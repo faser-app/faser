@@ -1,6 +1,6 @@
 <template>
   <div
-    class="bg-[#0206176c] h-[4.5rem] fixed backdrop-blur text-white w-full flex"
+    class="bg-[#0206176c] h-[4.5rem] fixed backdrop-blur text-white w-full flex z-50"
   >
     <RouterLink to="/">
       <div

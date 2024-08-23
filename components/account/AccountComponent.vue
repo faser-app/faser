@@ -35,37 +35,37 @@
         </div>
         <div class="bg-gray-900 mt-2 p-5 rounded-xl">
           <div class="grid grid-cols-2">
-            <p>ID</p>
+            <p><i class="fa-solid fa-id-card"></i> ID</p>
             <p>{{ profileData.id }}</p>
           </div>
         </div>
         <div class="bg-gray-900 p-5 rounded-xl">
           <div class="grid grid-cols-2">
-            <p>Beta Access</p>
+            <p><i class="fa-solid fa-user-check"></i> Beta Access</p>
             <p>{{ profileData.betaAccess }}</p>
           </div>
         </div>
         <div class="bg-gray-900 p-5 rounded-xl">
           <div class="grid grid-cols-2">
-            <p>Verified</p>
+            <p><i class="fa-solid fa-check"></i> Verified</p>
             <p>{{ profileData.verifiedAccount }}</p>
           </div>
         </div>
         <div class="bg-gray-900 p-5 rounded-xl">
           <div class="grid grid-cols-2">
-            <p>email</p>
+            <p><i class="fa-solid fa-address-card"></i> email</p>
             <p>{{ accountData.email }}</p>
           </div>
         </div>
         <div class="bg-gray-900 mt-2 p-5 rounded-xl">
           <div class="grid grid-cols-2">
-            <p>Terminated</p>
+            <p><i class="fa-solid fa-user-xmark"></i> Terminated</p>
             <p>{{ accountData.terminated }}</p>
           </div>
         </div>
         <div class="bg-gray-900 p-5 rounded-xl">
           <div class="grid grid-cols-2">
-            <p>Last login</p>
+            <p><i class="fa-solid fa-calendar-days"></i> Last login</p>
             <p>{{ lastLogin }}</p>
           </div>
         </div>
