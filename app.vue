@@ -1,6 +1,17 @@
+<script setup>
+useHead({
+  title: "faser.app",
+});
+</script>
+
 <template>
-  <div>
-    <NuxtRouteAnnouncer />
-    <NuxtWelcome />
-  </div>
+  <TooltipProvider>
+    <NuxtLayout>
+      <NuxtPage />
+      <TailwindBreakpointIndicator />
+    </NuxtLayout>
+  </TooltipProvider>
 </template>
+
+<style>
+</style>

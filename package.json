@@ -10,6 +10,8 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@fortawesome/vue-fontawesome": "^3.0.8",
+    "@nuxtjs/fontawesome": "^1.1.2",
     "nuxt": "^3.12.4",
     "vue": "latest"
   },
