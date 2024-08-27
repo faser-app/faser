@@ -85,6 +85,8 @@ onMounted(() => {
           router.push("/login");
         }
       });
+  } else {
+    router.push("/login");
   }
 });
 </script>
