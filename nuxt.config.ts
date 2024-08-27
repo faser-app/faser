@@ -18,4 +18,7 @@ export default defineNuxtConfig({
       ],
     },
   },
+  server: {
+    port: 3100,
+  },
 });
