@@ -4,35 +4,24 @@
       <h1
         class="text-3xl text-transparent bg-gradient-to-tr from-[#24c7ce] to-[#1ed794] bg-clip-text font-extrabold"
       >
-        faser login
+        verify email
       </h1>
+      <p class="text-gray-500">{{ email }}</p>
 
       <div class="flex flex-col mt-8 w-56">
         <input
-          type="email"
+          type="code"
           class="p-3 pl-4 bg-transparent text-white border border-gray-800 rounded-lg"
-          placeholder="email"
+          placeholder="code"
           @input="error = ''"
-          v-model="email"
-        />
-        <input
-          type="password"
-          class="p-3 pl-4 mt-2 bg-transparent text-white border border-gray-800 rounded-lg"
-          placeholder="password"
-          v-model="password"
-          @input="error = ''"
+          v-model="code"
         />
         <button
           class="p-2 mt-2 border border-gray-700 bg-transparent rounded-lg"
-          @click="login"
+          @click="verify"
         >
-          login
+          verify
         </button>
-
-        <RouterLink to="/register" class="mt-2 text-center text-gray-500">
-          You don't have an account yet? Create one
-          <div class="underline inline-block">here</div></RouterLink
-        >
 
         <div class="mt-12">
           <div
@@ -54,21 +43,22 @@ import { useRouter } from "vue-router";
 const router = useRouter();
 
 const email = ref("");
-const password = ref("");
+
+const code = ref("");
 
 const error = ref("");
 
-function login() {
-  const url = "https://api.faser.app/api/account/login";
+function verify() {
+  const url = "https://api.faser.app/api/account/verifyEmail";
 
   axios
     .post(url, {
       email: email.value,
-      password: password.value,
+      code: code.value,
+      token: Cookies.get("token"),
       lang: navigator.language || navigator.userLanguage,
     })
     .then((response) => {
-      Cookies.set("token", response.data.token, { expires: 5 });
       router.push("/");
     })
     .catch((err) => {
@@ -87,7 +77,13 @@ onMounted(() => {
         },
       })
       .then((response) => {
-        router.push("/");
+        console.log();
+        email.value = response.data[1].email;
+      })
+      .catch((error) => {
+        if (error.response.data.status === "error") {
+          router.push("/login");
+        }
       });
   }
 });

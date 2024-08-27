@@ -4,13 +4,20 @@
       <h1
         class="text-3xl text-transparent bg-gradient-to-tr from-[#24c7ce] to-[#1ed794] bg-clip-text font-extrabold"
       >
-        faser login
+        faser register
       </h1>
 
       <div class="flex flex-col mt-8 w-56">
         <input
-          type="email"
+          type="username"
           class="p-3 pl-4 bg-transparent text-white border border-gray-800 rounded-lg"
+          placeholder="username"
+          @input="error = ''"
+          v-model="username"
+        />
+        <input
+          type="email"
+          class="p-3 pl-4 mt-2 bg-transparent text-white border border-gray-800 rounded-lg"
           placeholder="email"
           @input="error = ''"
           v-model="email"
@@ -26,11 +33,11 @@
           class="p-2 mt-2 border border-gray-700 bg-transparent rounded-lg"
           @click="login"
         >
-          login
+          register
         </button>
 
-        <RouterLink to="/register" class="mt-2 text-center text-gray-500">
-          You don't have an account yet? Create one
+        <RouterLink to="/login" class="mt-2 text-center text-gray-500">
+          If you already have an account, login
           <div class="underline inline-block">here</div></RouterLink
         >
 
@@ -53,23 +60,25 @@ import { useRouter } from "vue-router";
 
 const router = useRouter();
 
+const username = ref("");
 const email = ref("");
 const password = ref("");
 
 const error = ref("");
 
 function login() {
-  const url = "https://api.faser.app/api/account/login";
+  const url = "https://api.faser.app/api/account/createAccount";
 
   axios
     .post(url, {
+      username: username.value,
       email: email.value,
       password: password.value,
       lang: navigator.language || navigator.userLanguage,
     })
     .then((response) => {
       Cookies.set("token", response.data.token, { expires: 5 });
-      router.push("/");
+      router.push("/verify");
     })
     .catch((err) => {
       error.value = err.response.data.message;

@@ -22,7 +22,7 @@
     </div>
     <div class="flex h-full top-10 self-center justify-end flex-1 w-full mr-4">
       <div
-        class="hidden opacity-0 self-center sm:opacity-100 gap-5 mr-5 md:flex"
+        class="hidden opacity-0 self-center sm:opacity-100 gap-5 mr-10 md:flex"
       >
         <div v-for="link in links" :key="link.name" class="cursor-pointer">
           <RouterLink :to="link.href" class="text-white hover:scale">{{
@@ -40,16 +40,19 @@
         </RouterLink>
       </div>
     </div>
-    <div
-      class="fixed backdrop-blur top-[4.5rem] bg-[#1118276c] w-full md:hidden"
-    >
+  </div>
+  <div class="fixed z-20 backdrop-blur top-[4.5rem] bg-[#0206176c] w-full md:hidden">
+    <div class="backdrop-blur w-full">
       <div :class="{ 'expandable-content': true, expanded: expanded }">
         <div
           v-for="link in links"
           :key="link.name"
-          class="cursor-pointer hover:bg-[#212d45] flex w-full"
+          class="w-full py-3 backdrop-blur"
         >
-          <RouterLink :to="link.href" class="text-white w-full my-2 ml-3">
+          <RouterLink
+            :to="link.href"
+            class="text-white w-full my-2 ml-3 backdrop-blur"
+          >
             {{ link.name }}
           </RouterLink>
         </div>
@@ -60,58 +63,14 @@
 </template>
 
 <script setup>
-import Cookies from "js-cookie";
-import axios from "axios";
-
 const expanded = ref(false);
 
 const links = [
   {
-    name: "Das",
-    href: "/",
-  },
-  {
-    name: "sind",
-    href: "/",
-  },
-  {
-    name: "irgendwelche",
-    href: "/",
-  },
-  {
-    name: "buttons",
-    href: "/",
-  },
-  {
-    name: "zum",
-    href: "/",
-  },
-  {
-    name: "testen",
+    name: "Home",
     href: "/",
   },
 ];
-
-onMounted(() => {
-  if (Cookies.get("token")) {
-    const url = "https://api.faser.app/api/account/checkAccountState";
-    axios
-      .post(url, {
-        token: Cookies.get("token"),
-        lang: navigator.language || navigator.userLanguage,
-      })
-      .then((response) => {
-        if (response.data.sataus === "success") {
-          console.log("Logged in");
-        }
-      })
-      .catch((error) => {
-        if (error.response.data.status === "error") {
-          Cookies.remove("token");
-        }
-      });
-  }
-});
 </script>
 
 <style scoped>

@@ -1,0 +1,4 @@
+<template>
+    <HeaderComponent />
+    <RegisterComponent />
+</template>
