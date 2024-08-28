@@ -3,7 +3,7 @@
     <div class="flex justify-center items-center h-svh pt-5">
       <div>
         <h1
-          class="text-3xl block text-transparent bg-gradient-to-tr from-[#24c7ce] to-[#1ed794] bg-clip-text font-extrabold"
+          class="text-5xl block text-transparent bg-gradient-to-tr from-[#24c7ce] to-[#1ed794] bg-clip-text font-extrabold"
         >
           Welcome to faser
         </h1>
