@@ -43,8 +43,6 @@ import { useRouter } from "vue-router";
 
 const router = useRouter();
 
-const email = ref("");
-
 const code = ref("");
 
 const error = ref("");
@@ -54,7 +52,6 @@ function verify() {
 
   axios
     .post(url, {
-      email: email.value,
       code: code.value,
       token: Cookies.get("token"),
       lang: navigator.language || navigator.userLanguage,

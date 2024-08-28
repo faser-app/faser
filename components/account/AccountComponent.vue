@@ -50,7 +50,10 @@
       >
         <p>File is too big</p>
       </div>
-      <span class="text-gray-500 text-sm ml-0.5">Max. 2MB</span>
+      <div class="grid grid-cols-2 w-full">
+        <span class="text-gray-500 text-sm ml-0.5">Max. 2MB</span>
+        <button @click="removeImage" v-if="profileData.avatarURL" class="place-self-end text-gray-400">Remove image</button>
+      </div>
 
       <div class="grid mt-2 gap-2">
         <div class="bg-gray-900 p-5 rounded-xl">
@@ -136,6 +139,17 @@ const file = ref(null);
 function logout() {
   Cookies.remove("token");
   router.push("/login");
+}
+
+function removeImage() {
+  axios.post("https://api.faser.app/api/profile/changeProfilePhoto", {
+    token: Cookies.get("token"),
+    photo: "",
+    lang: navigator.language || navigator.userLanguage,
+  })
+  .then((response) => {
+    router.push("/")
+  })
 }
 
 const toBase64 = (file) =>
