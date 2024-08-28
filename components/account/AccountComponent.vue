@@ -28,7 +28,7 @@
         <RouterLink to="/verify" class="underline">Verify</RouterLink>
       </div>
 
-      <div class="flex mt-4">
+      <div class="md:flex mt-4">
         <div class="flex w-full items-center text-sm p-2 py-4 border border-gray-800 rounded-xl cursor-pointer bg-gray-900 text-gray-50 focus:outline-none">
           <i class="fa-solid fa-image text-2xl mr-2"></i>
           <input
@@ -42,7 +42,7 @@
         <button
           @click="upload"
           :disabled="buttonDisabled"
-          class="ml-2 px-4 disabled:text-gray-500 disabled:cursor-default block p-2 text-sm border border-gray-800 rounded-xl cursor-pointer bg-gray-900 text-gray-50 focus:outline-none"
+          class="md:ml-2 px-4 w-full md:w-auto md:mt-0 mt-2 disabled:text-gray-500 disabled:cursor-default block p-2 text-sm border border-gray-800 rounded-xl cursor-pointer bg-gray-900 text-gray-50 focus:outline-none"
         >
           Upload profile picture
         </button>
