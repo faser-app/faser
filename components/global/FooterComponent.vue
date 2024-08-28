@@ -8,6 +8,12 @@
       </div>
 
       <p class="mt-5">© 2024 faser</p>
+
+      <div class="flex justify-center mt-3 text-2xl">
+        <a href="https://github.com/faser-app">
+          <i class="fa-brands fa-github hover:text-[#4078c0]"></i>
+        </a>
+      </div>
     </div>
   </div>
 </template>
