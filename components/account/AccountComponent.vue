@@ -20,6 +20,10 @@
           Welcome back, {{ profileData.displayName }}
         </h1>
       </div>
+      <div v-if="!accountData.emailConfirmed" class="w-full bg-gradient-to-tr from-[#24c7ce] to-[#1ed794] p-5 rounded-xl mt-3">
+        <p>You havent verified your email yet.</p>
+        <RouterLink to="/verify" class="underline">Verify</RouterLink>
+      </div>
       <div class="grid mt-5 gap-2">
         <div class="bg-gray-900 p-5 rounded-xl">
           <div class="grid grid-cols-2">

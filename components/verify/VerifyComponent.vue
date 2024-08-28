@@ -22,6 +22,7 @@
         >
           verify
         </button>
+        <button class="mt-2 text-gray-500" @click="resend">Resend email</button>
 
         <div class="mt-12">
           <div
@@ -63,6 +64,25 @@ function verify() {
     })
     .catch((err) => {
       error.value = err.response.data.message;
+    });
+}
+
+function resend() {
+  const url = "https://api.faser.app/api/account/resendEmail";
+
+  axios
+    .post(url, {
+      token: Cookies.get("token"),
+      lang: navigator.language || navigator.userLanguage,
+    })
+    .then((response) => {
+      console.log(response)
+    })
+    .catch((err) => {
+      error.value = err.response.data.message;
+      setTimeout(() => {
+        error.value = "";
+      }, 5000);
     });
 }
 
