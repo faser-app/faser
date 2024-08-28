@@ -29,13 +29,16 @@
       </div>
 
       <div class="flex mt-4">
-        <input
-          class="block w-full text-sm p-2 py-4 border border-gray-800 rounded-xl cursor-pointer bg-gray-900 text-gray-50 focus:outline-none"
-          id="file_input"
-          type="file"
-          accept="image/*"
-          @change="changePicture"
-        />
+        <div class="flex w-full items-center text-sm p-2 py-4 border border-gray-800 rounded-xl cursor-pointer bg-gray-900 text-gray-50 focus:outline-none">
+          <i class="fa-solid fa-image text-2xl mr-2"></i>
+          <input
+            class="block "
+            id="file_input"
+            type="file"
+            accept="image/*"
+            @change="changePicture"
+          />
+        </div>
         <button
           @click="upload"
           :disabled="buttonDisabled"
@@ -52,7 +55,13 @@
       </div>
       <div class="grid grid-cols-2 w-full">
         <span class="text-gray-500 text-sm ml-0.5">Max. 2MB</span>
-        <button @click="removeImage" v-if="profileData.avatarURL" class="place-self-end text-gray-400">Remove image</button>
+        <button
+          @click="removeImage"
+          v-if="profileData.avatarURL"
+          class="place-self-end text-gray-400"
+        >
+          Remove image
+        </button>
       </div>
 
       <div class="grid mt-2 gap-2">
@@ -142,14 +151,15 @@ function logout() {
 }
 
 function removeImage() {
-  axios.post("https://api.faser.app/api/profile/changeProfilePhoto", {
-    token: Cookies.get("token"),
-    photo: "",
-    lang: navigator.language || navigator.userLanguage,
-  })
-  .then((response) => {
-    router.push("/")
-  })
+  axios
+    .post("https://api.faser.app/api/profile/changeProfilePhoto", {
+      token: Cookies.get("token"),
+      photo: "",
+      lang: navigator.language || navigator.userLanguage,
+    })
+    .then((response) => {
+      router.push("/");
+    });
 }
 
 const toBase64 = (file) =>
@@ -163,25 +173,26 @@ const toBase64 = (file) =>
 function changePicture(event) {
   if (event.target.files[0].size / 1024 / 1024 >= 2) {
     fileTooBig.value = true;
-    buttonDisabled.value = true
+    buttonDisabled.value = true;
     return;
   } else {
     fileTooBig.value = false;
-    buttonDisabled.value = false
+    buttonDisabled.value = false;
     file.value = event.target.files[0];
   }
 }
 
 function upload() {
   toBase64(file.value).then((data) => {
-    axios.post("https://api.faser.app/api/profile/changeProfilePhoto", {
-      token: Cookies.get("token"),
-      photo: data,
-      lang: navigator.language || navigator.userLanguage,
-    })
-    .then((response) => {
-      router.push("/")
-    })
+    axios
+      .post("https://api.faser.app/api/profile/changeProfilePhoto", {
+        token: Cookies.get("token"),
+        photo: data,
+        lang: navigator.language || navigator.userLanguage,
+      })
+      .then((response) => {
+        router.push("/");
+      });
   });
 }
 
