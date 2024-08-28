@@ -97,8 +97,9 @@ onMounted(() => {
         },
       })
       .then((response) => {
-        console.log();
-        email.value = response.data[1].email;
+        if(response.data[1].emailConfirmed) {
+          router.push("/");
+        }
       })
       .catch((error) => {
         if (error.response.data.status === "error") {
