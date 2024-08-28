@@ -35,13 +35,16 @@
           <div
             class="border w-12 h-12 flex items-center justify-center rounded-full border-[#96969627] bg-[#1118276c] cursor-pointer"
           >
-            <i class="fa-solid fa-user rounded-full text-3xl"></i>
+            <i v-if="!avatarURL" class="fa-solid fa-user rounded-full text-3xl"></i>
+            <img v-else :src="avatarURL" class="rounded-full w-12 h-12" />
           </div>
         </RouterLink>
       </div>
     </div>
   </div>
-  <div class="fixed z-20 backdrop-blur top-[4.5rem] bg-[#0206176c] w-full md:hidden">
+  <div
+    class="fixed z-20 backdrop-blur top-[4.5rem] bg-[#0206176c] w-full md:hidden"
+  >
     <div class="backdrop-blur w-full">
       <div :class="{ 'expandable-content': true, expanded: expanded }">
         <div
@@ -63,7 +66,11 @@
 </template>
 
 <script setup>
+import axios from "axios";
+import Cookies from "js-cookie";
+
 const expanded = ref(false);
+const avatarURL = ref("")
 
 const links = [
   {
@@ -71,6 +78,22 @@ const links = [
     href: "/",
   },
 ];
+
+onMounted(() => {
+  const url = "https://api.faser.app/api/account/getOwnProfile";
+
+  axios
+    .get(url, {
+      headers: {
+        token: Cookies.get("token"),
+      },
+    })
+    .then((response) => {
+      if(response.data[0].avatarURL) {
+        avatarURL.value = response.data[0].avatarURL;
+      }
+    });
+});
 </script>
 
 <style scoped>
