@@ -98,7 +98,7 @@ onMounted(() => {
       })
       .then((response) => {
         if(response.data[1].emailConfirmed) {
-          router.push("/");
+          router.push("/account");
         }
       })
       .catch((error) => {
