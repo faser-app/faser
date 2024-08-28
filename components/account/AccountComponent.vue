@@ -20,11 +20,39 @@
           Welcome back, {{ profileData.displayName }}
         </h1>
       </div>
-      <div v-if="!accountData.emailConfirmed" class="w-full bg-gradient-to-tr from-[#24c7ce] to-[#1ed794] p-5 rounded-xl mt-3">
+      <div
+        v-if="!accountData.emailConfirmed"
+        class="w-full bg-gradient-to-tr from-[#24c7ce] to-[#1ed794] p-5 rounded-xl mt-3"
+      >
         <p>You havent verified your email yet.</p>
         <RouterLink to="/verify" class="underline">Verify</RouterLink>
       </div>
-      <div class="grid mt-5 gap-2">
+
+      <div class="flex mt-4">
+        <input
+          class="block w-full text-sm p-2 py-4 border border-gray-800 rounded-xl cursor-pointer bg-gray-900 text-gray-50 focus:outline-none"
+          id="file_input"
+          type="file"
+          accept="image/*"
+          @change="changePicture"
+        />
+        <button
+          @click="upload"
+          :disabled="buttonDisabled"
+          class="ml-2 px-4 disabled:text-gray-500 disabled:cursor-default block p-2 text-sm border border-gray-800 rounded-xl cursor-pointer bg-gray-900 text-gray-50 focus:outline-none"
+        >
+          Upload profile picture
+        </button>
+      </div>
+      <div
+        v-if="fileTooBig"
+        class="flex bg-[#220000] border border-red-700 rounded-xl w-full justify-center p-2 mt-2"
+      >
+        <p>File is too big</p>
+      </div>
+      <span class="text-gray-500 text-sm ml-0.5">Max. 2MB</span>
+
+      <div class="grid mt-2 gap-2">
         <div class="bg-gray-900 p-5 rounded-xl">
           <div class="grid grid-cols-2">
             <p>Display Name</p>
@@ -100,9 +128,47 @@ const lastLogin = ref("");
 
 const loaded = ref(false);
 
+const buttonDisabled = ref(true);
+const fileTooBig = ref(false);
+
+const file = ref(null);
+
 function logout() {
   Cookies.remove("token");
   router.push("/login");
+}
+
+const toBase64 = (file) =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = reject;
+  });
+
+function changePicture(event) {
+  if (event.target.files[0].size / 1024 / 1024 >= 2) {
+    fileTooBig.value = true;
+    buttonDisabled.value = true
+    return;
+  } else {
+    fileTooBig.value = false;
+    buttonDisabled.value = false
+    file.value = event.target.files[0];
+  }
+}
+
+function upload() {
+  toBase64(file.value).then((data) => {
+    axios.post("https://api.faser.app/api/profile/changeProfilePhoto", {
+      token: Cookies.get("token"),
+      photo: data,
+      lang: navigator.language || navigator.userLanguage,
+    })
+    .then((response) => {
+      router.push("/")
+    })
+  });
 }
 
 onMounted(() => {

@@ -36,7 +36,7 @@
             class="border w-12 h-12 flex items-center justify-center rounded-full border-[#96969627] bg-[#1118276c] cursor-pointer"
           >
             <i v-if="!avatarURL" class="fa-solid fa-user rounded-full text-3xl"></i>
-            <img v-else :src="avatarURL" class="rounded-full w-12 h-12" />
+            <img v-else :src="avatarURL" class="rounded-full w-12 h-12 object-cover" />
           </div>
         </RouterLink>
       </div>
@@ -68,6 +68,9 @@
 <script setup>
 import axios from "axios";
 import Cookies from "js-cookie";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 
 const expanded = ref(false);
 const avatarURL = ref("")
