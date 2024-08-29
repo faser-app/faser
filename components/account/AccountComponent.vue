@@ -123,6 +123,7 @@
         </button>
       </div>
     </div>
+    <AccountSubmitModalComponent />
   </div>
 </template>
 <script setup>
@@ -130,6 +131,7 @@ import Cookies from "js-cookie";
 import axios from "axios";
 import { useRouter } from "vue-router";
 import { DateTime } from "luxon";
+import { changeModal } from "~/scripts/account/deletePhoto";
 
 const router = useRouter();
 
@@ -151,15 +153,7 @@ function logout() {
 }
 
 function removeImage() {
-  axios
-    .post("https://api.faser.app/api/profile/changeProfilePhoto", {
-      token: Cookies.get("token"),
-      photo: "",
-      lang: navigator.language || navigator.userLanguage,
-    })
-    .then((response) => {
-      router.push("/");
-    });
+  changeModal(true)
 }
 
 const toBase64 = (file) =>
