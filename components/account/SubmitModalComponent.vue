@@ -16,6 +16,11 @@
         <h2 class="text-center font-bold mt-2">
           Are you sure you want to remove your profile picture?
         </h2>
+        <div class="flex justify-center text-center mt-2 text-gray-400">
+          <div class="md:w-2/3 w-full">
+            <p>When you delete your profile picture, you have to upload one again. If you want to replace your current profile picture, you can just select a file and upload it again.</p>
+          </div>
+        </div>
         <div class="flex flex-col md:flex-row justify-center gap-2 mt-4">
           <button
             @click="changeModal(false)"
