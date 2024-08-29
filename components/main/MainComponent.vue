@@ -18,9 +18,6 @@ onMounted(() => {
   document.addEventListener("mousemove", (e) => {
     const blob = document.querySelector(".blob");
 
-    const scrollX = window.scrollX;
-    const scrollY = window.scrollY;
-
     const targetX = e.clientX;
     const targetY = e.clientY;
 
