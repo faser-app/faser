@@ -21,8 +21,8 @@ onMounted(() => {
     const scrollX = window.scrollX;
     const scrollY = window.scrollY;
 
-    const targetX = e.clientX + scrollX;
-    const targetY = e.clientY + scrollY;
+    const targetX = e.clientX;
+    const targetY = e.clientY;
 
     let blobX = parseFloat(getComputedStyle(blob).left) || 0;
     let blobY = parseFloat(getComputedStyle(blob).top) || 0;
@@ -56,7 +56,7 @@ onMounted(() => {
 
 <style scoped>
 .blob {
-  position: absolute;
+  position: fixed;
   top: 50rem;
   left: 30rem;
   width: 500px;
