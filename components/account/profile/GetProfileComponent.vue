@@ -1,7 +1,8 @@
 <template>
   <div class="bg-gray-950 min-h-screen text-white">
-    <div class="md:flex w-full">
-      <div class="md:flex hidden flex-wrap md:w-60 gap-2 justify-center">
+    <div class="md:flex w-full" v-if="loaded">
+      <div v-if="success">
+        <div class="md:flex hidden flex-wrap md:w-60 gap-2 justify-center">
         <div v-for="community in communities" :key="community.name">
           <div
             class="w-full flex mr-8 h-fit truncate items-center rounded-xl bg-gray-800"
@@ -21,10 +22,14 @@
           class="flex flex-wrap bg-gray-800 md:w-full ml-2 md:ml-1 rounded-xl items-center mr-2 h-fit"
         >
           <img
+            v-if="profileData.avatarURL"
             :src="profileData.avatarURL"
             alt="profile picture"
             class="rounded-full h-24 w-24 m-5"
           />
+          <div v-else class="rounded-full h-24 w-24 m-5 flex border justify-center items-center border-[#96969627] bg-[#1118276c]">
+            <i v-if="!avatarURL" class="fa-solid fa-user rounded-full text-4xl"></i>
+          </div>
           <div class="grid">
             <div class="flex items-center">
               <div>
@@ -94,6 +99,10 @@
           </div>
         </div>
       </div>
+      </div>
+      <div class="flex w-full min-h-screen justify-center items-center text-2xl">
+        <p>User not found</p>
+      </div>
     </div>
   </div>
 </template>
@@ -110,6 +119,9 @@ const sinceString = ref("");
 
 const badges = ref([]);
 
+const success = ref(false)
+const loaded = ref(false)
+
 const accountSince = ref("");
 
 const communities = ref([]);
@@ -124,6 +136,9 @@ axios
     },
   })
   .then((response) => {
+    loaded.value = true
+    success.value = true
+
     profileData.value = response.data[0];
 
     badges.value = response.data[0].badges;
@@ -132,7 +147,10 @@ axios
     const accountCreatedString = accountCreated.toLocaleDateString();
     sinceString.value = accountCreatedString;
   })
-  .catch((error) => {});
+  .catch((error) => {
+    loaded.value = true
+    success.value = false
+  });
 </script>
 
 <style>
