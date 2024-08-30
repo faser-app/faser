@@ -122,16 +122,16 @@ const badges = ref([]);
 const success = ref(false)
 const loaded = ref(false)
 
-const accountSince = ref("");
-
 const communities = ref([]);
 
 const route = useRoute();
 
+const username = route.params.user.replace("@", "");
+
 axios
   .get(url, {
     headers: {
-      username: route.params.user,
+      username: username,
       lang: navigator.language || navigator.userLanguage,
     },
   })
