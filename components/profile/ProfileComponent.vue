@@ -21,10 +21,20 @@
           class="flex flex-wrap bg-gray-800 md:w-full ml-2 md:ml-1 rounded-xl items-center mr-2 h-fit"
         >
           <img
+            v-if="profileData.avatarURL"
             :src="profileData.avatarURL"
             alt="profile picture"
             class="rounded-full h-24 w-24 m-5"
           />
+          <div
+            v-else
+            class="rounded-full h-24 w-24 m-5 flex border justify-center items-center border-[#96969627] bg-[#1118276c]"
+          >
+            <i
+              v-if="!avatarURL"
+              class="fa-solid fa-user rounded-full text-4xl"
+            ></i>
+          </div>
           <div class="grid">
             <div class="flex items-center">
               <div>
