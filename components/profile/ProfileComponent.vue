@@ -114,6 +114,9 @@
 <script setup>
 import axios from "axios";
 import Cookies from "js-cookie";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 
 const url = "https://api.faser.app/api/account/getOwnProfile";
 
@@ -125,51 +128,7 @@ const sinceString = ref("");
 const badges = ref([]);
 
 const communities = ref([
-  {
-    name: "Community 1",
-  },
-  {
-    name: "Community 2",
-  },
-  {
-    name: "Community 3",
-  },
-  {
-    name: "Community 1",
-  },
-  {
-    name: "Community 2",
-  },
-  {
-    name: "Community 3",
-  },
-  {
-    name: "Community 1",
-  },
-  {
-    name: "Community 2",
-  },
-  {
-    name: "Community 3",
-  },
-  {
-    name: "Community 1",
-  },
-  {
-    name: "Community 2",
-  },
-  {
-    name: "Community 3",
-  },
-  {
-    name: "Community 1",
-  },
-  {
-    name: "Community 2",
-  },
-  {
-    name: "Community 3",
-  },
+  
 ]);
 
 axios
