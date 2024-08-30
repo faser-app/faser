@@ -14,7 +14,8 @@
             {{ community.name }}
           </div>
         </div>
-        <p v-if="communities.length === 0">No Communites yet</p>
+        <p v-if="communities.length === 0 && !privateAccount">No Communites yet</p>
+        <p v-if="privateAccount">Private account</p>
       </div>
       <div class="w-full mr-4">
         <div
@@ -26,8 +27,14 @@
             alt="profile picture"
             class="rounded-full h-24 w-24 m-5"
           />
-          <div v-else class="rounded-full h-24 w-24 m-5 flex border justify-center items-center border-[#96969627] bg-[#1118276c]">
-            <i v-if="!avatarURL" class="fa-solid fa-user rounded-full text-4xl"></i>
+          <div
+            v-else
+            class="rounded-full h-24 w-24 m-5 flex border justify-center items-center border-[#96969627] bg-[#1118276c]"
+          >
+            <i
+              v-if="!avatarURL"
+              class="fa-solid fa-user rounded-full text-4xl"
+            ></i>
           </div>
           <div class="grid">
             <div class="flex items-center">
@@ -65,7 +72,9 @@
           </div>
           <div class="w-full p-5 bg-gray-700 mb-2">
             <p v-if="profileData.bio" v-html="markdownHTML"></p>
-            <p v-else class="italic text-gray-300">No bio. Just imagine something cool here.</p>
+            <p v-else class="italic text-gray-300">
+              No bio. Just imagine something cool here.
+            </p>
           </div>
           <p class="w-full pl-5 pb-3">Member since {{ sinceString }}</p>
         </div>
@@ -76,7 +85,13 @@
             <p class="text-xl mt-2">Posts</p>
           </div>
           <div class="h-36 flex w-full justify-center items-center">
-            <p class="italic text-gray-400">No posts yet</p>
+            <p v-if="!privateAccount" class="italic text-gray-400">
+              No posts yet
+            </p>
+            <p v-if="privateAccount" class="italic text-gray-400">
+              {{ route.params.user.replace("@", "") }} have their profile on private. You have
+              to follow this person to view their Posts.
+            </p>
           </div>
         </div>
       </div>
@@ -126,8 +141,10 @@ const sinceString = ref("");
 
 const badges = ref([]);
 
-const success = ref(false)
-const loaded = ref(false)
+const success = ref(false);
+const loaded = ref(false);
+
+const privateAccount = ref(false)
 
 const markdownHTML = ref("");
 
@@ -145,8 +162,8 @@ axios
     },
   })
   .then((response) => {
-    loaded.value = true
-    success.value = true
+    loaded.value = true;
+    success.value = true;
 
     profileData.value = response.data[0];
 
@@ -154,15 +171,17 @@ axios
 
     markdownHTML.value = md.render(response.data[0].bio);
 
-    console.log(md.render(response.data[0].bio))
+    privateAccount.value = response.data[0].privateAccount;
+
+    console.log(md.render(response.data[0].bio));
 
     const accountCreated = new Date(response.data[1].memberSince);
     const accountCreatedString = accountCreated.toLocaleDateString();
     sinceString.value = accountCreatedString;
   })
   .catch((error) => {
-    loaded.value = true
-    success.value = false
+    loaded.value = true;
+    success.value = false;
   });
 </script>
 
