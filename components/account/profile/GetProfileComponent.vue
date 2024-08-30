@@ -63,6 +63,10 @@
               </div>
             </div>
           </div>
+          <div class="w-full p-5 bg-gray-700 mb-2">
+            <p v-if="profileData.bio">{{ profileData.bio }}</p>
+            <p v-else class="italic text-gray-300">We don't know much about this user</p>
+          </div>
           <p class="w-full pl-5 pb-3">Member since {{ sinceString }}</p>
         </div>
         <div

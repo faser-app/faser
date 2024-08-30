@@ -71,6 +71,16 @@
             class="bg-gray-900 md:w-[calc(50%-0.25rem)] w-full flex justify-center items-center p-5 rounded-xl"
           >
             <div class="flex flex-wrap justify-center">
+              <h1 class="text-xl font-bold">Edit Bio</h1>
+              <div class="w-full"></div>
+              <textarea id="bio" class="w-full p-2 rounded-xl bg-gray-800 text-white" rows="5"></textarea>
+              <button class="p-2 bg-gray-700 mt-1 rounded-xl" @click="saveBio">Save</button>
+            </div>
+          </div>
+          <div
+            class="bg-gray-900 md:w-[calc(50%-0.25rem)] w-full flex justify-center items-center p-5 rounded-xl"
+          >
+            <div class="flex flex-wrap justify-center">
               <h1 class="text-xl font-bold">Last Login</h1>
               <div class="w-full"></div>
               <p class="mt-4">{{ lastLogin }}</p>
@@ -158,6 +168,20 @@ function changePicture(event) {
   }
 }
 
+function saveBio() {
+  const bio = document.getElementById("bio").value;
+
+  axios
+    .post("https://api.faser.app/api/profile/changeBio", {
+      token: Cookies.get("token"),
+      bio: bio,
+      lang: navigator.language || navigator.userLanguage,
+    })
+    .then((response) => {
+      console.log(response);
+    });
+}
+
 function upload() {
   toBase64(file.value).then((data) => {
     axios
@@ -186,6 +210,8 @@ onMounted(() => {
       profileData.value = response.data[0];
 
       loaded.value = true;
+
+      document.querySelector("textarea").value = profileData.value.bio;
 
       lastLogin.value = DateTime.fromMillis(
         accountData.value.lastLogin
