@@ -1,8 +1,7 @@
 <template>
   <div class="bg-gray-950 min-h-screen text-white">
-    <div class="md:flex w-full" v-if="loaded">
-      <div v-if="success">
-        <div class="md:flex hidden flex-wrap md:w-60 gap-2 justify-center">
+    <div class="md:flex w-full" v-if="loaded && success">
+      <div class="md:flex hidden flex-wrap md:w-60 gap-2 justify-center">
         <div v-for="community in communities" :key="community.name">
           <div
             class="w-full flex mr-8 h-fit truncate items-center rounded-xl bg-gray-800"
@@ -99,9 +98,10 @@
           </div>
         </div>
       </div>
-      </div>
-      <div class="flex w-full min-h-screen justify-center items-center text-2xl">
-        <p>User not found</p>
+    </div>
+    <div v-if="!success">
+      <div class="flex flex-wrap min-h-svh w-full justify-center items-center">
+        <p class="text-3xl text-gray-400">404 Not found</p>
       </div>
     </div>
   </div>
