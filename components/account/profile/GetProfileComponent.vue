@@ -51,7 +51,7 @@
                 <div class="flex items-center gap-2">
                   <p class="text-xl">
                     <span class="text-gray-400 mr-0.5">@</span
-                    >{{ route.params.user }}
+                    >{{ route.params.user.replace("@", "") }}
                   </p>
                   <div
                     v-if="profileData.verifiedAccount"
