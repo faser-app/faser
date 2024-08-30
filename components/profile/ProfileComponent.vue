@@ -71,7 +71,7 @@
               </RouterLink>
             </div>
           </div>
-          <div class="w-full p-5 bg-gray-700 mb-2">
+          <div class="w-full p-5 bg-gray-700 mb-2 bio">
             <p v-if="profileData.bio" v-html="markdownHTML"></p>
             <p v-else class="italic text-gray-300">
               No bio. Just imagine something cool here.
@@ -169,134 +169,134 @@ axios
   transform: translateY(1px);
 }
 
-h1 {
+.bio h1 {
   font-size: 2em;
 }
 
-h2 {
+.bio h2 {
   font-size: 1.5em;
 }
 
-h3 {
+.bio h3 {
   font-size: 1.17em;
 }
 
-h4 {
+.bio h4 {
   font-size: 1em;
 }
 
-h5 {
+.bio h5 {
   font-size: 0.83em;
 }
 
-h6 {
+.bio h6 {
   font-size: 0.67em;
 }
 
-p {
+.bio p {
   font-size: 1em;
 }
 
-a {
+.bio a {
   text-decoration: underline;
 }
 
-ul {
+.bio ul {
   list-style-type: disc;
 }
 
-ol {
+.bio ol {
   list-style-type: decimal;
 }
 
-li {
+.bio li {
   font-size: 1em;
 }
 
-blockquote {
+.bio blockquote {
   font-size: 1em;
 }
 
-code {
+.bio code {
   font-size: 1em;
 }
 
-pre {
+.bio pre {
   font-size: 1em;
 }
 
-strong {
+.bio strong {
   font-weight: bold;
 }
 
-em {
+.bio em {
   font-style: italic;
 }
 
-u {
+.bio u {
   text-decoration: underline;
 }
 
-del {
+.bio del {
   text-decoration: line-through;
 }
 
-s {
+.bio s {
   text-decoration: line-through;
 }
 
-ins {
+.bio ins {
   text-decoration: underline;
 }
 
-mark {
+.bio mark {
   background-color: yellow;
 }
 
-sub {
+.bio sub {
   vertical-align: sub;
 }
 
-sup {
+.bio sup {
   vertical-align: super;
 }
 
-small {
+.bio small {
   font-size: 0.83em;
 }
 
-b {
+.bio b {
   font-weight: bold;
 }
 
-i {
+.bio i {
   font-style: italic;
 }
 
-u {
+.bio u {
   text-decoration: underline;
 }
 
-center {
+.bio center {
   text-align: center;
 }
 
-table {
+.bio table {
   border-collapse: collapse;
   width: 100%;
 }
 
-th {
+.bio th {
   border: 1px solid #ddd;
   padding: 8px;
 }
 
-td {
+.bio td {
   border: 1px solid #ddd;
   padding: 8px;
 }
 
-tr:nth-child(even) {
+.bio tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 </style>
