@@ -33,7 +33,11 @@
                     <div
                       class="flex items-center cursor-default border rounded-full px-2 p-1"
                       :class="
-                        'bg-' + badge.color + '-950 border-' + badge.color + '-600'
+                        'bg-' +
+                        badge.color +
+                        '-950 border-' +
+                        badge.color +
+                        '-600'
                       "
                     >
                       {{ badge.name }}
@@ -68,8 +72,10 @@
             </div>
           </div>
           <div class="w-full p-5 bg-gray-700 mb-2">
-            <p v-if="profileData.bio">{{ profileData.bio }}</p>
-            <p v-else class="italic text-gray-300">No bio. Just imagine something cool here.</p>
+            <p v-if="profileData.bio" v-html="markdownHTML"></p>
+            <p v-else class="italic text-gray-300">
+              No bio. Just imagine something cool here.
+            </p>
           </div>
           <p class="w-full pl-5 pb-3">Member since {{ sinceString }}</p>
         </div>
@@ -78,7 +84,6 @@
         >
           <div class="w-full flex justify-center">
             <p class="text-xl mt-2">Posts</p>
-
           </div>
           <div class="h-36 flex w-full justify-center items-center">
             <p class="italic text-gray-400">No posts yet</p>
@@ -115,6 +120,9 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 import { useRouter } from "vue-router";
+import MarkdownIt from "markdown-it";
+
+const md = new MarkdownIt();
 
 const router = useRouter();
 
@@ -125,11 +133,11 @@ const profileData = ref({});
 
 const sinceString = ref("");
 
+const markdownHTML = ref("");
+
 const badges = ref([]);
 
-const communities = ref([
-  
-]);
+const communities = ref([]);
 
 axios
   .get(url, {
@@ -145,6 +153,8 @@ axios
     const accountCreatedString = accountCreated.toLocaleDateString();
     sinceString.value = accountCreatedString;
 
+    markdownHTML.value = md.render(response.data[0].bio);
+
     badges.value = response.data[0].badges;
   })
   .catch((error) => {
@@ -154,8 +164,143 @@ axios
   });
 </script>
 
-<style>
+<style scoped>
 .verifiedBadge {
   transform: translateY(1px);
+}
+
+h1 {
+  font-size: 2em;
+}
+
+h2 {
+  font-size: 1.5em;
+}
+
+h3 {
+  font-size: 1.17em;
+}
+
+h4 {
+  font-size: 1em;
+}
+
+h5 {
+  font-size: 0.83em;
+}
+
+h6 {
+  font-size: 0.67em;
+}
+
+p {
+  font-size: 1em;
+}
+
+a {
+  color: #00a0e4;
+}
+
+a:hover {
+  color: #0077b3;
+}
+
+ul {
+  list-style-type: disc;
+}
+
+ol {
+  list-style-type: decimal;
+}
+
+li {
+  font-size: 1em;
+}
+
+blockquote {
+  font-size: 1em;
+}
+
+code {
+  font-size: 1em;
+}
+
+pre {
+  font-size: 1em;
+}
+
+strong {
+  font-weight: bold;
+}
+
+em {
+  font-style: italic;
+}
+
+u {
+  text-decoration: underline;
+}
+
+del {
+  text-decoration: line-through;
+}
+
+s {
+  text-decoration: line-through;
+}
+
+ins {
+  text-decoration: underline;
+}
+
+mark {
+  background-color: yellow;
+}
+
+sub {
+  vertical-align: sub;
+}
+
+sup {
+  vertical-align: super;
+}
+
+small {
+  font-size: 0.83em;
+}
+
+b {
+  font-weight: bold;
+}
+
+i {
+  font-style: italic;
+}
+
+u {
+  text-decoration: underline;
+}
+
+center {
+  text-align: center;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
 }
 </style>

@@ -64,7 +64,7 @@
             </div>
           </div>
           <div class="w-full p-5 bg-gray-700 mb-2">
-            <p v-if="profileData.bio">{{ profileData.bio }}</p>
+            <p v-if="profileData.bio" v-html="markdownHTML"></p>
             <p v-else class="italic text-gray-300">No bio. Just imagine something cool here.</p>
           </div>
           <p class="w-full pl-5 pb-3">Member since {{ sinceString }}</p>
@@ -113,7 +113,10 @@
 
 <script setup>
 import axios from "axios";
-import { useRouter, useRoute } from "vue-router";
+import { useRoute } from "vue-router";
+import MarkdownIt from "markdown-it";
+
+const md = new MarkdownIt();
 
 const url = "https://api.faser.app/api/account/getProfile";
 
@@ -125,6 +128,8 @@ const badges = ref([]);
 
 const success = ref(false)
 const loaded = ref(false)
+
+const markdownHTML = ref("");
 
 const communities = ref([]);
 
@@ -147,6 +152,10 @@ axios
 
     badges.value = response.data[0].badges;
 
+    markdownHTML.value = md.render(response.data[0].bio);
+
+    console.log(md.render(response.data[0].bio))
+
     const accountCreated = new Date(response.data[1].memberSince);
     const accountCreatedString = accountCreated.toLocaleDateString();
     sinceString.value = accountCreatedString;
@@ -157,8 +166,143 @@ axios
   });
 </script>
 
-<style>
+<style scoped>
 .verifiedBadge {
   transform: translateY(1px);
+}
+
+h1 {
+  font-size: 2em;
+}
+
+h2 {
+  font-size: 1.5em;
+}
+
+h3 {
+  font-size: 1.17em;
+}
+
+h4 {
+  font-size: 1em;
+}
+
+h5 {
+  font-size: 0.83em;
+}
+
+h6 {
+  font-size: 0.67em;
+}
+
+p {
+  font-size: 1em;
+}
+
+a {
+  color: #00a0e4;
+}
+
+a:hover {
+  color: #0077b3;
+}
+
+ul {
+  list-style-type: disc;
+}
+
+ol {
+  list-style-type: decimal;
+}
+
+li {
+  font-size: 1em;
+}
+
+blockquote {
+  font-size: 1em;
+}
+
+code {
+  font-size: 1em;
+}
+
+pre {
+  font-size: 1em;
+}
+
+strong {
+  font-weight: bold;
+}
+
+em {
+  font-style: italic;
+}
+
+u {
+  text-decoration: underline;
+}
+
+del {
+  text-decoration: line-through;
+}
+
+s {
+  text-decoration: line-through;
+}
+
+ins {
+  text-decoration: underline;
+}
+
+mark {
+  background-color: yellow;
+}
+
+sub {
+  vertical-align: sub;
+}
+
+sup {
+  vertical-align: super;
+}
+
+small {
+  font-size: 0.83em;
+}
+
+b {
+  font-weight: bold;
+}
+
+i {
+  font-style: italic;
+}
+
+u {
+  text-decoration: underline;
+}
+
+center {
+  text-align: center;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
 }
 </style>

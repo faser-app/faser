@@ -178,7 +178,7 @@ function saveBio() {
       lang: navigator.language || navigator.userLanguage,
     })
     .then((response) => {
-      console.log(response);
+      router.push("/profile")
     });
 }
 
