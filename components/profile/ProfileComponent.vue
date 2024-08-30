@@ -39,19 +39,17 @@
             <div class="flex items-center">
               <div>
                 <div class="flex gap-2 text-sm mb-2" v-if="badges.length !== 0">
-                  <div v-for="badge in badges" :key="badge.name">
-                    <div
-                      class="flex items-center cursor-default border rounded-full px-2 p-1"
-                      :class="
-                        'bg-' +
-                        badge.color +
-                        '-950 border-' +
-                        badge.color +
-                        '-600'
-                      "
-                    >
-                      {{ badge.name }}
-                    </div>
+                  <div
+                    class="flex items-center cursor-default border rounded-full px-2 p-1"
+                    :style="
+                      'background-color: ' +
+                      badge.color +
+                      '55; border: 1px solid ' +
+                      badge.color +
+                      ';'
+                    "
+                  >
+                    {{ badge.name }}
                   </div>
                 </div>
                 <div class="flex items-center gap-2">
