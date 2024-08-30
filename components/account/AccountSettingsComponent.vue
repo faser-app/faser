@@ -29,10 +29,12 @@
       </div>
 
       <div class="md:flex mt-4">
-        <div class="flex w-full items-center text-sm p-2 py-4 border border-gray-800 rounded-xl cursor-pointer bg-gray-900 text-gray-50 focus:outline-none">
+        <div
+          class="flex w-full items-center text-sm p-2 py-4 border border-gray-800 rounded-xl cursor-pointer bg-gray-900 text-gray-50 focus:outline-none"
+        >
           <i class="fa-solid fa-image text-2xl mr-2"></i>
           <input
-            class="block "
+            class="block"
             id="file_input"
             type="file"
             accept="image/*"
@@ -63,54 +65,30 @@
           Remove image
         </button>
       </div>
-
-      <div class="grid mt-2 gap-2">
-        <div class="bg-gray-900 p-5 rounded-xl">
-          <div class="grid grid-cols-2">
-            <p>Display Name</p>
-            <p>{{ profileData.displayName }}</p>
+      <div>
+        <div class="flex flex-wrap gap-2 w-full justify-center">
+          <div
+            class="bg-gray-900 md:w-[calc(50%-0.25rem)] w-full flex justify-center items-center p-5 rounded-xl"
+          >
+            <div class="flex flex-wrap justify-center">
+              <h1 class="text-xl font-bold">Last Login</h1>
+              <div class="w-full"></div>
+              <p class="mt-4">{{ lastLogin }}</p>
+            </div>
           </div>
-        </div>
-        <div class="bg-gray-900 p-5 rounded-xl">
-          <div class="grid grid-cols-2">
-            <p>Account Name</p>
-            <p>{{ accountData.username }}</p>
-          </div>
-        </div>
-        <div class="bg-gray-900 mt-2 p-5 rounded-xl">
-          <div class="grid grid-cols-2">
-            <p><i class="fa-solid fa-id-card"></i> ID</p>
-            <p>{{ profileData.id }}</p>
-          </div>
-        </div>
-        <div class="bg-gray-900 p-5 rounded-xl">
-          <div class="grid grid-cols-2">
-            <p><i class="fa-solid fa-user-check"></i> Beta Access</p>
-            <p>{{ profileData.betaAccess }}</p>
-          </div>
-        </div>
-        <div class="bg-gray-900 p-5 rounded-xl">
-          <div class="grid grid-cols-2">
-            <p><i class="fa-solid fa-check"></i> Verified</p>
-            <p>{{ profileData.verifiedAccount }}</p>
-          </div>
-        </div>
-        <div class="bg-gray-900 p-5 rounded-xl">
-          <div class="grid grid-cols-2">
-            <p><i class="fa-solid fa-address-card"></i> email</p>
-            <p>{{ accountData.email }}</p>
-          </div>
-        </div>
-        <div class="bg-gray-900 mt-2 p-5 rounded-xl">
-          <div class="grid grid-cols-2">
-            <p><i class="fa-solid fa-user-xmark"></i> Terminated</p>
-            <p>{{ accountData.terminated }}</p>
-          </div>
-        </div>
-        <div class="bg-gray-900 p-5 rounded-xl">
-          <div class="grid grid-cols-2">
-            <p><i class="fa-solid fa-calendar-days"></i> Last login</p>
-            <p>{{ lastLogin }}</p>
+          <div
+            class="bg-gray-900 md:w-[calc(50%-0.25rem)] w-full flex justify-center items-center p-5 rounded-xl"
+          >
+            <div class="flex flex-wrap justify-center">
+              <h1 class="text-xl font-bold">Change Password</h1>
+              <div class="w-full"></div>
+              <button
+                class="mt-4 bg-[#220000] p-2 border-red-700 border rounded-xl"
+                @click="changePassword"
+              >
+                Change Password
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -153,7 +131,11 @@ function logout() {
 }
 
 function removeImage() {
-  changeModal(true)
+  changeModal(true);
+}
+
+function changePassword() {
+  alert("Not implemented yet");
 }
 
 const toBase64 = (file) =>

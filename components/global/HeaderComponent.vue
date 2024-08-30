@@ -31,7 +31,7 @@
         </div>
       </div>
       <div class="h-full flex items-center">
-        <RouterLink to="/account">
+        <RouterLink to="/profile">
           <div
             class="border w-12 h-12 flex items-center justify-center rounded-full border-[#96969627] bg-[#1118276c] cursor-pointer"
           >

@@ -1,0 +1,4 @@
+<template>
+    <HeaderComponent />
+    <ProfileComponent />
+</template>
