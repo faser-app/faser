@@ -33,11 +33,7 @@
                     <div
                       class="flex items-center cursor-default border rounded-full px-2 p-1"
                       :class="
-                        'bg-' +
-                        badge.color +
-                        '-950 border-' +
-                        badge.color +
-                        '-500'
+                        'bg-' + badge.color + '-950 border-' + badge.color + '-500'
                       "
                     >
                       {{ badge.name }}
