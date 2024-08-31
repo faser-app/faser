@@ -73,8 +73,25 @@
             <div class="flex flex-wrap justify-center">
               <h1 class="text-xl font-bold">Edit Bio</h1>
               <div class="w-full"></div>
-              <textarea id="bio" class="w-full p-2 rounded-xl bg-gray-800 text-white" rows="5"></textarea>
-              <button class="p-2 bg-gray-700 mt-1 rounded-xl" @click="saveBio">Save</button>
+              <textarea
+                id="bio"
+                class="w-full p-2 rounded-xl bg-gray-800 text-white"
+                :class="{
+                  'border border-red-500': bioError,
+                }"
+                rows="5"
+                cols="50"
+                @input="bioError = ''"
+              ></textarea>
+              <div class="text-center">
+                <button
+                  class="p-2 bg-gray-700 mt-1 rounded-xl"
+                  @click="saveBio"
+                >
+                  Save
+                </button>
+                <p v-if="bioError" class="text-red-500 mt-2">{{ bioError }}</p>
+              </div>
             </div>
           </div>
           <div
@@ -168,6 +185,8 @@ function changePicture(event) {
   }
 }
 
+const bioError = ref("");
+
 function saveBio() {
   const bio = document.getElementById("bio").value;
 
@@ -178,7 +197,10 @@ function saveBio() {
       lang: navigator.language || navigator.userLanguage,
     })
     .then((response) => {
-      router.push("/profile")
+      router.push("/profile");
+    })
+    .catch((error) => {
+      bioError.value = error.response.data.message;
     });
 }
 
