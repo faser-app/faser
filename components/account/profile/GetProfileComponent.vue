@@ -25,7 +25,7 @@
             v-if="profileData.avatarURL"
             :src="profileData.avatarURL"
             alt="profile picture"
-            class="rounded-full h-24 w-24 m-5"
+            class="rounded-full h-24 w-24 m-5 object-cover"
           />
           <div
             v-else
