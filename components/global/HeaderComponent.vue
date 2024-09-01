@@ -22,8 +22,9 @@
     </div>
     <div class="flex h-full top-10 self-center justify-end flex-1 w-full mr-4">
       <div
-        class="hidden opacity-0 self-center sm:opacity-100 gap-5 mr-10 md:flex"
-      >
+        class="hidden opacity-0 self-center items-center sm:opacity-100 gap-5 mr-10 md:flex"
+        >
+        <SearchUserComponent />
         <div v-for="link in links" :key="link.name" class="cursor-pointer">
           <RouterLink :to="link.href" class="text-white hover:scale">{{
             link.name
@@ -47,6 +48,7 @@
   >
     <div class="backdrop-blur w-full">
       <div :class="{ 'expandable-content': true, expanded: expanded }">
+        <SearchUserComponent />
         <div
           v-for="link in links"
           :key="link.name"
