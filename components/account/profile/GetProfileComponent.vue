@@ -14,7 +14,9 @@
             {{ community.name }}
           </div>
         </div>
-        <p v-if="communities.length === 0 && !privateAccount">No Communites yet</p>
+        <p v-if="communities.length === 0 && !privateAccount">
+          No Communites yet
+        </p>
         <p v-if="privateAccount">Private account</p>
       </div>
       <div class="w-full mr-4">
@@ -22,8 +24,11 @@
           class="flex flex-wrap bg-gray-800 md:w-full ml-2 md:ml-1 rounded-xl items-center mr-2 h-fit"
         >
           <img
-            v-if="profileData.avatarURL"
-            :src="profileData.avatarURL"
+            v-if="hasProfilePicture && imageLoaded"
+            :src="
+              'https://api.faser.app/api/profile/getProfilePhoto?username=' +
+              route.params.user.replace('@', '')
+            "
             alt="profile picture"
             class="rounded-full h-24 w-24 m-5 object-cover"
           />
@@ -40,11 +45,19 @@
             <div class="flex items-center">
               <div>
                 <div class="flex gap-2 text-sm mb-2" v-if="badges.length !== 0">
-                  <div v-for="badge in badges" :key="badge.name" class="bg-black rounded-full">
+                  <div
+                    v-for="badge in badges"
+                    :key="badge.name"
+                    class="bg-black rounded-full"
+                  >
                     <div
                       class="flex items-center cursor-default border rounded-full px-2 p-1"
                       :style="
-                        'background-color: ' + badge.color + '55; border: 1px solid ' + badge.color + ';'
+                        'background-color: ' +
+                        badge.color +
+                        '55; border: 1px solid ' +
+                        badge.color +
+                        ';'
                       "
                     >
                       {{ badge.name }}
@@ -85,8 +98,8 @@
               No posts yet
             </p>
             <p v-if="privateAccount" class="italic text-gray-400">
-              {{ route.params.user.replace("@", "") }} have their profile on private. You have
-              to follow this person to view their Posts.
+              {{ route.params.user.replace("@", "") }} have their profile on
+              private. You have to follow this person to view their Posts.
             </p>
           </div>
         </div>
@@ -140,7 +153,10 @@ const badges = ref([]);
 const success = ref(false);
 const loaded = ref(false);
 
-const privateAccount = ref(false)
+const privateAccount = ref(false);
+
+const hasProfilePicture = ref(false);
+const imageLoaded = ref(false);
 
 const markdownHTML = ref("");
 
@@ -169,11 +185,22 @@ axios
 
     privateAccount.value = response.data[0].privateAccount;
 
-    console.log(md.render(response.data[0].bio));
-
     const accountCreated = new Date(response.data[1].memberSince);
     const accountCreatedString = accountCreated.toLocaleDateString();
     sinceString.value = accountCreatedString;
+
+    axios
+      .get(
+        "https://api.faser.app/api/profile/getProfilePhoto?username=" + username
+      )
+      .then((response) => {
+        hasProfilePicture.value = true;
+        imageLoaded.value = true;
+      })
+      .catch((error) => {
+        hasProfilePicture.value = false;
+        imageLoaded.value = true;
+      });
   })
   .catch((error) => {
     loaded.value = true;

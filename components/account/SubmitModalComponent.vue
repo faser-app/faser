@@ -58,9 +58,8 @@ onMounted(() => {
 
 function deleteImage() {
   axios
-    .post("https://api.faser.app/api/profile/changeProfilePhoto", {
+    .post("https://api.faser.app/api/profile/removeProfilePhoto", {
       token: Cookies.get("token"),
-      photo: "",
       lang: navigator.language || navigator.userLanguage,
     })
     .then((response) => {

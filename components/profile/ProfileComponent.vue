@@ -21,8 +21,11 @@
           class="flex flex-wrap bg-gray-800 md:w-full ml-2 md:ml-1 rounded-xl items-center mr-2 h-fit"
         >
           <img
-            v-if="profileData.avatarURL"
-            :src="profileData.avatarURL"
+            v-if="hasProfilePicture && loaded"
+            :src="
+              'https://api.faser.app/api/profile/getProfilePhoto?username=' +
+              accountData.username
+            "
             alt="profile picture"
             class="rounded-full h-24 w-24 m-5 object-cover"
           />
@@ -147,6 +150,9 @@ const profileData = ref({});
 
 const sinceString = ref("");
 
+const hasProfilePicture = ref(false);
+const loaded = ref(false);
+
 const markdownHTML = ref("");
 
 const badges = ref([]);
@@ -170,6 +176,20 @@ axios
     markdownHTML.value = md.render(response.data[0].bio);
 
     badges.value = response.data[0].badges;
+
+    axios
+      .get(
+        "https://api.faser.app/api/profile/getProfilePhoto?username=" +
+          accountData.value.username
+      )
+      .then((response) => {
+        hasProfilePicture.value = true;
+        loaded.value = true;
+      })
+      .catch((error) => {
+        hasProfilePicture.value = false;
+        loaded.value = true;
+      });
   })
   .catch((error) => {
     if (error.response.data.status === "error") {

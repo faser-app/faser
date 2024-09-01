@@ -57,11 +57,7 @@
       </div>
       <div class="grid grid-cols-2 w-full">
         <span class="text-gray-500 text-sm ml-0.5">Max. 2MB</span>
-        <button
-          @click="removeImage"
-          v-if="profileData.avatarURL"
-          class="place-self-end text-gray-400"
-        >
+        <button @click="removeImage" class="place-self-end text-gray-400">
           Remove image
         </button>
       </div>
@@ -165,14 +161,6 @@ function changePassword() {
   alert("Not implemented yet");
 }
 
-const toBase64 = (file) =>
-  new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = reject;
-  });
-
 function changePicture(event) {
   if (event.target.files[0].size / 1024 / 1024 >= 2) {
     fileTooBig.value = true;
@@ -205,17 +193,19 @@ function saveBio() {
 }
 
 function upload() {
-  toBase64(file.value).then((data) => {
-    axios
-      .post("https://api.faser.app/api/profile/changeProfilePhoto", {
+  const formData = new FormData();
+  formData.append("file", file.value);
+
+  axios
+    .post("https://api.faser.app/api/profile/changeProfilePhoto", formData, {
+      headers: {
         token: Cookies.get("token"),
-        photo: data,
-        lang: navigator.language || navigator.userLanguage,
-      })
-      .then((response) => {
-        router.push("/");
-      });
-  });
+        "Content-Type": "multipart/form-data",
+      },
+    })
+    .then((response) => {
+      router.push("/");
+    });
 }
 
 onMounted(() => {

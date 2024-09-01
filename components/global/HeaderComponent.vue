@@ -23,7 +23,7 @@
     <div class="flex h-full top-10 self-center justify-end flex-1 w-full mr-4">
       <div
         class="hidden opacity-0 self-center items-center sm:opacity-100 gap-5 mr-10 md:flex"
-        >
+      >
         <SearchUserComponent />
         <div v-for="link in links" :key="link.name" class="cursor-pointer">
           <RouterLink :to="link.href" class="text-white hover:scale">{{
@@ -36,8 +36,15 @@
           <div
             class="border w-12 h-12 flex items-center justify-center rounded-full border-[#96969627] bg-[#1118276c] cursor-pointer"
           >
-            <i v-if="!avatarURL" class="fa-solid fa-user rounded-full text-3xl"></i>
-            <img v-else :src="avatarURL" class="rounded-full w-12 h-12 object-cover" />
+            <i v-if="!haveProfilePicture" class="fa-solid fa-user rounded-full text-3xl"></i>
+            <img
+              v-else-if="haveProfilePicture && loaded"
+              :src="
+                'https://api.faser.app/api/profile/getProfilePhoto?username=' +
+                username
+              "
+              class="rounded-full w-12 h-12 object-cover"
+            />
           </div>
         </RouterLink>
       </div>
@@ -75,7 +82,10 @@ import { useRouter } from "vue-router";
 const router = useRouter();
 
 const expanded = ref(false);
-const avatarURL = ref("")
+const username = ref("");
+
+const loaded = ref(false);
+const haveProfilePicture = ref(false);
 
 const links = [
   {
@@ -94,9 +104,20 @@ onMounted(() => {
       },
     })
     .then((response) => {
-      if(response.data[0].avatarURL) {
-        avatarURL.value = response.data[0].avatarURL;
-      }
+      username.value = response.data[1].username;
+      axios.get("https://api.faser.app/api/profile/getProfilePhoto", {
+        params: {
+          username: response.data[1].username,
+        },
+      })
+      .then((response) => {
+        loaded.value = true;
+        haveProfilePicture.value = true;
+      })
+      .catch((err) => {
+        loaded.value = true;
+        haveProfilePicture.value = false;
+      });
     });
 });
 </script>
