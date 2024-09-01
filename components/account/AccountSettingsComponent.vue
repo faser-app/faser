@@ -196,6 +196,8 @@ function upload() {
   const formData = new FormData();
   formData.append("file", file.value);
 
+  buttonDisabled.value = true;
+
   axios
     .post("https://api.faser.app/api/profile/changeProfilePhoto", formData, {
       headers: {
