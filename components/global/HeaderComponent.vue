@@ -130,6 +130,6 @@ onMounted(() => {
 }
 
 .expandable-content.expanded {
-  max-height: 280px;
+  max-height: 100svh;
 }
 </style>

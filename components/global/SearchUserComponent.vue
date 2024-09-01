@@ -10,13 +10,14 @@
   </div>
   <div
     v-if="query.length > 0 && focus"
-    class="md:absolute top-16 rounded-xl text-white right-32 bg-gray-700 md:w-64 p-2"
+    class="md:absolute top-16 rounded-xl border border-gray-500 shadow-lg shadow-gray-900 text-white right-32 bg-gray-700 md:w-64 p-2"
   >
     <div
       v-if="users.length !== 0"
       v-for="user in users"
       :key="user.username"
       class="p-2"
+      :class="{ 'border-b border-gray-500': users.indexOf(user) !== users.length - 1 }"
     >
       <div class="flex items-center">
         <RouterLink :to="'/' + user.username" class="flex items-center">
@@ -37,16 +38,21 @@
             <i class="fa-solid fa-user rounded-full"></i>
           </div>
           <div class="flex">
-            <p>{{ user.username }}</p>
+            <div class="grid">
+              <p>{{ user.displayName }}</p>
+              <div class="text-gray-400 text-sm">
+                <span class="text-gray-400">@{{ user.username }}</span>
+              </div>
+            </div>
             <div v-if="user.verifiedAccount" class="ml-2">
               <div
-                class="flex justify-center text-xs items-center bg-sky-600 border w-6 h-6 border-sky-300 rounded-full"
+                class="flex mt-1 justify-center text-xs items-center bg-sky-600 border w-5 h-5 border-sky-300 rounded-full"
               >
-                <i class="fa-solid verifiedBadge fa-check"></i>
+                <i class="fa-solid text-[10px] verifiedBadge fa-check"></i>
               </div>
             </div>
             <div v-if="user.privateAccount" class="ml-2">
-              <i class="fa-solid fa-lock"></i>
+              <i class="fa-solid text-gray-300 fa-lock"></i>
             </div>
           </div>
         </RouterLink>
@@ -97,7 +103,4 @@ function searchUsers() {
 </script>
 
 <style scoped>
-.verifiedBadge {
-  transform: translateY(1px);
-}
 </style>
