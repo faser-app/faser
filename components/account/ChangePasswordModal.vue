@@ -37,14 +37,14 @@
             />
             <input
               type="password"
-              class="w-full p-2 rounded-xl bg-gray-800 text-white mt-2"
+              class="w-full p-2 rounded-xl bg-gray-800 text-white mt-5"
               v-model="newPassword"
               placeholder="New Password"
               @input="error = ''"
             />
             <input
               type="password"
-              class="w-full p-2 rounded-xl bg-gray-800 text-white mt-2"
+              class="w-full mt-2 p-2 rounded-xl bg-gray-800 text-white"
               v-model="retypedPassword"
               placeholder="Retype Password"
               @input="error = ''"
