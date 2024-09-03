@@ -10,7 +10,7 @@
   </div>
   <div
     v-if="query.length > 0 && focus"
-    class="md:absolute top-16 rounded-xl border border-gray-500 shadow-lg shadow-gray-900 text-white right-32 bg-gray-700 md:w-64 p-2"
+    class="md:absolute top-16 rounded-xl border border-gray-500 shadow-lg shadow-gray-900 text-white right-32 bg-gray-700 md:w-64 p-2 overflow-hidden"
   >
     <div
       v-if="users.length !== 0"
@@ -39,7 +39,7 @@
           </div>
           <div class="flex">
             <div class="grid">
-              <p>{{ user.displayName }}</p>
+              <p class="truncate">{{ user.displayName }}</p>
               <div class="text-gray-400 text-sm">
                 <span class="text-gray-400">@{{ user.username }}</span>
               </div>

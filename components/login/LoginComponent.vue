@@ -69,7 +69,7 @@ function login() {
     })
     .then((response) => {
       Cookies.set("token", response.data.token, { expires: 5 });
-      router.push("/");
+      router.push("/profile");
     })
     .catch((err) => {
       error.value = err.response.data.message;

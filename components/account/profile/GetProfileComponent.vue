@@ -37,7 +37,6 @@
             class="rounded-full h-24 w-24 m-5 flex border justify-center items-center border-[#96969627] bg-[#1118276c]"
           >
             <i
-              v-if="!avatarURL"
               class="fa-solid fa-user rounded-full text-4xl"
             ></i>
           </div>
@@ -65,15 +64,19 @@
                   </div>
                 </div>
                 <div class="flex items-center gap-2">
-                  <p class="text-xl">
-                    <span class="text-gray-400 mr-0.5">@</span
-                    >{{ route.params.user.replace("@", "") }}
-                  </p>
-                  <div
-                    v-if="profileData.verifiedAccount"
-                    class="flex justify-center text-xs items-center bg-sky-600 border w-6 h-6 border-sky-300 rounded-full"
-                  >
-                    <i class="fa-solid verifiedBadge fa-check"></i>
+                  <div>
+                    <div class="flex">
+                      <p>{{ profileData.displayName }}</p>
+                      <div
+                        v-if="profileData.verifiedAccount"
+                        class="flex ml-2 justify-center text-xs items-center bg-sky-600 border w-6 h-6 border-sky-300 rounded-full"
+                      >
+                        <i class="fa-solid verifiedBadge fa-check"></i>
+                      </div>
+                    </div>
+                    <p class="text text-gray-400">
+                      <span>@</span>{{ route.params.user.replace("@", "") }}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -127,7 +130,7 @@
         </div>
       </div>
     </div>
-    <div v-if="!success">
+    <div v-if="!success && !loaded">
       <div class="flex flex-wrap min-h-svh w-full justify-center items-center">
         <p class="text-3xl text-gray-400">404 Not found</p>
       </div>

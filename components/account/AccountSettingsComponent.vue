@@ -94,9 +94,33 @@
             class="bg-gray-900 md:w-[calc(50%-0.25rem)] w-full flex justify-center items-center p-5 rounded-xl"
           >
             <div class="flex flex-wrap justify-center">
-              <h1 class="text-xl font-bold">Last Login</h1>
-              <div class="w-full"></div>
-              <p class="mt-4">{{ lastLogin }}</p>
+              <div class="text-center">
+                <h1 class="text-xl font-bold">Change display name</h1>
+                <div class="w-full"></div>
+                <button
+                  class="mt-4 bg-[#220000] p-2 border-red-700 border rounded-xl"
+                  @click="changeDisplayName"
+                >
+                  Change Display Name
+                </button>
+              </div>
+            </div>
+          </div>
+          <div
+            class="bg-gray-900 md:w-[calc(50%-0.25rem)] w-full flex justify-center items-center p-5 rounded-xl"
+          >
+            <div class="flex flex-wrap justify-center">
+              <div class="text-center">
+                <h1 class="text-xl font-bold">Change username</h1>
+                <div class="w-full"></div>
+                <p>You can only change your username every 30 days.</p>
+                <button
+                  class="mt-4 bg-[#220000] p-2 border-red-700 border rounded-xl"
+                  @click="changeUsername"
+                >
+                  Change Username
+                </button>
+              </div>
             </div>
           </div>
           <div
@@ -125,6 +149,9 @@
       </div>
     </div>
     <AccountSubmitModalComponent />
+    <AccountChangePasswordModal />
+    <AccountChangeUsernameModal />
+    <AccountChangeDisplayNameModal />
   </div>
 </template>
 <script setup>
@@ -133,6 +160,9 @@ import axios from "axios";
 import { useRouter } from "vue-router";
 import { DateTime } from "luxon";
 import { changeModal } from "~/scripts/account/deletePhoto";
+import { changePasswordModal } from "~/scripts/account/changePassword";
+import { changeUsernameModal } from "~/scripts/account/changeUsername";
+import { changeDisplayNameModal } from "~/scripts/account/changeDisplayName";
 
 const router = useRouter();
 
@@ -158,7 +188,15 @@ function removeImage() {
 }
 
 function changePassword() {
-  alert("Not implemented yet");
+  changePasswordModal(true);
+}
+
+function changeUsername() {
+  changeUsernameModal(true);
+}
+
+function changeDisplayName() {
+  changeDisplayNameModal(true);
 }
 
 function changePicture(event) {
@@ -206,7 +244,7 @@ function upload() {
       },
     })
     .then((response) => {
-      router.push("/");
+      router.push("/profile");
     });
 }
 
