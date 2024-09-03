@@ -17,7 +17,9 @@
       v-for="user in users"
       :key="user.username"
       class="p-2"
-      :class="{ 'border-b border-gray-500': users.indexOf(user) !== users.length - 1 }"
+      :class="{
+        'border-b border-gray-500': users.indexOf(user) !== users.length - 1,
+      }"
     >
       <div class="flex items-center">
         <RouterLink :to="'/' + user.username" class="flex items-center">
@@ -63,15 +65,14 @@
     </div>
   </div>
 </template>
+
 <script setup>
 import axios from "axios";
+import { ref } from "vue";
 
 const query = ref("");
-
 const users = ref([]);
-
 const loaded = ref(false);
-
 const focus = ref(false);
 
 const url = "https://api.faser.app/api/profile/searchProfiles";
@@ -95,12 +96,23 @@ function searchUsers() {
           }
         }
 
-        users.value = userData;
+        users.value = sortByLetterPriority(userData, query.value.toLowerCase());
         loaded.value = true;
       });
   }
 }
+
+function sortByLetterPriority(arr, letter) {
+  return arr.sort((a, b) => {
+    const aStartsWith = a.username.toLowerCase().startsWith(letter);
+    const bStartsWith = b.username.toLowerCase().startsWith(letter);
+
+    if (aStartsWith && !bStartsWith) return -1;
+    if (!aStartsWith && bStartsWith) return 1;
+
+    return a.username.localeCompare(b.username);
+  });
+}
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
