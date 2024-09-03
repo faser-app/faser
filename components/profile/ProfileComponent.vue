@@ -33,9 +33,7 @@
             v-else
             class="rounded-full h-24 w-24 m-5 flex border justify-center items-center border-[#96969627] bg-[#1118276c]"
           >
-            <i
-              class="fa-solid fa-user rounded-full text-4xl"
-            ></i>
+            <i class="fa-solid fa-user rounded-full text-4xl"></i>
           </div>
           <div class="grid">
             <div class="flex items-center">
