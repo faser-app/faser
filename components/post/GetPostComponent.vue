@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full bg-gray-700 p-2 mb-2 rounded-xl">
+    <div v-if="postVisible"class="w-full bg-gray-700 p-2 mb-2 rounded-xl">
         <div class="flex items-center">
             <div class="flex items-center w-full">
                 <a :href="author.username" target="_blank" class="flex items-center">
