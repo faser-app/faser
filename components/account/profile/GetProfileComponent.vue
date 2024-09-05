@@ -1,7 +1,7 @@
 <template>
   <div class="bg-gray-950 min-h-screen text-white">
     <div class="md:flex w-full" v-if="loaded && success">
-      <div class="md:flex hidden flex-wrap md:w-60 gap-2 justify-center">
+      <div class="md:flex hidden flex-wrap md:w-1/5 gap-2 justify-center">
         <div v-for="community in communities" :key="community.name">
           <div class="w-full flex mr-8 h-fit truncate items-center rounded-xl bg-gray-800">
             <img src="https://via.placeholder.com/150" alt="profile picture" class="rounded-full h-8 w-8 m-2" />
@@ -13,7 +13,7 @@
         </p>
         <p v-if="privateAccount">Private account</p>
       </div>
-      <div class="w-4/5 mr-4">
+      <div class="md:w-4/5 mr-4">
         <div class="flex flex-wrap bg-gray-800 md:w-full ml-2 md:ml-1 rounded-xl items-center mr-2 h-fit">
           <img v-if="hasProfilePicture && imageLoaded" :src="'https://api.faser.app/api/profile/getProfilePhoto?username=' +
             route.params.user.replace('@', '')
@@ -77,15 +77,15 @@
           <p class="w-full pl-5 pb-3">Member since {{ sinceString }}</p>
         </div>
         <div class="flex flex-wrap mt-2 bg-gray-800 md:w-full ml-2 md:ml-1 rounded-xl items-center mr-2 h-fit">
-          <div class="flex p-2 flex-wrap mt-2 bg-gray-800 md:w-full ml-2 md:ml-1 rounded-xl items-center mr-2 h-fit">
+          <div class="flex p-2 flex-wrap mt-2 bg-gray-800 w-full ml-2 md:ml-1 rounded-xl items-center mr-2 h-fit">
             <div class="w-full flex justify-center">
               <p class="text-xl mt-2 mb-2">Posts</p>
             </div>
-            <div v-if="posts == 0" class="h-36 flex w-full justify-center items-center">
+            <div v-if="posts == 0" class="h-36 flexjustify-center items-center">
               <p class="italic text-gray-400">No posts yet</p>
             </div>
             <div v-else v-for="post in postsValue" :key="post.id"
-              class="w-full flex justify-center items-center">
+              class="w-full justify-center items-center">
               <PostGetPostComponent :postId="post" ownProfile="false" />
             </div>
           </div>
