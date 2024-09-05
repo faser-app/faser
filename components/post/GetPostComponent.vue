@@ -24,13 +24,18 @@
         </div>
         <p class="ml-2" v-html="postValue"></p>
 
-        <div class="flex gap-2 mt-2">
-            <div v-for="image in postContent.images" :key="image" class="flex bg-gray-700 p-2 rounded-xl">
-                <img @click="openImage('https://api.faser.app/api/social/getPostImage?postId=' + postContent.postId + '&imageId=' + image)"
-                    :src="'https://api.faser.app/api/social/getPostImage?postId=' + postContent.postId + '&imageId=' + image"
-                    class="w-48 h-48 object-cover rounded-lg" />
+        <div class="overflow-x-scroll scroll-snap-x">
+            <div class="inline-flex gap-2 mt-2">
+                <div v-for="image in postContent.images" :key="image"
+                    class="bg-gray-700 p-2 rounded-xl inline-block scroll-snap-item">
+                    <img @click="openImage('https://api.faser.app/api/social/getPostImage?postId=' + postContent.postId + '&imageId=' + image)"
+                        :src="'https://api.faser.app/api/social/getPostImage?postId=' + postContent.postId + '&imageId=' + image"
+                        class="min-w-48 h-48 object-cover rounded-lg" />
+                </div>
             </div>
         </div>
+
+
 
         <transition name="fade" @leave="leave">
             <div class="fixed top-0 left-0 w-screen h-screen backdrop-blur z-50 flex justify-center md:items-center items-end"
@@ -162,6 +167,15 @@ onMounted(() => {
 .animation {
     animation: fadeIn 0.25s;
 }
+
+.overflow-x-scroll {
+    scroll-snap-type: x mandatory;
+}
+
+.scroll-snap-item {
+    scroll-snap-align: start;
+}
+
 
 @keyframes fadeIn {
     from {

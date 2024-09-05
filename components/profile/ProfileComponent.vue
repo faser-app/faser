@@ -10,7 +10,7 @@
         </div>
         <p v-if="communities.length === 0">No Communites yet</p>
       </div>
-      <div class="w-full mr-4">
+      <div class="w-4/5 mr-4">
         <div class="flex flex-wrap bg-gray-800 md:w-full ml-2 md:ml-1 rounded-xl items-center mr-2 h-fit">
           <img v-if="hasProfilePicture && loaded" :src="'https://api.faser.app/api/profile/getProfilePhoto?username=' +
             accountData.username
