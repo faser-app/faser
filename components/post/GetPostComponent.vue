@@ -1,5 +1,5 @@
 <template>
-    <div v-if="postVisible"class="w-full bg-gray-700 p-2 mb-2 rounded-xl">
+    <div v-if="postVisible" class="w-full bg-gray-700 p-2 mb-2 rounded-xl">
         <div class="flex items-center">
             <div class="flex items-center w-full">
                 <a :href="author.username" target="_blank" class="flex items-center">
@@ -15,7 +15,7 @@
             </div>
 
             <div v-if="isAuthor === 'true'" class="flex ml-auto">
-                <div @click="deletePost"
+                <div @click="showModal = true"
                     class="flex cursor-pointer items-center w-12 h-12 justify-center bg-gray-600 text-red-500 rounded-xl">
                     <i class="fa-solid fa-trash overflow-visible"></i>
                 </div>
@@ -31,6 +31,32 @@
                     class="w-48 h-48 object-cover rounded-lg" />
             </div>
         </div>
+
+        <transition name="fade" @leave="leave">
+            <div class="fixed top-0 left-0 w-screen h-screen backdrop-blur z-50 flex justify-center items-center"
+                v-if="showModal">
+                <div class="bg-gray-900 p-5 text-center rounded-xl m-3 md:w-auto w-full" :class="{
+                    'animation': showModal,
+                }">
+                    <div class="w-full flex justify-center">
+                        <div
+                            class="bg-red-950 border border-red-600 h-14 w-14 rounded-full flex justify-center items-center">
+                            <i class="fa-solid fa-trash text-xl"></i>
+                        </div>
+                    </div>
+                    <h2 class="text-center font-bold mt-2">Delete Post?</h2>
+                    <p>Do you really want to delete this post?</p>
+                    <div class="flex flex-col md:flex-row justify-center gap-2 mt-4">
+                        <button @click="showModal = false" class="md:w-2/3 bg-gray-700 p-2 rounded-xl">
+                            No
+                        </button>
+                        <button @click="deletePost" class="md:w-1/3 bg-red-500 p-2 rounded-xl">
+                            Yes
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </transition>
     </div>
 </template>
 <script setup>
@@ -43,6 +69,8 @@ const md = new MarkdownIt();
 const showImageModal = ref(false);
 
 const postVisible = ref(true);
+
+const showModal = ref(false);
 
 const props = defineProps({
     postId: String,
@@ -129,6 +157,36 @@ onMounted(() => {
 <style scoped>
 .verifiedBadge {
     transform: translateY(1px);
+}
+
+.animation {
+    animation: fadeIn 0.25s;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-leave-active {
+    animation: faceOut 0.25s;
+}
+
+@keyframes faceOut {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
 }
 
 .bio h1 {
