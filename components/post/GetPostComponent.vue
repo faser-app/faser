@@ -33,7 +33,7 @@
         </div>
 
         <transition name="fade" @leave="leave">
-            <div class="fixed top-0 left-0 w-screen h-screen backdrop-blur z-50 flex justify-center items-center"
+            <div class="fixed top-0 left-0 w-screen h-screen backdrop-blur z-50 flex justify-center md:items-center items-end"
                 v-if="showModal">
                 <div class="bg-gray-900 p-5 text-center rounded-xl m-3 md:w-auto w-full" :class="{
                     'animation': showModal,
