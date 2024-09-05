@@ -141,7 +141,7 @@
       </div>
       <div>
         <button
-          class="bg-[#220000] border border-red-700 rounded-xl p-3 mt-2"
+          class="bg-[#220000] mb-1 border border-red-700 rounded-xl p-3 mt-2"
           @click="logout"
         >
           Logout

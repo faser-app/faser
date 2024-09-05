@@ -54,6 +54,20 @@
               </div>
             </div>
           </div>
+          <div class="min-w-full mb-3 sm:mb-0 sm:min-w-fit sm:ml-5 justify-center flex flex-wrap gap-4">
+            <div class="text-center text-gray-400 rounded-xl">
+              <p>Follower</p>
+              <p>{{ followers }}</p>
+            </div>
+            <div class="text-center text-gray-400 rounded-xl">
+              <p>Following</p>
+              <p>{{ following }}</p>
+            </div>
+            <div class="text-center text-gray-400 rounded-xl">
+              <p>Posts</p>
+              <p>{{ posts }}</p>
+            </div>
+          </div>
           <div class="w-full p-5 bg-gray-700 mb-2">
             <p v-if="profileData.bio" v-html="markdownHTML"></p>
             <p v-else class="italic text-gray-300">
@@ -63,17 +77,17 @@
           <p class="w-full pl-5 pb-3">Member since {{ sinceString }}</p>
         </div>
         <div class="flex flex-wrap mt-2 bg-gray-800 md:w-full ml-2 md:ml-1 rounded-xl items-center mr-2 h-fit">
-          <div class="w-full flex justify-center">
-            <p class="text-xl mt-2">Posts</p>
-          </div>
-          <div class="h-36 flex w-full justify-center items-center">
-            <p v-if="!privateAccount" class="italic text-gray-400">
-              No posts yet
-            </p>
-            <p v-if="privateAccount" class="italic text-gray-400">
-              {{ route.params.user.replace("@", "") }} have their profile on
-              private. You have to follow this person to view their Posts.
-            </p>
+          <div class="flex p-2 flex-wrap mt-2 bg-gray-800 md:w-full ml-2 md:ml-1 rounded-xl items-center mr-2 h-fit">
+            <div class="w-full flex justify-center">
+              <p class="text-xl mt-2 mb-2">Posts</p>
+            </div>
+            <div v-if="posts == 0" class="h-36 flex w-full justify-center items-center">
+              <p class="italic text-gray-400">No posts yet</p>
+            </div>
+            <div v-else v-for="post in postsValue" :key="post.id"
+              class="w-full flex justify-center items-center">
+              <PostGetPostComponent :postId="post" ownProfile="false" />
+            </div>
           </div>
         </div>
       </div>
@@ -118,6 +132,12 @@ const badges = ref([]);
 const success = ref(false);
 const loaded = ref(false);
 
+const postsValue = ref([]);
+
+const posts = ref(0)
+const followers = ref(0)
+const following = ref(0)
+
 const privateAccount = ref(false);
 
 const hasProfilePicture = ref(false);
@@ -148,6 +168,12 @@ axios
     badges.value = response.data[0].badges;
 
     markdownHTML.value = md.render(response.data[0].bio);
+
+    posts.value = response.data[0].posts.length;
+    followers.value = response.data[0].follower.length;
+    following.value = response.data[0].following.length;
+
+    postsValue.value = response.data[0].posts.reverse();
 
     privateAccount.value = response.data[0].privateAccount;
 

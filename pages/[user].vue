@@ -5,4 +5,5 @@ import GetProfileComponent from '~/components/account/profile/GetProfileComponen
 <template>
     <HeaderComponent />
     <GetProfileComponent />
+    <PostCreatePostComponent />
 </template>
