@@ -118,6 +118,14 @@ function formatTimeDifference(timestamp) {
 
     postValue.value = md.render(postContent.value.content)
 
+    const words = postContent.value.content.split(" ").length
+
+    for(let i = 0; i < words; i++) {
+        if(postContent.value.content.split(" ")[i].includes("https://")) {
+            postValue.value = postValue.value.replace(postContent.value.content.split(" ")[i], `<a style="text-decoration: underline;" href="${postContent.value.content.split(" ")[i]}" target="_blank">${postContent.value.content.split(" ")[i]}</a>`)
+        }
+    }
+
     const units = [
         { name: "y", seconds: 60 * 60 * 24 * 365 },
         { name: "mo", seconds: 60 * 60 * 24 * 30 },
