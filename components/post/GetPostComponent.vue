@@ -12,12 +12,24 @@
                     </div>
                 </a>
                 <p class="ml-3 text-gray-400">{{ postCreatedAt }}</p>
+                <p class="ml-3 text-gray-400" v-if="postContent.edited">edited</p>
             </div>
 
             <div v-if="isAuthor === 'true'" class="flex ml-auto">
-                <div @click="showModal = true"
-                    class="flex cursor-pointer items-center w-12 h-12 justify-center bg-gray-600 text-red-500 rounded-xl">
-                    <i class="fa-solid fa-trash overflow-visible"></i>
+
+                <div @click="openMenu"
+                    class="flex cursor-pointer items-center w-12 h-12 justify-center bg-gray-600 rounded-xl threeDotElement">
+                    <i v-if="!threeDotsMenu" class="fa-solid fa-ellipsis-vertical"></i>
+                    <div v-else>
+                        <div class="flex flex-col gap-2">
+                            <div class="p-2 rounded-xl w-full" @click="showModal = true">
+                                <i class="fa-solid fa-trash"></i>
+                            </div>
+                            <div class="p-2 rounded-xl w-full" @click="showEditModal = true">
+                                <i class="fa-solid fa-edit"></i>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -62,12 +74,43 @@
                 </div>
             </div>
         </transition>
+        <transition name="fade" @leave="leave">
+            <div class="fixed top-0 left-0 w-screen h-screen backdrop-blur z-50 flex justify-center md:items-center items-end"
+                v-if="showEditModal">
+                <div class="bg-gray-900 p-5 text-center rounded-xl m-3 md:w-auto w-full" :class="{
+                    'animation': showEditModal,
+                }">
+                    <div class="w-full flex justify-center">
+                        <div
+                            class="bg-red-950 border border-red-600 h-14 w-14 rounded-full flex justify-center items-center">
+                            <i class="fa-solid fa-pen text-xl"></i>
+                        </div>
+                    </div>
+                    <h2 class="text-center font-bold mt-2">Edit post</h2>
+                    <p class="text-gray-400">If you edit the post, an edited text will be added to the post</p>
+                    <textarea class="w-full p-2 rounded-xl h-40 bg-gray-800 text-white pt-0 mt-2 resize-none focus:outline-none"
+                        v-model="postContent.content"></textarea>
+                    <div class="flex flex-col md:flex-row justify-center gap-2 mt-4">
+                        <button @click="showEditModal = false" class="md:w-2/3 bg-gray-700 p-2 rounded-xl">
+                            Cancel
+                        </button>
+                        <button @click="editPost" class="md:w-1/3 bg-red-500 p-2 rounded-xl">
+                            Save
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </transition>
     </div>
 </template>
 <script setup>
 import axios from "axios";
 import MarkdownIt from "markdown-it";
 import Cookies from "js-cookie";
+import anime from 'animejs/lib/anime.es.js';
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 
 const md = new MarkdownIt();
 
@@ -76,11 +119,36 @@ const showImageModal = ref(false);
 const postVisible = ref(true);
 
 const showModal = ref(false);
+const showEditModal = ref(false);
+
+const threeDotsMenu = ref(false);
 
 const props = defineProps({
     postId: String,
     ownProfile: Boolean
 })
+
+function openMenu() {
+    anime({
+        targets: '.threeDotElement',
+        width: '12rem',
+        height: '8rem',
+        duration: 1000
+    })
+
+    setTimeout(() => {
+        threeDotsMenu.value = false
+
+        anime({
+            targets: '.threeDotElement',
+            width: '3rem',
+            height: '3rem',
+            duration: 1000
+        })
+    }, 10000)
+
+    threeDotsMenu.value = true
+}
 
 const postId = ref(props.postId)
 
@@ -93,6 +161,20 @@ function deletePost() {
     })
         .then(() => {
             postVisible.value = false
+        })
+}
+
+function editPost() {
+    axios.post("https://api.faser.app/api/social/editPost", {
+        postId: postId.value,
+        token: Cookies.get("token"),
+        message: postContent.value.content
+    })
+        .then(() => {
+            showEditModal.value = false
+            setTimeout(() => {
+                router.go()
+            }, 500)
         })
 }
 
@@ -120,8 +202,8 @@ function formatTimeDifference(timestamp) {
 
     const words = postContent.value.content.split(" ").length
 
-    for(let i = 0; i < words; i++) {
-        if(postContent.value.content.split(" ")[i].includes("https://")) {
+    for (let i = 0; i < words; i++) {
+        if (postContent.value.content.split(" ")[i].includes("https://")) {
             postValue.value = postValue.value.replace(postContent.value.content.split(" ")[i], `<a style="text-decoration: underline;" href="${postContent.value.content.split(" ")[i]}" target="_blank">${postContent.value.content.split(" ")[i]}</a>`)
         }
     }
