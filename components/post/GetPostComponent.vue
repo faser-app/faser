@@ -18,7 +18,9 @@
             <div v-if="isAuthor === 'true'" class="flex ml-auto">
 
                 <div @click="openMenu"
-                    class="flex cursor-pointer items-center w-12 h-12 justify-center bg-gray-600 rounded-xl threeDotElement">
+                    class="flex cursor-pointer items-center w-12 h-12 justify-center bg-gray-600 rounded-xl threeDotElement" :class="{
+                        'threeDotElementOpen': threeDotElementOpen
+                    }">
                     <i v-if="!threeDotsMenu" class="fa-solid fa-ellipsis-vertical"></i>
                     <div v-else>
                         <div class="flex flex-col gap-2">
@@ -116,6 +118,8 @@ const md = new MarkdownIt();
 
 const showImageModal = ref(false);
 
+const threeDotElementOpen = ref(false)
+
 const postVisible = ref(true);
 
 const showModal = ref(false);
@@ -129,23 +133,30 @@ const props = defineProps({
 })
 
 function openMenu() {
-    anime({
-        targets: '.threeDotElement',
-        width: '12rem',
-        height: '8rem',
-        duration: 1000
-    })
+    threeDotElementOpen.value = true
 
     setTimeout(() => {
-        threeDotsMenu.value = false
-
         anime({
-            targets: '.threeDotElement',
-            width: '3rem',
-            height: '3rem',
+            targets: '.threeDotElementOpen',
+            width: '12rem',
+            height: '8rem',
             duration: 1000
         })
-    }, 10000)
+    
+        setTimeout(() => {
+            threeDotsMenu.value = false
+    
+            anime({
+                targets: '.threeDotElementOpen',
+                width: '3rem',
+                height: '3rem',
+                duration: 1000
+            })
+
+            threeDotElementOpen.value = false
+        }, 10000)
+    }, 10)
+
 
     threeDotsMenu.value = true
 }
