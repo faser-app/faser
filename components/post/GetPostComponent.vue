@@ -1,6 +1,6 @@
 <template>
-    <div v-if="postVisible" class="w-full bg-gray-700 p-2 mb-2 rounded-xl">
-        <div class="flex">
+    <div class="w-full bg-gray-700 p-2 mb-2 rounded-xl">
+        <div class="flex items-center">
             <div class="flex items-center w-full">
                 <a :href="author.username" target="_blank" class="flex items-center">
                     <img :src="'https://api.faser.app/api/profile/getProfilePhoto?username=' + author.username"
@@ -13,13 +13,24 @@
                 </a>
                 <p class="ml-3 text-gray-400">{{ postCreatedAt }}</p>
             </div>
-            <div v-if="isAuthor === 'true'"
-                class="flex cursor-pointer bg-gray-600 h-12 items-center justify-center rounded-xl w-12 mt-1 mr-1 text-red-500"
-                @click="deletePost">
-                <i class="fa-solid fa-trash"></i>
+
+            <div v-if="isAuthor === 'true'" class="flex ml-auto">
+                <div @click="deletePost"
+                    class="flex cursor-pointer items-center w-12 h-12 justify-center bg-gray-600 text-red-500 rounded-xl">
+                    <i class="fa-solid fa-trash overflow-visible"></i>
+                </div>
             </div>
+
         </div>
         <p class="ml-2" v-html="postValue"></p>
+
+        <div class="flex gap-2 mt-2">
+            <div v-for="image in postContent.images" :key="image" class="flex bg-gray-700 p-2 rounded-xl">
+                <img @click="openImage('https://api.faser.app/api/social/getPostImage?postId=' + postContent.postId + '&imageId=' + image)"
+                    :src="'https://api.faser.app/api/social/getPostImage?postId=' + postContent.postId + '&imageId=' + image"
+                    class="w-48 h-48 object-cover rounded-lg" />
+            </div>
+        </div>
     </div>
 </template>
 <script setup>
