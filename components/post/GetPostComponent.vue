@@ -239,7 +239,7 @@ function formatTimeDifference(timestamp) {
 
     for (let i = 0; i < words; i++) {
         if (postContent.value.content.split(" ")[i].includes("https://")) {
-            postValue.value = postValue.value.replace(postContent.value.content.split(" ")[i], `<a style="text-decoration: underline;" href="${postContent.value.content.split(" ")[i]}" target="_blank">${postContent.value.content.split(" ")[i]}</a>`)
+            postValue.value = postValue.value.replace(postContent.value.content.split(" ")[i], `<a style="color: rgb(71, 166, 242);" href="${postContent.value.content.split(" ")[i]}" target="_blank">${postContent.value.content.split(" ")[i]}</a>`)
         }
     }
 
