@@ -316,6 +316,11 @@ function reloadStats() {
 
 .overflow-x-scroll {
     scroll-snap-type: x mandatory;
+
+}
+
+.overflow-x-scroll::-webkit-scrollbar {
+    display: none;
 }
 
 .scroll-snap-item {
