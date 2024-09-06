@@ -286,14 +286,18 @@ function reloadStats() {
             })
                 .then((response) => {
                     author.value = response.data[0]
-
-                    console.log(response.data)
-
-                    isLiked.value = postContent.value.likes.includes(response.data[0].id)
-
-                    console.log(isLiked.value)
+                    
+                    axios.get("https://api.faser.app/api/account/getOwnProfile", {
+                        headers: {
+                            token: Cookies.get("token")
+                        }
+                    })
+                    .then((response) => {
+                        isLiked.value = postContent.value.likes.includes(response.data[0].id)
+                    })
                 })
         })
+
 }
 </script>
 <style scoped>
