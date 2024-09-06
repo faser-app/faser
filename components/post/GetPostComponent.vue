@@ -207,9 +207,7 @@ function editPost() {
     })
         .then(() => {
             showEditModal.value = false
-            setTimeout(() => {
-                router.go()
-            }, 500)
+            reloadStats()
         })
 }
 
