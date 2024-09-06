@@ -18,7 +18,8 @@
             <div v-if="isAuthor === 'true'" class="flex ml-auto">
 
                 <div @click="openMenu"
-                    class="flex cursor-pointer items-center w-12 h-12 justify-center bg-gray-600 rounded-xl threeDotElement" :class="{
+                    class="flex cursor-pointer items-center w-12 h-12 justify-center bg-gray-600 rounded-xl threeDotElement"
+                    :class="{
                         'threeDotElementOpen': threeDotElementOpen
                     }">
                     <i v-if="!threeDotsMenu" class="fa-solid fa-ellipsis-vertical"></i>
@@ -46,6 +47,15 @@
                         :src="'https://api.faser.app/api/social/getPostImage?postId=' + postContent.postId + '&imageId=' + image"
                         class="min-w-48 h-48 object-cover rounded-lg" />
                 </div>
+            </div>
+        </div>
+        <div class="flex w-full items-center justify-center">
+            <div class="flex gap-2 cursor-pointer items-center text-gray-300" @click="toggleLike">
+                <i v-if="!isLiked" class="fa-regular text-xl fa-heart"></i>
+                <i v-else class="fa-solid text-xl fa-heart text-red-500"></i>
+                <p>
+                    {{ postLikes }}
+                </p>
             </div>
         </div>
 
@@ -90,7 +100,8 @@
                     </div>
                     <h2 class="text-center font-bold mt-2">Edit post</h2>
                     <p class="text-gray-400">If you edit the post, an edited text will be added to the post</p>
-                    <textarea class="w-full p-2 rounded-xl h-40 bg-gray-800 text-white pt-0 mt-2 resize-none focus:outline-none"
+                    <textarea
+                        class="w-full p-2 rounded-xl h-40 bg-gray-800 text-white pt-0 mt-2 resize-none focus:outline-none"
                         v-model="postContent.content"></textarea>
                     <div class="flex flex-col md:flex-row justify-center gap-2 mt-4">
                         <button @click="showEditModal = false" class="md:w-2/3 bg-gray-700 p-2 rounded-xl">
@@ -122,6 +133,9 @@ const threeDotElementOpen = ref(false)
 
 const postVisible = ref(true);
 
+const postLikes = ref(0);
+const isLiked = ref(false);
+
 const showModal = ref(false);
 const showEditModal = ref(false);
 
@@ -138,14 +152,14 @@ function openMenu() {
     setTimeout(() => {
         anime({
             targets: '.threeDotElementOpen',
-            width: '12rem',
+            width: '3rem',
             height: '8rem',
             duration: 1000
         })
-    
+
         setTimeout(() => {
             threeDotsMenu.value = false
-    
+
             anime({
                 targets: '.threeDotElementOpen',
                 width: '3rem',
@@ -159,6 +173,16 @@ function openMenu() {
 
 
     threeDotsMenu.value = true
+}
+
+function toggleLike() {
+    axios.post("https://api.faser.app/api/social/toggleLike", {
+        postId: postId.value,
+        token: Cookies.get("token")
+    })
+        .then(() => {
+            reloadStats()
+        })
 }
 
 const postId = ref(props.postId)
@@ -239,6 +263,10 @@ function formatTimeDifference(timestamp) {
 }
 
 onMounted(() => {
+    reloadStats()
+})
+
+function reloadStats() {
     axios.get("https://api.faser.app/api/social/fetchPost", {
         headers: {
             postId: postId.value
@@ -248,6 +276,8 @@ onMounted(() => {
             postContent.value = response.data[0]
             postCreatedAt.value = formatTimeDifference(postContent.value.creationDate)
 
+            postLikes.value = postContent.value.likes.length
+
 
             axios.get("https://api.faser.app/api/account/getProfile", {
                 headers: {
@@ -256,9 +286,15 @@ onMounted(() => {
             })
                 .then((response) => {
                     author.value = response.data[0]
+
+                    console.log(response.data)
+
+                    isLiked.value = postContent.value.likes.includes(response.data[0].id)
+
+                    console.log(isLiked.value)
                 })
         })
-})
+}
 </script>
 <style scoped>
 .verifiedBadge {
