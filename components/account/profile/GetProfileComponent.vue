@@ -17,9 +17,15 @@
         <div class="flex flex-wrap bg-gray-800 md:w-full ml-2 md:ml-1 rounded-xl items-center mr-2 h-fit">
           <img v-if="hasProfilePicture && imageLoaded" :src="'https://api.faser.app/api/profile/getProfilePhoto?username=' +
             route.params.user.replace('@', '')
-            " alt="profile picture" class="rounded-full h-24 w-24 m-5 object-cover" />
-          <div v-else
-            class="rounded-full h-24 w-24 m-5 flex border justify-center items-center border-[#96969627] bg-[#1118276c]">
+            " alt="profile picture" class="h-24 w-24 m-5 object-cover" :class="{
+              'rounded-full': !profileData.businessAccount,
+              'rounded-xl': profileData.businessAccount
+            }" />
+          <div v-else class="h-24 w-24 m-5 flex border justify-center items-center border-[#96969627] bg-[#1118276c]"
+            :class="{
+              'rounded-full': !profileData.businessAccount,
+              'rounded-xl': profileData.businessAccount
+            }">
             <i class="fa-solid fa-user rounded-full text-4xl"></i>
           </div>
           <div class="grid">
@@ -41,7 +47,11 @@
                   <div>
                     <div class="flex">
                       <p>{{ profileData.displayName }}</p>
-                      <div v-if="profileData.verifiedAccount"
+                      <div v-if="profileData.businessAccount"
+                        class="flex ml-2 justify-center text-xs items-center bg-yellow-600 border w-6 h-6 border-yellow-300 rounded-full">
+                        <i class="fa-solid verifiedBadge fa-check"></i>
+                      </div>
+                      <div v-else-if="profileData.verifiedAccount"
                         class="flex ml-2 justify-center text-xs items-center bg-sky-600 border w-6 h-6 border-sky-300 rounded-full">
                         <i class="fa-solid verifiedBadge fa-check"></i>
                       </div>
@@ -84,8 +94,7 @@
             <div v-if="posts == 0" class="h-36 flexjustify-center items-center">
               <p class="italic text-gray-400">No posts yet</p>
             </div>
-            <div v-else v-for="post in postsValue" :key="post.id"
-              class="w-full justify-center items-center">
+            <div v-else v-for="post in postsValue" :key="post.id" class="w-full justify-center items-center">
               <PostGetPostComponent :postId="post" ownProfile="false" />
             </div>
           </div>

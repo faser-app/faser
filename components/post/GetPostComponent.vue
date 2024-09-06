@@ -4,9 +4,16 @@
             <div class="flex items-center w-full">
                 <a :href="author.username" target="_blank" class="flex items-center">
                     <img :src="'https://api.faser.app/api/profile/getProfilePhoto?username=' + author.username"
-                        alt="profile picture" class="rounded-full h-14 w-14 m-2" />
+                        alt="profile picture" class="h-14 w-14 m-2" :class="{
+                            'rounded-full': !author.businessAccount,
+                            'rounded-lg': author.businessAccount
+                        }" />
                     <p>{{ author.displayName }}</p>
-                    <div v-if="author.verifiedAccount"
+                    <div v-if="author.businessAccount"
+                        class="flex ml-2 justify-center text-xs items-center bg-yellow-600 border w-6 h-6 border-yellow-300 rounded-full">
+                        <i class="fa-solid verifiedBadge fa-check"></i>
+                    </div>
+                    <div v-else-if="author.verifiedAccount"
                         class="flex ml-2 justify-center text-xs items-center bg-sky-600 border w-6 h-6 border-sky-300 rounded-full">
                         <i class="fa-solid verifiedBadge fa-check"></i>
                     </div>
@@ -284,15 +291,15 @@ function reloadStats() {
             })
                 .then((response) => {
                     author.value = response.data[0]
-                    
+
                     axios.get("https://api.faser.app/api/account/getOwnProfile", {
                         headers: {
                             token: Cookies.get("token")
                         }
                     })
-                    .then((response) => {
-                        isLiked.value = postContent.value.likes.includes(response.data[0].id)
-                    })
+                        .then((response) => {
+                            isLiked.value = postContent.value.likes.includes(response.data[0].id)
+                        })
                 })
         })
 
