@@ -45,7 +45,7 @@
                     <div class="flex md:flex-nowrap flex-wrap justify-end mt-2 gap-2">
                         <button @click="showModal = false"
                             class="bg-gray-700 p-2 md:w-2/3 w-full rounded-xl">Close</button>
-                        <button @click="uploadPost"
+                        <button @click="uploadPost" :disabled="postContent.length === 0"
                             class="bg-gradient-to-tr from-[#24c7ce] to-[#1ed794] p-2 md:w-1/3 w-full rounded-xl">Post</button>
                     </div>
                 </div>
@@ -91,7 +91,7 @@ function uploadPost() {
         images: images.value.length
     })
         .then(response => {
-            if(images.value.length === 0) {
+            if (images.value.length === 0) {
                 router.push("/profile")
             }
 

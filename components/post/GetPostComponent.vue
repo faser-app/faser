@@ -190,6 +190,15 @@ function toggleLike() {
         .then(() => {
             reloadStats()
         })
+        .catch((error) => {
+            if(error.response.data.message === "Account not found") {
+                router.push("/login")
+            }
+
+            if(error.response.status === 429) {
+                alert("You are beeing rate limited")
+            }
+        })
 }
 
 const postId = ref(props.postId)
@@ -246,7 +255,7 @@ function formatTimeDifference(timestamp) {
         if (postContent.value.content.split(" ")[i].includes("https://")) {
             postValue.value = postValue.value.replace(postContent.value.content.split(" ")[i], `<a style="color: rgb(71, 166, 242);" href="${postContent.value.content.split(" ")[i]}" target="_blank">${postContent.value.content.split(" ")[i]}</a>`)
         }
-        
+
         if (postContent.value.content.split(" ")[i].includes("@")) {
             postValue.value = postValue.value.replace(postContent.value.content.split(" ")[i], `<a style="color: rgb(71, 166, 242);" href="https://faser.app/${postContent.value.content.split(" ")[i].replace("@", "")}" target="_blank">${postContent.value.content.split(" ")[i]}</a>`)
         }
