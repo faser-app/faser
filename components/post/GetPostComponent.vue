@@ -2,7 +2,7 @@
     <div v-if="postVisible" class="w-full bg-gray-700 p-2 mb-2 rounded-xl">
         <div class="flex items-center">
             <div class="flex items-center w-full">
-                <a :href="author.username" target="_blank" class="flex items-center">
+                <RouterLink :to="author.username" class="flex items-center">
                     <div v-if="props.ownProfile === 'false'">
                         <img :src="'https://api.faser.app/api/profile/getProfilePhoto?username=' + author.username"
                             alt="profile picture" class="h-14 w-14 m-2" :class="{
@@ -26,7 +26,7 @@
                         class="flex ml-2 justify-center text-xs items-center bg-sky-600 border w-6 h-6 border-sky-300 rounded-full">
                         <i class="fa-solid verifiedBadge fa-check"></i>
                     </div>
-                </a>
+                </RouterLink>
                 <p class="ml-3 text-gray-400">{{ postCreatedAt }}</p>
                 <p class="ml-3 text-gray-400" v-if="postContent.edited">edited</p>
             </div>
