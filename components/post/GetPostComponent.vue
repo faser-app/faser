@@ -2,7 +2,7 @@
     <div v-if="postVisible" class="w-full bg-gray-700 p-2 mb-2 rounded-xl">
         <div class="flex items-center">
             <div class="flex items-center w-full">
-                <RouterLink :to="author.username" class="flex items-center">
+                <RouterLink v-if="props.ownProfile === 'false'" :to="'/' + author.username" class="flex items-center">
                     <div v-if="props.ownProfile === 'false'">
                         <img :src="'https://api.faser.app/api/profile/getProfilePhoto?username=' + author.username"
                             alt="profile picture" class="h-14 w-14 m-2" :class="{
@@ -10,13 +10,23 @@
                                 'rounded-lg': author.businessAccount
                             }" />
                     </div>
-                    <div v-else>
-                        <img :src="'https://api.faser.app/api/profile/getProfilePhoto?username=' + account.username"
-                            alt="profile picture" class="h-14 w-14 m-2" :class="{
-                                'rounded-full': !author.businessAccount,
-                                'rounded-lg': author.businessAccount
-                            }" />
+                    <p>{{ author.displayName }}</p>
+                    <div v-if="author.businessAccount"
+                        class="flex ml-2 justify-center text-xs items-center bg-yellow-600 border w-6 h-6 border-yellow-300 rounded-full">
+                        <i class="fa-solid verifiedBadge fa-check"></i>
                     </div>
+                    <div v-else-if="author.verifiedAccount"
+                        class="flex ml-2 justify-center text-xs items-center bg-sky-600 border w-6 h-6 border-sky-300 rounded-full">
+                        <i class="fa-solid verifiedBadge fa-check"></i>
+                    </div>
+                </RouterLink>
+                <RouterLink v-else :to="'/' + account.username" class="flex items-center">
+                    <img :src="'https://api.faser.app/api/profile/getProfilePhoto?username=' + account.username"
+                        alt="profile picture" class="h-14 w-14 m-2" :class="{
+                            'rounded-full': !author.businessAccount,
+                            'rounded-lg': author.businessAccount
+                        }" />
+
                     <p>{{ author.displayName }}</p>
                     <div v-if="author.businessAccount"
                         class="flex ml-2 justify-center text-xs items-center bg-yellow-600 border w-6 h-6 border-yellow-300 rounded-full">
@@ -226,8 +236,8 @@ function openMenu() {
 
 function toggleLike() {
     isLiked.value = !isLiked.value
-    
-    if(isLiked.value) {
+
+    if (isLiked.value) {
         postLikes.value++
     } else {
         postLikes.value--
@@ -249,7 +259,7 @@ function toggleLike() {
 
                 isLiked.value = !isLiked.value
 
-                if(isLiked.value) {
+                if (isLiked.value) {
                     postLikes.value++
                 } else {
                     postLikes.value--
@@ -337,15 +347,15 @@ function reloadStats() {
             postId: postId.value
         }
     })
-    .then((response) => {
-        postContent.value = response.data[0]
-        postCreatedAt.value = formatTimeDifference(postContent.value.creationDate)
-        
-        isLiked.value = postContent.value.likes.includes(props.ownProfileData.id)
+        .then((response) => {
+            postContent.value = response.data[0]
+            postCreatedAt.value = formatTimeDifference(postContent.value.creationDate)
 
-        postLikes.value = postContent.value.likes.length
-    })
-    
+            isLiked.value = postContent.value.likes.includes(props.ownProfileData.id)
+
+            postLikes.value = postContent.value.likes.length
+        })
+
 }
 
 onMounted(() => {
