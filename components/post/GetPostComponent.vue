@@ -3,11 +3,20 @@
         <div class="flex items-center">
             <div class="flex items-center w-full">
                 <a :href="author.username" target="_blank" class="flex items-center">
-                    <img :src="'https://api.faser.app/api/profile/getProfilePhoto?username=' + author.username"
-                        alt="profile picture" class="h-14 w-14 m-2" :class="{
-                            'rounded-full': !author.businessAccount,
-                            'rounded-lg': author.businessAccount
-                        }" />
+                    <div v-if="props.ownProfile === 'false'">
+                        <img :src="'https://api.faser.app/api/profile/getProfilePhoto?username=' + author.username"
+                            alt="profile picture" class="h-14 w-14 m-2" :class="{
+                                'rounded-full': !author.businessAccount,
+                                'rounded-lg': author.businessAccount
+                            }" />
+                    </div>
+                    <div v-else>
+                        <img :src="'https://api.faser.app/api/profile/getProfilePhoto?username=' + account.username"
+                            alt="profile picture" class="h-14 w-14 m-2" :class="{
+                                'rounded-full': !author.businessAccount,
+                                'rounded-lg': author.businessAccount
+                            }" />
+                    </div>
                     <p>{{ author.displayName }}</p>
                     <div v-if="author.businessAccount"
                         class="flex ml-2 justify-center text-xs items-center bg-yellow-600 border w-6 h-6 border-yellow-300 rounded-full">
@@ -128,15 +137,23 @@ import axios from "axios";
 import MarkdownIt from "markdown-it";
 import Cookies from "js-cookie";
 import anime from 'animejs/lib/anime.es.js';
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 
 const router = useRouter();
+const route = useRoute();
 
 const md = new MarkdownIt();
 
 const showImageModal = ref(false);
 
 const threeDotElementOpen = ref(false)
+
+const postContent = ref({})
+const author = ref({})
+
+const postValue = ref('')
+
+const postCreatedAt = ref('')
 
 const postVisible = ref(true);
 
@@ -150,7 +167,32 @@ const threeDotsMenu = ref(false);
 
 const props = defineProps({
     postId: String,
-    ownProfile: Boolean
+    ownProfile: Boolean,
+    profile: Object,
+    account: Object,
+    ownProfileData: Object
+})
+
+const ownProfile = ref(Boolean(props.ownProfile))
+
+onMounted(() => {
+    const profile = props.profile
+    const account = props.account
+
+    console.log(profile, account)
+
+
+
+    if (props.ownProfile === "false") {
+        console.log("own profile")
+        author.value.username = route.params.user.replace("@", "")
+    } else {
+        console.log("not own profile")
+    }
+
+    author.value.displayName = profile.displayName
+    author.value.verifiedAccount = profile.verifiedAccount
+    author.value.businessAccount = profile.businessAccount
 })
 
 function openMenu() {
@@ -183,20 +225,35 @@ function openMenu() {
 }
 
 function toggleLike() {
+    isLiked.value = !isLiked.value
+    
+    if(isLiked.value) {
+        postLikes.value++
+    } else {
+        postLikes.value--
+    }
+
     axios.post("https://api.faser.app/api/social/toggleLike", {
         postId: postId.value,
         token: Cookies.get("token")
     })
         .then(() => {
-            reloadStats()
         })
         .catch((error) => {
-            if(error.response.data.message === "Account not found") {
+            if (error.response.data.message === "Account not found") {
                 router.push("/login")
             }
 
-            if(error.response.status === 429) {
+            if (error.response.status === 429) {
                 alert("You are beeing rate limited")
+
+                isLiked.value = !isLiked.value
+
+                if(isLiked.value) {
+                    postLikes.value++
+                } else {
+                    postLikes.value--
+                }
             }
         })
 }
@@ -234,13 +291,6 @@ function openImage(imageSrcValue) {
     imageSrc.value = imageSrcValue
     console.log(imageSrc)
 }
-
-const postContent = ref({})
-const author = ref({})
-
-const postValue = ref('')
-
-const postCreatedAt = ref('')
 
 function formatTimeDifference(timestamp) {
     const now = new Date();
@@ -280,9 +330,6 @@ function formatTimeDifference(timestamp) {
     return "just now";
 }
 
-onMounted(() => {
-    reloadStats()
-})
 
 function reloadStats() {
     axios.get("https://api.faser.app/api/social/fetchPost", {
@@ -290,33 +337,20 @@ function reloadStats() {
             postId: postId.value
         }
     })
-        .then((response) => {
-            postContent.value = response.data[0]
-            postCreatedAt.value = formatTimeDifference(postContent.value.creationDate)
+    .then((response) => {
+        postContent.value = response.data[0]
+        postCreatedAt.value = formatTimeDifference(postContent.value.creationDate)
+        
+        isLiked.value = postContent.value.likes.includes(props.ownProfileData.id)
 
-            postLikes.value = postContent.value.likes.length
-
-
-            axios.get("https://api.faser.app/api/account/getProfile", {
-                headers: {
-                    userId: postContent.value.authorId
-                }
-            })
-                .then((response) => {
-                    author.value = response.data[0]
-
-                    axios.get("https://api.faser.app/api/account/getOwnProfile", {
-                        headers: {
-                            token: Cookies.get("token")
-                        }
-                    })
-                        .then((response) => {
-                            isLiked.value = postContent.value.likes.includes(response.data[0].id)
-                        })
-                })
-        })
-
+        postLikes.value = postContent.value.likes.length
+    })
+    
 }
+
+onMounted(() => {
+    reloadStats()
+})
 </script>
 <style scoped>
 .verifiedBadge {

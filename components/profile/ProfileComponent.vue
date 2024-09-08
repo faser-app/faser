@@ -89,7 +89,7 @@
             <p class="italic text-gray-400">No posts yet</p>
           </div>
           <div v-else v-for="post in postsValue" :key="post.id" class="w-full flex justify-center items-center">
-            <PostGetPostComponent :postId="post" ownProfile="true" />
+            <PostGetPostComponent :postId="post" ownProfile="true" :profile="profileData" :account="accountData" :ownProfileData="ownProfileData" />
           </div>
         </div>
       </div>
@@ -124,6 +124,7 @@ const url = "https://api.faser.app/api/account/getOwnProfile";
 
 const accountData = ref({});
 const profileData = ref({});
+const ownProfileData = ref({});
 
 const posts = ref(0)
 const followers = ref(0)
@@ -159,6 +160,8 @@ axios
     markdownHTML.value = md.render(response.data[0].bio);
 
     badges.value = response.data[0].badges;
+
+    ownProfileData.value = response.data[0];
 
     posts.value = response.data[0].posts.length;
     followers.value = response.data[0].follower.length;

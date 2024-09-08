@@ -95,7 +95,7 @@
               <p class="italic text-gray-400">No posts yet</p>
             </div>
             <div v-else v-for="post in postsValue" :key="post.id" class="w-full justify-center items-center">
-              <PostGetPostComponent :postId="post" ownProfile="false" />
+              <PostGetPostComponent :postId="post" ownProfile="false" :profile="profileData" :ownProfile="ownProfile" :account="accountData" :ownProfileData="ownProfileData" />
             </div>
           </div>
         </div>
@@ -154,11 +154,22 @@ const imageLoaded = ref(false);
 
 const markdownHTML = ref("");
 
+const ownProfile = ref({});
+const ownProfileData = ref({});
+
 const communities = ref([]);
 
 const route = useRoute();
 
 const username = route.params.user.replace("@", "");
+
+axios.get("https://api.faser.app/api/account/getOwnProfile", {
+  headers: {
+    token: Cookies.get("token"),
+  },
+}).then((response) => {
+  ownProfileData.value = response.data[0];
+});
 
 axios
   .get(url, {
