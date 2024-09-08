@@ -7,6 +7,7 @@ useHead({
 <template>
   <TooltipProvider>
     <NuxtLayout>
+      <HeaderComponent />
       <NuxtPage />
       <TailwindBreakpointIndicator />
       <FooterComponent />

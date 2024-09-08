@@ -1,5 +1,4 @@
 <template>
-    <HeaderComponent />
     <VerifyComponent />
 </template>
 

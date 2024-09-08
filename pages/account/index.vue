@@ -1,5 +1,4 @@
 <template>
-  <HeaderComponent />
   <div class="min-h-screen bg-gray-950"></div>
 </template>
 

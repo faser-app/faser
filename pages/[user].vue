@@ -3,6 +3,5 @@ import GetProfileComponent from '~/components/account/profile/GetProfileComponen
 </script>
 
 <template>
-    <HeaderComponent />
     <GetProfileComponent />
 </template>
