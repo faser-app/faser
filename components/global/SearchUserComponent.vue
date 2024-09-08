@@ -1,6 +1,6 @@
 <template>
   <div>
-    <input class="h-full md:w-auto w-full bg-gray-700 p-3 rounded-xl text-white" v-model="query" @input="searchUsers"
+    <input id="search" class="h-full md:w-auto w-full bg-gray-700 p-3 rounded-xl text-white" v-model="query" @input="searchUsers"
       placeholder="Search for user" @focus="focus = true" />
   </div>
   <div v-if="query.length > 0 && focus"
@@ -9,7 +9,7 @@
       'border-b border-gray-500': users.indexOf(user) !== users.length - 1,
     }">
       <div class="flex items-center">
-        <RouterLink :to="'/' + user.username" class="flex items-center">
+        <div class="flex items-center" @click="openUser('/' + user.username)" >
           <img :src="'https://api.faser.app/api/profile/getProfilePhoto?username=' +
             user.username
             " v-if="user.hasProfilePicture" alt="profile picture" class="h-8 w-8 m-2"
@@ -42,7 +42,7 @@
               <i class="fa-solid text-gray-300 fa-lock"></i>
             </div>
           </div>
-        </RouterLink>
+        </div>
       </div>
     </div>
     <div v-else>
@@ -54,6 +54,9 @@
 <script setup>
 import axios from "axios";
 import { ref } from "vue";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 
 const query = ref("");
 const users = ref([]);
@@ -61,6 +64,12 @@ const loaded = ref(false);
 const focus = ref(false);
 
 const url = "https://api.faser.app/api/profile/searchProfiles";
+
+function openUser(username) {
+  query.value = ""
+  focus.value = false;
+  router.push(username);
+}
 
 function searchUsers() {
   loaded.value = false;
