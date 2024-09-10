@@ -8,7 +8,7 @@
     <div v-if="users.length !== 0" v-for="user in users" :key="user.username" class="p-2" :class="{
       'border-b border-gray-500': users.indexOf(user) !== users.length - 1,
     }">
-      <div class="flex items-center">
+      <div class="flex items-center cursor-pointer">
         <div class="flex items-center" @click="openUser('/' + user.username)" >
           <img :src="'https://api.faser.app/api/profile/getProfilePhoto?username=' +
             user.username
