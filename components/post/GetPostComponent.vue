@@ -175,23 +175,16 @@ const showEditModal = ref(false);
 
 const threeDotsMenu = ref(false);
 
+const profile = ref({})
+
 const props = defineProps({
     postId: String,
     ownProfile: Boolean,
-    profile: Object,
     account: Object,
     ownProfileData: Object
 })
 
-const ownProfile = ref(Boolean(props.ownProfile))
-
 onMounted(() => {
-    const profile = props.profile
-
-    if (props.ownProfile === "false") {
-        author.value.username = route.params.user.replace("@", "")
-    }
-
     author.value.displayName = profile.displayName
     author.value.verifiedAccount = profile.verifiedAccount
     author.value.businessAccount = profile.businessAccount
@@ -225,6 +218,16 @@ function openMenu() {
 
     threeDotsMenu.value = true
 }
+
+axios.get("https://api.faser.app/api/profile/getPostProfile", {
+    headers: {
+        postId: props.postId
+    }
+})
+.then((response) => {
+    author.value = response.data[0]
+    author.value.username = response.data[1].username
+})
 
 function toggleLike() {
     isLiked.value = !isLiked.value
@@ -343,6 +346,8 @@ function reloadStats() {
             postCreatedAt.value = formatTimeDifference(postContent.value.creationDate)
 
             isLiked.value = postContent.value.likes.includes(props.ownProfileData.id)
+            
+            postLikes.value = response.data[0].likes.length
 
             postLikes.value = postContent.value.likes.length
         })

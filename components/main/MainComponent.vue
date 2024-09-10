@@ -1,13 +1,11 @@
 <template>
   <div class="min-h-screen flex pl-2 bg-gray-950 text-white">
-    <div class="flex justify-center w-3/4 items-center h-svh pt-5">
+    <div class="w-3/4 pt-5">
       <div>
-        <h1
-          class="text-5xl block text-transparent bg-gradient-to-tr from-[#24c7ce] to-[#1ed794] bg-clip-text font-extrabold"
-        >
-          Welcome to faser
-        </h1>
-        <p class="text-gray-500">coming soon</p>
+        <div v-for="post in posts">
+          <PostGetPostComponent :postId="post" ownProfile="false" :profile="profileData" :ownProfile="ownProfile"
+            :account="accountData" :ownProfileData="ownProfileData" />
+        </div>
       </div>
     </div>
     <div class="w-1/4 flex justify-center pr-2 mt-2 min-h-full">
@@ -19,3 +17,28 @@
   <div class="blob bg-gradient-to-tr z-1 pointer-events-none from-[#24c7ce] to-[#1ed794]"></div>
 </template>
 
+<script setup>
+import { ref } from 'vue';
+import axios from 'axios';
+import Cookies from "js-cookie"
+
+const posts = ref([]);
+
+axios.post("https://api.faser.app/api/posts/getPosts")
+  .then((response) => {
+    posts.value = response.data;
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+
+const ownProfileData = ref({})
+
+axios.get("https://api.faser.app/api/account/getOwnProfile", {
+  headers: {
+    token: Cookies.get("token"),
+  },
+}).then((ownResponse) => {
+  ownProfileData.value = ownResponse.data[0];
+})
+</script>
