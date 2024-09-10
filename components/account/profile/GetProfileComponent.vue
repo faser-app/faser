@@ -64,6 +64,18 @@
               </div>
             </div>
           </div>
+          <div @click="toggleFollow"
+            class="ml-5 cursor-pointer h-10 w-24 rounded-xl flex items-center justify-center bg-gradient-to-tr from-[#24c7ce] to-[#1ed794] ">
+            <p class="absolute">Followed</p>
+            <div
+              class="z-20 flex items-center justify-center transition-all duration-500 ease-out px-5 bg-gray-700 shadow-2xl rounded-xl text-gray-100"
+              :class="{
+                'h-10 w-24': !followed,
+                'h-0 w-0 overflow-hidden': followed
+              }">
+              <p>Follow</p>
+            </div>
+          </div>
           <div class="min-w-full mb-3 sm:mb-0 sm:min-w-fit sm:ml-5 justify-center flex flex-wrap gap-4">
             <div class="text-center text-gray-400 rounded-xl">
               <p>Follower</p>
@@ -95,7 +107,8 @@
               <p class="italic text-gray-400">No posts yet</p>
             </div>
             <div v-else v-for="post in postsValue" :key="post.id" class="w-full justify-center items-center">
-              <PostGetPostComponent :postId="post" ownProfile="false" :profile="profileData" :ownProfile="ownProfile" :account="accountData" :ownProfileData="ownProfileData" />
+              <PostGetPostComponent :postId="post" ownProfile="false" :profile="profileData" :ownProfile="ownProfile"
+                :account="accountData" :ownProfileData="ownProfileData" />
             </div>
           </div>
         </div>
@@ -149,10 +162,14 @@ const following = ref(0)
 
 const privateAccount = ref(false);
 
+const followed = ref(false)
+
 const hasProfilePicture = ref(false);
 const imageLoaded = ref(false);
 
 const markdownHTML = ref("");
+
+const ownId = ref(0)
 
 const ownProfile = ref({});
 const ownProfileData = ref({});
@@ -169,55 +186,79 @@ axios.get("https://api.faser.app/api/account/getOwnProfile", {
   },
 }).then((response) => {
   ownProfileData.value = response.data[0];
+  ownId.value = response.data[0].id
+
+  axios
+    .get(url, {
+      headers: {
+        username: username,
+        token: Cookies.get("token"),
+        lang: navigator.language || navigator.userLanguage,
+      },
+    })
+    .then((response) => {
+      loaded.value = true;
+      success.value = true;
+
+      profileData.value = response.data[0];
+
+      badges.value = response.data[0].badges;
+
+      markdownHTML.value = md.render(response.data[0].bio);
+
+      posts.value = response.data[0].posts.length;
+      followers.value = response.data[0].follower.length;
+      following.value = response.data[0].following.length;
+
+      if(response.data[0].follower.includes(ownId.value)) {
+        followed.value = true
+      }
+
+      postsValue.value = response.data[0].posts.reverse();
+
+      privateAccount.value = response.data[0].privateAccount;
+
+      const accountCreated = new Date(response.data[1].memberSince);
+      const accountCreatedString = accountCreated.toLocaleDateString();
+      sinceString.value = accountCreatedString;
+
+      axios
+        .get(
+          "https://api.faser.app/api/profile/getProfilePhoto?username=" + username
+        )
+        .then((response) => {
+          hasProfilePicture.value = true;
+          imageLoaded.value = true;
+        })
+        .catch((error) => {
+          hasProfilePicture.value = false;
+          imageLoaded.value = true;
+        });
+    })
+    .catch((error) => {
+      loaded.value = true;
+      success.value = false;
+    });
 });
 
-axios
-  .get(url, {
-    headers: {
-      username: username,
-      token: Cookies.get("token"),
-      lang: navigator.language || navigator.userLanguage,
-    },
+function toggleFollow() {
+  let url = ""
+
+  if(followed.value) {
+    url = "https://api.faser.app/api/social/unfollowUser"
+    followers.value--
+  } else {
+    url = "https://api.faser.app/api/social/followUser"
+    followers.value++
+  }
+
+  axios.post(url, {
+    token: Cookies.get("token"),
+    username: route.params.user.replace("@", "")
   })
-  .then((response) => {
-    loaded.value = true;
-    success.value = true;
 
-    profileData.value = response.data[0];
-
-    badges.value = response.data[0].badges;
-
-    markdownHTML.value = md.render(response.data[0].bio);
-
-    posts.value = response.data[0].posts.length;
-    followers.value = response.data[0].follower.length;
-    following.value = response.data[0].following.length;
-
-    postsValue.value = response.data[0].posts.reverse();
-
-    privateAccount.value = response.data[0].privateAccount;
-
-    const accountCreated = new Date(response.data[1].memberSince);
-    const accountCreatedString = accountCreated.toLocaleDateString();
-    sinceString.value = accountCreatedString;
-
-    axios
-      .get(
-        "https://api.faser.app/api/profile/getProfilePhoto?username=" + username
-      )
-      .then((response) => {
-        hasProfilePicture.value = true;
-        imageLoaded.value = true;
-      })
-      .catch((error) => {
-        hasProfilePicture.value = false;
-        imageLoaded.value = true;
-      });
-  })
-  .catch((error) => {
-    loaded.value = true;
-    success.value = false;
-  });
+  followed.value = !followed.value
+}
 </script>
 
 <style scoped>
