@@ -187,17 +187,9 @@ const ownProfile = ref(Boolean(props.ownProfile))
 
 onMounted(() => {
     const profile = props.profile
-    const account = props.account
-
-    console.log(profile, account)
-
-
 
     if (props.ownProfile === "false") {
-        console.log("own profile")
         author.value.username = route.params.user.replace("@", "")
-    } else {
-        console.log("not own profile")
     }
 
     author.value.displayName = profile.displayName
@@ -299,7 +291,6 @@ const isAuthor = ref(props.ownProfile)
 function openImage(imageSrcValue) {
     showImageModal.value = true
     imageSrc.value = imageSrcValue
-    console.log(imageSrc)
 }
 
 function formatTimeDifference(timestamp) {

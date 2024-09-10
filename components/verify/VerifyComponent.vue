@@ -72,9 +72,7 @@ function resend() {
       token: Cookies.get("token"),
       lang: navigator.language || navigator.userLanguage,
     })
-    .then((response) => {
-      console.log(response)
-    })
+    .then()
     .catch((err) => {
       error.value = err.response.data.message;
       setTimeout(() => {
