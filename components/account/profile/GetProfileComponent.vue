@@ -64,7 +64,7 @@
               </div>
             </div>
           </div>
-          <div @click="toggleFollow"
+          <div v-if="isAbleToFollow" @click="toggleFollow"
             class="ml-5 cursor-pointer h-10 w-24 rounded-xl flex items-center justify-center bg-gradient-to-tr from-[#24c7ce] to-[#1ed794] ">
             <p class="absolute">Followed</p>
             <div
@@ -162,6 +162,8 @@ const following = ref(0)
 
 const privateAccount = ref(false);
 
+const isAbleToFollow = ref(true)
+
 const followed = ref(false)
 
 const hasProfilePicture = ref(false);
@@ -184,9 +186,9 @@ axios.get("https://api.faser.app/api/account/getOwnProfile", {
   headers: {
     token: Cookies.get("token"),
   },
-}).then((response) => {
-  ownProfileData.value = response.data[0];
-  ownId.value = response.data[0].id
+}).then((ownResponse) => {
+  ownProfileData.value = ownResponse.data[0];
+  ownId.value = ownResponse.data[0].id
 
   axios
     .get(url, {
@@ -221,6 +223,10 @@ axios.get("https://api.faser.app/api/account/getOwnProfile", {
       const accountCreated = new Date(response.data[1].memberSince);
       const accountCreatedString = accountCreated.toLocaleDateString();
       sinceString.value = accountCreatedString;
+
+      if(response.data[0].id === ownResponse.data[0].id) {
+        isAbleToFollow.value = false
+      }
 
       axios
         .get(
