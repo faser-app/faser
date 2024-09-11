@@ -3,7 +3,7 @@
     <div class="bg-gray-900 text-white text-center p-4 rounded-t-xl">
       <div class="flex justify-center gap-4">
         <div v-for="links in links" :key="links.name">
-          <a :href="links.url" class="underline">{{ links.name }}</a>
+          <RouterLink :to="links.url" class="underline">{{ links.name }}</RouterLink>
         </div>
       </div>
 
@@ -21,8 +21,20 @@
 <script setup>
 const links = ref([
   {
-    name: "Support",
-    url: "mailto:support@faser.app",
+    name: "Imprint",
+    url: "/imprint",
+  },
+  {
+    name: "ToS",
+    url: "/tos",
+  },
+  {
+    name: "Cookie Policy",
+    url: "/cookies",
+  },
+  {
+    name: "Privacy",
+    url: "/privacy",
   },
 ]);
 </script>
