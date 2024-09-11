@@ -1,11 +1,11 @@
 <template>
   <div class="min-h-screen md:flex pl-2 bg-gray-950 text-white">
-    <div class="md:w-1/4 w-full md:hidden flex justify-center pr-2 pt-2 min-h-full">
+    <div class="md:w-1/4 w-full justify-center pr-2 pt-2 min-h-full">
       <div class="md:hidden w-full block">
         <PostCreatePostComponent />
       </div>
     </div>
-    <div class="md:w-3/4 w-full pt-5 pr-2">
+    <div class="md:w-3/4 w-full max-w-[100rem] pt-5 pr-2">
       <div>
         <div v-for="post in posts">
           <PostGetPostComponent :postId="post" ownProfile="false" :profile="profileData" :ownProfile="ownProfile"

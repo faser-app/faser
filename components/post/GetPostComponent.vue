@@ -147,10 +147,9 @@ import axios from "axios";
 import MarkdownIt from "markdown-it";
 import Cookies from "js-cookie";
 import anime from 'animejs/lib/anime.es.js';
-import { useRouter, useRoute } from "vue-router";
+import { useRouter } from "vue-router";
 
 const router = useRouter();
-const route = useRoute();
 
 const md = new MarkdownIt();
 
@@ -224,10 +223,10 @@ axios.get("https://api.faser.app/api/profile/getPostProfile", {
         postId: props.postId
     }
 })
-.then((response) => {
-    author.value = response.data[0]
-    author.value.username = response.data[1].username
-})
+    .then((response) => {
+        author.value = response.data[0]
+        author.value.username = response.data[1].username
+    })
 
 function toggleLike() {
     isLiked.value = !isLiked.value
@@ -346,7 +345,7 @@ function reloadStats() {
             postCreatedAt.value = formatTimeDifference(postContent.value.creationDate)
 
             isLiked.value = postContent.value.likes.includes(props.ownProfileData.id)
-            
+
             postLikes.value = response.data[0].likes.length
 
             postLikes.value = postContent.value.likes.length

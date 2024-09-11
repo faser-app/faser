@@ -1,51 +1,28 @@
 <template>
   <div class="min-h-screen pl-2 bg-gray-950 text-white">
     <div class="flex flex-col h-svh justify-center items-center">
-      <h1
-        class="text-3xl text-transparent bg-gradient-to-tr from-[#24c7ce] to-[#1ed794] bg-clip-text font-extrabold"
-      >
+      <h1 class="text-3xl text-transparent bg-gradient-to-tr from-[#24c7ce] to-[#1ed794] bg-clip-text font-extrabold">
         faser register
       </h1>
 
       <div class="flex flex-col mt-8 w-56">
-        <input
-          type="username"
-          class="p-3 pl-4 bg-transparent text-white border border-gray-800 rounded-lg"
-          placeholder="username"
-          @input="error = ''"
-          v-model="username"
-        />
-        <input
-          type="email"
-          class="p-3 pl-4 mt-2 bg-transparent text-white border border-gray-800 rounded-lg"
-          placeholder="email"
-          @input="error = ''"
-          v-model="email"
-        />
-        <input
-          type="password"
-          class="p-3 pl-4 mt-2 bg-transparent text-white border border-gray-800 rounded-lg"
-          placeholder="password"
-          v-model="password"
-          @input="error = ''"
-        />
-        <button
-          class="p-2 mt-2 border border-gray-700 bg-transparent rounded-lg"
-          @click="login"
-        >
+        <input type="username" class="p-3 pl-4 bg-transparent text-white border border-gray-800 rounded-lg"
+          placeholder="username" @input="error = ''" v-model="username" />
+        <input type="email" class="p-3 pl-4 mt-2 bg-transparent text-white border border-gray-800 rounded-lg"
+          placeholder="email" @input="error = ''" v-model="email" />
+        <input type="password" class="p-3 pl-4 mt-2 bg-transparent text-white border border-gray-800 rounded-lg"
+          placeholder="password" v-model="password" @input="error = ''" />
+        <button class="p-2 mt-2 border border-gray-700 bg-transparent rounded-lg" @click="login">
           register
         </button>
 
         <RouterLink to="/login" class="mt-2 text-center text-gray-500">
           If you already have an account, login
-          <div class="underline inline-block">here</div></RouterLink
-        >
+          <div class="underline inline-block">here</div>
+        </RouterLink>
 
         <div class="mt-12">
-          <div
-            v-show="error"
-            class="bg-[#220000] border border-red-700 rounded-xl w-56 text-center py-8"
-          >
+          <div v-show="error" class="bg-[#220000] border border-red-700 rounded-xl w-56 text-center py-8">
             <p>{{ error }}</p>
           </div>
         </div>

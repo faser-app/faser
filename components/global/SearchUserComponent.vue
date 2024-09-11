@@ -1,7 +1,7 @@
 <template>
   <div>
-    <input id="search" class="h-full md:w-auto w-full bg-gray-700 p-3 rounded-xl text-white" v-model="query" @input="searchUsers"
-      placeholder="Search for user" @focus="focus = true" />
+    <input id="search" class="h-full md:w-auto w-full bg-gray-700 p-3 rounded-xl text-white" v-model="query"
+      @input="searchUsers" placeholder="Search for user" @focus="focus = true" />
   </div>
   <div v-if="query.length > 0 && focus"
     class="md:absolute top-16 rounded-xl border border-gray-500 shadow-lg shadow-gray-900 text-white right-32 bg-gray-700 md:w-64 p-2 overflow-hidden">
@@ -9,7 +9,7 @@
       'border-b border-gray-500': users.indexOf(user) !== users.length - 1,
     }">
       <div class="flex items-center cursor-pointer">
-        <div class="flex items-center" @click="openUser('/' + user.username)" >
+        <div class="flex items-center" @click="openUser('/' + user.username)">
           <img :src="'https://api.faser.app/api/profile/getProfilePhoto?username=' +
             user.username
             " v-if="user.hasProfilePicture" alt="profile picture" class="h-8 w-8 m-2"

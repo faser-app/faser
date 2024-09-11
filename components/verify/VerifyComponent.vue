@@ -1,34 +1,21 @@
 <template>
   <div class="min-h-screen pl-2 bg-gray-950 text-white">
     <div class="flex flex-col h-svh justify-center items-center">
-      <h1
-        class="text-3xl text-transparent bg-gradient-to-tr from-[#24c7ce] to-[#1ed794] bg-clip-text font-extrabold"
-      >
+      <h1 class="text-3xl text-transparent bg-gradient-to-tr from-[#24c7ce] to-[#1ed794] bg-clip-text font-extrabold">
         verify email
       </h1>
       <p class="text-gray-500">{{ email }}</p>
 
       <div class="flex flex-col mt-8 w-56">
-        <input
-          type="code"
-          class="p-3 pl-4 bg-transparent text-white border border-gray-800 rounded-lg"
-          placeholder="code"
-          @input="error = ''"
-          v-model="code"
-        />
-        <button
-          class="p-2 mt-2 border border-gray-700 bg-transparent rounded-lg"
-          @click="verify"
-        >
+        <input type="code" class="p-3 pl-4 bg-transparent text-white border border-gray-800 rounded-lg"
+          placeholder="code" @input="error = ''" v-model="code" />
+        <button class="p-2 mt-2 border border-gray-700 bg-transparent rounded-lg" @click="verify">
           verify
         </button>
         <button class="mt-2 text-gray-500" @click="resend">Resend email</button>
 
         <div class="mt-12">
-          <div
-            v-show="error"
-            class="bg-[#220000] border border-red-700 rounded-xl w-56 text-center py-8"
-          >
+          <div v-show="error" class="bg-[#220000] border border-red-700 rounded-xl w-56 text-center py-8">
             <p>{{ error }}</p>
           </div>
         </div>
@@ -92,7 +79,7 @@ onMounted(() => {
         },
       })
       .then((response) => {
-        if(response.data[1].emailConfirmed) {
+        if (response.data[1].emailConfirmed) {
           router.push("/account");
         }
       })
