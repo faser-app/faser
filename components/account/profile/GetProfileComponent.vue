@@ -182,9 +182,11 @@
 
 <script setup>
 import axios from "axios";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import MarkdownIt from "markdown-it";
 import Cookies from "js-cookie";
+
+const router = useRouter()
 
 const md = new MarkdownIt();
 
@@ -237,63 +239,63 @@ axios.get("https://api.faser.app/api/account/getOwnProfile", {
 }).then((ownResponse) => {
   ownProfileData.value = ownResponse.data[0];
   ownId.value = ownResponse.data[0].id
+})
 
-  axios
-    .get(url, {
-      headers: {
-        username: username,
-        token: Cookies.get("token"),
-        lang: navigator.language || navigator.userLanguage,
-      },
-    })
-    .then((response) => {
-      loaded.value = true;
-      success.value = true;
+axios
+  .get(url, {
+    headers: {
+      username: username,
+      token: Cookies.get("token"),
+      lang: navigator.language || navigator.userLanguage,
+    },
+  })
+  .then((response) => {
+    loaded.value = true;
+    success.value = true;
 
-      profileData.value = response.data[0];
+    profileData.value = response.data[0];
 
-      badges.value = response.data[0].badges;
+    badges.value = response.data[0].badges;
 
-      markdownHTML.value = md.render(response.data[0].bio);
+    markdownHTML.value = md.render(response.data[0].bio);
 
-      posts.value = response.data[0].posts.length;
-      followers.value = response.data[0].follower.length;
-      following.value = response.data[0].following.length;
+    posts.value = response.data[0].posts.length;
+    followers.value = response.data[0].follower.length;
+    following.value = response.data[0].following.length;
 
-      if (response.data[0].follower.includes(ownId.value)) {
-        followed.value = true
-      }
+    if (response.data[0].follower.includes(ownId.value)) {
+      followed.value = true
+    }
 
-      postsValue.value = response.data[0].posts.reverse();
+    postsValue.value = response.data[0].posts.reverse();
 
-      privateAccount.value = response.data[0].privateAccount;
+    privateAccount.value = response.data[0].privateAccount;
 
-      const accountCreated = new Date(response.data[1].memberSince);
-      const accountCreatedString = accountCreated.toLocaleDateString();
-      sinceString.value = accountCreatedString;
+    const accountCreated = new Date(response.data[1].memberSince);
+    const accountCreatedString = accountCreated.toLocaleDateString();
+    sinceString.value = accountCreatedString;
 
-      if (response.data[0].id === ownResponse.data[0].id) {
-        isAbleToFollow.value = false
-      }
+    if (response.data[0].id === ownResponse.data[0].id) {
+      isAbleToFollow.value = false
+    }
+  })
+  .catch((error) => {
+    loaded.value = true;
+    success.value = true;
+  });
 
-      axios
-        .get(
-          "https://api.faser.app/api/profile/getProfilePhoto?username=" + username
-        )
-        .then((response) => {
-          hasProfilePicture.value = true;
-          imageLoaded.value = true;
-        })
-        .catch((error) => {
-          hasProfilePicture.value = false;
-          imageLoaded.value = true;
-        });
-    })
-    .catch((error) => {
-      loaded.value = true;
-      success.value = false;
-    });
-});
+axios
+  .get(
+    "https://api.faser.app/api/profile/getProfilePhoto?username=" + username
+  )
+  .then((response) => {
+    hasProfilePicture.value = true;
+    imageLoaded.value = true;
+  })
+  .catch((error) => {
+    hasProfilePicture.value = false;
+    imageLoaded.value = true;
+  });
 
 function toggleFollow() {
   let url = ""
@@ -310,6 +312,10 @@ function toggleFollow() {
     token: Cookies.get("token"),
     username: route.params.user.replace("@", "")
   })
+    .then()
+    .catch((error) => {
+      router.push("/login")
+    })
 
   followed.value = !followed.value
 }
