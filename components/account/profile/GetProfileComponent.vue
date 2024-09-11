@@ -65,10 +65,10 @@
             </div>
           </div>
           <div v-if="isAbleToFollow" @click="toggleFollow"
-            class="ml-5 cursor-pointer h-10 w-24 rounded-xl flex items-center justify-center bg-gradient-to-tr from-[#24c7ce] to-[#1ed794] ">
+            class="ml-5 cursor-pointer h-10 w-24 select-none rounded-xl flex items-center justify-center bg-gradient-to-tr from-[#24c7ce] to-[#1ed794] ">
             <p class="absolute">Followed</p>
             <div
-              class="z-20 flex items-center justify-center transition-all duration-500 ease-out px-5 bg-gray-700 shadow-2xl rounded-xl text-gray-100"
+              class="z-20 flex items-center select-none justify-center transition-all duration-500 ease-out px-5 bg-gray-700 shadow-2xl rounded-xl text-gray-100"
               :class="{
                 'h-10 w-24': !followed,
                 'h-0 w-0 overflow-hidden': followed
@@ -136,7 +136,7 @@
     <div v-if="openFollower" :class="{
       'animation': openFollower
     }" class="fixed h-full w-full backdrop-blur top-0 left-0 flex justify-center items-center">
-      <div class="bg-gray-800 w-[60rem] max-h-[90rem] overflow-y-scroll mx-4 p-2 rounded-xl">
+      <div class="bg-gray-800 w-[60rem] max-h-[80rem] overflow-y-scroll mx-4 p-2 rounded-xl">
         <div class="w-full flex items-center justify-center text-xl font-bold">
           <h1 class="w-full text-center">Followers ({{ followers }})</h1>
           <i class="fa-solid fa-xmark mr-2 cursor-pointer" @click="openFollower = false"></i>
@@ -158,7 +158,7 @@
     <div v-if="openFollowing" :class="{
       'animation': openFollowing
     }" class="fixed h-full w-full backdrop-blur top-0 left-0 flex justify-center items-center">
-      <div class="bg-gray-800 w-[60rem] max-h-[90rem] overflow-y-scroll mx-4 p-2 rounded-xl">
+      <div class="bg-gray-800 w-[60rem] max-h-[80svh] overflow-y-scroll mx-4 p-2 rounded-xl">
         <div class="w-full flex items-center justify-center text-xl font-bold">
           <h1 class="w-full text-center">Following ({{ following }})</h1>
           <i class="fa-solid fa-xmark mr-2 cursor-pointer" @click="openFollowing = false"></i>
@@ -314,7 +314,33 @@ function toggleFollow() {
   })
     .then()
     .catch((error) => {
-      router.push("/login")
+      if (error.response.data.message === "You cannot follow yourself") {
+        alert(error.response.data.message)
+
+        if (followed.value) {
+          url = "https://api.faser.app/api/social/unfollowUser"
+          followers.value--
+        } else {
+          url = "https://api.faser.app/api/social/followUser"
+          followers.value++
+        }
+
+        followed.value = !followed.value
+      } else if (error.response.status === 429) {
+        alert(error.response.data)
+
+        if (followed.value) {
+          url = "https://api.faser.app/api/social/unfollowUser"
+          followers.value--
+        } else {
+          url = "https://api.faser.app/api/social/followUser"
+          followers.value++
+        }
+
+        followed.value = !followed.value
+      } else {
+        router.push("/login")
+      }
     })
 
   followed.value = !followed.value
