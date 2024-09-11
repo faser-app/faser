@@ -52,8 +52,7 @@
             Terms of Service.</p><br>
 
         <h2 class="text-xl font-semibold mt-6 mb-2">9. Governing Law</h2>
-        <p>These Terms of Service are governed by the laws of [Country], where the provider of the App is based. The
-            place of jurisdiction is [Location].</p><br>
+        <p>These Terms of Service are governed by the laws of Germany, where the provider of the App is based.</p><br>
 
         <h2 class="text-xl font-semibold mt-6 mb-2">10. Contact</h2>
         <p>For any questions or comments regarding these Terms of Service, please contact us at 
