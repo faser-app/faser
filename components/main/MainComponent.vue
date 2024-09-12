@@ -17,7 +17,7 @@
           <div class="text-center">
             <h1 class="text-3xl text-transparent bg-gradient-to-tr from-[#24c7ce] to-[#1ed794] bg-clip-text">No posts
               available</h1>
-            <p>There are no posts to be shown. Follow someone to view posts.</p>
+            <p>There are no posts to be shown. Follow more people to see posts.</p>
           </div>
         </div>
       </div>
@@ -59,12 +59,18 @@ const noPosts = ref(true)
 
 const noMorePosts = ref(false)
 
+const lastRequest = ref(0)
+
 
 document.addEventListener("scroll", (event) => {
   if (document.body.offsetHeight - 2000 < window.scrollY && !loading.value) {
-    loading.value = true
+    if (lastRequest.value + 1000 < Date.now()) {
+      lastRequest.value = Date.now()
 
-    loadPosts()
+      loading.value = true
+
+      loadPosts()
+    }
   }
 })
 
@@ -97,6 +103,7 @@ function loadPosts() {
         })
         .catch((error) => {
           noPosts.value = true
+          loading.value = false
 
           console.error(error.response.data.message);
         });
