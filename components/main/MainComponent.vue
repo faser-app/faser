@@ -6,10 +6,19 @@
       </div>
     </div>
     <div class="md:w-3/4 w-full max-w-[100rem] pt-5 pr-2">
-      <div>
-        <div v-for="post in posts">
+      <div v-if="loggedIn">
+        <div v-for="post in posts" key="post">
           <PostGetPostComponent :postId="post" ownProfile="false" :profile="profileData" :ownProfile="ownProfile"
             :account="accountData" :ownProfileData="ownProfileData" />
+        </div>
+      </div>
+      <div v-else>
+        <div class="w-full min-h-screen flex items-center justify-center">
+          <div class="text-center">
+            <h1 class="text-3xl text-transparent bg-gradient-to-tr from-[#24c7ce] to-[#1ed794] bg-clip-text">Not logged
+              in</h1>
+            <p>You have to log in to view posts.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -29,13 +38,49 @@ import Cookies from "js-cookie"
 
 const posts = ref([]);
 
-axios.post("https://api.faser.app/api/posts/getPosts")
-  .then((response) => {
-    posts.value = response.data;
-  })
-  .catch((error) => {
-    console.error(error);
-  });
+
+const loggedIn = ref(false)
+
+onMounted(() => {
+  loadPosts()
+})
+
+let loading = ref(false)
+
+document.addEventListener("scroll", (event) => {
+  if (document.body.offsetHeight - 2000 < window.scrollY && !loading.value) {
+    loading.value = true
+
+    loadPosts()
+  }
+})
+
+function loadPosts() {
+  if (Cookies.get("token")) {
+    axios.post("https://api.faser.app/api/posts/loadPosts", {
+      token: Cookies.get("token"),
+      loadPosts: 25
+    })
+      .then((response) => {
+        posts.value.push()
+
+        for (let i = 0; i < response.data.posts.length; i++) {
+          posts.value.push(response.data.posts[i])
+        }
+
+        loading.value = false
+
+        loggedIn.value = true
+
+        console.log(posts.value)
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  } else {
+    loggedIn.value = false
+  }
+}
 
 const ownProfileData = ref({})
 
