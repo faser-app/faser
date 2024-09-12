@@ -6,18 +6,28 @@
       </div>
     </div>
     <div class="md:w-3/4 w-full max-w-[100rem] pt-5 pr-2">
-      <div v-if="loggedIn">
+      <div v-if="loggedIn && posts.length > 0">
         <div v-for="post in posts" key="post">
           <PostGetPostComponent :postId="post" ownProfile="false" :profile="profileData" :ownProfile="ownProfile"
             :account="accountData" :ownProfileData="ownProfileData" />
         </div>
       </div>
+      <div v-else-if="noPosts">
+        <div class="w-full min-h-screen flex items-center justify-center">
+          <div class="text-center">
+            <h1 class="text-3xl text-transparent bg-gradient-to-tr from-[#24c7ce] to-[#1ed794] bg-clip-text">No posts
+              available</h1>
+            <p>There are no posts to be shown. Follow someone to view posts.</p>
+          </div>
+        </div>
+      </div>
       <div v-else>
         <div class="w-full min-h-screen flex items-center justify-center">
           <div class="text-center">
-            <h1 class="text-3xl text-transparent bg-gradient-to-tr from-[#24c7ce] to-[#1ed794] bg-clip-text">Not logged
+            <h1 class="text-3xl font-bold text-transparent bg-gradient-to-tr from-[#24c7ce] to-[#1ed794] bg-clip-text">
+              Not logged
               in</h1>
-            <p>You have to log in to view posts.</p>
+            <p>You have to be logged in to view posts.</p>
           </div>
         </div>
       </div>
@@ -38,14 +48,15 @@ import Cookies from "js-cookie"
 
 const posts = ref([]);
 
-
 const loggedIn = ref(false)
 
 onMounted(() => {
   loadPosts()
 })
 
-let loading = ref(false)
+const loading = ref(false)
+const noPosts = ref(true)
+
 
 document.addEventListener("scroll", (event) => {
   if (document.body.offsetHeight - 2000 < window.scrollY && !loading.value) {
@@ -57,25 +68,33 @@ document.addEventListener("scroll", (event) => {
 
 function loadPosts() {
   if (Cookies.get("token")) {
+    loading.value = true
     axios.post("https://api.faser.app/api/posts/loadPosts", {
       token: Cookies.get("token"),
       loadPosts: 25
     })
       .then((response) => {
+
+        loggedIn.value = true
+        loading.value = false
+
+        if (response.data.message === "no posts available") {
+          noPosts.value = true
+          return
+        }
+
         posts.value.push()
 
         for (let i = 0; i < response.data.posts.length; i++) {
           posts.value.push(response.data.posts[i])
         }
 
-        loading.value = false
-
-        loggedIn.value = true
-
         console.log(posts.value)
       })
       .catch((error) => {
-        console.error(error);
+        noPosts.value = true
+
+        console.error(error.response.data.message);
       });
   } else {
     loggedIn.value = false

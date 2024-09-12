@@ -16,6 +16,10 @@
           register
         </button>
 
+        <p class="text-sm text-center text-gray-500 mb-2">By creating an account, you agree to our <RouterLink to="/tos"
+            class="underline">Terms of Service</RouterLink> and <RouterLink to="/privacy" class="underline">Privacy
+            Policy</RouterLink>.</p>
+
         <RouterLink to="/login" class="mt-2 text-center text-gray-500">
           If you already have an account, login
           <div class="underline inline-block">here</div>
