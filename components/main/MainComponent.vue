@@ -57,6 +57,8 @@ onMounted(() => {
 const loading = ref(false)
 const noPosts = ref(true)
 
+const noMorePosts = ref(false)
+
 
 document.addEventListener("scroll", (event) => {
   if (document.body.offsetHeight - 2000 < window.scrollY && !loading.value) {
@@ -68,34 +70,37 @@ document.addEventListener("scroll", (event) => {
 
 function loadPosts() {
   if (Cookies.get("token")) {
-    loading.value = true
-    axios.post("https://api.faser.app/api/posts/loadPosts", {
-      token: Cookies.get("token"),
-      loadPosts: 25
-    })
-      .then((response) => {
-
-        loggedIn.value = true
-        loading.value = false
-
-        if (response.data.message === "no posts available") {
-          noPosts.value = true
-          return
-        }
-
-        posts.value.push()
-
-        for (let i = 0; i < response.data.posts.length; i++) {
-          posts.value.push(response.data.posts[i])
-        }
-
-        console.log(posts.value)
+    if (!noMorePosts.value) {
+      loading.value = true
+      axios.post("https://api.faser.app/api/posts/loadPosts", {
+        token: Cookies.get("token"),
+        loadPosts: 25
       })
-      .catch((error) => {
-        noPosts.value = true
+        .then((response) => {
 
-        console.error(error.response.data.message);
-      });
+          loggedIn.value = true
+          loading.value = false
+
+          if (response.data.message === "no posts available") {
+            noMorePosts.value = true
+            noPosts.value = true
+            return
+          }
+
+          for (let i = 0; i < response.data.posts.length; i++) {
+            if (!posts.value.includes(response.data.posts[i])) {
+              posts.value.push(response.data.posts[i])
+            }
+          }
+
+          console.log(posts.value)
+        })
+        .catch((error) => {
+          noPosts.value = true
+
+          console.error(error.response.data.message);
+        });
+    }
   } else {
     loggedIn.value = false
   }
