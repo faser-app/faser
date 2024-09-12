@@ -98,8 +98,6 @@ function loadPosts() {
               posts.value.push(response.data.posts[i])
             }
           }
-
-          console.log(posts.value)
         })
         .catch((error) => {
           noPosts.value = true
