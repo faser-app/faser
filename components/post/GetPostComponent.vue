@@ -154,7 +154,7 @@
                 <div class="bg-gray-900 p-5 text-center rounded-xl m-3 md:w-auto w-full" :class="{
                     'animation': showImageModal,
                 }">
-                <img :src="imageSrc" class="w-full h-full object-cover rounded-lg max-w-[85svw] max-h-[85svh]" />
+                <img :src="imageSrc" class="w-full cursor-pointer h-full object-cover rounded-lg max-w-[85svw] max-h-[85svh]" />
 
                     <button @click="showImageModal = false" class="md:w-1/3 mt-2 bg-gray-500 p-2 rounded-xl">
                         Close
