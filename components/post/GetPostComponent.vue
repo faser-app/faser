@@ -79,7 +79,7 @@
                     class="bg-gray-700 p-2 rounded-xl inline-block scroll-snap-item">
                     <img @click="openImage('https://api.faser.app/api/social/getPostImage?postId=' + postContent.postId + '&imageId=' + image)"
                         :src="'https://api.faser.app/api/social/getPostImage?postId=' + postContent.postId + '&imageId=' + image"
-                        class="min-w-48 h-48 object-cover rounded-lg" />
+                        class="min-w-48 h-48 object-cover rounded-lg cursor-pointer" />
                 </div>
             </div>
         </div>
@@ -154,7 +154,7 @@
                 <div class="bg-gray-900 p-5 text-center rounded-xl m-3 md:w-auto w-full" :class="{
                     'animation': showImageModal,
                 }">
-                <img :src="imageSrc" class="w-full cursor-pointer h-full object-cover rounded-lg max-w-[85svw] max-h-[85svh]" />
+                <img :src="imageSrc" class="w-full h-full object-cover rounded-lg max-w-[85svw] max-h-[85svh]" />
 
                     <button @click="showImageModal = false" class="md:w-1/3 mt-2 bg-gray-500 p-2 rounded-xl">
                         Close
