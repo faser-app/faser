@@ -39,6 +39,14 @@
                 </RouterLink>
                 <p class="ml-3 text-gray-400">{{ postCreatedAt }}</p>
                 <p class="ml-3 text-gray-400" v-if="postContent.edited">edited</p>
+
+                <div v-if="!postContent.appropriate" v-on:mouseover="hovered = true" v-on:mouseleave="hovered = false"
+                    class="w-8 h-8 ml-2 rounded-full bg-gray-500 text-gray-300 flex items-center justify-center">
+                    <i class="fa-solid fa-info"></i>
+                    <div class="absolute mb-16 bg-gray-600 p-2 rounded-xl" v-if="hovered">
+                        {{ postContent.appropriateDescription }}
+                    </div>
+                </div>
             </div>
 
             <div v-if="isAuthor === 'true'" class="flex ml-auto">
@@ -168,6 +176,8 @@ const postVisible = ref(true);
 
 const postLikes = ref(0);
 const isLiked = ref(false);
+
+const hovered = ref(false);
 
 const showModal = ref(false);
 const showEditModal = ref(false);

@@ -50,6 +50,8 @@ const posts = ref([]);
 
 const loggedIn = ref(false)
 
+const lastTimestamp = ref(Date.now())
+
 onMounted(() => {
   loadPosts()
 })
@@ -80,7 +82,8 @@ function loadPosts() {
       loading.value = true
       axios.post("https://api.faser.app/api/posts/loadPosts", {
         token: Cookies.get("token"),
-        loadPosts: 25
+        loadPosts: 25,
+        lastTimestamp: lastTimestamp.value
       })
         .then((response) => {
 

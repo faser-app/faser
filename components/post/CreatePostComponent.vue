@@ -42,11 +42,19 @@
                             </template>
                         </div>
                     </div>
+                    <p v-if="error" class="text-red-500">Error message</p>
                     <div class="flex md:flex-nowrap flex-wrap justify-end mt-2 gap-2">
                         <button @click="showModal = false"
                             class="bg-gray-700 p-2 md:w-2/3 w-full rounded-xl">Close</button>
                         <button @click="uploadPost" :disabled="postContent.length === 0"
-                            class="bg-gradient-to-tr from-[#24c7ce] to-[#1ed794] p-2 md:w-1/3 w-full rounded-xl">Post</button>
+                            class="bg-gradient-to-tr from-[#24c7ce] to-[#1ed794] p-2 flex justify-center items-center md:w-1/3 w-full rounded-xl">
+
+                            <p v-if="!loading">Post</p>
+                            <div v-else>
+                                <div class="container"></div>
+                            </div>
+
+                        </button>
                     </div>
                 </div>
             </div>
@@ -67,6 +75,10 @@ const postContent = ref('');
 
 const images = ref([]);
 
+const error = ref('')
+
+const loading = ref(false)
+
 function getPreviewImage(file) {
     return URL.createObjectURL(file);
 }
@@ -84,6 +96,8 @@ function selectFile() {
 }
 
 function uploadPost() {
+    loading.value = true
+
     axios.post("https://api.faser.app/api/social/createPost", {
         token: Cookies.get("token"),
         message: postContent.value,
@@ -91,6 +105,8 @@ function uploadPost() {
         images: images.value.length
     })
         .then(response => {
+            loading.value = false
+
             if (images.value.length === 0) {
                 router.push("/profile")
             }
@@ -116,6 +132,9 @@ function uploadPost() {
                         })
                 }
             }
+        })
+        .catch(error => {
+            console.log(error.response.data)
         })
 }
 </script>
@@ -160,6 +179,56 @@ function uploadPost() {
 
     to {
         opacity: 0;
+    }
+}
+
+.container {
+    --uib-size: 80px;
+    --uib-color: black;
+    --uib-speed: 1.4s;
+    --uib-stroke: 5px;
+    --uib-bg-opacity: .1;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: var(--uib-stroke);
+    width: var(--uib-size);
+    border-radius: calc(var(--uib-stroke) / 2);
+    overflow: hidden;
+    transform: translate3d(0, 0, 0);
+}
+
+.container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: var(--uib-color);
+    opacity: var(--uib-bg-opacity);
+    transition: background-color 0.3s ease;
+}
+
+.container::after {
+    content: '';
+    height: 100%;
+    width: 100%;
+    border-radius: calc(var(--uib-stroke) / 2);
+    animation: zoom var(--uib-speed) ease-in-out infinite;
+    transform: translateX(-100%);
+    background-color: var(--uib-color);
+    transition: background-color 0.3s ease;
+}
+
+@keyframes zoom {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    100% {
+        transform: translateX(100%);
     }
 }
 </style>
