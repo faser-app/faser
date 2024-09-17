@@ -148,6 +148,20 @@
                 </div>
             </div>
         </transition>
+        <transition name="fade" @leave="leave">
+            <div class="fixed top-0 left-0 w-screen h-screen backdrop-blur z-50 flex justify-center md:items-center items-end"
+                v-if="showImageModal">
+                <div class="bg-gray-900 p-5 text-center rounded-xl m-3 md:w-auto w-full" :class="{
+                    'animation': showImageModal,
+                }">
+                <img :src="imageSrc" class="w-full h-full object-cover rounded-lg max-w-[85svw] max-h-[85svh]" />
+
+                    <button @click="showImageModal = false" class="md:w-1/3 mt-2 bg-gray-500 p-2 rounded-xl">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </transition>
     </div>
 </template>
 <script setup>
