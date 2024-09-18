@@ -4,11 +4,20 @@
             <div class="flex items-center w-full">
                 <RouterLink v-if="props.ownProfile === 'false'" :to="'/' + author.username" class="flex items-center">
                     <div v-if="props.ownProfile === 'false'">
-                        <img :src="'https://api.faser.app/api/profile/getProfilePhoto?username=' + author.username"
+                        <img v-if="author.hasProfilePicture" @error="author.hasProfilePicture = false"
+                            :src="'https://api.faser.app/api/profile/getProfilePhoto?username=' + author.username"
                             alt="profile picture" class="h-14 w-14 m-2" :class="{
                                 'rounded-full': !author.businessAccount,
                                 'rounded-lg': author.businessAccount
                             }" />
+                        <div v-else
+                            class="h-14 w-14 m-2 flex border justify-center items-center border-[#96969627] bg-[#1118276c]"
+                            :class="{
+                                'rounded-full': !author.businessAccount,
+                                'rounded-xl': author.businessAccount
+                            }">
+                            <i class="fa-solid fa-user rounded-full text-4xl"></i>
+                        </div>
                     </div>
                     <p>{{ author.displayName }}</p>
                     <div v-if="author.businessAccount"
@@ -21,11 +30,20 @@
                     </div>
                 </RouterLink>
                 <RouterLink v-else :to="'/' + account.username" class="flex items-center">
-                    <img :src="'https://api.faser.app/api/profile/getProfilePhoto?username=' + account.username"
+                    <img v-if="author.hasProfilePicture" @error="author.hasProfilePicture = false"
+                        :src="'https://api.faser.app/api/profile/getProfilePhoto?username=' + account.username"
                         alt="profile picture" class="h-14 w-14 m-2" :class="{
                             'rounded-full': !author.businessAccount,
                             'rounded-lg': author.businessAccount
                         }" />
+                    <div v-else
+                        class="h-14 w-14 m-2 flex border justify-center items-center border-[#96969627] bg-[#1118276c]"
+                        :class="{
+                            'rounded-full': !author.businessAccount,
+                            'rounded-xl': author.businessAccount
+                        }">
+                        <i class="fa-solid fa-user rounded-full text-xl"></i>
+                    </div>
 
                     <p>{{ author.displayName }}</p>
                     <div v-if="author.businessAccount"
@@ -149,12 +167,12 @@
             </div>
         </transition>
         <transition name="fade" @leave="leave">
-            <div class="fixed top-0 left-0 w-screen h-screen backdrop-blur z-50 flex justify-center md:items-center items-end"
+            <div class="fixed top-0 left-0 w-screen h-screen backdrop-blur z-50 flex justify-center items-center"
                 v-if="showImageModal">
                 <div class="bg-gray-900 p-5 text-center rounded-xl m-3 md:w-auto w-full" :class="{
                     'animation': showImageModal,
                 }">
-                <img :src="imageSrc" class="w-full h-full object-cover rounded-lg max-w-[85svw] max-h-[85svh]" />
+                    <img :src="imageSrc" class="w-full h-full object-cover rounded-lg max-w-[85svw] max-h-[85svh]" />
 
                     <button @click="showImageModal = false" class="md:w-1/3 mt-2 bg-gray-500 p-2 rounded-xl">
                         Close
@@ -211,6 +229,7 @@ onMounted(() => {
     author.value.displayName = profile.displayName
     author.value.verifiedAccount = profile.verifiedAccount
     author.value.businessAccount = profile.businessAccount
+    author.value.profilePicture = true
 })
 
 function openMenu() {

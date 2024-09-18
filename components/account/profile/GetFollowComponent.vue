@@ -1,11 +1,16 @@
 <template>
     <RouterLink :to="'/' + user.username">
         <div class="flex min-w-full items-center">
-            <img :src="'https://api.faser.app/api/profile/getProfilePhoto?username=' + user.username"
+            <img v-if="user.hasProfilePicture" @error="user.hasProfilePicture = false"
+                :src="'https://api.faser.app/api/profile/getProfilePhoto?username=' + user.username"
                 class="h-12 w-12 bg-cover" :class="{
                     'rounded-full': !user.businessAccount,
                     'rounded-lg': user.businessAccount
                 }" />
+            <div v-else
+                class="rounded-full h-12 w-12 flex border justify-center items-center border-[#96969627] bg-[#1118276c]">
+                <i class="fa-solid fa-user rounded-full"></i>
+            </div>
             <div class="grid grid-rows-2 ml-2">
                 <div class="flex">
                     <p class="text-lg">{{ user.displayName }}</p>
@@ -50,6 +55,8 @@ onMounted(async () => {
     })
 
     user.value = response.data[0]
+
+    user.value.hasProfilePicture = true
 })
 
 </script>
