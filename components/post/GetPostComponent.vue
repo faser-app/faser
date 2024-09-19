@@ -16,7 +16,7 @@
                                 'rounded-full': !author.businessAccount,
                                 'rounded-xl': author.businessAccount
                             }">
-                            <i class="fa-solid fa-user rounded-full text-4xl"></i>
+                            <i class="fa-solid fa-user rounded-full text-2xl"></i>
                         </div>
                     </div>
                     <p>{{ author.displayName }}</p>
@@ -42,7 +42,7 @@
                             'rounded-full': !author.businessAccount,
                             'rounded-xl': author.businessAccount
                         }">
-                        <i class="fa-solid fa-user rounded-full text-xl"></i>
+                        <i class="fa-solid fa-user rounded-full text-2xl"></i>
                     </div>
 
                     <p>{{ author.displayName }}</p>
@@ -229,7 +229,6 @@ onMounted(() => {
     author.value.displayName = profile.displayName
     author.value.verifiedAccount = profile.verifiedAccount
     author.value.businessAccount = profile.businessAccount
-    author.value.profilePicture = true
 })
 
 function openMenu() {
@@ -269,6 +268,7 @@ axios.get("https://api.faser.app/api/profile/getPostProfile", {
     .then((response) => {
         author.value = response.data[0]
         author.value.username = response.data[1].username
+        author.value.hasProfilePicture = true
     })
 
 function toggleLike() {
