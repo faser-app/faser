@@ -185,7 +185,7 @@ import axios from "axios";
 import { useRoute, useRouter } from "vue-router";
 import MarkdownIt from "markdown-it";
 import Cookies from "js-cookie";
-import { useHead } from "@vueuse/core";
+import { useHead } from "#app";
 
 const router = useRouter()
 
@@ -255,6 +255,24 @@ axios
     success.value = true;
 
     profileData.value = response.data[0];
+
+    useHead({
+      title: profileData.value.displayName + " - faser.app",
+      meta: [
+        {
+          name: "og:description",
+          content: profileData.value.bio || "No bio available.",
+        },
+        {
+          name: "og:title",
+          content: profileData.value.displayName || "User Profile",
+        },
+        {
+          name: "og:image",
+          content: "https://api.faser.app/api/profile/getProfilePhoto?username=" + username,
+        }
+      ]
+    });
 
     badges.value = response.data[0].badges;
 
