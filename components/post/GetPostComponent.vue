@@ -1,5 +1,5 @@
 <template>
-    <div v-if="postVisible" class="w-full bg-gray-700 p-2 mb-2 rounded-xl">
+    <div v-if="postVisible" class="w-full bg-gray-700 p-2 mb-2 rounded-xl text-white">
         <div class="flex items-center">
             <div class="flex items-center w-full">
                 <RouterLink v-if="props.ownProfile === 'false'" :to="'/' + author.username" class="flex items-center">
@@ -67,7 +67,7 @@
                 </div>
             </div>
 
-            <div v-if="isAuthor === 'true'" class="flex ml-auto">
+            <div v-if="isAuthor === 'true' || isAuthor === true || props.ownProfile" class="flex ml-auto">
 
                 <div @click="openMenu"
                     class="flex cursor-pointer items-center w-12 h-12 justify-center bg-gray-600 rounded-xl threeDotElement"
@@ -90,7 +90,6 @@
 
         </div>
         <p class="ml-2" v-html="postValue"></p>
-
         <div class="overflow-x-scroll scroll-snap-x">
             <div class="inline-flex gap-2 mt-2">
                 <div v-for="image in postContent.images" :key="image"
@@ -102,13 +101,26 @@
             </div>
         </div>
         <div class="flex w-full items-center justify-center">
-            <div class="flex gap-2 cursor-pointer items-center text-gray-300" @click="toggleLike">
+            <div class="flex justify-center gap-2 w-1/2 cursor-pointer items-center text-gray-300" @click="toggleLike">
                 <i v-if="!isLiked" class="fa-regular text-xl fa-heart"></i>
                 <i v-else class="fa-solid text-xl fa-heart text-red-500"></i>
                 <p>
                     {{ postLikes }}
                 </p>
             </div>
+            <div class="flex gap-2 w-1/2 justify-center cursor-pointer items-center text-gray-300">
+                <RouterLink :to="'/post/' + postContent.postId" class="flex gap-2 items-center justify-center">
+                    <i class="fa-regular fa-comment text-xl"></i>
+                    <p>
+                        {{ postComments }}
+                    </p>
+                </RouterLink>
+            </div>
+        </div>
+        <div class="flex w-full gap-2 mt-2">
+            <input type="text" class="w-3/4 bg-gray-600 p-2 rounded-xl focus:outline-none"
+                placeholder="Write a comment..." v-model="commentText" />
+            <button class="w-1/4 bg-gray-600 p-2 rounded-xl" @click="postComment">Comment</button>
         </div>
 
 
@@ -202,11 +214,14 @@ const author = ref({})
 
 const postValue = ref('')
 
+const commentText = ref('')
+
 const postCreatedAt = ref('')
 
 const postVisible = ref(true);
 
 const postLikes = ref(0);
+const postComments = ref(0)
 const isLiked = ref(false);
 
 const hovered = ref(false);
@@ -217,6 +232,17 @@ const showEditModal = ref(false);
 const threeDotsMenu = ref(false);
 
 const profile = ref({})
+
+function postComment() {
+    axios.post("https://api.faser.app/api/social/createPost", {
+        token: Cookies.get("token"),
+        message: commentText.value,
+        lang: "en",
+        type: 'comment',
+        parentPost: postId.value,
+        images: 0
+    })
+}
 
 const props = defineProps({
     postId: String,
@@ -392,8 +418,9 @@ function reloadStats() {
             postLikes.value = response.data[0].likes.length
 
             postLikes.value = postContent.value.likes.length
-        })
 
+            postComments.value = postContent.value.comments.length
+        })
 }
 
 onMounted(() => {

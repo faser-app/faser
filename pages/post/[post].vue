@@ -1,0 +1,4 @@
+<template>
+    <PostsPostPageComponent />
+</template>
+

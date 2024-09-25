@@ -102,6 +102,7 @@ function uploadPost() {
         token: Cookies.get("token"),
         message: postContent.value,
         lang: "en",
+        type: 'post',
         images: images.value.length
     })
         .then(response => {

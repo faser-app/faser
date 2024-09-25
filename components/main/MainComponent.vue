@@ -12,12 +12,13 @@
             :account="accountData" :ownProfileData="ownProfileData" />
         </div>
       </div>
-      <div v-else-if="noPosts">
+      <div v-else-if="loggedIn && noPosts">
         <div class="w-full min-h-screen flex items-center justify-center">
           <div class="text-center">
             <h1 class="text-3xl text-transparent bg-gradient-to-tr from-[#24c7ce] to-[#1ed794] bg-clip-text">No posts
               available</h1>
             <p>There are no posts to be shown. Follow more people to see posts.</p>
+            <p>{{ loggedIn }}</p>
           </div>
         </div>
       </div>
@@ -27,13 +28,14 @@
             <h1 class="text-3xl font-bold text-transparent bg-gradient-to-tr from-[#24c7ce] to-[#1ed794] bg-clip-text">
               Not logged
               in</h1>
-            <p>You have to be logged in to view posts.</p>
+            <p class="mb-4">You have to be logged in to view and make posts.</p>
+            <RouterLink to="/login" class="py-3 px-5 rounded-xl bg-gray-800">Login</RouterLink>
           </div>
         </div>
       </div>
     </div>
     <div class="md:w-1/4 w-full flex justify-center pr-2 mt-2 min-h-full">
-      <div class="w-32 md:block hidden">
+      <div class="w-32 md:block hidden" v-if="loggedIn">
         <PostCreatePostComponent />
       </div>
     </div>
@@ -86,8 +88,6 @@ function loadPosts() {
         lastTimestamp: lastTimestamp.value
       })
         .then((response) => {
-
-          loggedIn.value = true
           loading.value = false
 
           if (response.data.message === "no posts available") {
@@ -109,8 +109,6 @@ function loadPosts() {
           console.error(error.response.data.message);
         });
     }
-  } else {
-    loggedIn.value = false
   }
 }
 
@@ -122,5 +120,10 @@ axios.get("https://api.faser.app/api/account/getOwnProfile", {
   },
 }).then((ownResponse) => {
   ownProfileData.value = ownResponse.data[0];
-})
+  loggedIn.value = true
+  console.log("logged in")
+}).catch((error) => {
+  loggedIn.value = false
+  console.log("not logged in")
+});
 </script>
