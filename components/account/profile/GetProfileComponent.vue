@@ -240,6 +240,21 @@ axios.get("https://api.faser.app/api/account/getOwnProfile", {
 }).then((ownResponse) => {
   ownProfileData.value = ownResponse.data[0];
   ownId.value = ownResponse.data[0].id
+
+  if (profileData.value) {
+    useHead({
+      title: `${profileData.value.displayName} - faser.app`,
+      meta: [
+        { property: "og:title", content: profileData.value.displayName },
+        { property: "og:description", content: profileData.value.bio || "Keine Bio verfügbar." },
+        {
+          property: "og:image",
+          content: `https://api.faser.app/api/profile/getProfilePhoto?username=${username}`,
+        },
+        { property: "og:url", content: `https://faser.app/${username}` },
+      ],
+    });
+  }
 })
 
 axios
@@ -256,23 +271,6 @@ axios
 
     profileData.value = response.data[0];
 
-    useHead({
-      title: profileData.value.displayName + " - faser.app",
-      meta: [
-        {
-          name: "og:description",
-          content: profileData.value.bio || "No bio available.",
-        },
-        {
-          name: "og:title",
-          content: profileData.value.displayName || "User Profile",
-        },
-        {
-          name: "og:image",
-          content: "https://api.faser.app/api/profile/getProfilePhoto?username=" + username,
-        }
-      ]
-    });
 
     badges.value = response.data[0].badges;
 
