@@ -181,111 +181,169 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import { useRoute, useHead } from '#app'
-import axios from 'axios'
-import Cookies from 'js-cookie'
+import axios from "axios";
+import { useRoute, useRouter } from "vue-router";
+import MarkdownIt from "markdown-it";
+import Cookies from "js-cookie";
 
-const profileData = ref({})
-const sinceString = ref("")
-const badges = ref([])
-const success = ref(false)
-const loaded = ref(false)
-const postsValue = ref([])
+const router = useRouter()
+
+const md = new MarkdownIt();
+
+const url = "https://api.faser.app/api/account/getProfile";
+
+const profileData = ref({});
+
+const sinceString = ref("");
+
+const badges = ref([]);
+
+const success = ref(false);
+const loaded = ref(false);
+
+const postsValue = ref([]);
+
 const posts = ref(0)
 const followers = ref(0)
 const following = ref(0)
-const privateAccount = ref(false)
-const isAbleToFollow = ref(true)
-const followed = ref(false)
-const hasProfilePicture = ref(false)
-const imageLoaded = ref(false)
-const markdownHTML = ref("")
-const ownId = ref(0)
-const ownProfileData = ref({})
-const communities = ref([])
+
 const openFollower = ref(false)
 const openFollowing = ref(false)
 
-const route = useRoute()
-const username = route.params.user.replace("@", "")
+const privateAccount = ref(false);
 
-async function loadProfileData() {
-  try {
-    const ownResponse = await axios.get('https://api.faser.app/api/account/getOwnProfile', {
-      headers: {
-        token: Cookies.get('token'),
-      },
-    })
-    ownProfileData.value = ownResponse.data[0]
-    ownId.value = ownResponse.data[0].id
+const isAbleToFollow = ref(true)
 
-    const response = await axios.get('https://api.faser.app/api/account/getProfile', {
-      headers: {
-        username: username,
-        token: Cookies.get('token'),
-        lang: navigator.language || navigator.userLanguage,
-      },
-    })
+const followed = ref(false)
 
-    loaded.value = true
-    success.value = true
+const hasProfilePicture = ref(false);
+const imageLoaded = ref(false);
 
-    profileData.value = response.data[0]
-    badges.value = response.data[0].badges
-    markdownHTML.value = response.data[0].bio
-    posts.value = response.data[0].posts.length
-    followers.value = response.data[0].follower.length
-    following.value = response.data[0].following.length
-    privateAccount.value = response.data[0].privateAccount
+const markdownHTML = ref("");
 
-    const accountCreated = new Date(response.data[0].memberSince)
-    sinceString.value = accountCreated.toLocaleDateString()
+const ownId = ref(0)
 
-    const imageResponse = await axios.get(
-      `https://api.faser.app/api/profile/getProfilePhoto?username=${username}`
-    )
-    hasProfilePicture.value = true
-    imageLoaded.value = true
+const ownProfile = ref({});
+const ownProfileData = ref({});
 
-    useHead({
-      title: `${profileData.value.displayName} - faser.app`,
-      meta: [
-        { property: 'og:title', content: profileData.value.displayName },
-        { property: 'og:description', content: profileData.value.bio || 'Keine Bio verfügbar.' },
-        {
-          property: 'og:image',
-          content: `https://api.faser.app/api/profile/getProfilePhoto?username=${username}`,
-        },
-        { property: 'og:url', content: `https://faser.app/${username}` },
-        { name: 'twitter:card', content: 'summary_large_image' },
-      ],
-    })
-  } catch (error) {
-    loaded.value = true
-    success.value = false
-  }
-}
+const communities = ref([]);
 
-loadProfileData()
+const route = useRoute();
+
+const username = route.params.user.replace("@", "");
+
+axios.get("https://api.faser.app/api/account/getOwnProfile", {
+  headers: {
+    token: Cookies.get("token"),
+  },
+}).then((ownResponse) => {
+  ownProfileData.value = ownResponse.data[0];
+  ownId.value = ownResponse.data[0].id
+})
+
+axios
+  .get(url, {
+    headers: {
+      username: username,
+      token: Cookies.get("token"),
+      lang: navigator.language || navigator.userLanguage,
+    },
+  })
+  .then((response) => {
+    loaded.value = true;
+    success.value = true;
+
+    profileData.value = response.data[0];
+
+    badges.value = response.data[0].badges;
+
+    markdownHTML.value = md.render(response.data[0].bio);
+
+    posts.value = response.data[0].posts.length;
+    followers.value = response.data[0].follower.length;
+    following.value = response.data[0].following.length;
+
+    if (response.data[0].follower.includes(ownId.value)) {
+      followed.value = true
+    }
+
+    postsValue.value = response.data[0].posts.reverse();
+
+    privateAccount.value = response.data[0].privateAccount;
+
+    const accountCreated = new Date(response.data[1].memberSince);
+    const accountCreatedString = accountCreated.toLocaleDateString();
+    sinceString.value = accountCreatedString;
+
+    if (response.data[0].id === ownResponse.data[0].id) {
+      isAbleToFollow.value = false
+    }
+  })
+  .catch((error) => {
+    loaded.value = true;
+    success.value = true;
+  });
+
+axios
+  .get(
+    "https://api.faser.app/api/profile/getProfilePhoto?username=" + username
+  )
+  .then((response) => {
+    hasProfilePicture.value = true;
+    imageLoaded.value = true;
+  })
+  .catch((error) => {
+    hasProfilePicture.value = false;
+    imageLoaded.value = true;
+  });
 
 function toggleFollow() {
-  let url = followed.value
-    ? 'https://api.faser.app/api/social/unfollowUser'
-    : 'https://api.faser.app/api/social/followUser'
+  let url = ""
 
-  axios
-    .post(url, {
-      token: Cookies.get('token'),
-      username: route.params.user.replace('@', ''),
-    })
-    .then(() => {
-      followed.value = !followed.value
-      followers.value += followed.value ? 1 : -1
-    })
+  if (followed.value) {
+    url = "https://api.faser.app/api/social/unfollowUser"
+    followers.value--
+  } else {
+    url = "https://api.faser.app/api/social/followUser"
+    followers.value++
+  }
+
+  axios.post(url, {
+    token: Cookies.get("token"),
+    username: route.params.user.replace("@", "")
+  })
+    .then()
     .catch((error) => {
-      console.error('Fehler beim Follow/Unfollow:', error)
+      if (error.response.data.message === "You cannot follow yourself") {
+        alert(error.response.data.message)
+
+        if (followed.value) {
+          url = "https://api.faser.app/api/social/unfollowUser"
+          followers.value--
+        } else {
+          url = "https://api.faser.app/api/social/followUser"
+          followers.value++
+        }
+
+        followed.value = !followed.value
+      } else if (error.response.status === 429) {
+        alert(error.response.data)
+
+        if (followed.value) {
+          url = "https://api.faser.app/api/social/unfollowUser"
+          followers.value--
+        } else {
+          url = "https://api.faser.app/api/social/followUser"
+          followers.value++
+        }
+
+        followed.value = !followed.value
+      } else {
+        router.push("/login")
+      }
     })
+
+  followed.value = !followed.value
 }
 </script>
 
