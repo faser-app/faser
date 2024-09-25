@@ -242,6 +242,9 @@ function postComment() {
         parentPost: postId.value,
         images: 0
     })
+    .then(() => {
+        router.push("/post/" + postId.value)
+    })
 }
 
 const props = defineProps({
