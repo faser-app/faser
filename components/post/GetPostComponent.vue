@@ -29,9 +29,9 @@
                         <i class="fa-solid verifiedBadge fa-check"></i>
                     </div>
                 </RouterLink>
-                <RouterLink v-else :to="'/' + account.username" class="flex items-center">
+                <RouterLink v-else :to="'/' + author.username" class="flex items-center">
                     <img v-if="author.hasProfilePicture" @error="author.hasProfilePicture = false"
-                        :src="'https://api.faser.app/api/profile/getProfilePhoto?username=' + account.username"
+                        :src="'https://api.faser.app/api/profile/getProfilePhoto?username=' + author.username"
                         alt="profile picture" class="h-14 w-14 m-2" :class="{
                             'rounded-full': !author.businessAccount,
                             'rounded-lg': author.businessAccount
@@ -66,8 +66,8 @@
                     </div>
                 </div>
             </div>
-
-            <div v-if="isAuthor === 'true' || isAuthor === true || props.ownProfile" class="flex ml-auto">
+            
+            <div v-if="isAuthor === 'true' || isAuthor === true || props.ownProfile === true" class="flex ml-auto">
 
                 <div @click="openMenu"
                     class="flex cursor-pointer items-center w-12 h-12 justify-center bg-gray-600 rounded-xl threeDotElement"
