@@ -185,6 +185,7 @@ import axios from "axios";
 import { useRoute, useRouter } from "vue-router";
 import MarkdownIt from "markdown-it";
 import Cookies from "js-cookie";
+import { useHead } from "@vueuse/core";
 
 const router = useRouter()
 
@@ -345,6 +346,24 @@ function toggleFollow() {
 
   followed.value = !followed.value
 }
+
+useHead({
+  title: profileData.value.displayName + " - faser.app",
+  meta: [
+    {
+      name: "og:description",
+      content: profileData.value.bio,
+    },
+    {
+      name: "og:title",
+      content: profileData.value.displayName,
+    },
+    {
+      name: "og:image",
+      content: "https://api.faser.app/api/profile/getProfilePhoto?username=" + username,
+    }
+  ],
+});
 </script>
 
 <style scoped>
