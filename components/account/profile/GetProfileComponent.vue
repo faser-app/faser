@@ -185,7 +185,7 @@ import axios from "axios";
 import { useRoute, useRouter } from "vue-router";
 import MarkdownIt from "markdown-it";
 import Cookies from "js-cookie";
-import { useHead } from "@vueuse/head";
+import { useHead } from "@vueuse/core";
 
 const router = useRouter()
 
