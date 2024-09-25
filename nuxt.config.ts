@@ -21,6 +21,24 @@ export default defineNuxtConfig({
           href: "/favicon.ico",
         },
       ],
+      meta: [
+        {
+          property: "og:title",
+          content: "faser – Weaving Conversations, One Thread at a Time.",
+        },
+        {
+          property: "og:description",
+          content:
+            "Connect with others, share your thoughts, and become part of a network that weaves conversations into a global community.",
+        },
+        {
+          property: "og:image",
+          content: "_nuxt/assets/img/icon/logo.png",
+        },
+        { property: "og:url", content: "https://faser.app" },
+        { name: "twitter:card", content: "summary_large_image" },
+        { name: "twitter:site", content: "@faser_app" },
+      ],
     },
   },
   server: {
