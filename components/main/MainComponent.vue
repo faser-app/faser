@@ -121,9 +121,7 @@ axios.get("https://api.faser.app/api/account/getOwnProfile", {
 }).then((ownResponse) => {
   ownProfileData.value = ownResponse.data[0];
   loggedIn.value = true
-  console.log("logged in")
 }).catch((error) => {
   loggedIn.value = false
-  console.log("not logged in")
 });
 </script>

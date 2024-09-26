@@ -2,7 +2,7 @@
   <div class="bg-gray-950 min-h-screen text-white">
     <div class="md:flex w-full" v-if="loaded && success">
       <div class="md:flex hidden flex-wrap md:w-1/5 gap-2 justify-center">
-        <div v-for="community in communities" :key="community.name">
+        <!-- <div v-for="community in communities" :key="community.name">
           <div class="w-full flex mr-8 h-fit truncate items-center rounded-xl bg-gray-800">
             <img src="https://via.placeholder.com/150" alt="profile picture" class="rounded-full h-8 w-8 m-2" />
             {{ community.name }}
@@ -11,7 +11,7 @@
         <p v-if="communities.length === 0 && !privateAccount">
           No Communites yet
         </p>
-        <p v-if="privateAccount">Private account</p>
+        <p v-if="privateAccount">Private account</p> -->
       </div>
       <div class="md:w-4/5 w-full mr-4">
         <div class="flex flex-wrap bg-gray-800 md:w-full ml-2 md:ml-1 rounded-xl items-center mr-2 h-fit">
@@ -232,70 +232,90 @@ const route = useRoute();
 
 const username = route.params.user.replace("@", "");
 
-axios.get("https://api.faser.app/api/account/getOwnProfile", {
-  headers: {
-    token: Cookies.get("token"),
-  },
-}).then((ownResponse) => {
-  ownProfileData.value = ownResponse.data[0];
-  ownId.value = ownResponse.data[0].id
-})
-
-axios
-  .get(url, {
+async function main() {
+  const ownResponse = await axios.get("https://api.faser.app/api/account/getOwnProfile", {
     headers: {
-      username: username,
       token: Cookies.get("token"),
-      lang: navigator.language || navigator.userLanguage,
     },
   })
-  .then((response) => {
-    loaded.value = true;
-    success.value = true;
 
-    profileData.value = response.data[0];
+  ownProfileData.value = ownResponse.data[0];
+  ownId.value = ownResponse.data[0].id
 
-    badges.value = response.data[0].badges;
+  const response = await axios
+    .get(url, {
+      headers: {
+        username: username,
+        token: Cookies.get("token"),
+        lang: navigator.language || navigator.userLanguage,
+      },
+    }).catch((error) => {
+      if (error.response.status === 404) {
+        loaded.value = true;
+        success.value = false;
+      } else {
+        router.push("/login")
+      }
+    });
 
-    markdownHTML.value = md.render(response.data[0].bio);
+  loaded.value = true;
+  success.value = true;
 
-    posts.value = response.data[0].posts.length;
-    followers.value = response.data[0].follower.length;
-    following.value = response.data[0].following.length;
+  profileData.value = response.data[0];
 
-    if (response.data[0].follower.includes(ownId.value)) {
-      followed.value = true
-    }
+  badges.value = response.data[0].badges;
 
-    postsValue.value = response.data[0].posts.reverse();
+  markdownHTML.value = md.render(response.data[0].bio);
 
-    privateAccount.value = response.data[0].privateAccount;
+  posts.value = response.data[0].posts.length;
+  followers.value = response.data[0].follower.length;
+  following.value = response.data[0].following.length;
 
-    const accountCreated = new Date(response.data[1].memberSince);
-    const accountCreatedString = accountCreated.toLocaleDateString();
-    sinceString.value = accountCreatedString;
+  if (response.data[0].follower.includes(ownId.value)) {
+    followed.value = true
+  }
 
-    if (response.data[0].id === ownResponse.data[0].id) {
-      isAbleToFollow.value = false
-    }
-  })
-  .catch((error) => {
-    loaded.value = true;
-    success.value = true;
+  postsValue.value = response.data[0].posts.reverse();
+
+  privateAccount.value = response.data[0].privateAccount;
+
+  const accountCreated = new Date(response.data[1].memberSince);
+  const accountCreatedString = accountCreated.toLocaleDateString();
+  sinceString.value = accountCreatedString;
+
+  if (response.data[0].id === ownResponse.data[0].id) {
+    isAbleToFollow.value = false
+  }
+
+  useHead({
+    title: profileData.value.displayName + " - faser.app",
+    meta: [
+      {
+        name: "description",
+        content: profileData.value.bio,
+      },
+      {
+        name: "keywords",
+        content: "faser, social media, profile, " + profileData.value.displayName,
+      },
+    ],
   });
 
-axios
-  .get(
-    "https://api.faser.app/api/profile/getProfilePhoto?username=" + username
-  )
-  .then((response) => {
-    hasProfilePicture.value = true;
-    imageLoaded.value = true;
-  })
-  .catch((error) => {
-    hasProfilePicture.value = false;
-    imageLoaded.value = true;
-  });
+  axios
+    .get(
+      "https://api.faser.app/api/profile/getProfilePhoto?username=" + username
+    )
+    .then((response) => {
+      hasProfilePicture.value = true;
+      imageLoaded.value = true;
+    })
+    .catch((error) => {
+      hasProfilePicture.value = false;
+      imageLoaded.value = true;
+    });
+}
+
+main();
 
 function toggleFollow() {
   let url = ""

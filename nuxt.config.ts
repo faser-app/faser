@@ -21,6 +21,12 @@ export default defineNuxtConfig({
           href: "/favicon.ico",
         },
       ],
+      script: [
+        {
+          src: "https://cdn.jsdelivr.net/npm/ldrs/dist/auto/lineWobble.js",
+          type: "module",
+        }
+      ]
     },
   },
   server: {

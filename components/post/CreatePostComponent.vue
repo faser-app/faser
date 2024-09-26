@@ -23,9 +23,12 @@
                             <i class="fa-solid fa-xmark"></i>
                         </div>
                     </div>
-                    <div class="bg-gray-800 mt-2 p-2 rounded-xl">
+                    <div class="bg-gray-800 mt-2 p-2 rounded-xl" :class="{
+                        'border border-red-500': error
+                    }">
                         <textarea class="w-full h-40 bg-gray-800 text-white pt-0 mt-2 resize-none focus:outline-none"
-                            v-model="postContent" placeholder="What are you thinking about?"></textarea>
+                            v-model="postContent" @input="error = ''"
+                            placeholder="What are you thinking about?"></textarea>
                         <div class="flex cursor-pointer items-center w-12 h-12 justify-center bg-gray-700 rounded-xl"
                             @click="selectFile">
                             <i class="fa-solid fa-image text-2xl overflow-visible"></i>
@@ -42,7 +45,7 @@
                             </template>
                         </div>
                     </div>
-                    <p v-if="error" class="text-red-500">Error message</p>
+                    <p v-if="error" class="text-red-500 mt-1">{{ error }}</p>
                     <div class="flex md:flex-nowrap flex-wrap justify-end mt-2 gap-2">
                         <button @click="showModal = false"
                             class="bg-gray-700 p-2 md:w-2/3 w-full rounded-xl">Close</button>
@@ -134,8 +137,9 @@ function uploadPost() {
                 }
             }
         })
-        .catch(error => {
-            console.log(error.response.data)
+        .catch(err => {
+            error.value = err.response.data.message
+            loading.value = false
         })
 }
 </script>

@@ -2,13 +2,13 @@
   <div class="bg-gray-950 min-h-screen text-white">
     <div class="md:flex w-full">
       <div class="md:flex hidden flex-wrap md:w-60 gap-2 justify-center">
-        <div v-for="community in communities" :key="community.name">
+        <!-- <div v-for="community in communities" :key="community.name">
           <div class="w-full flex mr-8 h-fit truncate items-center rounded-xl bg-gray-800">
             <img src="https://via.placeholder.com/150" alt="profile picture" class="rounded-full h-8 w-8 m-2" />
             {{ community.name }}
           </div>
         </div>
-        <p v-if="communities.length === 0">No Communites yet</p>
+        <p v-if="communities.length === 0">No Communites yet</p> -->
       </div>
       <div class="md:w-4/5 w-full mr-4">
         <div class="flex flex-wrap bg-gray-800 md:w-full ml-2 md:ml-1 rounded-xl items-center mr-2 h-fit">
@@ -95,7 +95,7 @@
         </div>
       </div>
     </div>
-    <div>
+    <!-- <div>
       <div v-if="communities.length !== 0" class="flex md:hidden w-full justify-center text-xl mt-2">
         <p>Communities</p>
       </div>
@@ -107,7 +107,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <div v-if="openFollower" :class="{
       'animation': openFollower

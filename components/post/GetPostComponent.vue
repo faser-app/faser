@@ -1,37 +1,9 @@
 <template>
     <div v-if="postVisible" class="w-full bg-gray-700 p-2 mb-2 rounded-xl text-white">
-        <RouterLink :to="'/post/' + props.postId">
-            <div class="flex items-center">
-                <div class="flex items-center w-full">
-                    <RouterLink v-if="props.ownProfile === 'false'" :to="'/' + author.username"
-                        class="flex items-center">
-                        <div v-if="props.ownProfile === 'false'">
-                            <img v-if="author.hasProfilePicture" @error="author.hasProfilePicture = false"
-                                :src="'https://api.faser.app/api/profile/getProfilePhoto?username=' + author.username"
-                                alt="profile picture" class="h-14 w-14 m-2" :class="{
-                                    'rounded-full': !author.businessAccount,
-                                    'rounded-lg': author.businessAccount
-                                }" />
-                            <div v-else
-                                class="h-14 w-14 m-2 flex border justify-center items-center border-[#96969627] bg-[#1118276c]"
-                                :class="{
-                                    'rounded-full': !author.businessAccount,
-                                    'rounded-xl': author.businessAccount
-                                }">
-                                <i class="fa-solid fa-user rounded-full text-2xl"></i>
-                            </div>
-                        </div>
-                        <p>{{ author.displayName }}</p>
-                        <div v-if="author.businessAccount"
-                            class="flex ml-2 justify-center text-xs items-center bg-yellow-600 border w-6 h-6 border-yellow-300 rounded-full">
-                            <i class="fa-solid verifiedBadge fa-check"></i>
-                        </div>
-                        <div v-else-if="author.verifiedAccount"
-                            class="flex ml-2 justify-center text-xs items-center bg-sky-600 border w-6 h-6 border-sky-300 rounded-full">
-                            <i class="fa-solid verifiedBadge fa-check"></i>
-                        </div>
-                    </RouterLink>
-                    <RouterLink v-else :to="'/' + author.username" class="flex items-center">
+        <div class="flex items-center">
+            <div class="flex items-center w-full">
+                <RouterLink v-if="props.ownProfile === 'false'" :to="'/' + author.username" class="flex items-center">
+                    <div v-if="props.ownProfile === 'false'">
                         <img v-if="author.hasProfilePicture" @error="author.hasProfilePicture = false"
                             :src="'https://api.faser.app/api/profile/getProfilePhoto?username=' + author.username"
                             alt="profile picture" class="h-14 w-14 m-2" :class="{
@@ -46,64 +18,88 @@
                             }">
                             <i class="fa-solid fa-user rounded-full text-2xl"></i>
                         </div>
+                    </div>
+                    <p>{{ author.displayName }}</p>
+                    <div v-if="author.businessAccount"
+                        class="flex ml-2 justify-center text-xs items-center bg-yellow-600 border w-6 h-6 border-yellow-300 rounded-full">
+                        <i class="fa-solid verifiedBadge fa-check"></i>
+                    </div>
+                    <div v-else-if="author.verifiedAccount"
+                        class="flex ml-2 justify-center text-xs items-center bg-sky-600 border w-6 h-6 border-sky-300 rounded-full">
+                        <i class="fa-solid verifiedBadge fa-check"></i>
+                    </div>
+                </RouterLink>
+                <RouterLink v-else :to="'/' + author.username" class="flex items-center">
+                    <img v-if="author.hasProfilePicture" @error="author.hasProfilePicture = false"
+                        :src="'https://api.faser.app/api/profile/getProfilePhoto?username=' + author.username"
+                        alt="profile picture" class="h-14 w-14 m-2" :class="{
+                            'rounded-full': !author.businessAccount,
+                            'rounded-lg': author.businessAccount
+                        }" />
+                    <div v-else
+                        class="h-14 w-14 m-2 flex border justify-center items-center border-[#96969627] bg-[#1118276c]"
+                        :class="{
+                            'rounded-full': !author.businessAccount,
+                            'rounded-xl': author.businessAccount
+                        }">
+                        <i class="fa-solid fa-user rounded-full text-2xl"></i>
+                    </div>
 
-                        <p>{{ author.displayName }}</p>
-                        <div v-if="author.businessAccount"
-                            class="flex ml-2 justify-center text-xs items-center bg-yellow-600 border w-6 h-6 border-yellow-300 rounded-full">
-                            <i class="fa-solid verifiedBadge fa-check"></i>
-                        </div>
-                        <div v-else-if="author.verifiedAccount"
-                            class="flex ml-2 justify-center text-xs items-center bg-sky-600 border w-6 h-6 border-sky-300 rounded-full">
-                            <i class="fa-solid verifiedBadge fa-check"></i>
-                        </div>
-                    </RouterLink>
-                    <p class="ml-3 text-gray-400">{{ postCreatedAt }}</p>
-                    <p class="ml-3 text-gray-400" v-if="postContent.edited">edited</p>
+                    <p>{{ author.displayName }}</p>
+                    <div v-if="author.businessAccount"
+                        class="flex ml-2 justify-center text-xs items-center bg-yellow-600 border w-6 h-6 border-yellow-300 rounded-full">
+                        <i class="fa-solid verifiedBadge fa-check"></i>
+                    </div>
+                    <div v-else-if="author.verifiedAccount"
+                        class="flex ml-2 justify-center text-xs items-center bg-sky-600 border w-6 h-6 border-sky-300 rounded-full">
+                        <i class="fa-solid verifiedBadge fa-check"></i>
+                    </div>
+                </RouterLink>
+                <p class="ml-3 text-gray-400">{{ postCreatedAt }}</p>
+                <p class="ml-3 text-gray-400" v-if="postContent.edited">edited</p>
 
-                    <div v-if="!postContent.appropriate" v-on:mouseover="hovered = true"
-                        v-on:mouseleave="hovered = false"
-                        class="w-8 h-8 ml-2 rounded-full bg-gray-500 text-gray-300 flex items-center justify-center">
-                        <i class="fa-solid fa-info"></i>
-                        <div class="absolute mb-16 bg-gray-600 p-2 rounded-xl" v-if="hovered">
-                            {{ postContent.appropriateDescription }}
-                        </div>
+                <div v-if="!postContent.appropriate" v-on:mouseover="hovered = true" v-on:mouseleave="hovered = false"
+                    class="w-8 h-8 ml-2 rounded-full bg-gray-500 text-gray-300 flex items-center justify-center">
+                    <i class="fa-solid fa-info"></i>
+                    <div class="absolute mb-16 bg-gray-600 p-2 rounded-xl" v-if="hovered">
+                        {{ postContent.appropriateDescription }}
                     </div>
                 </div>
+            </div>
 
-                <div v-if="isAuthor === 'true' || isAuthor === true || props.ownProfile === true" class="flex ml-auto">
+            <div v-if="isAuthor === 'true' || isAuthor === true || props.ownProfile === true" class="flex ml-auto">
 
-                    <div @click="openMenu"
-                        class="flex cursor-pointer items-center w-12 h-12 justify-center bg-gray-600 rounded-xl threeDotElement"
-                        :class="{
-                            'threeDotElementOpen': threeDotElementOpen
-                        }">
-                        <i v-if="!threeDotsMenu" class="fa-solid fa-ellipsis-vertical"></i>
-                        <div v-else>
-                            <div class="flex flex-col gap-2">
-                                <div class="p-2 rounded-xl w-full" @click="showModal = true">
-                                    <i class="fa-solid fa-trash"></i>
-                                </div>
-                                <div class="p-2 rounded-xl w-full" @click="showEditModal = true">
-                                    <i class="fa-solid fa-edit"></i>
-                                </div>
+                <div @click="openMenu"
+                    class="flex cursor-pointer items-center w-12 h-12 justify-center bg-gray-600 rounded-xl threeDotElement"
+                    :class="{
+                        'threeDotElementOpen': threeDotElementOpen
+                    }">
+                    <i v-if="!threeDotsMenu" class="fa-solid fa-ellipsis-vertical"></i>
+                    <div v-else>
+                        <div class="flex flex-col gap-2">
+                            <div class="p-2 rounded-xl w-full" @click="showModal = true">
+                                <i class="fa-solid fa-trash"></i>
+                            </div>
+                            <div class="p-2 rounded-xl w-full" @click="showEditModal = true">
+                                <i class="fa-solid fa-edit"></i>
                             </div>
                         </div>
                     </div>
                 </div>
-
             </div>
-            <p class="ml-2" v-html="postValue"></p>
-            <div class="overflow-x-scroll scroll-snap-x">
-                <div class="inline-flex gap-2 mt-2">
-                    <div v-for="image in postContent.images" :key="image"
-                        class="bg-gray-700 p-2 rounded-xl inline-block scroll-snap-item">
-                        <img @click="openImage('https://api.faser.app/api/social/getPostImage?postId=' + postContent.postId + '&imageId=' + image)"
-                            :src="'https://api.faser.app/api/social/getPostImage?postId=' + postContent.postId + '&imageId=' + image"
-                            class="min-w-48 h-48 object-cover rounded-lg cursor-pointer" />
-                    </div>
+
+        </div>
+        <p class="ml-2" v-html="postValue"></p>
+        <div class="overflow-x-scroll scroll-snap-x">
+            <div class="inline-flex gap-2 mt-2">
+                <div v-for="image in postContent.images" :key="image"
+                    class="bg-gray-700 p-2 rounded-xl inline-block scroll-snap-item">
+                    <img @click="openImage('https://api.faser.app/api/social/getPostImage?postId=' + postContent.postId + '&imageId=' + image)"
+                        :src="'https://api.faser.app/api/social/getPostImage?postId=' + postContent.postId + '&imageId=' + image"
+                        class="min-w-48 h-48 object-cover rounded-lg cursor-pointer" />
                 </div>
             </div>
-        </RouterLink>
+        </div>
         <div class="flex w-full items-center justify-center">
             <div class="flex justify-center gap-2 w-1/2 cursor-pointer items-center text-gray-300" @click="toggleLike">
                 <i v-if="!isLiked" class="fa-regular text-xl fa-heart"></i>
@@ -124,7 +120,11 @@
         <div class="flex w-full gap-2 mt-2">
             <input type="text" class="w-3/4 bg-gray-600 p-2 rounded-xl focus:outline-none"
                 placeholder="Write a comment..." v-model="commentText" />
-            <button class="w-1/4 bg-gray-600 p-2 rounded-xl" @click="postComment">Comment</button>
+            <button v-if="!runningCommentRequest" class="w-1/4 bg-gray-600 p-2 rounded-xl"
+                @click="postComment">Comment</button>
+            <button v-else class="w-1/4 bg-gray-600 p-2 rounded-xl">
+                <l-line-wobble size="80" stroke="5" bg-opacity="0.1" speed="1.75" color="black"></l-line-wobble>
+            </button>
         </div>
 
 
@@ -224,6 +224,8 @@ const postCreatedAt = ref('')
 
 const postVisible = ref(true);
 
+const runningCommentRequest = ref(false);
+
 const postLikes = ref(0);
 const postComments = ref(0)
 const isLiked = ref(false);
@@ -238,6 +240,8 @@ const threeDotsMenu = ref(false);
 const profile = ref({})
 
 function postComment() {
+    runningCommentRequest.value = true
+
     axios.post("https://api.faser.app/api/social/createPost", {
         token: Cookies.get("token"),
         message: commentText.value,
@@ -246,9 +250,22 @@ function postComment() {
         parentPost: postId.value,
         images: 0
     })
-    .then(() => {
-        router.push("/post/" + postId.value)
-    })
+        .then(() => {
+            if (router.currentRoute.value.path.startsWith("/post/")) {
+                router.go(0)
+            } else {
+                router.push("/post/" + postId.value)
+            }
+
+            runningCommentRequest.value = false
+        })
+        .catch((error) => {
+            runningCommentRequest.value = false
+
+            if (error.response.status === 429) {
+                alert("You are beeing rate limited")
+            }
+        })
 }
 
 const props = defineProps({
