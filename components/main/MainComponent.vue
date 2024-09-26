@@ -85,10 +85,12 @@ function loadPosts() {
       axios.post("https://api.faser.app/api/posts/loadPosts", {
         token: Cookies.get("token"),
         loadPosts: 25,
-        lastTimestamp: lastTimestamp.value
+        lastTimestamp: lastTimestamp.value,
       })
         .then((response) => {
           loading.value = false
+
+          lastTimestamp.value = response.data.lastTimestamp
 
           if (response.data.message === "no posts available") {
             noMorePosts.value = true
