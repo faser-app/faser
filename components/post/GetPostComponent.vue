@@ -403,7 +403,7 @@ function formatTimeDifference(timestamp) {
         }
 
         if (postContent.value.content.split(" ")[i].includes("@")) {
-            postValue.value = postValue.value.replace(postContent.value.content.split(" ")[i], `<a style="color: rgb(71, 166, 242);" href="https://faser.app/${postContent.value.content.split(" ")[i].replace("@", "")}" target="_blank">${postContent.value.content.split(" ")[i]}</a>`)
+            postValue.value = postValue.value.replace(postContent.value.content.split(" ")[i], `<a style="color: rgb(71, 166, 242);" href="https://faser.app/${postContent.value.content.split(" ")[i].replace("@", "")}">${postContent.value.content.split(" ")[i]}</a>`)
         }
     }
 
