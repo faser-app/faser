@@ -98,15 +98,15 @@
           </div>
           <p class="w-full pl-5 pb-3">Member since {{ sinceString }}</p>
         </div>
-        <div class="flex flex-wrap mt-2 bg-gray-800 md:w-full ml-2 md:ml-1 rounded-xl items-center mr-2 h-fit">
-          <div class="p-2 mt-2 bg-gray-800 w-full ml-2 md:ml-1 rounded-xl items-center h-fit">
+        <div class="flex flex-wrap mt-2 bg-gray-800 mb-2 md:w-full ml-2 md:ml-1 rounded-xl items-center mr-2 h-fit">
+          <div class="p-2 mt-2 bg-gray-800 w-full text-center pr-3 ml-2 md:ml-1 rounded-xl items-center h-fit">
             <div class="w-full flex justify-center">
               <p class="text-xl mt-2 mb-2">Posts</p>
             </div>
             <div v-if="posts == 0" class="h-36 flexjustify-center items-center">
               <p class="italic text-gray-400">No posts yet</p>
             </div>
-            <div v-else v-for="post in postsValue" :key="post.id" class="w-full justify-center items-center">
+            <div v-else v-for="post in postsValue" :key="post.id" class="w-full block">
               <PostGetPostComponent :postId="post" ownProfile="false" :profile="profileData" :ownProfile="ownProfile"
                 :account="accountData" :ownProfileData="ownProfileData" />
             </div>
