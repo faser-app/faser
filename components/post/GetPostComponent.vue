@@ -1,5 +1,5 @@
 <template>
-    <div v-if="postVisible" class="w-full max-w-[100rem] bg-gray-700 p-2 mb-2 rounded-xl text-white">
+    <div v-if="postVisible" class="w-full bg-gray-700 p-2 mb-2 rounded-xl text-white">
         <div class="flex items-center">
             <div class="flex items-center w-full">
                 <RouterLink v-if="props.ownProfile === 'false'" :to="'/' + author.username" class="flex items-center">

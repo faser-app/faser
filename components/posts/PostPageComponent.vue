@@ -2,12 +2,14 @@
     <div class="min-h-screen bg-gray-950 px-2 text-white">
         <div v-if="isLoading" class="text-center mt-5">Loading...</div>
         <div v-else>
-            <PostGetPostComponent :postId="postId" :ownProfile="false" :ownProfileData="ownProfileData"
-                :account="accountData" />
-            <div class="mt-5">
-                <div v-for="(comment, index) in comments" :key="comment">
-                    <PostGetPostComponent :postId="comment" :ownProfile="ownProfileArray[index]"
-                        :ownProfileData="ownProfileData" :account="accountData" />
+            <div class="w-full justify-center">
+                <PostGetPostComponent :postId="postId" :ownProfile="false" :ownProfileData="ownProfileData"
+                    :account="accountData" />
+                <div class="mt-5">
+                    <div v-for="(comment, index) in comments" :key="comment">
+                        <PostGetPostComponent :postId="comment" :ownProfile="ownProfileArray[index]"
+                            :ownProfileData="ownProfileData" :account="accountData" />
+                    </div>
                 </div>
             </div>
         </div>
