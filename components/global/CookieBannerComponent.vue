@@ -18,7 +18,7 @@
 import Cookies from "js-cookie"
 
 function acceptCookies() {
-    Cookies.set("accepted", true)
+    Cookies.set("accepted", true, { expires: 365 })
     window.location.reload()
 }
 </script>
