@@ -99,7 +99,7 @@
           <p class="w-full pl-5 pb-3">Member since {{ sinceString }}</p>
         </div>
         <div class="flex flex-wrap mt-2 bg-gray-800 mb-2 md:w-full ml-2 md:ml-1 rounded-xl items-center mr-2 h-fit">
-          <div class="p-2 mt-2 bg-gray-800 w-full text-center pr-3 ml-2 md:ml-1 rounded-xl items-center h-fit">
+          <div class="p-2 mt-2 bg-gray-800 w-full pr-3 ml-2 md:ml-1 rounded-xl items-center h-fit">
             <div class="w-full flex justify-center">
               <p class="text-xl mt-2 mb-2">Posts</p>
             </div>

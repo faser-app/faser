@@ -90,7 +90,7 @@
               <p class="italic text-gray-400">No posts yet</p>
             </div>
             <div v-else v-for="post in postsValue" :key="post.id" class="w-full block">
-              <PostGetPostComponent :postId="post" ownProfile="false" :profile="profileData" :ownProfile="ownProfile"
+              <PostGetPostComponent :postId="post" ownProfile="true" :profile="profileData" :ownProfile="ownProfile"
                 :account="accountData" :ownProfileData="ownProfileData" />
             </div>
           </div>
