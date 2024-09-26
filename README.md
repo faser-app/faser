@@ -26,12 +26,12 @@ Faser is a social media app that allows users to create and share posts in real-
 
 2. Install the dependencies:
    ```npm install```
-   # or
+   or
    ```yarn install```
 
 3. Start the development server:
    ```npm run dev```
-   # or
+   or
    ```yarn dev```
 
 5. Open the app in your browser at ```http://localhost:3000```.
