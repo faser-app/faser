@@ -1,5 +1,9 @@
 <template>
     <div v-if="postVisible" class="w-full bg-gray-700 p-2 mb-2 rounded-xl text-white">
+        <div class="flex items-center" v-if="postType === 'comment'">
+            <div class="rounded-tl-lg border-t-2 border-l-2 border-gray-500 h-4 w-4 ml-8"></div>
+            <RouterLink :to="'/post/' + parentPost" class="ml-2 mb-4 text-gray-400 underline cursor-pointer">Go to parent post</RouterLink>
+        </div>
         <div class="flex items-center">
             <div class="flex items-center w-full">
                 <RouterLink v-if="props.ownProfile === 'false'" :to="'/' + author.username" class="flex items-center">
@@ -224,6 +228,9 @@ const postCreatedAt = ref('')
 
 const postVisible = ref(true);
 
+const postType = ref('')
+const parentPost = ref('')
+
 const runningCommentRequest = ref(false);
 
 const postLikes = ref(0);
@@ -444,6 +451,9 @@ function reloadStats() {
             postLikes.value = postContent.value.likes.length
 
             postComments.value = postContent.value.comments.length
+
+            postType.value = response.data[0].postType
+            parentPost.value = response.data[0].parentPost
         })
 }
 
