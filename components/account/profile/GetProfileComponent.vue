@@ -263,10 +263,6 @@ async function main() {
   followers.value = response.data[0].follower.length;
   following.value = response.data[0].following.length;
 
-  if (response.data[0].follower.includes(ownId.value)) {
-    followed.value = true
-  }
-
   postsValue.value = response.data[0].posts.reverse();
 
   privateAccount.value = response.data[0].privateAccount;
@@ -313,6 +309,10 @@ async function main() {
 
   if (response.data[0].id === ownResponse.data[0].id) {
     isAbleToFollow.value = false
+  }
+
+  if (response.data[0].follower.includes(ownId.value)) {
+    followed.value = true
   }
 }
 
