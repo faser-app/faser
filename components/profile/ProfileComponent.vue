@@ -22,7 +22,7 @@
           <div class="grid">
             <div class="flex items-center">
               <div>
-                <div class="flex gap-2 text-sm mb-2" v-if="badges.length !== 0">
+                <div class="flex max-w-[40vw] flex-wrap gap-2 text-sm mb-2" v-if="badges.length !== 0">
                   <div v-for="badge in badges" :key="badge.name" class="bg-black rounded-full">
                     <div class="flex items-center cursor-default border rounded-full px-2 p-1" :style="'background-color: ' +
                       badge.color +
