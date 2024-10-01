@@ -115,10 +115,11 @@
         <div class="flex w-full items-center justify-center">
             <div class="flex justify-center gap-2 w-1/2 cursor-pointer items-center text-gray-300" @click="toggleLike">
 
-                <Transition name="fade" @leave="leave" @enter="open">
-                    <i v-if="!isLiked" class="fa-regular absolute text-xl fa-heart"></i>
-                    <i v-else class="fa-solid text-xl absolute fa-heart text-red-500"></i>
+                <Transition name="like" @leave="leave" @enter="open">
+                    <i v-if="isLiked" class="fa-solid text-xl absolute fa-heart text-red-500"></i>
                 </Transition>
+                <i v-if="!isLiked"
+                    class="fa-regular absolute text-xl fa-heart hover:text-red-500 transition-colors duration-150"></i>
                 <p class="ml-10">
                     {{ postLikes }}
                 </p>
@@ -521,6 +522,38 @@ onMounted(() => {
     to {
         opacity: 0;
         transform: translateY(5px);
+    }
+}
+
+.like-enter-active {
+    animation: likeIn 0.25s ease;
+}
+
+@keyframes likeIn {
+    0% {
+        transform: scale(0.5);
+    }
+
+    85% {
+        transform: scale(1.1);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.like-leave-active {
+    animation: likeOut 0.25s;
+}
+
+@keyframes likeOut {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
     }
 }
 
