@@ -66,8 +66,11 @@
                 <div v-if="!postContent.appropriate" v-on:mouseover="hovered = true" v-on:mouseleave="hovered = false"
                     class="w-8 h-8 ml-2 rounded-full bg-gray-500 text-gray-300 flex items-center justify-center">
                     <i class="fa-solid fa-info"></i>
-                    <div class="absolute mb-16 bg-gray-600 p-2 rounded-xl" v-if="hovered">
-                        {{ postContent.appropriateDescription }}
+                    <div class="absolute mb-20 bg-gray-600 p-2 rounded-xl flex justify-center items-end" v-if="hovered">
+                        <div class="bg-gray-600 z-10">
+                            {{ postContent.appropriateDescription }}
+                        </div>
+                        <div class="absolute rotate-45 w-4 h-4 bg-gray-600 translate-y-4"></div>
                     </div>
                 </div>
             </div>
