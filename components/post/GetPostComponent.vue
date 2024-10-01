@@ -2,7 +2,8 @@
     <div v-if="postVisible" class="w-full bg-gray-700 p-2 mb-2 rounded-xl text-white">
         <div class="flex items-center" v-if="postType === 'comment'">
             <div class="rounded-tl-lg border-t-2 border-l-2 border-gray-500 h-4 w-4 ml-8"></div>
-            <RouterLink :to="'/post/' + parentPost" class="ml-2 mb-4 text-gray-400 underline cursor-pointer">Go to parent post</RouterLink>
+            <RouterLink :to="'/post/' + parentPost" class="ml-2 mb-4 text-gray-400 underline cursor-pointer">Go to
+                parent post</RouterLink>
         </div>
         <div class="flex items-center">
             <div class="flex items-center w-full">
@@ -72,23 +73,27 @@
             </div>
 
             <div v-if="isAuthor === 'true' || isAuthor === true || props.ownProfile === true" class="flex ml-auto">
-
-                <div @click="openMenu"
-                    class="flex cursor-pointer items-center w-12 h-12 justify-center bg-gray-600 rounded-xl threeDotElement"
-                    :class="{
-                        'threeDotElementOpen': threeDotElementOpen
-                    }">
-                    <i v-if="!threeDotsMenu" class="fa-solid fa-ellipsis-vertical"></i>
-                    <div v-else>
-                        <div class="flex flex-col gap-2">
-                            <div class="p-2 rounded-xl w-full" @click="showModal = true">
-                                <i class="fa-solid fa-trash"></i>
+                <Transition name="fade" @leave="leave" @enter="open">
+                    <div v-if="threeDotsMenu">
+                        <div
+                            class="flex flex-col gap-2 bg-gray-600 p-2 rounded-xl absolute -translate-x-16 translate-y-2">
+                            <div class="p-2 rounded-xl w-full flex items-center cursor-pointer"
+                                @click="openDeleteModal">
+                                <i class="fa-solid fa-trash mr-2"></i>
+                                <p>Delete</p>
                             </div>
-                            <div class="p-2 rounded-xl w-full" @click="showEditModal = true">
-                                <i class="fa-solid fa-edit"></i>
+                            <hr class="border-gray-400" />
+                            <div class="p-2 rounded-xl w-full flex items-center cursor-pointer" @click="openEditModal">
+                                <i class="fa-solid fa-edit mr-2"></i>
+                                <p>Edit</p>
                             </div>
                         </div>
                     </div>
+                </Transition>
+
+                <div @click="openMenu"
+                    class="flex cursor-pointer items-center w-12 h-12 justify-center bg-gray-600 rounded-xl">
+                    <i class="fa-solid fa-ellipsis-vertical"></i>
                 </div>
             </div>
 
@@ -106,9 +111,12 @@
         </div>
         <div class="flex w-full items-center justify-center">
             <div class="flex justify-center gap-2 w-1/2 cursor-pointer items-center text-gray-300" @click="toggleLike">
-                <i v-if="!isLiked" class="fa-regular text-xl fa-heart"></i>
-                <i v-else class="fa-solid text-xl fa-heart text-red-500"></i>
-                <p>
+
+                <Transition name="fade" @leave="leave" @enter="open">
+                    <i v-if="!isLiked" class="fa-regular absolute text-xl fa-heart"></i>
+                    <i v-else class="fa-solid text-xl absolute fa-heart text-red-500"></i>
+                </Transition>
+                <p class="ml-10">
                     {{ postLikes }}
                 </p>
             </div>
@@ -206,7 +214,6 @@
 import axios from "axios";
 import MarkdownIt from "markdown-it";
 import Cookies from "js-cookie";
-import anime from 'animejs/lib/anime.es.js';
 import { useRouter } from "vue-router";
 
 const router = useRouter();
@@ -291,30 +298,20 @@ onMounted(() => {
 function openMenu() {
     threeDotElementOpen.value = true
 
-    setTimeout(() => {
-        anime({
-            targets: '.threeDotElementOpen',
-            width: '3rem',
-            height: '8rem',
-            duration: 1000
-        })
-
-        setTimeout(() => {
-            threeDotsMenu.value = false
-
-            anime({
-                targets: '.threeDotElementOpen',
-                width: '3rem',
-                height: '3rem',
-                duration: 1000
-            })
-
-            threeDotElementOpen.value = false
-        }, 10000)
-    }, 10)
-
 
     threeDotsMenu.value = true
+
+    setTimeout(() => {
+        if (threeDotElementOpen.value) {
+            closeMenu()
+        }
+    }, 5000)
+}
+
+function closeMenu() {
+    threeDotElementOpen.value = false
+
+    threeDotsMenu.value = false
 }
 
 axios.get("https://api.faser.app/api/profile/getPostProfile", {
@@ -433,6 +430,15 @@ function formatTimeDifference(timestamp) {
     return "just now";
 }
 
+function openDeleteModal() {
+    showModal.value = true
+    closeMenu()
+}
+
+function openEditModal() {
+    showEditModal.value = true
+    closeMenu()
+}
 
 function reloadStats() {
     axios.get("https://api.faser.app/api/social/fetchPost", {
@@ -483,11 +489,14 @@ onMounted(() => {
     scroll-snap-align: start;
 }
 
+.fade-enter-active {
+    animation: fadeIn 0.25s;
+}
 
 @keyframes fadeIn {
     from {
         opacity: 0;
-        transform: translateY(10px);
+        transform: translateY(-5px);
     }
 
     to {
@@ -503,10 +512,12 @@ onMounted(() => {
 @keyframes faceOut {
     from {
         opacity: 1;
+        transform: translateY(0);
     }
 
     to {
         opacity: 0;
+        transform: translateY(5px);
     }
 }
 
