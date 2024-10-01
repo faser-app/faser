@@ -149,10 +149,10 @@
                     <p>Do you really want to delete this post?</p>
                     <div class="flex flex-col md:flex-row justify-center gap-2 mt-4">
                         <button @click="showModal = false" class="md:w-2/3 bg-gray-700 p-2 rounded-xl">
-                            No
+                            Cancel
                         </button>
                         <button @click="deletePost" class="md:w-1/3 bg-red-500 p-2 rounded-xl">
-                            Yes
+                            Delete
                         </button>
                     </div>
                 </div>
