@@ -103,7 +103,7 @@
             <div class="w-full flex justify-center">
               <p class="text-xl mt-2 mb-2">Posts</p>
             </div>
-            <div v-if="posts == 0" class="h-36 flexjustify-center items-center">
+            <div v-if="posts == 0" class="h-36 flex justify-center items-center">
               <p class="italic text-gray-400">No posts yet</p>
             </div>
             <div v-else v-for="post in postsValue" :key="post.id" class="w-full block">
