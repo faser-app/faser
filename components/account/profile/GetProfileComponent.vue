@@ -233,26 +233,18 @@ const route = useRoute();
 const username = route.params.user.replace("@", "");
 
 async function main() {
-  const ownResponse = await axios.get("https://api.faser.app/api/account/getOwnProfile", {
-    headers: {
-      token: Cookies.get("token"),
-    },
-  })
-
-  ownProfileData.value = ownResponse.data[0];
-  ownId.value = ownResponse.data[0].id
-
   const response = await axios
     .get(url, {
       headers: {
         username: username,
-        token: Cookies.get("token"),
         lang: navigator.language || navigator.userLanguage,
       },
     }).catch((error) => {
       if (error.response.status === 404) {
         loaded.value = true;
         success.value = false;
+
+        console.log("404 Not found")
       } else {
         router.push("/login")
       }
@@ -283,10 +275,6 @@ async function main() {
   const accountCreatedString = accountCreated.toLocaleDateString();
   sinceString.value = accountCreatedString;
 
-  if (response.data[0].id === ownResponse.data[0].id) {
-    isAbleToFollow.value = false
-  }
-
   useHead({
     title: profileData.value.displayName + " - faser.app",
     meta: [
@@ -313,6 +301,19 @@ async function main() {
       hasProfilePicture.value = false;
       imageLoaded.value = true;
     });
+
+  const ownResponse = await axios.get("https://api.faser.app/api/account/getOwnProfile", {
+    headers: {
+      token: Cookies.get("token"),
+    },
+  }).catch(error => { })
+
+  ownProfileData.value = ownResponse.data[0];
+  ownId.value = ownResponse.data[0].id
+
+  if (response.data[0].id === ownResponse.data[0].id) {
+    isAbleToFollow.value = false
+  }
 }
 
 main();
