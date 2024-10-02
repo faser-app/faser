@@ -233,46 +233,6 @@ const route = useRoute();
 
 const username = route.params.user.replace("@", "");
 
-const { data, status, error } = useFetch(url, {
-  headers: {
-    username: username,
-    lang: navigator.language || navigator.userLanguage,
-  },
-
-  onResponse(response) {
-    profileData.value = response.data[0];
-    badges.value = response.data[0].badges;
-    markdownHTML.value = md.render(response.data[0].bio);
-    posts.value = response.data[0].posts.length;
-    followers.value = response.data[0].follower.length;
-    following.value = response.data[0].following.length;
-    postsValue.value = response.data[0].posts.reverse();
-    privateAccount.value = response.data[0].privateAccount;
-
-    const accountCreated = new Date(response.data[1].memberSince);
-    const accountCreatedString = accountCreated.toLocaleDateString();
-    sinceString.value = accountCreatedString;
-
-    useSeoMeta({
-      title: profileData.value.displayName + " - faser.app",
-      meta: [
-        {
-          name: "og:title",
-          content: profileData.value.displayName + " - faser.app",
-        },
-        {
-          name: "og:description",
-          content: profileData.value.bio,
-        },
-        {
-          name: "og:image",
-          content: "https://api.faser.app/api/profile/getProfilePhoto?username=" + username,
-        }
-      ],
-    });
-  }
-})
-
 async function main() {
   const response = await axios
     .get(url, {
