@@ -240,6 +240,19 @@ const { data, status, error } = useFetch(url, {
   },
 
   onResponse(response) {
+    profileData.value = response.data[0];
+    badges.value = response.data[0].badges;
+    markdownHTML.value = md.render(response.data[0].bio);
+    posts.value = response.data[0].posts.length;
+    followers.value = response.data[0].follower.length;
+    following.value = response.data[0].following.length;
+    postsValue.value = response.data[0].posts.reverse();
+    privateAccount.value = response.data[0].privateAccount;
+
+    const accountCreated = new Date(response.data[1].memberSince);
+    const accountCreatedString = accountCreated.toLocaleDateString();
+    sinceString.value = accountCreatedString;
+
     useSeoMeta({
       title: profileData.value.displayName + " - faser.app",
       meta: [
