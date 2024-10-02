@@ -567,4 +567,8 @@ onMounted(() => {
         opacity: 0;
     }
 }
+
+i {
+    z-index: 0;
+}
 </style>
