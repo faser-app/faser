@@ -22,13 +22,26 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     }
   );
 
+  const authorUser = await useFetch(
+    "https://api.faser.app/api/account/getProfile",
+    {
+      headers: {
+        userid: postAuthor.data.value[0].id,
+      },
+    }
+  );
+
   if (data.value && data.value.length > 0) {
     useHead({
       meta: [
         {
           hid: "og-title",
           property: "og:title",
-          content: postAuthor.data.value[0].displayName + " (@" + postAuthor.data.value[0].username + ") - faser.app",
+          content:
+            postAuthor.data.value[0].displayName +
+            " (@" +
+            authorUser.data.value[0].username +
+            ") - faser.app",
         },
         {
           hid: "og-description",
