@@ -18,27 +18,17 @@ const { data, status, error } = useFetch(url, {
     onResponse(response) {
         console.log(response.response._data)
 
-        useHead({
-            title: response.response._data[0].displayName + ' - faser.app',
-            meta: [
-                {
-                    name: "og:title",
-                    content: response.response._data[0].displayName + ' - faser.app'
-                },
-                {
-                    name: "og:description",
-                    content: response.response._data[0].bio
-                },
-                {
-                    name: "og:image",
-                    content: "https://api.faser.app/api/profile/getProfilePhoto?username=" + response.response._data[0].username
-                },
-                {
-                    name: "og:url",
-                    content: "https://faser.app/" + response.response._data[0].username
-                }
-            ]
-        })
+        const computedPageMeta = computed(() => {
+            return {
+                title: response.response._data[0].displayName + ' - faser.app',
+                meta: [
+                    { hid: 'og-title', property: 'og:title', content: response.response._data[0].displayName },
+                    { hid: 'og-description', property: 'og:description', content: response.response._data[0].bio },
+                ]
+            };
+        });
+
+        useHead(computedPageMeta);
     }
 })
 </script>
