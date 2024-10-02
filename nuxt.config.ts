@@ -32,11 +32,6 @@ export default defineNuxtConfig({
     },
   },
 
-  site: {
-    // production URL
-    url: "https://faser.app",
-  },
-
   server: {
     port: 3100,
   },
