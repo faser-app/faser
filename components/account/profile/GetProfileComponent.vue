@@ -132,6 +132,11 @@
         <p class="text-3xl text-gray-400">404 Not found</p>
       </div>
     </div>
+    <div v-if="!success && loaded">
+      <div class="flex flex-wrap min-h-svh w-full justify-center items-center">
+        <p class="text-3xl text-gray-400">404 Not found</p>
+      </div>
+    </div>
 
     <Transition name="fade" @leave="leave" @enter="enter">
       <div v-if="openFollower"
@@ -187,7 +192,6 @@ import axios from "axios";
 import { useRoute, useRouter } from "vue-router";
 import MarkdownIt from "markdown-it";
 import Cookies from "js-cookie";
-import { useFetch } from "#app";
 
 const router = useRouter()
 
@@ -251,8 +255,10 @@ async function main() {
       }
     });
 
-  loaded.value = true;
-  success.value = true;
+  if (response.status === 200) {
+    loaded.value = true;
+    success.value = true;
+  }
 
   profileData.value = response.data[0];
 
