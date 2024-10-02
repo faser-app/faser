@@ -125,12 +125,12 @@
                 </p>
             </div>
             <div class="flex gap-2 w-1/2 justify-center cursor-pointer items-center text-gray-300">
-                <RouterLink :to="'/post/' + postContent.postId" class="flex gap-2 items-center justify-center">
+                <a :href="'/post/' + postContent.postId" class="flex gap-2 items-center justify-center">
                     <i class="fa-regular fa-comment text-xl"></i>
                     <p>
                         {{ postComments }}
                     </p>
-                </RouterLink>
+                </a>
             </div>
             <div class="w-1/12 justify-center cursor-pointer items-center text-gray-300">
                 <i v-if="!copied" class="fa-solid fa-arrow-up-from-bracket" @click="sharePost"></i>
