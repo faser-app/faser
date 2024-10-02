@@ -27,6 +27,11 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
           property: "og:description",
           content: data.value[0].bio,
         },
+        {
+          hid: "og-image",
+          property: "og:image",
+          content: "https://api.faser.app/api/profile/getProfilePhoto?username=" + username,
+        },
       ],
     });
   } else {
