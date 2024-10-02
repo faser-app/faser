@@ -55,9 +55,18 @@
             use of the app after any changes have been made will constitute acceptance of those changes.</p>
 
         <br>
+				<h2 class="text-xl font-semibold mt-4">Google Analytics</h2>
+				<p>We use Google Analytics to collect information about how users interact with our app. Google Analytics collects data such as your IP address, browser type, device information, and the pages you visit. We use this data to improve our services and understand user behavior. All data collected is anonymized where possible, and IP anonymization is enabled to further protect your privacy.</p>
+
+				<p>You can opt-out of Google Analytics tracking by using the Google Analytics Opt-out Browser Add-on: <a href="https://tools.google.com/dlpage/gaoptout" class="underline" target="_blank">https://tools.google.com/dlpage/gaoptout</a>.</p>
+
+				<br>
         <h2 class="text-xl font-semibold mt-4">8. Contact</h2>
         <p>If you have any questions or concerns about this Privacy Policy, please contact us at <a
                 href="mailto:support@faser.app" class="underline">support@faser.app</a>.
         </p>
+				
+				<br>
+				
     </div>
 </template>
