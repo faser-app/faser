@@ -35,4 +35,10 @@ export default defineNuxtConfig({
   server: {
     port: 3100,
   },
+
+  modules: ["nuxt-gtag"],
+
+  gtag: {
+    id: "G-WY5FW4MTNC",
+  },
 });

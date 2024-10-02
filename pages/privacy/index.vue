@@ -24,6 +24,9 @@
             <li>To ensure the security of our app and services.</li>
             <li>To communicate with you about updates, changes, or important information related to your use of the app.
             </li>
+            <li>We use Google Analytics to collect and analyze data about how you interact with our app to help us
+                improve our services. Google Analytics collects data such as your IP address, browser type, and the
+                pages you visit.</li>
         </ul>
 
         <br>
@@ -53,7 +56,8 @@
 
         <br>
         <h2 class="text-xl font-semibold mt-4">8. Contact</h2>
-        <p>If you have any questions or concerns about this Privacy Policy, please contact us at <a href="mailto:support@faser.app" class="underline">support@faser.app</a>.
+        <p>If you have any questions or concerns about this Privacy Policy, please contact us at <a
+                href="mailto:support@faser.app" class="underline">support@faser.app</a>.
         </p>
     </div>
 </template>
