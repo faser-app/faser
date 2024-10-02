@@ -2,8 +2,9 @@
   <div class="bg-gray-950">
     <div class="bg-gray-900 text-white text-center p-4 rounded-t-xl">
       <div class="flex justify-center gap-4">
-        <div v-for="links in links" :key="links.name">
-          <RouterLink :to="links.url" class="underline">{{ links.name }}</RouterLink>
+        <div v-for="link in links" :key="link.name">
+          <RouterLink v-if="link.url.startsWith('/')" :to="link.url" class="underline">{{ link.name }}</RouterLink>
+          <a :href="link.url" v-else class="underline">{{ link.name }}</a>
         </div>
       </div>
 
@@ -35,6 +36,10 @@ const links = ref([
   {
     name: "Privacy",
     url: "/privacy",
+  },
+  {
+    name: "Status Page",
+    url: "https://stats.uptimerobot.com/Ow7zN9GfBE",
   },
 ]);
 </script>
