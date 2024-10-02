@@ -472,6 +472,8 @@ onMounted(() => {
 })
 </script>
 <style scoped>
+@import url("~/assets/css/markdown.css");
+
 .verifiedBadge {
     transform: translateY(1px);
 }
@@ -482,7 +484,6 @@ onMounted(() => {
 
 .overflow-x-scroll {
     scroll-snap-type: x mandatory;
-
 }
 
 .overflow-x-scroll::-webkit-scrollbar {
@@ -555,136 +556,5 @@ onMounted(() => {
     100% {
         opacity: 0;
     }
-}
-
-.bio h1 {
-    font-size: 2em;
-}
-
-.bio h2 {
-    font-size: 1.5em;
-}
-
-.bio h3 {
-    font-size: 1.17em;
-}
-
-.bio h4 {
-    font-size: 1em;
-}
-
-.bio h5 {
-    font-size: 0.83em;
-}
-
-.bio h6 {
-    font-size: 0.67em;
-}
-
-.bio p {
-    font-size: 1em;
-}
-
-.bio a {
-    text-decoration: underline;
-}
-
-.bio ul {
-    list-style-type: disc;
-}
-
-.bio ol {
-    list-style-type: decimal;
-}
-
-.bio li {
-    font-size: 1em;
-}
-
-.bio blockquote {
-    font-size: 1em;
-}
-
-.bio code {
-    font-size: 1em;
-}
-
-.bio pre {
-    font-size: 1em;
-}
-
-.bio strong {
-    font-weight: bold;
-}
-
-.bio em {
-    font-style: italic;
-}
-
-.bio u {
-    text-decoration: underline;
-}
-
-.bio del {
-    text-decoration: line-through;
-}
-
-.bio s {
-    text-decoration: line-through;
-}
-
-.bio ins {
-    text-decoration: underline;
-}
-
-.bio mark {
-    background-color: yellow;
-}
-
-.bio sub {
-    vertical-align: sub;
-}
-
-.bio sup {
-    vertical-align: super;
-}
-
-.bio small {
-    font-size: 0.83em;
-}
-
-.bio b {
-    font-weight: bold;
-}
-
-.bio i {
-    font-style: italic;
-}
-
-.bio u {
-    text-decoration: underline;
-}
-
-.bio center {
-    text-align: center;
-}
-
-.bio table {
-    border-collapse: collapse;
-    width: 100%;
-}
-
-.bio th {
-    border: 1px solid #ddd;
-    padding: 8px;
-}
-
-.bio td {
-    border: 1px solid #ddd;
-    padding: 8px;
-}
-
-.bio tr:nth-child(even) {
-    background-color: #f2f2f2;
 }
 </style>
