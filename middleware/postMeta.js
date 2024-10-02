@@ -3,9 +3,11 @@ import { useFetch, useHead } from "#app";
 import { useRoute } from "#app";
 
 export default defineNuxtRouteMiddleware(async (to, from) => {
+  const route = useRoute();
+
   const url = "https://api.faser.app/api/social/fetchPost";
 
-  const postId = useRoute().params.post;
+  const postId = route.params.post;
 
   const headers = {
     postId: postId,
