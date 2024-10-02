@@ -1,7 +1,9 @@
 <script setup>
-useHead({
-  title: "faser.app",
-});
+import { definePageMeta } from '#imports';
+
+definePageMeta({
+  middleware: "main-meta"
+})
 
 import Cookies from "js-cookie"
 

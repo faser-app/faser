@@ -278,20 +278,6 @@ async function main() {
   const accountCreatedString = accountCreated.toLocaleDateString();
   sinceString.value = accountCreatedString;
 
-  useHead({
-    title: profileData.value.displayName + " - faser.app",
-    meta: [
-      {
-        name: "description",
-        content: profileData.value.bio,
-      },
-      {
-        name: "keywords",
-        content: "faser, social media, profile, " + profileData.value.displayName,
-      },
-    ],
-  });
-
   axios
     .get(
       "https://api.faser.app/api/profile/getProfilePhoto?username=" + username
