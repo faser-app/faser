@@ -35,6 +35,4 @@ export default defineNuxtConfig({
   server: {
     port: 3100,
   },
-
-  modules: ["nuxt-og-image"],
 });
