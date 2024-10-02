@@ -34,6 +34,11 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
             "https://api.faser.app/api/profile/getProfilePhoto?username=" +
             username,
         },
+        {
+          hid: "theme-color",
+          name: "theme-color",
+          content: "#24c7ce",
+        },
       ],
     });
   } else {

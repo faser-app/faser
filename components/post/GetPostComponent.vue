@@ -132,6 +132,10 @@
                     </p>
                 </RouterLink>
             </div>
+            <div class="w-1/12 justify-center cursor-pointer items-center text-gray-300">
+                <i v-if="!copied" class="fa-solid fa-arrow-up-from-bracket" @click="sharePost"></i>
+                <i v-else class="fa-solid fa-check"></i>
+            </div>
         </div>
         <div class="flex w-full gap-2 mt-2">
             <input type="text" class="w-3/4 bg-gray-600 p-2 rounded-xl focus:outline-none"
@@ -238,6 +242,7 @@ const commentText = ref('')
 const postCreatedAt = ref('')
 
 const postVisible = ref(true);
+const copied = ref(false);
 
 const postType = ref('')
 const parentPost = ref('')
@@ -442,6 +447,11 @@ function openDeleteModal() {
 function openEditModal() {
     showEditModal.value = true
     closeMenu()
+}
+
+function sharePost() {
+    navigator.clipboard.writeText("https://faser.app/post/" + postId.value)
+    copied.value = true
 }
 
 function reloadStats() {

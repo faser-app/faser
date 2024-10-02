@@ -50,6 +50,11 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
               "&imageId=4",
           ],
         },
+        {
+          hid: "theme-color",
+          name: "theme-color",
+          content: "#24c7ce",
+        },
       ],
     });
   } else {
