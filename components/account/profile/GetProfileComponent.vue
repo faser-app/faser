@@ -240,10 +240,22 @@ const { data, status, error } = useFetch(url, {
   },
 
   onResponse(response) {
-    defineOgImageComponent({
-      title: response.data[0].displayName,
-      description: response.data[0].bio,
-      image: "https://api.faser.app/api/profile/getProfilePhoto?username=" + username,
+    useSeoMeta({
+      title: profileData.value.displayName + " - faser.app",
+      meta: [
+        {
+          name: "og:title",
+          content: profileData.value.displayName + " - faser.app",
+        },
+        {
+          name: "og:description",
+          content: profileData.value.bio,
+        },
+        {
+          name: "og:image",
+          content: "https://api.faser.app/api/profile/getProfilePhoto?username=" + username,
+        }
+      ],
     });
   }
 })
