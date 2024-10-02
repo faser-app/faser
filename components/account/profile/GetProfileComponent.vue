@@ -228,35 +228,9 @@ const ownProfileData = ref({});
 
 const communities = ref([]);
 
+const route = useRoute();
+
 const username = route.params.user.replace("@", "");
-
-const { data: profileDataResponse } = await useFetch(() => `https://api.faser.app/api/account/getProfile`, {
-  headers: {
-    username: username,
-    lang: navigator.language || navigator.userLanguage,
-  }
-})
-
-// Wenn die Daten vorhanden sind, setze die Meta-Tags
-if (profileDataResponse.value) {
-  useHead({
-    title: `${profileData.value[0].displayName} - faser.app`,
-    meta: [
-      {
-        name: 'og:title',
-        content: profileData.value[0].displayName,
-      },
-      {
-        name: 'og:description',
-        content: profileData.value[0].bio,
-      },
-      {
-        name: 'og:image',
-        content: `https://api.faser.app/api/profile/getProfilePhoto?username=${route.params.user.replace("@", "")}`,
-      },
-    ],
-  })
-}
 
 async function main() {
   const response = await axios
@@ -294,6 +268,20 @@ async function main() {
   const accountCreated = new Date(response.data[1].memberSince);
   const accountCreatedString = accountCreated.toLocaleDateString();
   sinceString.value = accountCreatedString;
+
+  useHead({
+    title: profileData.value.displayName + " - faser.app",
+    meta: [
+      {
+        name: "description",
+        content: profileData.value.bio,
+      },
+      {
+        name: "keywords",
+        content: "faser, social media, profile, " + profileData.value.displayName,
+      },
+    ],
+  });
 
   axios
     .get(
