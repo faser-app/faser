@@ -38,16 +38,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
           content: [
             "https://api.faser.app/api/social/getPostImage?postId=" +
               postId +
-              "&imageId=1",
-            "https://api.faser.app/api/social/getPostImage?postId=" +
-              postId +
-              "&imageId=2",
-            "https://api.faser.app/api/social/getPostImage?postId=" +
-              postId +
-              "&imageId=3",
-            "https://api.faser.app/api/social/getPostImage?postId=" +
-              postId +
-              "&imageId=4",
+              "&imageId=1"
           ],
         },
         {
