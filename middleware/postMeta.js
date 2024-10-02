@@ -15,9 +15,12 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     headers: headers,
   });
 
-  console.log(postId);
-
-  console.log(data.value);
+  const postAuthor = await useFetch(
+    "https://api.faser.app/api/profile/getPostProfile",
+    {
+      headers: headers,
+    }
+  );
 
   if (data.value && data.value.length > 0) {
     useHead({
@@ -25,7 +28,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
         {
           hid: "og-title",
           property: "og:title",
-          content: "faser.app",
+          content: postAuthor.data.value[0].displayName + " (@" + postAuthor.data.value[0].username + ") - faser.app",
         },
         {
           hid: "og-description",
@@ -38,13 +41,18 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
           content: [
             "https://api.faser.app/api/social/getPostImage?postId=" +
               postId +
-              "&imageId=1"
+              "&imageId=1",
           ],
         },
         {
           hid: "theme-color",
           name: "theme-color",
           content: "#24c7ce",
+        },
+        {
+          hid: "og-url",
+          property: "og:url",
+          content: "https://faser.app/post/" + postId,
         },
       ],
     });
