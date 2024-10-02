@@ -125,7 +125,7 @@
                 </p>
             </div>
             <div class="flex gap-2 w-1/2 justify-center cursor-pointer items-center text-gray-300">
-                <RouterLink :to="'/post/' + [postContent.postId]" class="flex gap-2 items-center justify-center">
+                <RouterLink :to="'/post/' + postContent.postId" class="flex gap-2 items-center justify-center">
                     <i class="fa-regular fa-comment text-xl"></i>
                     <p>
                         {{ postComments }}

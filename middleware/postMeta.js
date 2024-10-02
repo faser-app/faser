@@ -1,13 +1,9 @@
-// middleware/profileMeta.js
 import { useFetch, useHead } from "#app";
-import { useRoute } from "#app";
 
 export default defineNuxtRouteMiddleware(async (to, from) => {
-  const route = useRoute();
-
   const url = "https://api.faser.app/api/social/fetchPost";
 
-  const postId = route.params.post;
+  const postId = to.params.post;
 
   const headers = {
     postId: postId,
