@@ -185,6 +185,7 @@ import axios from "axios";
 import { useRoute, useRouter } from "vue-router";
 import MarkdownIt from "markdown-it";
 import Cookies from "js-cookie";
+import { useFetch } from "#app";
 
 const router = useRouter()
 
@@ -231,6 +232,21 @@ const communities = ref([]);
 const route = useRoute();
 
 const username = route.params.user.replace("@", "");
+
+const { data, status, error } = useFetch(url, {
+  headers: {
+    username: username,
+    lang: navigator.language || navigator.userLanguage,
+  },
+
+  onResponse(response) {
+    defineOgImageComponent({
+      title: response.data[0].displayName,
+      description: response.data[0].bio,
+      image: "https://api.faser.app/api/profile/getProfilePhoto?username=" + username,
+    });
+  }
+})
 
 async function main() {
   const response = await axios

@@ -2,12 +2,14 @@ export default defineNuxtConfig({
   compatibilityDate: "2024-04-03",
   devtools: { enabled: true },
   css: ["~/assets/css/main.css"],
+
   postcss: {
     plugins: {
       tailwindcss: {},
       autoprefixer: {},
     },
   },
+
   app: {
     head: {
       link: [
@@ -25,11 +27,19 @@ export default defineNuxtConfig({
         {
           src: "https://cdn.jsdelivr.net/npm/ldrs/dist/auto/lineWobble.js",
           type: "module",
-        }
-      ]
+        },
+      ],
     },
   },
+
+  site: {
+    // production URL
+    url: "https://faser.app",
+  },
+
   server: {
     port: 3100,
   },
+
+  modules: ["nuxt-og-image"],
 });

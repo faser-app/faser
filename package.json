@@ -17,6 +17,7 @@
     "luxon": "^3.5.0",
     "markdown-it": "^14.1.0",
     "nuxt": "^3.12.4",
+    "nuxt-og-image": "^3.0.4",
     "vue": "latest"
   },
   "devDependencies": {
