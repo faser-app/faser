@@ -13,10 +13,9 @@ Faser is a social media app that allows users to create and share posts in real-
 
 ### Prerequisites
 
-- Node.js (>= 16.x)
+- Node.js (>= 21.x)
 - NPM or Yarn
-- A database (e.g., MongoDB, MySQL)
-- Redis (for real-time functionalities)
+- A database (MongoDB)
 
 ### Steps
 
