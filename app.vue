@@ -1,11 +1,10 @@
 <script setup>
 import { definePageMeta } from '#imports';
+import Cookies from "js-cookie";
 
 definePageMeta({
   middleware: "main-meta"
-})
-
-import Cookies from "js-cookie"
+})  
 
 const accepted = ref(false)
 
