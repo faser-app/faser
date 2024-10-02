@@ -60,7 +60,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
         {
           hid: "theme-color",
           name: "theme-color",
-          content: "#24c7ce",
+          content: "#1ed794",
         },
         {
           hid: "og-url",
