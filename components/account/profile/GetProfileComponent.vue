@@ -185,38 +185,6 @@ import axios from "axios";
 import { useRoute, useRouter } from "vue-router";
 import MarkdownIt from "markdown-it";
 import Cookies from "js-cookie";
-import { useFetch, useHead } from "#app";
-
-const route = useRoute();
-
-const { data, status, error } = useFetch("https://api.faser.app/api/account/getProfile", {
-  headers: {
-    username: route.params.user.replace("@", ""),
-    lang: navigator.language || navigator.userLanguage,
-  },
-
-  onResponse(response) {
-    console.log(response.response._data)
-
-    useHead({
-      title: response.response._data[0].displayName + " - faser.app",
-      meta: [
-        {
-          name: "og:title",
-          content: response.response._data[0].displayName,
-        },
-        {
-          name: "og:description",
-          content: response.response._data[0].bio,
-        },
-        {
-          name: "og:image",
-          content: "https://api.faser.app/api/profile/getProfilePhoto?username=" + route.params.user.replace("@", ""),
-        },
-      ],
-    })
-  }
-})
 
 const router = useRouter()
 
@@ -261,6 +229,34 @@ const ownProfileData = ref({});
 const communities = ref([]);
 
 const username = route.params.user.replace("@", "");
+
+const { data: profileDataResponse } = await useFetch(() => `https://api.faser.app/api/account/getProfile`, {
+  headers: {
+    username: username,
+    lang: navigator.language || navigator.userLanguage,
+  }
+})
+
+// Wenn die Daten vorhanden sind, setze die Meta-Tags
+if (profileDataResponse.value) {
+  useHead({
+    title: `${profileData.value[0].displayName} - faser.app`,
+    meta: [
+      {
+        name: 'og:title',
+        content: profileData.value[0].displayName,
+      },
+      {
+        name: 'og:description',
+        content: profileData.value[0].bio,
+      },
+      {
+        name: 'og:image',
+        content: `https://api.faser.app/api/profile/getProfilePhoto?username=${route.params.user.replace("@", "")}`,
+      },
+    ],
+  })
+}
 
 async function main() {
   const response = await axios
