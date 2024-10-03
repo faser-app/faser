@@ -40,5 +40,18 @@ export default defineNuxtConfig({
 
   gtag: {
     id: "G-WY5FW4MTNC",
+    initCommands: [
+      [
+        "consent",
+        "default",
+        {
+          ad_user_data: "denied",
+          ad_personalization: "denied",
+          ad_storage: "denied",
+          analytics_storage: "denied",
+          wait_for_update: 500,
+        },
+      ],
+    ],
   },
 });

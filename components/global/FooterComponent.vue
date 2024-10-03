@@ -7,6 +7,9 @@
           <a :href="link.url" v-else class="underline">{{ link.name }}</a>
         </div>
       </div>
+      <div class="w-full flex justify-center underline mt-2 cursor-pointer" @click="resetCookies">
+        Cookie Settings
+      </div>
 
       <p class="mt-5">© 2024 faser</p>
 
@@ -20,6 +23,11 @@
 </template>
 
 <script setup>
+import Cookie from "js-cookie";
+import { useGtag } from "#imports";
+
+const gTag = useGtag();
+
 const links = ref([
   {
     name: "Imprint",
@@ -42,4 +50,19 @@ const links = ref([
     url: "https://stats.uptimerobot.com/Ow7zN9GfBE",
   },
 ]);
+
+function resetCookies () {
+  Cookie.remove("accepted");
+  Cookie.remove("essential");
+
+  gTag.gtag('consent', 'update', {
+    ad_storage: 'denied',
+    analytics_storage: 'denied'
+  });
+
+  Cookie.remove("_ga")
+  Cookie.remove("_ga_WY5FW4MTNC")
+
+  window.location.reload();
+}
 </script>

@@ -15,6 +15,14 @@
 
         <br>
 
+        <p><strong>Data Protection Officer:</strong></p>
+        <p>For privacy-related inquiries, please contact:<br>
+            Email: <a href="mailto:support@faser.app" class="underline">support@faser.app</a></p>
+        <p>For more information on how we process personal data, please review our <a href="/privacy"
+                class="underline">Privacy Policy</a>.</p>
+
+        <br>
+
         <p><strong>Disclaimer:</strong></p>
         <p>The provider assumes no liability for the accuracy, completeness, and timeliness of the information provided.
         </p>
