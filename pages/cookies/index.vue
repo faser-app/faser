@@ -1,7 +1,7 @@
 <template>
     <div class="p-4 min-h-screen bg-gray-950 text-white">
-        <h1 class="text-2xl font-bold mb-4">Cookie Policy</h1>
-        <p><strong>Effective Date:</strong> September 11, 2024</p>
+        <h1 class="text-2xl font-bold mb-4"> Cookie Policy</h1>
+        <p><strong>Effective Date:</strong>October 03, 2024</p>
         <p>This Cookie Policy explains how faser.app uses cookies and similar technologies to recognize you when you
             visit our app. It explains what these technologies are, why we use them, and your rights to control our use
             of them.</p>
