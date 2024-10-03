@@ -52,16 +52,14 @@ const links = ref([
 ]);
 
 function resetCookies () {
-  Cookie.remove("accepted");
-  Cookie.remove("essential");
-
   gTag.gtag('consent', 'update', {
     ad_storage: 'denied',
     analytics_storage: 'denied'
   });
 
-  Cookie.remove("_ga")
-  Cookie.remove("_ga_WY5FW4MTNC")
+  Object.keys(Cookie.get()).forEach((cookie) => {
+    Cookie.remove(cookie);
+  });
 
   window.location.reload();
 }
