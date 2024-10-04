@@ -25,7 +25,7 @@
           @click="openMessages = true">
           <i class="fa-solid fa-bell text-xl"></i>
           <div v-if="messages.length > 0"
-            class="absolute mt-8 ml-8 h-6 w-6 text-sm flex items-center justify-center bg-gray-700 rounded-full">
+            class="absolute mt-8 ml-8 h-6 w-6 text-sm flex items-center justify-center bg-red-700 rounded-full">
             {{ messages.length }}
           </div>
         </div>
