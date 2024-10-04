@@ -65,7 +65,7 @@
           <i class="fa-solid fa-xmark mr-2 cursor-pointer text-xl" @click="openMessages = false"></i>
         </div>
         <div v-if="messages.length === 0" class="w-full text-gray-400 italic flex items-center justify-center h-28">
-          <p>Great! You have no messages</p>
+          <p>Great! You have no new messages</p>
         </div>
         <div v-else v-for="(message, index) in messages" :key="message">
           <div v-if="message.type === 'like'" class="flex pb-2 mb-2" :class="{
@@ -130,8 +130,10 @@
             </div>
           </div>
         </div>
-        <div class="w-full flex justify-center text-sm text-gray-400">
-          <p>This will reset automatically when refreshing the page</p>
+        <div class="w-full flex justify-center" v-if="messages.length > 0">
+          <button class="bg-red-500 p-2 rounded-xl" @click="clearMessages">
+            Clear messages
+          </button>
         </div>
       </div>
     </div>
@@ -194,6 +196,18 @@ onMounted(() => {
       messages.value = response.data.messages
     });
 });
+
+function clearMessages() {
+  axios.post("https://api.faser.app/api/profile/clearUserMessages", {
+    token: Cookies.get("token")
+  })
+    .then((response) => {
+      openMessages.value = false
+      setTimeout(() => {
+        messages.value = []
+      }, 500)
+    });
+}
 </script>
 
 <style scoped>
