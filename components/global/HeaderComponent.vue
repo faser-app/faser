@@ -56,7 +56,7 @@
 
   <Transition name="fade" @leave="leave" @enter="open">
     <div class="fixed w-screen h-screen backdrop-blur-lg z-50 flex items-center justify-center" v-if="openMessages">
-      <div class="max-w-[90rem] md:w-[80svw] w-[95svw] text-white max-h-[90rem] bg-gray-800 p-2 rounded-xl">
+      <div class="max-w-[90rem] md:w-[80svw] w-[95svw] text-white max-h-[70svh] overflow-scroll bg-gray-800 p-2 rounded-xl">
         <div class="w-full flex items-center justify-between text-2xl font-bold">
           <div class="w-full text-center">
             <h1>Messages</h1>
