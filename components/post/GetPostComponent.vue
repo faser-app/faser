@@ -79,7 +79,7 @@
                 <Transition name="fade" @leave="leave" @enter="open">
                     <div v-if="threeDotsMenu">
                         <div
-                            class="flex flex-col gap-2 bg-gray-600 p-2 rounded-xl absolute -translate-x-16 translate-y-2">
+                            class="flex flex-col gap-2 bg-gray-600 z-10 p-2 rounded-xl absolute -translate-x-16 translate-y-2">
                             <div class="p-2 rounded-xl w-full flex items-center cursor-pointer"
                                 @click="openDeleteModal">
                                 <i class="fa-solid fa-trash mr-2"></i>
@@ -95,7 +95,7 @@
                 </Transition>
 
                 <div @click="openMenu"
-                    class="flex cursor-pointer items-center w-12 h-12 justify-center bg-gray-600 rounded-xl">
+                    class="flex z-0 cursor-pointer items-center w-12 h-12 justify-center bg-gray-600 rounded-xl">
                     <i class="fa-solid fa-ellipsis-vertical"></i>
                 </div>
             </div>
@@ -511,11 +511,13 @@ onMounted(() => {
 @keyframes fadeIn {
     from {
         opacity: 0;
+        z-index: 10;
         transform: translateY(-5px);
     }
 
     to {
         opacity: 1;
+        z-index: 10;
         transform: translateY(0);
     }
 }
