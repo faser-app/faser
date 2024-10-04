@@ -26,7 +26,12 @@
           <i class="fa-solid fa-bell text-xl"></i>
           <div v-if="messages.length > 0"
             class="absolute mt-8 ml-8 h-6 w-6 text-sm flex items-center justify-center bg-red-700 rounded-full">
-            {{ messages.length }}
+            <div v-if="messages.length > 100">
+              99+
+            </div>
+            <div v-else>
+              {{ messages.length }}
+            </div>
           </div>
         </div>
         <RouterLink to="/profile" class="ml-4">
@@ -57,7 +62,7 @@
   <Transition name="fade" @leave="leave" @enter="open">
     <div class="fixed w-screen h-screen backdrop-blur-lg z-50 flex items-center justify-center" v-if="openMessages">
       <div
-        class="max-w-[90rem] md:w-[80svw] w-[95svw] text-white max-h-[70svh] overflow-scroll bg-gray-800 p-2 rounded-xl">
+        class="max-w-[90rem] md:w-[80svw] w-[95svw] text-white max-h-[70svh] overflow-auto bg-gray-800 p-2 rounded-xl">
         <div class="w-full flex items-center justify-between text-2xl font-bold">
           <div class="w-full text-center">
             <h1>Messages</h1>
@@ -68,12 +73,17 @@
           <p>Great! You have no new messages</p>
         </div>
         <div v-else v-for="(message, index) in messages" :key="message">
-          <div v-if="message.type === 'like'" class="flex pb-2 mb-2" :class="{
+          <div v-if="message.type === 'like' || message.type === 'comment'" class="flex pb-2 mb-2" :class="{
             'border-b border-gray-500': index < messages.length - 1
           }">
             <div class="h-full items-center">
-              <div class="flex justify-center items-center w-8 h-8 bg-gray-700 rounded-full text-red-500 mr-2">
-                <i class="fa-solid fa-heart"></i>
+              <div class="flex justify-center items-center w-8 h-8 bg-gray-700 rounded-full mr-2">
+                <div v-if="message.type === 'like'" class="text-red-500">
+                  <i class="fa-solid fa-heart"></i>
+                </div>
+                <div v-else class="text-green-400">
+                  <i class="fa-solid fa-comment"></i>
+                </div>
               </div>
             </div>
             <div>
@@ -95,7 +105,8 @@
               </div>
               <RouterLink :to="'/post/' + message.postId" @click="openMessages = false">
                 <div class="flex">
-                  <p class="text-gray-400 mr-1">Has liked your post: </p>
+                  <p class="text-gray-400 mr-1" v-if="message.type === 'like'">Has liked your post: </p>
+                  <p class="text-gray-400 mr-1" v-else>Commented on your post: </p>
                   <p>{{ message.postData[0] }}</p>
                 </div>
               </RouterLink>
