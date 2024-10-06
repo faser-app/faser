@@ -151,6 +151,15 @@
   </Transition>
 
   <div class="h-20 bg-gray-950"></div>
+  <div v-if="showBanner"
+    class="w-full flex justify-center mb-2 p-5 text-white items-center bg-gradient-to-tr from-[#24c7ce] to-[#1ed794]">
+    <div class="text-center">
+      <p>You'll get a better experience using the web app of faser.</p>
+      <h2 class="font-bold text-2xl mt-2">How to get the web app</h2>
+      <p class="inline">To get the web app, tap on share <img class="inline" src="/assets/svg/ios-share.svg">, select "Add to Home
+        Screen" and click add</p>
+    </div>
+  </div>
 </template>
 
 <script setup>
@@ -164,6 +173,8 @@ const loaded = ref(false);
 const haveProfilePicture = ref(false);
 
 const messages = ref([])
+
+const showBanner = ref(false)
 
 const openMessages = ref(false)
 
@@ -218,6 +229,10 @@ function clearMessages() {
         messages.value = []
       }, 500)
     });
+}
+
+if (!window.navigator.standalone && window.navigator.userAgent.match(/(iPhone|iPod|iPad)/i)) {
+  showBanner.value = true
 }
 </script>
 
