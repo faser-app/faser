@@ -1,6 +1,6 @@
 <template>
   <div>
-    <input id="search" class="h-full md:w-auto w-full bg-gray-700 p-3 rounded-xl text-white" v-model="query"
+    <input id="search" class="h-full border-0 shadow-none md:w-auto w-full outline-none bg-gray-700 p-3 rounded-xl text-white" v-model="query"
       @input="searchUsers" placeholder="Search for user" @focus="focus = true" />
   </div>
   <div v-if="query.length > 0 && focus"

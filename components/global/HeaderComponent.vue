@@ -51,7 +51,7 @@
       <div :class="{ 'expandable-content': true, expanded: expanded }">
         <SearchUserComponent />
         <div v-for="link in links" :key="link.name" class="w-full py-3 backdrop-blur">
-          <RouterLink :to="link.href" class="text-white w-full my-2 ml-3 backdrop-blur">
+          <RouterLink @click="expanded = false" :to="link.href" class="text-white w-full my-2 ml-3 backdrop-blur">
             {{ link.name }}
           </RouterLink>
         </div>
