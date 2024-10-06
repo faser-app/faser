@@ -10,6 +10,10 @@ useHead({
     {
       name: 'description',
       content: 'This is the home page'
+    },
+    {
+      name: "theme-color",
+      content: "#030712"
     }
   ]
 });
