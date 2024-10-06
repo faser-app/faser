@@ -192,6 +192,16 @@ import axios from "axios";
 import { useRoute, useRouter } from "vue-router";
 import MarkdownIt from "markdown-it";
 import Cookies from "js-cookie";
+import { useHead } from "#app";
+
+useHead({
+  meta: [
+    {
+      name: "theme-color",
+      content: "#000000"
+    }
+  ]
+})
 
 const router = useRouter()
 
