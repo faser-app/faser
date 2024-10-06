@@ -450,8 +450,11 @@ function openEditModal() {
 }
 
 function sharePost() {
-    navigator.clipboard.writeText("https://faser.app/post/" + postId.value)
-    copied.value = true
+    navigator.share({
+        title: postContent.value.content,
+        text: postContent.value.content,
+        url: "https://faser.app/post/" + postId.value
+    })
 }
 
 function reloadStats() {
