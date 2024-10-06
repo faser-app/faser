@@ -1,6 +1,6 @@
 {
-  "name": "faser.app",
-  "short_name": "faser.app",
+  "name": "faser",
+  "short_name": "faser",
   "icons": [
     {
       "src": "/icon/logo.png",
