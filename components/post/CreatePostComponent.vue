@@ -1,5 +1,5 @@
 <template>
-    <div class="p-3 z-50 select-none cursor-pointer text-xl bottom-5 right-5 bg-gradient-to-tr hover:backdrop-brightness-0 from-[#24c7ce] to-[#1ed794] flex justify-center items-center rounded-full"
+    <div class="p-3 z-100 select-none cursor-pointer text-xl bottom-5 right-5 bg-gradient-to-tr hover:backdrop-brightness-0 from-[#24c7ce] to-[#1ed794] flex justify-center items-center rounded-full"
         @click="showModal = true">
         Post
     </div>
@@ -147,6 +147,10 @@ function uploadPost() {
 <style scoped>
 .animation {
     animation: fadeIn 0.3s;
+}
+
+.z-100 {
+    z-index: 100;
 }
 
 .fadeIn {
