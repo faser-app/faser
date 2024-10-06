@@ -22,7 +22,7 @@
       </div>
       <div class="h-full flex items-center">
         <div class="flex items-center justify-center bg-gray-800 w-12 h-12 rounded-full cursor-pointer"
-          @click="openMessages = true">
+          @click="openUserMessages">
           <i class="fa-solid fa-bell text-xl"></i>
           <div v-if="messages.length > 0"
             class="absolute mt-8 ml-8 h-6 w-6 text-sm flex items-center justify-center bg-red-700 rounded-full">
@@ -156,7 +156,8 @@
     <div class="text-center">
       <p>You'll get a better experience using the web app of faser.</p>
       <h2 class="font-bold text-2xl mt-2">How to get the web app</h2>
-      <p class="inline">To get the web app, tap on share <img class="inline" src="/assets/svg/ios-share.svg">, select "Add to Home
+      <p class="inline">To get the web app, tap on share <img class="inline" src="/assets/svg/ios-share.svg">, select
+        "Add to Home
         Screen" and click add</p>
     </div>
   </div>
@@ -211,13 +212,25 @@ onMounted(() => {
         });
     });
 
+  getUserMessages()
+});
+
+function getUserMessages() {
   axios.post("https://api.faser.app/api/profile/getUserMessages", {
     token: Cookies.get("token")
   })
     .then((response) => {
       messages.value = response.data.messages
     });
-});
+}
+
+function openUserMessages() {
+  openMessages.value = !openMessages.value
+
+  if (openMessages.value) {
+    getUserMessages()
+  }
+}
 
 function clearMessages() {
   axios.post("https://api.faser.app/api/profile/clearUserMessages", {
