@@ -7,7 +7,7 @@
     <transition name="fade" @leave="leave">
 
         <div v-if="showModal"
-            class="h-full backdrop-blur w-full fixed top-0 left-0 flex justify-center md:pt-36 items-end md:items-start pb-2"
+            class="h-full z-100 backdrop-blur pb-5 w-full fixed top-0 left-0 flex justify-center md:pt-36 items-end md:items-start"
             :class="{
                 'fadeIn': showModal,
             }">
