@@ -2,6 +2,16 @@
 import { definePageMeta } from '#imports';
 import { useGtag } from '#imports';
 import Cookies from "js-cookie";
+import { useHead } from '#imports';
+
+useHead({
+  meta: [
+    {
+      name: "theme-color",
+      content: "#000000"
+    }
+  ]
+})
 
 const gTag = useGtag()
 
