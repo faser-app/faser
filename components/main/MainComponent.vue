@@ -18,7 +18,6 @@
             <h1 class="text-3xl text-transparent bg-gradient-to-tr from-[#24c7ce] to-[#1ed794] bg-clip-text">No posts
               available</h1>
             <p>There are no posts to be shown. Follow more people to see posts.</p>
-            <p>{{ loggedIn }}</p>
           </div>
         </div>
       </div>
