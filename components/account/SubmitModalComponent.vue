@@ -1,7 +1,7 @@
 <template>
   <transition name="fade" @leave="leave">
     <div v-if="showModal" :class="{ animation: showModal, fadeOut: !showModal }"
-      class="fixed flex justify-center md:items-center items-end top-0 left-0 w-full h-full z-50 backdrop-blur">
+      class="fixed flex justify-center items-center top-0 left-0 w-full h-full z-50 backdrop-blur">
       <div class="bg-gray-900 p-5 rounded-xl m-3 md:w-auto w-full">
         <div class="w-full flex justify-center">
           <div class="bg-red-950 border border-red-600 h-14 w-14 rounded-full flex justify-center items-center">
