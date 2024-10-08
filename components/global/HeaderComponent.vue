@@ -46,7 +46,7 @@
       </div>
     </div>
   </div>
-  <div v-if="mobile" class="fixed z-100 bottom-0 h-16 backdrop-blur-xl w-full">
+  <div v-if="mobile" class="fixed z-100 bottom-0 h-20 pb-5 backdrop-blur-xl w-full">
     <div class="grid grid-cols-5 text-center items-center h-full text-white">
       <div>
         <RouterLink to="/">
