@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-[#0206176c] h-[4.5rem] flex fixed backdrop-blur text-white w-full z-100">
+  <div v-if="!mobile" class="bg-[#0206176c] h-[4.5rem] flex fixed backdrop-blur text-white w-full z-100">
     <RouterLink to="/">
       <div class="flex h-full w-full justify-center md:justify-start fixed pointer-events-none">
         <img src="/assets/img/icon/logo.png" alt="Logo"
@@ -17,7 +17,7 @@
         <div v-for="link in links" :key="link.name" class="cursor-pointer">
           <RouterLink :to="link.href" class="text-white hover:scale">{{
             link.name
-          }}</RouterLink>
+            }}</RouterLink>
         </div>
       </div>
       <div class="h-full flex items-center">
@@ -46,6 +46,47 @@
       </div>
     </div>
   </div>
+  <div v-if="mobile" class="fixed z-100 bottom-0 h-16 backdrop-blur-xl w-full">
+    <div class="grid grid-cols-5 text-center items-center h-full text-white">
+      <div>
+        <RouterLink to="/">
+          <div class="text-center">
+            <div class="flex items-center h-8 justify-center">
+              <i class="fa-solid fa-home"></i>
+            </div>
+            <p>Home</p>
+          </div>
+        </RouterLink>
+      </div>
+      <div @click="expandedSearch = !expandedSearch" class="text-center">
+        <div class="flex items-center h-8 justify-center">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </div>
+        <p>Search</p>
+      </div>
+      <div class="flex justify-center">
+        <PostCreatePostComponent text="+" mobile="true" />
+      </div>
+      <div @click="openMessages = !openMessages" class="text-center">
+        <div class="flex items-center h-8 justify-center">
+          <i class="fa-solid fa-bell"></i>
+        </div>
+        <p>Messages</p>
+      </div>
+      <div class="flex justify-center">
+        <RouterLink to="/profile" class="flex justify-center flex-wrap">
+          <div
+            class="border w-8 h-8 flex items-center justify-center rounded-full border-[#96969627] bg-[#1118276c] cursor-pointer">
+            <i v-if="!haveProfilePicture" class="fa-solid fa-user rounded-full text-3xl"></i>
+            <img v-else-if="haveProfilePicture && loaded" :src="'https://api.faser.app/api/profile/getProfilePhoto?username=' +
+              username
+              " class="rounded-full w-8 h-8 object-cover" />
+          </div>
+          <p class="w-full">Profile</p>
+        </RouterLink>
+      </div>
+    </div>
+  </div>
   <div class="fixed z-20 backdrop-blur top-[4.5rem] bg-[#0206176c] w-full md:hidden z-100">
     <div class="backdrop-blur w-full">
       <div :class="{ 'expandable-content': true, expanded: expanded }">
@@ -58,6 +99,21 @@
       </div>
     </div>
   </div>
+
+  <Transition name="fade" @leave="leave" @enter="open">
+    <div class="fixed w-screen h-screen backdrop-blur-lg z-50 flex items-center justify-center" v-if="expandedSearch">
+      <div
+        class="max-w-[90rem] md:w-[80svw] w-[95svw] text-white max-h-[70svh] overflow-auto bg-gray-800 p-2 rounded-xl">
+        <div class="w-full flex items-center justify-between text-2xl font-bold">
+          <div class="w-full text-center">
+            <h1>Search</h1>
+          </div>
+          <i class="fa-solid fa-xmark mr-2 cursor-pointer text-xl" @click="expandedSearch = false"></i>
+        </div>
+        <SearchUserComponent />
+      </div>
+    </div>
+  </Transition>
 
   <Transition name="fade" @leave="leave" @enter="open">
     <div class="fixed w-screen h-screen backdrop-blur-lg z-50 flex items-center justify-center" v-if="openMessages">
@@ -150,7 +206,7 @@
     </div>
   </Transition>
 
-  <div class="h-20 bg-gray-950"></div>
+  <div v-if="!mobile" class="h-20 bg-gray-950"></div>
   <div v-if="showBanner"
     class="w-full flex justify-center mb-2 p-5 text-white items-center bg-gradient-to-tr from-[#24c7ce] to-[#1ed794]">
     <div class="text-center">
@@ -176,6 +232,9 @@ const haveProfilePicture = ref(false);
 const messages = ref([])
 
 const showBanner = ref(false)
+const mobile = ref(false)
+
+const expandedSearch = ref(false)
 
 const openMessages = ref(false)
 
@@ -246,6 +305,10 @@ function clearMessages() {
 
 if (!window.navigator.standalone && window.navigator.userAgent.match(/(iPhone|iPod|iPad)/i)) {
   showBanner.value = true
+}
+
+if (window.navigator.standalone && window.navigator.userAgent.match(/(iPhone|iPod|iPad)/i)) {
+  mobile.value = true
 }
 </script>
 

@@ -2,7 +2,7 @@
   <div class="min-h-screen md:flex pl-2 bg-gray-950 text-white">
     <div class="md:w-1/4 w-full justify-center pr-2 pt-2 min-h-full">
       <div class="md:hidden w-full block">
-        <PostCreatePostComponent />
+        <PostCreatePostComponent text="Post" mobile="false" />
       </div>
     </div>
     <div class="md:w-3/4 w-full max-w-[100rem] pt-5 pr-2">
@@ -35,7 +35,7 @@
     </div>
     <div class="md:w-1/4 w-full flex justify-center pr-2 mt-2 min-h-full">
       <div class="w-32 md:block hidden" v-if="loggedIn">
-        <PostCreatePostComponent />
+        <PostCreatePostComponent text="post" mobile="false" />
       </div>
     </div>
   </div>

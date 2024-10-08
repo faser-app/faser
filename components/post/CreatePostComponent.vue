@@ -1,7 +1,11 @@
 <template>
-    <div class="p-3 z-100 select-none cursor-pointer text-xl bottom-5 right-5 bg-gradient-to-tr hover:backdrop-brightness-0 from-[#24c7ce] to-[#1ed794] flex justify-center items-center rounded-full"
+    <div
+        :class="{
+            'h-12 w-12': props.mobile === 'true',
+        }"
+        class="p-2 z-100 select-none cursor-pointer text-xl bottom-5 right-5 bg-gradient-to-tr hover:backdrop-brightness-0 from-[#24c7ce] to-[#1ed794] flex justify-center items-center rounded-full"
         @click="showModal = true">
-        Post
+        {{ props.text }}
     </div>
 
     <transition name="fade" @leave="leave">
@@ -80,6 +84,8 @@ const images = ref([]);
 
 const error = ref('')
 
+const mobile = ref(false)
+
 const loading = ref(false)
 
 function getPreviewImage(file) {
@@ -96,6 +102,16 @@ function selectFile() {
         const file = e.target.files[0];
         images.value.push(file);
     };
+}
+
+const props = defineProps({
+    text: String,
+    mobile: String
+})
+
+
+if (!window.navigator.standalone && window.navigator.userAgent.match(/(iPhone|iPod|iPad)/i)) {
+    mobile.value = true
 }
 
 function uploadPost() {
