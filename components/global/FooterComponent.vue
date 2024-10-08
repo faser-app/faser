@@ -1,5 +1,7 @@
 <template>
-  <div class="bg-gray-950">
+  <div class="bg-gray-950" :class="{
+    'mb-20': mobile
+  }">
     <div class="bg-gray-900 text-white text-center p-4 rounded-t-xl">
       <div class="flex justify-center gap-4">
         <div v-for="link in links" :key="link.name">
@@ -27,6 +29,7 @@ import Cookie from "js-cookie";
 import { useGtag } from "#imports";
 
 const gTag = useGtag();
+const mobile = ref(false);
 
 const links = ref([
   {
@@ -50,6 +53,10 @@ const links = ref([
     url: "https://stats.uptimerobot.com/Ow7zN9GfBE",
   },
 ]);
+
+if (window.navigator.standalone && window.navigator.userAgent.match(/(iPhone|iPod|iPad)/i)) {
+  mobile.value = true
+}
 
 function resetCookies () {
   gTag.gtag('consent', 'update', {
