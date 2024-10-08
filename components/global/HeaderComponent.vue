@@ -307,7 +307,7 @@ if (!window.navigator.standalone && window.navigator.userAgent.match(/(iPhone|iP
   showBanner.value = true
 }
 
-if (!window.navigator.standalone && !window.navigator.userAgent.match(/(iPhone|iPod|iPad)/i)) {
+if (window.navigator.standalone && window.navigator.userAgent.match(/(iPhone|iPod|iPad)/i)) {
   mobile.value = true
 }
 </script>
