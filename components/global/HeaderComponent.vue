@@ -86,7 +86,7 @@
         <RouterLink to="/profile" class="flex justify-center flex-wrap">
           <div
             class="border w-8 h-8 flex items-center justify-center rounded-full border-[#96969627] bg-[#1118276c] cursor-pointer">
-            <i v-if="!haveProfilePicture" class="fa-solid fa-user rounded-full text-3xl"></i>
+            <i v-if="!haveProfilePicture" class="fa-solid fa-user rounded-full"></i>
             <img v-else-if="haveProfilePicture && loaded" :src="'https://api.faser.app/api/profile/getProfilePhoto?username=' +
               username
               " class="rounded-full w-8 h-8 object-cover" />
@@ -316,7 +316,7 @@ if (!window.navigator.standalone && window.navigator.userAgent.match(/(iPhone|iP
   showBanner.value = true
 }
 
-if (window.navigator.standalone && window.navigator.userAgent.match(/(iPhone|iPod|iPad)/i)) {
+if (!window.navigator.standalone && !window.navigator.userAgent.match(/(iPhone|iPod|iPad)/i)) {
   mobile.value = true
 }
 </script>
