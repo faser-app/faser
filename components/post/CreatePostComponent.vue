@@ -11,7 +11,7 @@
     <transition name="fade" @leave="leave">
 
         <div v-if="showModal"
-            class="h-full z-100 backdrop-blur pb-5 w-full fixed top-0 left-0 flex justify-center md:pt-36 items-end md:items-start"
+            class="h-full z-100 pb-5 w-full fixed top-0 left-0 flex justify-center md:pt-36 items-end md:items-start"
             :class="{
                 'fadeIn': showModal,
             }">
@@ -20,7 +20,7 @@
                 'fadeOut': !showModal
             }">
 
-                <div class="bg-gray-900 md:w-4/5 w-full md:mx-0 mx-2 shadow-xl p-3 rounded-xl">
+                <div class="bg-gray-900 md:w-4/5 w-full md:mx-0 mx-2 p-3 rounded-xl">
                     <div class="flex">
                         <h1 class="w-full">Make Post</h1>
                         <div @click="showModal = false" class="flex cursor-pointer justify-end text-xl mr-1">
@@ -108,11 +108,6 @@ const props = defineProps({
     text: String,
     mobile: String
 })
-
-
-if (!window.navigator.standalone && window.navigator.userAgent.match(/(iPhone|iPod|iPad)/i)) {
-    mobile.value = true
-}
 
 function uploadPost() {
     loading.value = true
