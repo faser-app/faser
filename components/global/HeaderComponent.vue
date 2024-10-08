@@ -67,9 +67,18 @@
       <div class="flex justify-center">
         <PostCreatePostComponent text="+" mobile="true" />
       </div>
-      <div @click="openMessages = !openMessages" class="text-center">
+      <div @click="openUserMessages" class="text-center">
         <div class="flex items-center h-8 justify-center">
           <i class="fa-solid fa-bell"></i>
+        </div>
+        <div v-if="messages.length > 0"
+          class="absolute -mt-5 ml-14 h-6 w-6 text-sm flex items-center justify-center bg-red-700 rounded-full">
+          <div v-if="messages.length > 100">
+            99+
+          </div>
+          <div v-else>
+            {{ messages.length }}
+          </div>
         </div>
         <p>Messages</p>
       </div>
