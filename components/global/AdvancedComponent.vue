@@ -1,6 +1,6 @@
 <template>
     <Transition name="fade">
-        <div class="advanced-gradient backdrop-blur-xl p-5 overflow-scroll text-center rounded-xl m-3 md:w-auto w-full max-h-[80svh] max-w-[80svw]"
+        <div class="advanced-gradient md:mb-0 mb-[10svh] backdrop-blur-xl p-5 overflow-scroll text-center rounded-xl m-3 md:w-auto w-full max-h-[80svh] max-w-[80svw]"
             v-if="showModal">
             <h1 class="text-2xl font-bold mb-2 text-[#ffffffbb]">
                 faser Advanced</h1>
