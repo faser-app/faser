@@ -6,53 +6,8 @@
                 faser Advanced</h1>
             <p>Oh hello! You've found a faser Advanced feature.</p>
             <p>Subscribe now to faser Advanced to use it!</p>
-            <div class="md:block hidden">
-
-                <table class="border-separate md:border-spacing-5 my-2">
-                    <tr class="ml-2">
-                        <td></td>
-                        <td class="font-bold">faser Basic</td>
-                        <td class="font-bold">faser Advanced</td>
-                    </tr>
-                    <tr>
-                        <td>Max post Character Limit</td>
-                        <td>300</td>
-                        <td>2000</td>
-                    </tr>
-                    <tr>
-                        <td>Edit Messages</td>
-                        <td>No</td>
-                        <td>Yes</td>
-                    </tr>
-                </table>
-            </div>
-            <div class="md:hidden block mt-2">
-                <div v-for="(item, index) in accordionItems" :key="item"
-                    :class="{ 'border-b border-white': index < accordionItems.length - 1 }">
-                    <button @click="toggleAccordion(index)" class="w-full flex justify-between items-center py-5">
-                        <span>{{ item.title }}</span>
-                        <span :id="'icon-' + index" class="transition-transform duration-300">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"
-                                class="w-4 h-4">
-                                <path
-                                    d="M8.75 3.75a.75.75 0 0 0-1.5 0v3.5h-3.5a.75.75 0 0 0 0 1.5h3.5v3.5a.75.75 0 0 0 1.5 0v-3.5h3.5a.75.75 0 0 0 0-1.5h-3.5v-3.5Z" />
-                            </svg>
-                        </span>
-                    </button>
-                    <div :id="'content-' + index"
-                        class="max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
-                        <div class="pb-5 text-sm">
-                            <div class="flex justify-between">
-                                <span class="text-bold">Basic</span>
-                                <span>{{ item.basic }}</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-bold">Advanced</span>
-                                <span>{{ item.advanced }}</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="mt-2">
+                <AccordionBuilder :items="accordionItems" type="advanced" />
             </div>
             <div class="flex justify-center gap-2">
                 <button @click="$emit('closeModal')" class="w-1/3 bg-gray-700 mt-2 p-2 rounded-xl">
