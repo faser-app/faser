@@ -7,7 +7,8 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
       {
         hid: "description",
         name: "description",
-        content: "faser.app",
+        content:
+          "Stay connected, stay inspired. Discover what moves the world with Faser.",
       },
       {
         hid: "og:title",
@@ -17,7 +18,8 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
       {
         hid: "og:description",
         property: "og:description",
-        content: "faser.app",
+        content:
+          "Stay connected, stay inspired. Discover what moves the world with Faser.",
       },
       {
         hid: "og:image",
@@ -52,7 +54,8 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
       {
         hid: "twitter:description",
         name: "twitter:description",
-        content: "faser.app",
+        content:
+          "Stay connected, stay inspired. Discover what moves the world with Faser.",
       },
       {
         hid: "twitter:image",
