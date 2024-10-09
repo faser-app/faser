@@ -177,28 +177,33 @@
         <transition name="fade" @leave="leave">
             <div class="fixed top-0 left-0 w-screen h-screen backdrop-blur z-50 flex justify-center items-center"
                 v-if="showEditModal">
-                <div class="bg-gray-900 p-5 text-center rounded-xl m-3 md:w-auto w-full" :class="{
-                    'animation': showEditModal,
-                }">
-                    <div class="w-full flex justify-center">
-                        <div
-                            class="bg-red-950 border border-red-600 h-14 w-14 rounded-full flex justify-center items-center">
-                            <i class="fa-solid fa-pen text-xl"></i>
+                <div v-if="ownProfileData.advancedUser">
+                    <div class="bg-gray-900 p-5 text-center rounded-xl m-3 md:w-auto w-full" :class="{
+                        'animation': showEditModal,
+                    }">
+                        <div class="w-full flex justify-center">
+                            <div
+                                class="bg-red-950 border border-red-600 h-14 w-14 rounded-full flex justify-center items-center">
+                                <i class="fa-solid fa-pen text-xl"></i>
+                            </div>
+                        </div>
+                        <h2 class="text-center font-bold mt-2">Edit post</h2>
+                        <p class="text-gray-400">If you edit the post, an edited text will be added to the post</p>
+                        <textarea
+                            class="w-full p-2 rounded-xl h-40 bg-gray-800 text-white pt-0 mt-2 resize-none focus:outline-none"
+                            v-model="postContent.content"></textarea>
+                        <div class="flex flex-col md:flex-row justify-center gap-2 mt-4">
+                            <button @click="showEditModal = false" class="md:w-2/3 bg-gray-700 p-2 rounded-xl">
+                                Cancel
+                            </button>
+                            <button @click="editPost" class="md:w-1/3 bg-red-500 p-2 rounded-xl">
+                                Save
+                            </button>
                         </div>
                     </div>
-                    <h2 class="text-center font-bold mt-2">Edit post</h2>
-                    <p class="text-gray-400">If you edit the post, an edited text will be added to the post</p>
-                    <textarea
-                        class="w-full p-2 rounded-xl h-40 bg-gray-800 text-white pt-0 mt-2 resize-none focus:outline-none"
-                        v-model="postContent.content"></textarea>
-                    <div class="flex flex-col md:flex-row justify-center gap-2 mt-4">
-                        <button @click="showEditModal = false" class="md:w-2/3 bg-gray-700 p-2 rounded-xl">
-                            Cancel
-                        </button>
-                        <button @click="editPost" class="md:w-1/3 bg-red-500 p-2 rounded-xl">
-                            Save
-                        </button>
-                    </div>
+                </div>
+                <div v-else>
+                    <AdvancedComponent :showModal="showEditModal" @closeModal="showEditModal = false" />
                 </div>
             </div>
         </transition>

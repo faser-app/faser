@@ -252,6 +252,10 @@ const links = [
     name: "Home",
     href: "/",
   },
+  {
+    name: "Advanced",
+    href: "/"
+  }
 ];
 
 onMounted(() => {
