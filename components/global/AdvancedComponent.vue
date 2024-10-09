@@ -1,6 +1,6 @@
 <template>
     <Transition name="fade">
-        <div class="bg-gradient-to-tr from-[#24c7ce] to-[#1ed794] p-5 text-center rounded-xl m-3 md:w-auto w-full max-w-[80svw]"
+        <div class="bg-gradient-to-tr from-[#24c7ce] to-[#1ed794] p-5 overflow-scroll text-center rounded-xl m-3 md:w-auto w-full max-h-[80svh] max-w-[80svw]"
             v-if="showModal">
             <h1
                 class="text-2xl text-shadow font-bold mb-2 text-transparent bg-gradient-to-tr from-[#24c7ce] to-[#1ed794] bg-clip-text">
