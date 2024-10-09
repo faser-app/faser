@@ -1,6 +1,6 @@
 <template>
     <Transition name="fade">
-        <div class="bg-gradient-to-tr from-[#24c7ce] to-[#1ed794] p-5 text-center rounded-xl m-3 md:w-auto w-full"
+        <div class="bg-gradient-to-tr from-[#24c7ce] to-[#1ed794] p-5 text-center rounded-xl m-3 md:w-auto w-full max-w-[80svw]"
             v-if="showModal">
             <h1
                 class="text-2xl text-shadow font-bold mb-2 text-transparent bg-gradient-to-tr from-[#24c7ce] to-[#1ed794] bg-clip-text">
@@ -27,10 +27,10 @@
                     </tr>
                 </table>
             </div>
-            <div class="md:hidden block">
-                <div v-for="(item, index) in accordionItems" :key="item">
-                    <button @click="toggleAccordion(index)"
-                        class="w-full flex justify-between items-center py-5">
+            <div class="md:hidden block mt-2">
+                <div v-for="(item, index) in accordionItems" :key="item"
+                    :class="{ 'border-b border-white': index < accordionItems.length - 1 }">
+                    <button @click="toggleAccordion(index)" class="w-full flex justify-between items-center py-5">
                         <span>{{ item.title }}</span>
                         <span :id="'icon-' + index" class="transition-transform duration-300">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"
@@ -40,7 +40,8 @@
                             </svg>
                         </span>
                     </button>
-                    <div :id="'content-' + index" class="max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
+                    <div :id="'content-' + index"
+                        class="max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
                         <div class="pb-5 text-sm">
                             <div class="flex justify-between">
                                 <span>Basic</span>
