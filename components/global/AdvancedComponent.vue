@@ -17,6 +17,11 @@
                     Subscribe
                 </button>
             </div>
+            <p>faser Advanced is not implemented right now</p>
+            <div class="w-full text-left">
+                <p class="text-sm mt-2">Side note:</p>
+                <p>Maybe am i going to remove or add some things later.</p>
+            </div>
         </div>
     </Transition>
 </template>
