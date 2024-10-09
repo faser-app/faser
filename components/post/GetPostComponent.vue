@@ -152,7 +152,7 @@
         <transition name="fade" @leave="leave">
             <div class="fixed top-0 left-0 w-screen h-screen backdrop-blur z-50 flex justify-center items-center"
                 v-if="showModal">
-                <div class="bg-gray-900 p-5 text-center rounded-xl m-3 md:w-auto w-full" :class="{
+                <div class="bg-gray-900 p-5 text-center max-w-[80svw] rounded-xl m-3 md:w-auto w-full" :class="{
                     'animation': showModal,
                 }">
                     <div class="w-full flex justify-center">
@@ -178,7 +178,7 @@
             <div class="fixed top-0 left-0 w-screen h-screen backdrop-blur z-50 flex justify-center items-center"
                 v-if="showEditModal">
                 <div v-if="ownProfileData.advancedUser">
-                    <div class="bg-gray-900 p-5 text-center rounded-xl m-3 md:w-auto w-full" :class="{
+                    <div class="bg-gray-900 p-5 text-center rounded-xl m-3 max-w-[80svw] md:w-auto w-full" :class="{
                         'animation': showEditModal,
                     }">
                         <div class="w-full flex justify-center">
@@ -210,7 +210,7 @@
         <transition name="fade" @leave="leave">
             <div class="fixed top-0 left-0 w-screen h-screen backdrop-blur z-50 flex justify-center items-center"
                 v-if="showImageModal">
-                <div class="bg-gray-900 p-5 text-center rounded-xl m-3 md:w-auto w-full" :class="{
+                <div class="bg-gray-900 p-5 text-center rounded-xl max-w-[80svw] m-3 md:w-auto w-full" :class="{
                     'animation': showImageModal,
                 }">
                     <img :src="imageSrc" class="w-full h-full object-cover rounded-lg max-w-[85svw] max-h-[85svh]" />
