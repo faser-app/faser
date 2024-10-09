@@ -1,9 +1,6 @@
 <template>
   <div class="min-h-screen bg-gray-950 text-white px-2">
-    <div :class="{
-      opacityAnimation: true,
-      opacityAnimationRun: loaded,
-    }">
+    <div>
       <div>
         <h1 v-if="Date.now() < accountData.accountCreated + 1000 * 60 * 10"
           class="text-3xl text-transparent bg-gradient-to-tr from-[#24c7ce] to-[#1ed794] bg-clip-text font-extrabold">
@@ -225,16 +222,3 @@ onMounted(() => {
     });
 });
 </script>
-
-<style scoped>
-.opacityAnimation {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: all 0.5s ease;
-}
-
-.opacityAnimationRun {
-  opacity: 1;
-  transform: translateY(0);
-}
-</style>

@@ -1,8 +1,6 @@
 <script setup>
-import { definePageMeta } from '#imports';
-import { useGtag } from '#imports';
+import { useGtag, useHead, definePageMeta } from '#imports';
 import Cookies from "js-cookie";
-import { useHead } from '#imports';
 
 useHead({
   meta: [
@@ -42,8 +40,35 @@ if (Cookies.get("accepted") || Cookies.get("essential")) {
       <HeaderComponent />
       <NuxtPage />
       <CookieBannerComponent v-if="!accepted" />
-      <TailwindBreakpointIndicator />
       <FooterComponent />
     </NuxtLayout>
   </TooltipProvider>
 </template>
+
+<style>
+.page-enter-active,
+.page-leave-active {
+  transition: all 0.4s ease;
+}
+
+.page-enter-from {
+  transform: translateX(100%);
+  opacity: 0;
+}
+
+.page-enter-to {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.page-leave-from {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.page-leave-to {
+  transform: translateX(-100%);
+  opacity: 0;
+}
+
+</style>

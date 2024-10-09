@@ -1,5 +1,7 @@
 <template>
-  <MainComponent />
+  <div>
+    <MainComponent />
+  </div>
 </template>
 <script setup>
 import { useHead } from '#app';
