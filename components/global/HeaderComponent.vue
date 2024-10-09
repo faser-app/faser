@@ -72,7 +72,7 @@
           <i class="fa-solid fa-bell"></i>
         </div>
         <div v-if="messages.length > 0"
-          class="absolute -mt-5 ml-14 h-6 w-6 text-sm flex items-center justify-center bg-red-700 rounded-full">
+          class="absolute -mt-5 ml-[11%] h-6 w-6 text-sm flex items-center justify-center bg-red-700 rounded-full">
           <div v-if="messages.length > 100">
             99+
           </div>
@@ -320,7 +320,7 @@ if (!window.navigator.standalone && window.navigator.userAgent.match(/(iPhone|iP
   showBanner.value = true
 }
 
-if (window.navigator.standalone && window.navigator.userAgent.match(/(iPhone|iPod|iPad|Macintosh)/i)) {
+if (!window.navigator.standalone && window.navigator.userAgent.match(/(iPhone|iPod|iPad|Macintosh)/i)) {
   mobile.value = true
 }
 </script>
