@@ -53,22 +53,17 @@ if (Cookies.get("accepted") || Cookies.get("essential")) {
 
 .page-enter-from {
   transform: translateX(100%);
-  opacity: 0;
 }
 
 .page-enter-to {
   transform: translateX(0);
-  opacity: 1;
 }
 
 .page-leave-from {
   transform: translateX(0);
-  opacity: 1;
 }
 
 .page-leave-to {
   transform: translateX(-100%);
-  opacity: 0;
 }
-
 </style>
