@@ -1,9 +1,8 @@
 <template>
     <Transition name="fade">
-        <div class="bg-gradient-to-tr from-[#24c7ce] to-[#1ed794] p-5 overflow-scroll text-center rounded-xl m-3 md:w-auto w-full max-h-[80svh] max-w-[80svw]"
+        <div class="advanced-gradient p-5 overflow-scroll text-center rounded-xl m-3 md:w-auto w-full max-h-[80svh] max-w-[80svw]"
             v-if="showModal">
-            <h1
-                class="text-2xl text-shadow font-bold mb-2 text-transparent bg-gradient-to-tr from-[#24c7ce] to-[#1ed794] bg-clip-text">
+            <h1 class="text-2xl text-shadow font-bold mb-2 text-[#ffffff66]">
                 faser Advanced</h1>
             <p>Oh hello! You've found a faser Advanced feature.</p>
             <p>Subscribe now to faser Advanced to use it!</p>
@@ -111,6 +110,27 @@ function toggleAccordion(index) {
 
 <style scoped>
 .text-shadow {
-    filter: drop-shadow(0 0 1rem rgba(0, 0, 0, 0.746));
+    filter: drop-shadow(0 0 0.6rem rgb(0, 0, 0));
+}
+
+.advanced-gradient {
+    background: linear-gradient(45deg, rgba(36, 199, 206, 1) 0%, rgba(30, 209, 215, 1) 30%, rgba(255, 0, 243, 1) 70%, rgba(255, 83, 0, 1) 100%);
+    background-size: 800% 800%;
+    background-repeat: no-repeat;
+    animation: gradient 25s linear infinite;
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 100% 0%;
+    }
+
+    50% {
+        background-position: 0% 100%;
+    }
+
+    100% {
+        background-position: 100% 0%;
+    }
 }
 </style>
