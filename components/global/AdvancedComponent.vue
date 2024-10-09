@@ -49,6 +49,31 @@ const accordionItems = [
         basic: "Release Features",
         advanced: "Early Access Features",
     },
+    {
+        title: "Full Bio Features",
+        basic: "Restricted Markdown Support",
+        advanced: "Extended Markdown Support",
+    },
+    {
+        title: "Limited File Uploads",
+        basic: "Smaller File Sizes",
+        advanced: "Full File Size",
+    },
+    {
+        title: "No Ads",
+        basic: "Ads between posts",
+        advanced: "No Ads at all",
+    },
+    {
+        title: "Personalized Themes",
+        basic: "Basic Design",
+        advanced: "Many Design Options",
+    },
+    {
+        title: "Custom Emojis",
+        basic: "Basic Emojis",
+        advanced: "Custom Emojis and Stickers",
+    },
 ]
 </script>
 
