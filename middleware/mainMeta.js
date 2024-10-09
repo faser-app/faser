@@ -1,4 +1,4 @@
-import { useFetch, useHead } from "#app";
+import { useHead } from "#app";
 
 export default defineNuxtRouteMiddleware(async (to, from) => {
   useHead({

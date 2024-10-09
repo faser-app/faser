@@ -13,10 +13,6 @@ useHead({
 
 const gTag = useGtag()
 
-definePageMeta({
-  middleware: "main-meta"
-})
-
 if (Cookies.get("token")) {
   gTag.gtag('event', 'logged_in', {
     'logged_in': 'true'
