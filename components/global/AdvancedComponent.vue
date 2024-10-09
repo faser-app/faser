@@ -123,15 +123,15 @@ function toggleAccordion(index) {
 
 @keyframes gradient {
     0% {
-        background-position: 100% 0%;
-    }
-
-    50% {
         background-position: 0% 100%;
     }
 
-    100% {
+    50% {
         background-position: 100% 0%;
+    }
+
+    100% {
+        background-position: 0% 100%;
     }
 }
 </style>
