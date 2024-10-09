@@ -44,11 +44,11 @@
                         class="max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
                         <div class="pb-5 text-sm">
                             <div class="flex justify-between">
-                                <span>Basic</span>
+                                <span class="text-bold">Basic</span>
                                 <span>{{ item.basic }}</span>
                             </div>
                             <div class="flex justify-between">
-                                <span>Advanced</span>
+                                <span class="text-bold">Advanced</span>
                                 <span>{{ item.advanced }}</span>
                             </div>
                         </div>
