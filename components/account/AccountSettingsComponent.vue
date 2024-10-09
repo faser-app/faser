@@ -86,6 +86,15 @@
               </button>
             </div>
           </div>
+          <div class="bg-gray-900 md:w-[calc(50%-0.25rem)] w-full flex justify-center items-center p-5 rounded-xl">
+            <div class="flex flex-wrap justify-center">
+              <h1 class="text-xl font-bold">Delete Account</h1>
+              <div class="w-full"></div>
+              <button class="mt-4 bg-[#220000] p-2 border-red-700 border rounded-xl" @click="deleteAccountModal = true">
+                Delete Account
+              </button>
+            </div>
+          </div>
         </div>
       </div>
       <div>
@@ -98,6 +107,7 @@
     <AccountChangePasswordModal />
     <AccountChangeUsernameModal />
     <AccountChangeDisplayNameModal />
+    <DeleteAccountModal :showModal="deleteAccountModal" @close="deleteAccountModal = false" />
   </div>
 </template>
 <script setup>
@@ -109,6 +119,7 @@ import { changeModal } from "~/scripts/account/deletePhoto";
 import { changePasswordModal } from "~/scripts/account/changePassword";
 import { changeUsernameModal } from "~/scripts/account/changeUsername";
 import { changeDisplayNameModal } from "~/scripts/account/changeDisplayName";
+import DeleteAccountModal from "./DeleteAccountModal.vue";
 
 const router = useRouter();
 
@@ -118,6 +129,8 @@ const profileData = ref({});
 const lastLogin = ref("");
 
 const loaded = ref(false);
+
+const deleteAccountModal = ref(false)
 
 const buttonDisabled = ref(true);
 const fileTooBig = ref(false);

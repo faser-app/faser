@@ -1,7 +1,8 @@
 <template>
   <div>
-    <input id="search" class="h-full border-0 shadow-none md:w-auto w-full outline-none bg-gray-700 p-3 rounded-xl text-white" v-model="query"
-      @input="searchUsers" placeholder="Search for user" @focus="focus = true" />
+    <input id="search"
+      class="h-full border-0 shadow-none md:w-auto w-full outline-none bg-gray-700 p-3 rounded-xl text-white"
+      v-model="query" @input="searchUsers" placeholder="Search for user" @focus="focus = true" />
   </div>
   <div v-if="query.length > 0 && focus"
     class="md:absolute top-16 rounded-xl border border-gray-500 shadow-lg shadow-gray-900 text-white right-32 bg-gray-700 md:w-64 p-2 overflow-hidden">

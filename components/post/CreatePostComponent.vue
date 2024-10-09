@@ -1,9 +1,7 @@
 <template>
-    <div
-        :class="{
-            'h-12 w-12': props.mobile === 'true',
-        }"
-        class="p-2 z-100 select-none cursor-pointer text-xl bottom-5 right-5 bg-gradient-to-tr hover:backdrop-brightness-0 from-[#24c7ce] to-[#1ed794] flex justify-center items-center rounded-full"
+    <div :class="{
+        'h-12 w-12': props.mobile === 'true',
+    }" class="p-2 z-100 select-none cursor-pointer text-xl bottom-5 right-5 bg-gradient-to-tr hover:backdrop-brightness-0 from-[#24c7ce] to-[#1ed794] flex justify-center items-center rounded-full"
         @click="showModal = true">
         {{ props.text }}
     </div>
