@@ -59,6 +59,10 @@ export default defineNuxtConfig({
           src: "https://cdn.jsdelivr.net/npm/ldrs/dist/auto/lineWobble.js",
           type: "module",
         },
+        {
+          src: "https://cdn.jsdelivr.net/npm/ldrs/dist/auto/zoomies.js",
+          type: "module",
+        },
       ],
     },
   },

@@ -16,13 +16,14 @@
         <p v-if="errors.message" class="text-red-500">{{ errors.message }}</p>
         <button class="w-full h-10 bg-gray-700 text-white p-2 rounded-xl mt-2" @click="sendMessage">
             <div v-if="loading">
-                <l-zoomies size="80" stroke="5" bg-opacity="0.1" speed="1.4" color="black"></l-zoomies>
+                <l-zoomies size="80" stroke="5" bg-opacity="0.1" speed="1.4" color="white"></l-zoomies>
             </div>
             <div v-else>
                 Send
             </div>
         </button>
         <p class="text-green-500" v-if="success">Message sent successfully! (SupportId: {{ supportId }})</p>
+        <p class="text-red-500" v-if="errors.request">{{ errors.request }}</p>
     </div>
 </template>
 
@@ -106,8 +107,8 @@ function sendMessage() {
         supportId.value = response.data.supportId
     }).catch((err) => {
         console.log(err);
-        alert("An error occurred. Please try again later.");
         loading.value = false;
+        errors.value.request = err.response.data.message
     });
 }
 
