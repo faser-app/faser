@@ -208,3 +208,9 @@
         </div>
     </div>
 </template>
+
+<style scoped>
+p {
+    margin-left: 1rem;
+}
+</style>
