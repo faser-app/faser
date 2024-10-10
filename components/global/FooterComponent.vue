@@ -9,8 +9,13 @@
           <a :href="link.url" v-else class="underline">{{ link.name }}</a>
         </div>
       </div>
-      <div class="w-full flex justify-center underline mt-2 cursor-pointer" @click="resetCookies">
-        Cookie Settings
+      <div class="flex w-full justify-center gap-2">
+        <div class="flex justify-center underline mt-2 cursor-pointer" @click="resetCookies">
+          Cookie Settings
+        </div>
+        <RouterLink to="/faq" class="flex justify-center underline mt-2 cursor-pointer">
+          FAQ
+        </RouterLink>
       </div>
 
       <p class="mt-5">© 2024 faser</p>
@@ -58,7 +63,7 @@ if (window.navigator.standalone && window.navigator.userAgent.match(/(iPhone|iPo
   mobile.value = true
 }
 
-function resetCookies () {
+function resetCookies() {
   gTag.gtag('consent', 'update', {
     ad_storage: 'denied',
     analytics_storage: 'denied'

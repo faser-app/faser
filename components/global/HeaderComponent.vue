@@ -253,6 +253,10 @@ const links = [
     href: "/",
   },
   {
+    name: "FAQ",
+    href: "/faq",
+  },
+  {
     name: "Advanced",
     href: "/"
   }
