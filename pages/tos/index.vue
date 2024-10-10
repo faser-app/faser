@@ -1,7 +1,7 @@
 <template>
     <div class="min-h-screen bg-gray-950 text-white px-5 py-6">
         <h1 class="text-2xl font-bold mb-4">Terms of Service</h1>
-        <p><strong>Effective Date:</strong> September 11, 2024</p>
+        <p><strong>Effective Date:</strong> October 10, 2024</p>
         <p>Welcome to faser.app! These Terms of Service ("ToS") govern your use of the faser.app platform ("the App")
             and apply to all users aged 13 and older. By accessing or using the App, you agree to be bound by these
             Terms of Service. If you do not agree, please do not use the App.</p><br>
