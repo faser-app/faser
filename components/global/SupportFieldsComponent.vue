@@ -84,7 +84,7 @@ function sendMessage() {
         errors.value.message = "Message is required";
     }
 
-    if (errors.value.length > 0) {
+    if (errors.value.message || errors.value.subject || errors.value.email) {
         return;
     }
 
