@@ -13,17 +13,13 @@
                 <AccordionBuilder :items="accordionItems" type="advanced" accordion-id="advanced" />
             </div>
             <div class="flex justify-center gap-2">
-                <button v-if="!props.faqPage" @click="$emit('closeModal')" class="w-1/3 bg-gray-700 mt-2 p-2 rounded-xl">
+                <button v-if="!props.faqPage" @click="$emit('closeModal')"
+                    class="w-1/3 bg-gray-700 mt-2 p-2 rounded-xl">
                     Cancel
                 </button>
                 <button @click="$emit('closeModal')" class="w-2/3 bg-[#ffffff3f] text-white border mt-2 p-2 rounded-xl">
-                    Subscribe
+                    Subscribe (Not implemented)
                 </button>
-            </div>
-            <p>faser Advanced is not implemented right now</p>
-            <div class="w-full text-left">
-                <p class="text-sm mt-2">Side note:</p>
-                <p>Maybe am i going to remove or add some things later.</p>
             </div>
         </div>
     </Transition>

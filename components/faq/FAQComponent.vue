@@ -22,6 +22,10 @@
             <div class="w-full -ml-3">
                 <AdvancedComponent :show-modal="true" :faq-page="true" accordion-id="advanced" />
             </div>
+
+            <div class="w-full mt-2" id="support">
+                <SupportFieldsComponent />
+            </div>
         </div>
     </div>
 </template>

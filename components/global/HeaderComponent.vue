@@ -257,9 +257,13 @@ const links = [
     href: "/faq",
   },
   {
+    name: "Support",
+    href: "/faq#support"
+  },
+  {
     name: "Advanced",
     href: "/"
-  }
+  },
 ];
 
 onMounted(() => {
