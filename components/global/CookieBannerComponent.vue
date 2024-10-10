@@ -10,9 +10,10 @@
                     </RouterLink>.</p>
             </div>
             <div class="flex mt-2">
-                <button class="bg-gray-700 text-white py-1 px-4 ml-2 rounded" @click="acceptEssentialCookies">Only
+                <button class="bg-gray-700 text-white py-1 px-4 rounded" @click="acceptEssentialCookies">Only
                     Essential</button>
-                <button class="bg-gray-700 text-white py-1 px-4 rounded" @click="acceptAllCookies">Accept All</button>
+                <button class="bg-gray-700 text-white py-1 px-4 ml-2 rounded" @click="acceptAllCookies">Accept
+                    All</button>
             </div>
         </div>
     </div>
