@@ -262,7 +262,7 @@ const links = [
   },
   {
     name: "Advanced",
-    href: "/"
+    href: "/faq#advanced"
   },
 ];
 

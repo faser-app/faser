@@ -19,7 +19,7 @@
                 <AccordionBuilder :items="faqItems" type="normal" accordion-id="faser" />
             </div>
 
-            <div class="w-full -ml-3">
+            <div class="w-full -ml-3" id="advanced">
                 <AdvancedComponent :show-modal="true" :faq-page="true" accordion-id="advanced" />
             </div>
 

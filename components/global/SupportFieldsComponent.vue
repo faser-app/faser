@@ -1,8 +1,5 @@
 <template>
     <div class="w-full p-2 bg-gray-800 rounded-xl">
-        <div class="w-full flex justify-center">
-            <p class="text-xl font-bold mb-2">Contact us</p>
-        </div>
         <input type="email" class="w-full p-2 bg-gray-800 border border-gray-700 rounded-xl" placeholder="Email"
             v-model="email" @input="errors.email = ''" :class="{ 'border border-red-500': errors.email }" />
         <p v-if="errors.email" class="text-red-500">{{ errors.email }}</p>
@@ -29,6 +26,27 @@
 <script setup>
 import axios from "axios";
 import Cookies from "js-cookie";
+
+const props = defineProps({
+    predefinedSubject: {
+        type: String,
+        default: ""
+    },
+    predefinedMessage: {
+        type: String,
+        default: ""
+    }
+})
+
+onMounted(() => {
+    if (props.predefinedSubject) {
+        subject.value = props.predefinedSubject
+    }
+
+    if (props.predefinedMessage) {
+        message.value = props.predefinedMessage
+    }
+})
 
 const email = ref("");
 const subject = ref("");
