@@ -5,7 +5,7 @@
       v-model="query" @input="searchUsers" placeholder="Search for user" @focus="focus = true" />
   </div>
   <div v-if="query.length > 0 && focus"
-    class="md:absolute top-16 rounded-xl border border-gray-500 shadow-lg shadow-gray-900 text-white right-32 bg-gray-700 md:w-64 p-2 overflow-hidden">
+    class="md:absolute top-16 rounded-xl border border-gray-500 shadow-lg shadow-gray-900 text-white right-96 bg-gray-700 md:w-64 p-2 overflow-hidden">
     <div v-if="users.length !== 0" v-for="user in users" :key="user.username" class="p-2" :class="{
       'border-b border-gray-500': users.indexOf(user) !== users.length - 1,
     }">
