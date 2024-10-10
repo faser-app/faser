@@ -54,7 +54,7 @@ const faqItems = ref([
     },
     {
         title: "How can I contact faser support?",
-        content: "You can reach out to our support team at support@faser.app. We are here to assist you with any issues or questions you may have."
+        content: "You can contact faser support by taking a look at the bottom of the page. There you will find a contact form that you can fill out and send to us."
     },
 ]);
 
