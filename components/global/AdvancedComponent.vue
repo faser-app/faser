@@ -1,16 +1,19 @@
 <template>
     <Transition name="fade">
-        <div class="advanced-gradient md:mb-0 mb-[10svh] backdrop-blur-xl p-5 overflow-scroll text-center rounded-xl m-3 md:w-auto w-full max-h-[80svh] max-w-[80svw]"
+        <div class="advanced-gradient md:mb-0 mb-[10svh] backdrop-blur-xl p-5 overflow-scroll text-center rounded-xl m-3 md:w-auto min-w-full max-h-[80svh] max-w-[80svw]"
             v-if="showModal">
             <h1 class="text-2xl font-bold mb-2 text-[#ffffffbb]">
                 faser Advanced</h1>
-            <p>Oh hello! You've found a faser Advanced feature.</p>
-            <p>Subscribe now to faser Advanced to use it!</p>
+            <div v-show="!props.faqPage">
+                <p>Oh hello! You've found a faser Advanced feature.</p>
+                <p>Subscribe now to faser Advanced to use it!</p>
+            </div>
+            <p>Here are some features listed what you can do with faser advanced</p>
             <div class="mt-2">
-                <AccordionBuilder :items="accordionItems" type="advanced" />
+                <AccordionBuilder :items="accordionItems" type="advanced" accordion-id="advanced" />
             </div>
             <div class="flex justify-center gap-2">
-                <button @click="$emit('closeModal')" class="w-1/3 bg-gray-700 mt-2 p-2 rounded-xl">
+                <button v-if="!props.faqPage" @click="$emit('closeModal')" class="w-1/3 bg-gray-700 mt-2 p-2 rounded-xl">
                     Cancel
                 </button>
                 <button @click="$emit('closeModal')" class="w-2/3 bg-[#ffffff3f] text-white border mt-2 p-2 rounded-xl">
@@ -31,6 +34,7 @@ import { defineProps } from 'vue'
 
 const props = defineProps({
     showModal: Boolean,
+    faqPage: Boolean,
 })
 
 const accordionItems = [

@@ -1,0 +1,57 @@
+<template>
+    <div class="bg-gray-950 min-h-screen text-white">
+        <div class="mx-5 py-2">
+            <h1 class="text-2xl font-bold">faser FAQ</h1>
+
+            <p class="mt-2">Welcome to faser FAQ, here you can read more about faser and what we are doing.</p>
+
+            <div class="mt-6 p-4 bg-gray-800 rounded-xl">
+                <h2 class="text-xl font-bold">About faser</h2>
+                <p class="mt-2">
+                    faser is a next-generation social media platform designed to bring people together in a vibrant,
+                    interactive space. Our mission is to provide a seamless and engaging experience for users who want
+                    to share, connect, and explore new ideas.
+                </p>
+            </div>
+
+
+            <div class="p-2 mt-2 bg-gray-800 rounded-xl">
+                <AccordionBuilder :items="faqItems" type="normal" accordion-id="faser" />
+            </div>
+
+            <div class="w-full -ml-3">
+                <AdvancedComponent :show-modal="true" :faq-page="true" accordion-id="advanced" />
+            </div>
+        </div>
+    </div>
+</template>
+
+<script setup>
+const faqItems = ref([
+    {
+        title: "What is faser?",
+        content: "faser is a social media platform that allows users to connect, share, and engage with each other. It offers a unique space for discussions, sharing media, and staying updated with the latest trends."
+    },
+    {
+        title: "How do I create an account on faser?",
+        content: "To create an account, simply visit our website at faser.app, click on the 'Login' button and then go to 'create account'. Follow the on-screen instructions to set up your profile and start using faser."
+    },
+    {
+        title: "Is faser free to use?",
+        content: "Yes, faser offers a free version with all the essential features. However, you can subscribe to faser Advanced for additional features and an ad-free experience."
+    },
+    {
+        title: "What is faser Advanced?",
+        content: "faser Advanced is our premium subscription model that gives users access to additional features, such as enhanced analytics, priority support, and the ability to customize their experience further."
+    },
+    {
+        title: "How do I delete my account?",
+        content: "If you wish to delete your account, go to 'Your Profile' > 'Account Settings' > 'Delete Account'. Please note that this action is irreversible, and all your data will be permanently removed."
+    },
+    {
+        title: "How can I contact faser support?",
+        content: "You can reach out to our support team at support@faser.app. We are here to assist you with any issues or questions you may have."
+    },
+]);
+
+</script>
