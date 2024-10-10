@@ -53,10 +53,6 @@
                   </div>
                 </div>
               </div>
-              <RouterLink to="/account/settings"
-                class="absolute right-5 bg-gray-700 p-3 h-12 w-12 flex justify-center items-center rounded-xl">
-                <i class="fa-solid fa-pen"></i>
-              </RouterLink>
             </div>
           </div>
           <div class="min-w-full mb-3 sm:mb-0 sm:min-w-fit sm:ml-5 justify-center flex flex-wrap gap-4">
@@ -71,6 +67,16 @@
             <div class="text-center text-gray-400 rounded-xl select-none">
               <p>Posts</p>
               <p>{{ posts }}</p>
+            </div>
+          </div>
+          <div class="w-full p-5">
+            <div class="flex gap-2">
+              <RouterLink to="/account/settings" class="flex justify-center rounded-xl p-2 w-1/2 bg-gray-700">
+                Account Settings
+              </RouterLink>
+              <div @click="shareProfile" class="flex cursor-pointer justify-center rounded-xl p-2 w-1/2 bg-gray-700">
+                Share Profile
+              </div>
             </div>
           </div>
           <div class="w-full p-5 bg-gray-700 mb-2 bio">
@@ -239,6 +245,13 @@ axios
       router.push("/login");
     }
   });
+
+function shareProfile() {
+  navigator.share({
+    title: "Check out my profile on Faser",
+    url: "https://faser.app/" + accountData.value.username
+  })
+}
 </script>
 
 <style scoped>

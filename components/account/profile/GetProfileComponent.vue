@@ -90,6 +90,21 @@
               <p>{{ posts }}</p>
             </div>
           </div>
+          <div class="w-full p-5">
+            <div class="flex gap-2">
+              <div to="/account/settings" @click="alertNotImplemented"
+                class="flex cursor-pointer justify-center rounded-xl p-2 w-1/2 bg-gray-700">
+                Report Profile
+              </div>
+              <div to="/account/settings" @click="alertNotImplemented"
+                class="flex cursor-pointer justify-center rounded-xl p-2 w-1/2 bg-gray-700">
+                Block User
+              </div>
+              <div @click="shareProfile" class="flex cursor-pointer justify-center rounded-xl p-2 w-1/2 bg-gray-700">
+                Share Profile
+              </div>
+            </div>
+          </div>
           <div class="w-full p-5 bg-gray-700 mb-2">
             <p v-if="profileData.bio" v-html="markdownHTML"></p>
             <p v-else class="italic text-gray-300">
@@ -248,6 +263,17 @@ const communities = ref([]);
 const route = useRoute();
 
 const username = route.params.user.replace("@", "");
+
+function shareProfile() {
+  navigator.share({
+    title: "Check out this profile on Faser",
+    url: "https://faser.app/" + route.params.user,
+  });
+}
+
+function alertNotImplemented() {
+  alert("This feature is not implemented yet");
+}
 
 async function main() {
   const response = await axios
