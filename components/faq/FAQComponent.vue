@@ -24,7 +24,7 @@
             </div>
 
             <div class="w-full mt-2" id="support">
-                <SupportFieldsComponent />
+                <SupportFieldsComponent title="Contact Support" />
             </div>
         </div>
     </div>

@@ -1,5 +1,8 @@
 <template>
     <div class="w-full p-2 bg-gray-800 rounded-xl">
+        <div class="w-full flex justify-center mb-2">
+            <h2 class="text-xl font-bold">{{ title }}</h2>
+        </div>
         <input type="email" class="w-full p-2 bg-gray-800 border border-gray-700 rounded-xl" placeholder="Email"
             v-model="email" @input="errors.email = ''" :class="{ 'border border-red-500': errors.email }" />
         <p v-if="errors.email" class="text-red-500">{{ errors.email }}</p>
@@ -33,6 +36,10 @@ const props = defineProps({
         default: ""
     },
     predefinedMessage: {
+        type: String,
+        default: ""
+    },
+    title: {
         type: String,
         default: ""
     }
