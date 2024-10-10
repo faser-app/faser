@@ -204,7 +204,7 @@
         class="fixed h-full z-100 z-50 w-full backdrop-blur top-0 left-0 flex justify-center items-center">
         <div class="bg-gray-800 w-[60rem] max-h-[80svh] overflow-y-scroll mx-4 p-2 rounded-xl">
           <div class="w-full flex items-center justify-center text-xl font-bold">
-            <h1 class="w-full text-center">Report User</h1>
+            <h1 class="w-full text-center">Report Profile</h1>
             <i class="fa-solid fa-xmark mr-2 cursor-pointer" @click="openReport = false"></i>
           </div>
           <SupportFieldsComponent :predefinedSubject="'User Report for ' + profileData.displayName" :predefinedMessage="'I want to report this person because...\n\nProfile Link: https://faser.app' + route.path" />
