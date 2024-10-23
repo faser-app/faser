@@ -33,6 +33,24 @@ const props = defineProps({
     faqPage: Boolean,
 })
 
+let scrollpos = window.scrollY;
+
+watch(() => props.showModal, (value) => {
+    if (value) {
+        scrollpos = window.scrollY;
+
+        document.body.style.position = 'fixed';
+        document.body.style.top = "-" + scrollpos + "px";
+        document.body.classList.add("overflow-hidden")
+    }
+    else {
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.classList.remove("overflow-hidden")
+        window.scrollTo(0, scrollpos);
+    }
+})
+
 const accordionItems = [
     {
         title: "Max post Character Limit",
