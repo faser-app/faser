@@ -37,7 +37,6 @@ import Cookies from "js-cookie";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
-
 const showModal = ref(false);
 
 onMounted(() => {

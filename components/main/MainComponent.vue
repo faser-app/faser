@@ -48,9 +48,7 @@ import axios from 'axios';
 import Cookies from "js-cookie"
 
 const posts = ref([]);
-
 const loggedIn = ref(false)
-
 const lastTimestamp = ref(Date.now())
 
 onMounted(() => {
@@ -59,9 +57,7 @@ onMounted(() => {
 
 const loading = ref(false)
 const noPosts = ref(true)
-
 const noMorePosts = ref(false)
-
 const lastRequest = ref(0)
 
 

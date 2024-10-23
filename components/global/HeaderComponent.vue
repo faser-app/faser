@@ -235,17 +235,12 @@ import Cookies from "js-cookie";
 
 const expanded = ref(false);
 const username = ref("");
-
 const loaded = ref(false);
 const haveProfilePicture = ref(false);
-
 const messages = ref([])
-
 const showBanner = ref(false)
 const mobile = ref(false)
-
 const expandedSearch = ref(false)
-
 const openMessages = ref(false)
 
 const links = [

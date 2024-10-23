@@ -59,13 +59,9 @@ onMounted(() => {
 const email = ref("");
 const subject = ref("");
 const message = ref("");
-
 const loading = ref(false);
-
 const errors = ref([]);
-
 const success = ref(false)
-
 const supportId = ref(0)
 
 function sendMessage() {

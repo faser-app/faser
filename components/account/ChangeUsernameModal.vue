@@ -40,11 +40,8 @@ import Cookies from "js-cookie";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
-
 const showModal = ref(false);
-
 const newUsername = ref("");
-
 const error = ref("");
 
 let scrollpos = window.scrollY;

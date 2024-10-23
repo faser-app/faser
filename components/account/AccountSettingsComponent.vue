@@ -122,19 +122,13 @@ import { changeDisplayNameModal } from "~/scripts/account/changeDisplayName";
 import DeleteAccountModal from "./DeleteAccountModal.vue";
 
 const router = useRouter();
-
 const accountData = ref({});
 const profileData = ref({});
-
 const lastLogin = ref("");
-
 const loaded = ref(false);
-
 const deleteAccountModal = ref(false)
-
 const buttonDisabled = ref(true);
 const fileTooBig = ref(false);
-
 const file = ref(null);
 
 function logout() {

@@ -230,41 +230,26 @@ import Cookies from "js-cookie";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
-
 const md = new MarkdownIt();
-
 const showImageModal = ref(false);
-
 const threeDotElementOpen = ref(false)
-
 const postContent = ref({})
 const author = ref({})
-
 const postValue = ref('')
-
 const commentText = ref('')
-
 const postCreatedAt = ref('')
-
 const postVisible = ref(true);
 const copied = ref(false);
-
 const postType = ref('')
 const parentPost = ref('')
-
 const runningCommentRequest = ref(false);
-
 const postLikes = ref(0);
 const postComments = ref(0)
 const isLiked = ref(false);
-
 const hovered = ref(false);
-
 const showModal = ref(false);
 const showEditModal = ref(false);
-
 const threeDotsMenu = ref(false);
-
 const profile = ref({})
 
 let scrollpos = window.scrollY

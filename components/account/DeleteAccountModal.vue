@@ -64,11 +64,9 @@ watch(() => props.showModal, (value) => {
 })
 
 const router = useRouter();
-
 const email = ref("");
 const password = ref("");
 const retypedPassword = ref("");
-
 const error = ref("");
 
 

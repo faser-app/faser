@@ -58,7 +58,6 @@ import { ref } from "vue";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
-
 const query = ref("");
 const users = ref([]);
 const loaded = ref(false);

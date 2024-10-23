@@ -47,14 +47,11 @@ import Cookies from "js-cookie";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
-
 const showModal = ref(false);
-
 const email = ref("");
 const password = ref("");
 const newPassword = ref("");
 const retypedPassword = ref("");
-
 const error = ref("");
 
 let scrollpos = window.scrollY;
