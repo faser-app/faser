@@ -33,8 +33,6 @@ const props = defineProps({
     faqPage: Boolean,
 })
 
-let scrollpos = window.scrollY;
-
 const accordionItems = [
     {
         title: "Max post Character Limit",
