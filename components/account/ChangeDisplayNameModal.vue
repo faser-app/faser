@@ -47,9 +47,25 @@ const newUsername = ref("");
 
 const error = ref("");
 
+let scrollpos = window.scrollY;
+
 onMounted(() => {
   watch(getModalState(), (value) => {
     showModal.value = value;
+
+    if (value) {
+      scrollpos = window.scrollY;
+
+      document.body.style.position = 'fixed';
+      document.body.style.top = "-" + scrollpos + "px";
+      document.body.classList.add("overflow-hidden")
+    }
+    else {
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.classList.remove("overflow-hidden")
+      window.scrollTo(0, scrollpos);
+    }
   });
 });
 

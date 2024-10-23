@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!mobile" class="bg-[#0206176c] h-[4.5rem] flex fixed backdrop-blur text-white w-full z-100">
+  <div v-if="!mobile" class="bg-[#0206176c] h-[4.5rem] flex top-0 fixed backdrop-blur text-white w-full z-100">
     <RouterLink to="/">
       <div class="flex h-full w-full justify-center md:justify-start fixed pointer-events-none">
         <img src="/assets/img/icon/logo.png" alt="Logo"
@@ -17,7 +17,7 @@
         <div v-for="link in links" :key="link.name" class="cursor-pointer">
           <RouterLink :to="link.href" class="text-white hover:scale">{{
             link.name
-            }}</RouterLink>
+          }}</RouterLink>
         </div>
       </div>
       <div class="h-full flex items-center">
@@ -125,14 +125,14 @@
   </Transition>
 
   <Transition name="fade" @leave="leave" @enter="open">
-    <div class="fixed w-screen h-screen backdrop-blur-lg z-50 flex items-center justify-center" v-if="openMessages">
+    <div class="fixed top-0 left-0 w-screen h-screen backdrop-blur-lg z-50 flex items-center justify-center" v-if="openMessages">
       <div
         class="max-w-[90rem] md:w-[80svw] w-[95svw] text-white max-h-[70svh] overflow-auto bg-gray-800 p-2 rounded-xl">
         <div class="w-full flex items-center justify-between text-2xl font-bold">
           <div class="w-full text-center">
             <h1>Messages</h1>
           </div>
-          <i class="fa-solid fa-xmark mr-2 cursor-pointer text-xl" @click="openMessages = false"></i>
+          <i class="fa-solid fa-xmark mr-2 cursor-pointer text-xl" @click="closeUserMessages"></i>
         </div>
         <div v-if="messages.length === 0" class="w-full text-gray-400 italic flex items-center justify-center h-28">
           <p>Great! You have no new messages</p>
@@ -154,7 +154,7 @@
             <div>
               <div class="flex w-full items-center">
 
-                <RouterLink @click="openMessages = false" :to="'/' + message.userProfile[0].username" class="flex">
+                <RouterLink @click="closeUserMessages" :to="'/' + message.userProfile[0].username" class="flex">
                   <p class="flex">{{ message.userProfile[0].displayName }}</p>
                   <p class="text-gray-400">(@{{ message.userProfile[0].username }})</p>
                   <div v-if="message.userProfile[0].businessAccount"
@@ -168,7 +168,7 @@
                 </RouterLink>
 
               </div>
-              <RouterLink :to="'/post/' + message.postId" @click="openMessages = false">
+              <RouterLink :to="'/post/' + message.postId" @click="closeUserMessages">
                 <div class="flex">
                   <p class="text-gray-400 mr-1" v-if="message.type === 'like'">Has liked your post: </p>
                   <p class="text-gray-400 mr-1" v-else>Commented on your post: </p>
@@ -186,7 +186,7 @@
               </div>
             </div>
             <div>
-              <RouterLink @click="openMessages = false" :to="'/' + message.userProfile[0].username">
+              <RouterLink @click="closeUserMessages" :to="'/' + message.userProfile[0].username">
                 <div class="flex w-full items-center">
 
                   <p class="flex">{{ message.userProfile[0].displayName }}</p>
@@ -304,12 +304,33 @@ function getUserMessages() {
     });
 }
 
+let scrollpos = window.scrollY;
+
 function openUserMessages() {
   openMessages.value = !openMessages.value
+
+
+  scrollpos = window.scrollY;
+
+  document.body.style.position = 'fixed';
+  document.body.style.top = "-" + scrollpos + "px";
+  document.body.classList.add("overflow-hidden")
+  document.body.classList.add("max-w-screen")
+
 
   if (openMessages.value) {
     getUserMessages()
   }
+}
+
+function closeUserMessages() {
+  openMessages.value = false
+
+  document.body.style.position = '';
+  document.body.style.top = '';
+  document.body.classList.remove("overflow-hidden")
+  document.body.classList.remove("max-w-screen")
+  window.scrollTo(0, scrollpos);
 }
 
 function clearMessages() {

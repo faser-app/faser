@@ -2,7 +2,7 @@
     <div :class="{
         'h-12 w-12': props.mobile === 'true',
     }" class="p-2 z-100 select-none cursor-pointer text-xl bottom-5 right-5 bg-gradient-to-tr hover:backdrop-brightness-0 from-[#24c7ce] to-[#1ed794] flex justify-center items-center rounded-full"
-        @click="showModal = true">
+        @click="openModal">
         {{ props.text }}
     </div>
 
@@ -12,6 +12,7 @@
             class="h-full z-100 pb-5 w-full fixed top-0 left-0 flex justify-center md:pt-36 items-end md:items-start"
             :class="{
                 'fadeIn': showModal,
+                'backdrop-blur-xl': !props.mobile !== undefined ? props.mobile : false
             }">
             <div class="w-full flex justify-center h-fit" :class="{
                 'animation': showModal,
@@ -21,7 +22,7 @@
                 <div class="bg-gray-900 md:w-4/5 w-full md:mx-0 mx-2 p-3 rounded-xl">
                     <div class="flex">
                         <h1 class="w-full">Make Post</h1>
-                        <div @click="showModal = false" class="flex cursor-pointer justify-end text-xl mr-1">
+                        <div @click="closeModal" class="flex cursor-pointer justify-end text-xl mr-1">
                             <i class="fa-solid fa-xmark"></i>
                         </div>
                     </div>
@@ -49,7 +50,7 @@
                     </div>
                     <p v-if="error" class="text-red-500 mt-1">{{ error }}</p>
                     <div class="flex md:flex-nowrap flex-wrap justify-end mt-2 gap-2">
-                        <button @click="showModal = false"
+                        <button @click="closeModal"
                             class="bg-gray-700 p-2 md:w-2/3 w-full rounded-xl">Close</button>
                         <button @click="uploadPost" :disabled="postContent.length === 0"
                             class="bg-gradient-to-tr from-[#24c7ce] to-[#1ed794] p-2 flex justify-center items-center md:w-1/3 w-full rounded-xl">
@@ -100,6 +101,27 @@ function selectFile() {
         const file = e.target.files[0];
         images.value.push(file);
     };
+}
+
+let scrollpos = window.scrollY;
+
+function openModal() {
+    showModal.value = true
+
+    scrollpos = window.scrollY;
+
+    document.body.style.position = 'fixed';
+    document.body.style.top = "-" + scrollpos + "px";
+    document.body.classList.add("overflow-hidden")
+}
+
+function closeModal() {
+    showModal.value = false
+
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.classList.remove("overflow-hidden")
+    window.scrollTo(0, scrollpos);
 }
 
 const props = defineProps({

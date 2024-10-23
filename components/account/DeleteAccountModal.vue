@@ -44,6 +44,24 @@ const props = defineProps({
     showModal: Boolean,
 })
 
+let scrollpos = window.scrollY;
+
+watch(() => props.showModal, (value) => {
+    if (value) {
+        scrollpos = window.scrollY;
+
+        document.body.style.position = 'fixed';
+        document.body.style.top = "-" + scrollpos + "px";
+        document.body.classList.add("overflow-hidden")
+    }
+    else {
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.classList.remove("overflow-hidden")
+        window.scrollTo(0, scrollpos);
+    }
+})
+
 const router = useRouter();
 
 const email = ref("");
@@ -59,13 +77,13 @@ function deleteAccount() {
         "password": password.value,
         "email": email.value
     })
-    .then((response) => {
-        Cookies.remove("token");
-        router.push("/");
-    })
-    .catch((error) => {
-        error.value = error.response.data.message;
-    });
+        .then((response) => {
+            Cookies.remove("token");
+            router.push("/");
+        })
+        .catch((error) => {
+            error.value = error.response.data.message;
+        });
 }
 
 
