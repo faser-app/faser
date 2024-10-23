@@ -57,6 +57,7 @@ onMounted(() => {
       scrollpos = window.scrollY;
 
       document.body.style.position = 'fixed';
+      document.body.style.width = '100%';
       document.body.style.top = "-" + scrollpos + "px";
       document.body.classList.add("overflow-hidden")
     }

@@ -17,7 +17,7 @@
         <div v-for="link in links" :key="link.name" class="cursor-pointer">
           <RouterLink :to="link.href" class="text-white hover:scale">{{
             link.name
-          }}</RouterLink>
+            }}</RouterLink>
         </div>
       </div>
       <div class="h-full flex items-center">
@@ -125,7 +125,8 @@
   </Transition>
 
   <Transition name="fade" @leave="leave" @enter="open">
-    <div class="fixed top-0 left-0 w-screen h-screen backdrop-blur-lg z-50 flex items-center justify-center" v-if="openMessages">
+    <div class="fixed top-0 left-0 w-screen h-screen backdrop-blur-lg z-50 flex items-center justify-center"
+      v-if="openMessages">
       <div
         class="max-w-[90rem] md:w-[80svw] w-[95svw] text-white max-h-[70svh] overflow-auto bg-gray-800 p-2 rounded-xl">
         <div class="w-full flex items-center justify-between text-2xl font-bold">
@@ -313,6 +314,7 @@ function openUserMessages() {
   scrollpos = window.scrollY;
 
   document.body.style.position = 'fixed';
+  document.body.style.width = '100%';
   document.body.style.top = "-" + scrollpos + "px";
   document.body.classList.add("overflow-hidden")
   document.body.classList.add("max-w-screen")
