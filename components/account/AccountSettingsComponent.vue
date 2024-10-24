@@ -67,7 +67,7 @@
                         class="h-10 w-10 items-center mt-1 rounded-full mr-1" />
                       <p>{{ profileData.music.songName }} - </p>
                       <div v-for="(author, index) in profileData.music.songAuthor" :key="author.name">
-                        <p v-if="index === 1">{{ author.name }}</p>
+                        <p v-if="index === 0">{{ author.name }}</p>
                       </div>
                     </div>
                   </div>
