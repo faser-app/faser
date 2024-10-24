@@ -17,7 +17,7 @@
         <div v-for="link in links" :key="link.name" class="cursor-pointer">
           <RouterLink :to="link.href" class="text-white hover:scale">{{
             link.name
-            }}</RouterLink>
+          }}</RouterLink>
         </div>
       </div>
       <div class="h-full flex items-center">
@@ -58,7 +58,7 @@
           </div>
         </RouterLink>
       </div>
-      <div @click="expandedSearch = !expandedSearch" class="text-center">
+      <div @click="toggleSearch" class="text-center">
         <div class="flex items-center h-8 justify-center">
           <i class="fa-solid fa-magnifying-glass"></i>
         </div>
@@ -110,14 +110,14 @@
   </div>
 
   <Transition name="fade" @leave="leave" @enter="open">
-    <div class="fixed w-screen h-screen backdrop-blur-lg z-50 flex items-center justify-center" v-if="expandedSearch">
+    <div class="fixed top-0 w-screen h-screen backdrop-blur-lg z-50 flex items-center justify-center" v-if="expandedSearch">
       <div
         class="max-w-[90rem] md:w-[80svw] w-[95svw] text-white max-h-[70svh] overflow-auto bg-gray-800 p-2 rounded-xl">
         <div class="w-full flex items-center justify-between text-2xl font-bold">
           <div class="w-full text-center">
             <h1>Search</h1>
           </div>
-          <i class="fa-solid fa-xmark mr-2 cursor-pointer text-xl" @click="expandedSearch = false"></i>
+          <i class="fa-solid fa-xmark mr-2 cursor-pointer text-xl" @click="toggleSearch"></i>
         </div>
         <SearchUserComponent />
       </div>
@@ -330,6 +330,28 @@ function closeUserMessages() {
   window.scrollTo(0, scrollpos);
 }
 
+function toggleSearch() {
+  expandedSearch.value = !expandedSearch.value
+
+
+  if (expandedSearch.value) {
+    scrollpos = window.scrollY;
+
+    document.body.style.position = 'fixed';
+    document.body.style.width = '100%';
+    document.body.style.top = "-" + scrollpos + "px";
+    document.body.classList.add("overflow-hidden")
+    document.body.classList.add("max-w-screen")
+  }
+  else {
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.classList.remove("overflow-hidden")
+    document.body.classList.remove("max-w-screen")
+    window.scrollTo(0, scrollpos);
+  }
+}
+
 function clearMessages() {
   axios.post("https://api.faser.app/api/profile/clearUserMessages", {
     token: Cookies.get("token")
@@ -346,7 +368,7 @@ if (!window.navigator.standalone && window.navigator.userAgent.match(/(iPhone|iP
   showBanner.value = true
 }
 
-if (window.navigator.standalone && window.navigator.userAgent.match(/(iPhone|iPod|iPad|Macintosh)/i)) {
+if (!window.navigator.standalone && window.navigator.userAgent.match(/(iPhone|iPod|iPad|Macintosh)/i)) {
   mobile.value = true
 }
 </script>
