@@ -69,6 +69,19 @@
               <p>{{ posts }}</p>
             </div>
           </div>
+          <div v-if="music.songAuthor" class="w-full flex gap-3 text-gray-300" @click="toggleMusicModal">
+            <div class="flex items-center cursor-pointer p-3 m-2 ml-6 rounded-xl gap-3"
+              :style="'background-color: ' + color">
+              <i class="fa-solid fa-music"></i>
+              <div class="flex items-center gap-1">
+                <img :src="music.songImage" alt="song cover" class="h-10 w-10 items-center mt-1 rounded-full mr-1" />
+                <p>{{ music.songName }} - </p>
+                <div v-for="(author, index) in music.songAuthor" :key="author.name">
+                  <p v-if="index === 1">{{ author.name }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
           <div class="w-full p-5">
             <div class="flex gap-2">
               <RouterLink to="/account/settings" class="flex justify-center rounded-xl p-2 w-1/2 bg-gray-700">
@@ -161,6 +174,29 @@
       </div>
     </Transition>
 
+    <Transition name="fade" @leave="leave" @enter="enter">
+      <div v-if="openMusicModalValue"
+        class="fixed h-full w-full backdrop-blur top-0 left-0 flex justify-center items-center">
+        <div class="w-[60rem] max-h-[80svh] overflow-y-scroll mx-4 p-2 rounded-xl"
+          :style="'background-color: ' + color">
+          <div class="w-full flex items-center justify-center text-xl font-bold">
+            <h1 class="w-full text-center">{{ music.songName }} - {{ music.songAuthor[0].name }}</h1>
+            <i class="fa-solid fa-xmark mr-2 cursor-pointer" @click="toggleMusicModal"></i>
+          </div>
+          <div class="w-full gap-2 mt-2 flex items-center justify-center text-xl font-bold">
+            <img :src="music.songImage" alt="song cover" class="h-48 w-48 rounded-lg" />
+          </div>
+          <div class="w-full flex justify-center mt-2">
+            <audio :src="music.songPreview" controls></audio>
+          </div>
+          <div class="flex">
+            <p>Music from Spotify <i class="fa-brands fa-spotify"></i></p>
+            <a :href="music.spotifyLink" target="_blank" class="ml-2 underline  ">Open in Spotify</a>
+          </div>
+        </div>
+      </div>
+    </Transition>
+
   </div>
 </template>
 
@@ -169,36 +205,29 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { useRouter } from "vue-router";
 import MarkdownIt from "markdown-it";
+import { FastAverageColor } from 'fast-average-color';
 
 const md = new MarkdownIt();
-
-const router = useRouter();
-
+const router = useRouter()
 const url = "https://api.faser.app/api/account/getOwnProfile";
-
 const accountData = ref({});
 const profileData = ref({});
 const ownProfileData = ref({});
-
 const posts = ref(0)
 const followers = ref(0)
 const following = ref(0)
-
 const postsValue = ref([])
-
 const sinceString = ref("");
-
 const openFollower = ref(false)
 const openFollowing = ref(false)
-
 const hasProfilePicture = ref(false);
 const loaded = ref(false);
-
 const markdownHTML = ref("");
-
 const badges = ref([]);
-
 const communities = ref([]);
+const color = ref("")
+const music = ref([])
+const openMusicModalValue = ref(false)
 
 axios
   .get(url, {
@@ -215,6 +244,14 @@ axios
     sinceString.value = accountCreatedString;
 
     markdownHTML.value = md.render(response.data[0].bio);
+
+    music.value = response.data[0].music;
+
+    const fac = new FastAverageColor();
+    fac.getColorAsync(music.value.songImage, { algorithm: 'sqrt' }).then(avgColor => {
+      console.log(color.rgb)
+      color.value = avgColor.rgb
+    });
 
     badges.value = response.data[0].badges;
 
@@ -251,6 +288,27 @@ function shareProfile() {
     title: "Check out my profile on Faser",
     url: "https://faser.app/" + accountData.value.username
   })
+}
+
+let scrollpos = window.scrollY;
+
+function toggleMusicModal() {
+  openMusicModalValue.value = !openMusicModalValue.value
+
+  if (openMusicModalValue.value) {
+    scrollpos = window.scrollY;
+
+    document.body.style.position = 'fixed';
+    document.body.style.width = '100%';
+    document.body.style.top = "-" + scrollpos + "px";
+    document.body.classList.add("overflow-hidden")
+  }
+  else {
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.classList.remove("overflow-hidden")
+    window.scrollTo(0, scrollpos);
+  }
 }
 </script>
 

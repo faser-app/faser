@@ -90,6 +90,19 @@
               <p>{{ posts }}</p>
             </div>
           </div>
+          <div v-if="music.songAuthor" class="w-full flex gap-3 text-gray-300" @click="toggleMusicModal">
+            <div class="flex items-center cursor-pointer p-3 m-2 ml-6 rounded-xl gap-3"
+              :style="'background-color: ' + color">
+              <i class="fa-solid fa-music"></i>
+              <div class="flex items-center gap-1">
+                <img :src="music.songImage" alt="song cover" class="h-10 w-10 items-center mt-1 rounded-full mr-1" />
+                <p>{{ music.songName }} - </p>
+                <div v-for="(author, index) in music.songAuthor" :key="author.name">
+                  <p v-if="index === 1">{{ author.name }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
           <div class="w-full p-5">
             <div class="flex gap-2">
               <div to="/account/settings" @click="openReport = true"
@@ -207,8 +220,32 @@
             <h1 class="w-full text-center">Report Profile</h1>
             <i class="fa-solid fa-xmark mr-2 cursor-pointer" @click="openReport = false"></i>
           </div>
-          <SupportFieldsComponent :predefinedSubject="'User Report for ' + profileData.displayName" :predefinedMessage="'I want to report this person because...\n\nProfile Link: https://faser.app' + route.path" />
+          <SupportFieldsComponent :predefinedSubject="'User Report for ' + profileData.displayName"
+            :predefinedMessage="'I want to report this person because...\n\nProfile Link: https://faser.app' + route.path" />
           <p class="ml-2">Please provide the Profile link for the Person you want to report.</p>
+        </div>
+      </div>
+    </Transition>
+
+    <Transition name="fade" @leave="leave" @enter="enter">
+      <div v-if="openMusicModalValue"
+        class="fixed h-full w-full z-[90] backdrop-blur top-0 left-0 flex justify-center items-center">
+        <div class="w-[60rem] max-h-[80svh] overflow-y-scroll mx-4 p-2 rounded-xl"
+          :style="'background-color: ' + color">
+          <div class="w-full flex items-center justify-center text-xl font-bold">
+            <h1 class="w-full text-center">{{ music.songName }} - {{ music.songAuthor[0].name }}</h1>
+            <i class="fa-solid fa-xmark mr-2 cursor-pointer" @click="toggleMusicModal"></i>
+          </div>
+          <div class="w-full gap-2 mt-2 flex items-center justify-center text-xl font-bold">
+            <img :src="music.songImage" alt="song cover" class="h-48 w-48 rounded-lg" />
+          </div>
+          <div class="w-full flex justify-center mt-2">
+            <audio :src="music.songPreview" controls></audio>
+          </div>
+          <div class="flex">
+            <p>Music from Spotify <i class="fa-brands fa-spotify"></i></p>
+            <a :href="music.spotifyLink" target="_blank" class="ml-2 underline  ">Open in Spotify</a>
+          </div>
         </div>
       </div>
     </Transition>
@@ -222,6 +259,7 @@ import { useRoute, useRouter } from "vue-router";
 import MarkdownIt from "markdown-it";
 import Cookies from "js-cookie";
 import { useHead } from "#app";
+import { FastAverageColor } from 'fast-average-color';
 
 useHead({
   meta: [
@@ -233,52 +271,35 @@ useHead({
 })
 
 const router = useRouter()
-
 const md = new MarkdownIt();
-
 const url = "https://api.faser.app/api/account/getProfile";
-
 const profileData = ref({});
-
 const sinceString = ref("");
-
 const badges = ref([]);
-
 const success = ref(false);
 const loaded = ref(false);
-
 const postsValue = ref([]);
-
 const posts = ref(0)
 const followers = ref(0)
 const following = ref(0)
-
 const openFollower = ref(false)
 const openFollowing = ref(false)
-
 const privateAccount = ref(false);
-
 const isAbleToFollow = ref(true)
-
 const followed = ref(false)
-
 const hasProfilePicture = ref(false);
 const imageLoaded = ref(false);
-
 const markdownHTML = ref("");
-
 const ownId = ref(0)
-
 const ownProfile = ref({});
 const ownProfileData = ref({});
-
 const communities = ref([]);
-
 const route = useRoute();
-
 const username = route.params.user.replace("@", "");
-
 const openReport = ref(false)
+const music = ref([])
+const color = ref("")
+const openMusicModalValue = ref(false)
 
 function shareProfile() {
   navigator.share({
@@ -321,6 +342,14 @@ async function main() {
   posts.value = response.data[0].posts.length;
   followers.value = response.data[0].follower.length;
   following.value = response.data[0].following.length;
+
+  music.value = response.data[0].music
+
+  const fac = new FastAverageColor();
+  fac.getColorAsync(music.value.songImage, { algorithm: 'sqrt' }).then(avgColor => {
+    console.log(color.rgb)
+    color.value = avgColor.rgb
+  });
 
   postsValue.value = response.data[0].posts.reverse();
 
@@ -410,6 +439,27 @@ function toggleFollow() {
     })
 
   followed.value = !followed.value
+}
+
+let scrollpos = window.scrollY;
+
+function toggleMusicModal() {
+  openMusicModalValue.value = !openMusicModalValue.value
+
+  if (openMusicModalValue.value) {
+    scrollpos = window.scrollY;
+
+    document.body.style.position = 'fixed';
+    document.body.style.width = '100%';
+    document.body.style.top = "-" + scrollpos + "px";
+    document.body.classList.add("overflow-hidden")
+  }
+  else {
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.classList.remove("overflow-hidden")
+    window.scrollTo(0, scrollpos);
+  }
 }
 </script>
 

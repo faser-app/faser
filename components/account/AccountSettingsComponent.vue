@@ -57,6 +57,30 @@
           <div class="bg-gray-900 md:w-[calc(50%-0.25rem)] w-full flex justify-center items-center p-5 rounded-xl">
             <div class="flex flex-wrap justify-center">
               <div class="text-center">
+                <h1 class="text-xl font-bold">Profile Song</h1>
+                <div v-if="haveMusic" class="w-full flex gap-3 text-gray-300" @click="musicModal = true">
+                  <div class="flex items-center cursor-pointer p-3 m-2 ml-6 rounded-xl gap-3"
+                    :style="'background-color: ' + color">
+                    <i class="fa-solid fa-music"></i>
+                    <div class="flex items-center">
+                      <img :src="profileData.music.songImage" alt="song cover"
+                        class="h-10 w-10 items-center mt-1 rounded-full mr-1" />
+                      <p>{{ profileData.music.songName }} - </p>
+                      <div v-for="(author, index) in profileData.music.songAuthor" :key="author.name">
+                        <p v-if="index === 1">{{ author.name }}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div v-else>
+                  <button @click="musicModal = true" class="mt-3 bg-gray-600 p-3 rounded-xl border-gray-400 border">Set profile Song</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="bg-gray-900 md:w-[calc(50%-0.25rem)] w-full flex justify-center items-center p-5 rounded-xl">
+            <div class="flex flex-wrap justify-center">
+              <div class="text-center">
                 <h1 class="text-xl font-bold">Change display name</h1>
                 <div class="w-full"></div>
                 <button class="mt-4 bg-[#220000] p-2 border-red-700 border rounded-xl" @click="changeDisplayName">
@@ -108,6 +132,7 @@
     <AccountChangeUsernameModal />
     <AccountChangeDisplayNameModal />
     <DeleteAccountModal :showModal="deleteAccountModal" @close="deleteAccountModal = false" />
+    <AccountChangeSongModal :showModal="musicModal" @close="musicModal = false" />
   </div>
 </template>
 <script setup>
@@ -120,6 +145,7 @@ import { changePasswordModal } from "~/scripts/account/changePassword";
 import { changeUsernameModal } from "~/scripts/account/changeUsername";
 import { changeDisplayNameModal } from "~/scripts/account/changeDisplayName";
 import DeleteAccountModal from "./DeleteAccountModal.vue";
+import { FastAverageColor } from 'fast-average-color';
 
 const router = useRouter();
 const accountData = ref({});
@@ -130,6 +156,9 @@ const deleteAccountModal = ref(false)
 const buttonDisabled = ref(true);
 const fileTooBig = ref(false);
 const file = ref(null);
+const color = ref("")
+const musicModal = ref(false);
+const haveMusic = ref(false);
 
 function logout() {
   Cookies.remove("token");
@@ -217,6 +246,16 @@ onMounted(() => {
       loaded.value = true;
 
       document.querySelector("textarea").value = profileData.value.bio;
+
+      const fac = new FastAverageColor();
+      fac.getColorAsync(profileData.value.music.songImage, { algorithm: 'sqrt' }).then(avgColor => {
+        console.log(color.rgb)
+        color.value = avgColor.rgb
+      });
+
+      if (profileData.value.music.songName) {
+        haveMusic.value = true;
+      }
 
       lastLogin.value = DateTime.fromMillis(
         accountData.value.lastLogin
