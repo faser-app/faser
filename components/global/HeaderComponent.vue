@@ -334,7 +334,7 @@ function toggleSearch() {
   expandedSearch.value = !expandedSearch.value
 
 
-  if (expandedSearch.value) {
+  if (expandedSearch.value && !mobile) {
     scrollpos = window.scrollY;
 
     document.body.style.position = 'fixed';
@@ -343,7 +343,7 @@ function toggleSearch() {
     document.body.classList.add("overflow-hidden")
     document.body.classList.add("max-w-screen")
   }
-  else {
+  else if (!expandedSearch.value && !mobile) {
     document.body.style.position = '';
     document.body.style.top = '';
     document.body.classList.remove("overflow-hidden")
