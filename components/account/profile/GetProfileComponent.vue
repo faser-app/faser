@@ -244,7 +244,8 @@
           </div>
           <div class="flex">
             <p>Music from Spotify <i class="fa-brands fa-spotify"></i></p>
-            <a :href="music.spotifyLink" target="_blank" class="ml-2 underline  ">Open in Spotify</a>
+            <a :href="music.spotifyLink" target="_blank" class="ml-2 underline  ">Open in Spotify <i
+                class="fa-solid fa-up-right-from-square"></i></a>
           </div>
         </div>
       </div>
