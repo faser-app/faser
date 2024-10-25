@@ -25,9 +25,12 @@
 
                 </div>
                 <div v-for="songData in songDataRaw.data" :key="songData.songName">
-                    <div class="flex items-center cursor-pointer p-3 m-2 ml-6 rounded-xl gap-3" :class="{
-                        'border': selectedTrack === songData,
-                    }" @click="selectedTrack = songData" :style="'background-color: ' + color">
+                    <div class="flex items-center cursor-pointer p-3 m-2 ml-6 rounded-xl gap-3"
+                        @click="selectedTrack = songData" :style="'background-color: ' + color">
+                        <div class="flex items-center mr-6">
+                            <i class="fa-regular fa-circle" v-if="selectedTrack !== songData"></i>
+                            <i class="fa-solid fa-circle" v-else></i>
+                        </div>
                         <i class="fa-solid fa-music"></i>
                         <div class="flex items-center gap-1">
                             <img :src="songData.songImage" alt="song cover"
