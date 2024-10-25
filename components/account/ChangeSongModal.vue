@@ -24,9 +24,10 @@
                     </div>
 
                 </div>
-                <div v-if="songData.songName" class="mt-2">
-                    <div class="flex items-center cursor-pointer p-3 m-2 ml-6 rounded-xl gap-3"
-                        :style="'background-color: ' + color">
+                <div v-for="songData in songDataRaw.data" :key="songData.songName">
+                    <div class="flex items-center cursor-pointer p-3 m-2 ml-6 rounded-xl gap-3" :class="{
+                        'border': selectedTrack === songData,
+                    }" @click="selectedTrack = songData" :style="'background-color: ' + color">
                         <i class="fa-solid fa-music"></i>
                         <div class="flex items-center gap-1">
                             <img :src="songData.songImage" alt="song cover"
@@ -41,12 +42,21 @@
                         <audio :src="songData.songPreview" controls></audio>
                     </div>
                 </div>
+                <div class="flex mt-2">
+                    <p>Music and Search from Spotify <i class="fa-brands fa-spotify"></i></p>
+                </div>
                 <div class="flex flex-col md:flex-row justify-center gap-2 mt-4">
                     <button @click="$emit('close')" class="md:w-2/3 bg-gray-700 p-2 rounded-xl">
                         Cancel
                     </button>
-                    <button @click="changeSong" class="md:w-1/3 bg-green-500 p-2 rounded-xl">
+                    <button @click="changeSong"
+                        class="md:w-1/3 bg-green-500 disabled:bg-green-800 disabled:text-gray-300 text-white p-2 rounded-xl"
+                        v-if="!loading" :disabled="!selectedTrack">
                         Submit
+                    </button>
+                    <button @click="changeSong"
+                        class="md:w-1/3 bg-green-500 p-2 rounded-xl flex items-center justify-center" v-else>
+                        <l-zoomies size="80" stroke="5" bg-opacity="0.1" speed="1.4" color="white"></l-zoomies>
                     </button>
                 </div>
             </div>
@@ -85,14 +95,16 @@ const router = useRouter();
 const error = ref("");
 const songSearch = ref("");
 const loading = ref(false);
-const songData = ref({});
+const songDataRaw = ref({});
+
+const selectedTrack = ref(null)
 
 function searchSong() {
     axios.post("https://api.faser.app/api/spotify/searchTrack", {
         query: songSearch.value,
     }).then((response) => {
         console.log(response.data);
-        songData.value = response.data;
+        songDataRaw.value = response.data;
     }).catch((error) => {
         console.log(error.response.data);
     })
@@ -101,8 +113,8 @@ function searchSong() {
 function changeSong() {
     axios.post("https://api.faser.app/api/spotify/saveTrack", {
         token: Cookies.get("token"),
-        songId: songData.value.songId,
-        albumId: songData.value.albumId,
+        songId: selectedTrack.value.songId,
+        albumId: selectedTrack.value.albumId,
     })
         .then((response) => {
             router.push("/profile");
