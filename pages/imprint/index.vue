@@ -4,13 +4,13 @@
             <h1 class="text-xl font-bold">Imprint</h1>
             <p>Information according to § 5 TMG</p>
             <p>
-                Neo <br>
+                Neo Kremers <br>
                 Schieferweg 5<br>
                 56244 Helferskirchen, Rhineland-Palatinate, Germany<br>
             </p>
             <p>
                 <strong>Represented by:</strong><br>
-                Neo<br>
+                Neo Kremers<br>
             </p>
             <p>
                 <strong>Contact:</strong> <br>
