@@ -143,6 +143,11 @@ function uploadPost() {
             loading.value = false
 
             if (images.value.length === 0) {
+                document.body.style.position = '';
+                document.body.style.top = '';
+                document.body.classList.remove("overflow-hidden")
+                window.scrollTo(0, scrollpos);
+
                 router.push("/profile")
             }
 
@@ -162,6 +167,11 @@ function uploadPost() {
                     })
                         .then(response => {
                             if (i === images.value.length - 1) {
+                                document.body.style.position = '';
+                                document.body.style.top = '';
+                                document.body.classList.remove("overflow-hidden")
+                                window.scrollTo(0, scrollpos);
+
                                 router.push("/profile")
                             }
                         })
