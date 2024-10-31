@@ -51,7 +51,7 @@
                     <p v-if="error" class="text-red-500 mt-1">{{ error }}</p>
                     <div class="flex md:flex-nowrap flex-wrap justify-end mt-2 gap-2">
                         <button @click="closeModal" class="bg-gray-700 p-2 md:w-2/3 w-full rounded-xl">Close</button>
-                        <button @click="uploadPost" :disabled="postContent.length === 0 && loading"
+                        <button @click="uploadPost" :disabled="postContent.length === 0 || loading"
                             class="bg-gradient-to-tr from-[#24c7ce] to-[#1ed794] p-2 flex justify-center items-center md:w-1/3 w-full rounded-xl">
 
                             <p v-if="!loading">Post</p>
