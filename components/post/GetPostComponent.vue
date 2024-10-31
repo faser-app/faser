@@ -424,6 +424,7 @@ function deletePost() {
     })
         .then(() => {
             postVisible.value = false
+            showModal.value = false
         })
 }
 
