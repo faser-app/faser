@@ -73,17 +73,11 @@ import Cookies from 'js-cookie';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
-
 const showModal = ref(false);
-
 const postContent = ref('');
-
 const images = ref([]);
-
 const error = ref('')
-
 const mobile = ref(false)
-
 const loading = ref(false)
 
 function getPreviewImage(file) {

@@ -34,10 +34,8 @@ import axios from "axios";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
-
 const email = ref("");
 const password = ref("");
-
 const error = ref("");
 
 function login() {
