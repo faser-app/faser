@@ -228,7 +228,6 @@ import { useRoute, useRouter } from "vue-router";
 import MarkdownIt from "markdown-it";
 import Cookies from "js-cookie";
 import { useHead } from "#app";
-import { FastAverageColor } from 'fast-average-color';
 
 useHead({
   meta: [
@@ -313,12 +312,6 @@ async function main() {
   following.value = response.data[0].following.length;
 
   music.value = response.data[0].music
-
-  const fac = new FastAverageColor();
-  fac.getColorAsync(music.value.songImage, { algorithm: 'sqrt' }).then(avgColor => {
-    console.log(color.rgb)
-    color.value = avgColor.rgb
-  });
 
   postsValue.value = response.data[0].posts.reverse();
 

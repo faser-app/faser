@@ -194,9 +194,7 @@ const loaded = ref(false);
 const markdownHTML = ref("");
 const badges = ref([]);
 const communities = ref([]);
-const color = ref("")
 const music = ref([])
-const openMusicModalValue = ref(false)
 
 axios
   .get(url, {
@@ -215,12 +213,6 @@ axios
     markdownHTML.value = md.render(response.data[0].bio);
 
     music.value = response.data[0].music;
-
-    const fac = new FastAverageColor();
-    fac.getColorAsync(music.value.songImage, { algorithm: 'sqrt' }).then(avgColor => {
-      console.log(color.rgb)
-      color.value = avgColor.rgb
-    });
 
     badges.value = response.data[0].badges;
 
