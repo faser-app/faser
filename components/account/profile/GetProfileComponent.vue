@@ -236,17 +236,9 @@
             <h1 class="w-full text-center">{{ music.songName }} - {{ music.songAuthor[0].name }}</h1>
             <i class="fa-solid fa-xmark mr-2 cursor-pointer" @click="toggleMusicModal"></i>
           </div>
-          <div class="w-full gap-2 mt-2 flex items-center justify-center text-xl font-bold">
-            <img :src="music.songImage" alt="song cover" class="h-48 w-48 rounded-lg" />
-          </div>
-          <div class="w-full flex justify-center mt-2">
-            <audio :src="music.songPreview" controls></audio>
-          </div>
-          <div class="flex">
-            <p>Music from Spotify <i class="fa-brands fa-spotify"></i></p>
-            <a :href="music.spotifyLink" target="_blank" class="ml-2 underline  ">Open in Spotify <i
-                class="fa-solid fa-up-right-from-square"></i></a>
-          </div>
+          <iframe :src="'https://open.spotify.com/embed/track/' + music.songId + '?utm_source=generator'"
+            width="100%" height="352" frameBorder="0" allowfullscreen=""
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
         </div>
       </div>
     </Transition>

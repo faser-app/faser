@@ -33,8 +33,6 @@
                         </div>
                         <i class="fa-solid fa-music"></i>
                         <div class="flex items-center gap-1">
-                            <img :src="songData.songImage" alt="song cover"
-                                class="h-10 w-10 items-center mt-1 rounded-full mr-1" />
                             <p>{{ songData.songName }} - </p>
                             <div v-for="(author, index) in songData.songAuthor" :key="author.name">
                                 <p v-if="index === 0">{{ author.name }}</p>
@@ -42,7 +40,11 @@
                         </div>
                     </div>
                     <div class="w-full flex justify-center">
-                        <audio :src="songData.songPreview" controls></audio>
+                        <iframe
+                            :src="'https://open.spotify.com/embed/track/' + songData.songId + '?utm_source=generator'"
+                            width="100%" height="120" frameBorder="0" allowfullscreen=""
+                            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                            loading="lazy"></iframe>
                     </div>
                 </div>
                 <div class="flex mt-2">
