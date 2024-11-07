@@ -40,11 +40,9 @@
                         </div>
                     </div>
                     <div class="w-full flex justify-center">
-                        <iframe
-                            :src="'https://open.spotify.com/embed/track/' + songData.songId + '?utm_source=generator'"
-                            width="100%" height="120" frameBorder="0" allowfullscreen=""
-                            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                            loading="lazy"></iframe>
+                        <iframe :src="'https://open.spotify.com/embed/track/' + songData.songId"
+                            class="md:w-96 w-full mx-5" width="100%" height="80rem" frameBorder="0" allowfullscreen=""
+                            allow="clipboard-write; encrypted-media;"></iframe>
                     </div>
                 </div>
                 <div class="flex mt-2">
