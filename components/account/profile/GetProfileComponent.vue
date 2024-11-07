@@ -91,17 +91,10 @@
             </div>
           </div>
           <div v-if="music.songAuthor" class="w-full flex gap-3 text-gray-300" @click="toggleMusicModal">
-            <div class="flex items-center cursor-pointer p-3 m-2 ml-6 rounded-xl gap-3"
-              :style="'background-color: ' + color">
-              <i class="fa-solid fa-music"></i>
-              <div class="flex items-center gap-1">
-                <img :src="music.songImage" alt="song cover" class="h-10 w-10 items-center mt-1 rounded-full mr-1" />
-                <p>{{ music.songName }} - </p>
-                <div v-for="(author, index) in music.songAuthor" :key="author.name">
-                  <p v-if="index === 0">{{ author.name }}</p>
-                </div>
-              </div>
-            </div>
+            <iframe :src="'https://open.spotify.com/embed/track/' + music.songId + '?utm_source=generator'" class="md:w-96 w-full mx-5" width="100%"
+              height="120" frameBorder="0" allowfullscreen=""
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+              loading="lazy"></iframe>
           </div>
           <div class="w-full p-5">
             <div class="flex gap-2">
@@ -223,22 +216,6 @@
           <SupportFieldsComponent :predefinedSubject="'User Report for ' + profileData.displayName"
             :predefinedMessage="'I want to report this person because...\n\nProfile Link: https://faser.app' + route.path" />
           <p class="ml-2">Please provide the Profile link for the Person you want to report.</p>
-        </div>
-      </div>
-    </Transition>
-
-    <Transition name="fade" @leave="leave" @enter="enter">
-      <div v-if="openMusicModalValue"
-        class="fixed h-full w-full z-[90] backdrop-blur top-0 left-0 flex justify-center items-center">
-        <div class="w-[60rem] max-h-[80svh] overflow-y-scroll mx-4 p-2 rounded-xl"
-          :style="'background-color: ' + color">
-          <div class="w-full flex items-center justify-center text-xl font-bold">
-            <h1 class="w-full text-center">{{ music.songName }} - {{ music.songAuthor[0].name }}</h1>
-            <i class="fa-solid fa-xmark mr-2 cursor-pointer" @click="toggleMusicModal"></i>
-          </div>
-          <iframe :src="'https://open.spotify.com/embed/track/' + music.songId + '?utm_source=generator'"
-            width="100%" height="352" frameBorder="0" allowfullscreen=""
-            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
         </div>
       </div>
     </Transition>
