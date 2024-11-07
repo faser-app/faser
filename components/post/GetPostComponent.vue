@@ -112,6 +112,9 @@
                 </div>
             </div>
         </div>
+        <iframe v-if="postContent.music" :src="'https://open.spotify.com/embed/track/' + postContent.music"
+            class="md:w-96 w-full mb-2" width="100%" height="80rem" frameBorder="0" allowfullscreen=""
+            allow="clipboard-write; encrypted-media;"></iframe>
         <div class="flex w-full items-center justify-center">
             <div class="flex justify-center gap-2 w-1/2 cursor-pointer items-center text-gray-300" @click="toggleLike">
 

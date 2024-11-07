@@ -32,9 +32,26 @@
                         <textarea class="w-full h-40 bg-gray-800 text-white pt-0 mt-2 resize-none focus:outline-none"
                             v-model="postContent" @input="error = ''"
                             placeholder="What are you thinking about?"></textarea>
-                        <div class="flex cursor-pointer items-center w-12 h-12 justify-center bg-gray-700 rounded-xl"
-                            @click="selectFile">
-                            <i class="fa-solid fa-image text-2xl overflow-visible"></i>
+
+                        <div v-if="selectedTrack">
+                            <div class="flex absolute bg-gray-700 w-8 h-8 justify-center items-center p-2 rounded-xl cursor-pointer" @click="selectedTrack = null">
+                                <i class="fa-solid fa-xmark"></i>
+                            </div>
+                            <iframe v-if="selectedTrack"
+                                :src="'https://open.spotify.com/embed/track/' + selectedTrack.songId"
+                                class="md:w-96 w-full mb-2" width="100%" height="80rem" frameBorder="0"
+                                allowfullscreen="" allow="clipboard-write; encrypted-media;"></iframe>
+                        </div>
+
+                        <div class="flex gap-2">
+                            <div class="flex cursor-pointer items-center w-12 h-12 justify-center bg-gray-700 rounded-xl"
+                                @click="selectFile">
+                                <i class="fa-solid fa-image text-2xl overflow-visible"></i>
+                            </div>
+                            <div @click="searchSong = !searchSong"
+                                class="flex cursor-pointer items-center w-12 h-12 justify-center bg-gray-700 rounded-xl">
+                                <i class="fa-solid fa-music text-2xl overflow-visible"></i>
+                            </div>
                         </div>
                         <div class="flex gap-4 mt-2">
                             <template v-for="(image, index) in images">
@@ -65,6 +82,9 @@
             </div>
         </div>
     </transition>
+
+    <PostSelectSongComponent :show-modal="searchSong" @close="searchSong = false" class="z-[100]"
+        @selectSong="selectSong" />
 </template>
 
 <script setup>
@@ -79,6 +99,8 @@ const images = ref([]);
 const error = ref('')
 const mobile = ref(false)
 const loading = ref(false)
+const searchSong = ref(false)
+const selectedTrack = ref(null)
 
 function getPreviewImage(file) {
     return URL.createObjectURL(file);
@@ -123,6 +145,11 @@ const props = defineProps({
     mobile: String
 })
 
+function selectSong(song) {
+    selectedTrack.value = song
+    searchSong.value = false
+}
+
 function uploadPost() {
     loading.value = true
 
@@ -131,6 +158,7 @@ function uploadPost() {
         message: postContent.value,
         lang: "en",
         type: 'post',
+        music: selectedTrack.value ? selectedTrack.value.songId : null,
         images: images.value.length
     })
         .then(response => {
