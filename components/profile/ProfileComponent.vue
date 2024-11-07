@@ -69,11 +69,10 @@
               <p>{{ posts }}</p>
             </div>
           </div>
-          <div v-if="music.songAuthor" class="w-full flex gap-3 text-gray-300" @click="toggleMusicModal">
-            <iframe :src="'https://open.spotify.com/embed/track/' + music.songId + '?utm_source=generator'"
-              class="md:w-96 w-full mx-5" width="100%" height="120" frameBorder="0" allowfullscreen=""
-              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-              loading="lazy"></iframe>
+          <div v-if="music.songAuthor" class="w-full flex gap-3 text-gray-300">
+            <iframe :src="'https://open.spotify.com/embed/track/' + music.songId"
+              class="md:w-96 w-full mx-5" width="100%" height="80rem" frameBorder="0" allowfullscreen=""
+              allow="clipboard-write; encrypted-media;"></iframe>
           </div>
           <div class="w-full p-5">
             <div class="flex gap-2">
@@ -258,27 +257,6 @@ function shareProfile() {
     title: "Check out my profile on Faser",
     url: "https://faser.app/" + accountData.value.username
   })
-}
-
-let scrollpos = window.scrollY;
-
-function toggleMusicModal() {
-  openMusicModalValue.value = !openMusicModalValue.value
-
-  if (openMusicModalValue.value) {
-    scrollpos = window.scrollY;
-
-    document.body.style.position = 'fixed';
-    document.body.style.width = '100%';
-    document.body.style.top = "-" + scrollpos + "px";
-    document.body.classList.add("overflow-hidden")
-  }
-  else {
-    document.body.style.position = '';
-    document.body.style.top = '';
-    document.body.classList.remove("overflow-hidden")
-    window.scrollTo(0, scrollpos);
-  }
 }
 </script>
 
