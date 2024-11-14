@@ -10,6 +10,7 @@
 
         <div v-if="showModal"
             class="h-full z-100 pb-5 w-full fixed top-0 left-0 flex justify-center md:pt-36 items-end md:items-start"
+            @click.self="closeModal"
             :class="{
                 'fadeIn': showModal,
                 'backdrop-blur-xl': !props.mobile !== undefined ? props.mobile : false
