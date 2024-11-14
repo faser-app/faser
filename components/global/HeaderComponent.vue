@@ -17,7 +17,7 @@
         <div v-for="link in links" :key="link.name" class="cursor-pointer">
           <RouterLink :to="link.href" class="text-white hover:scale">{{
             link.name
-          }}</RouterLink>
+            }}</RouterLink>
         </div>
       </div>
       <div class="h-full flex items-center">

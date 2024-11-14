@@ -105,7 +105,7 @@
             class="md:w-96 w-full mb-2" width="100%" height="80rem" frameBorder="0" allowfullscreen=""
             allow="clipboard-write; encrypted-media;"></iframe>
         <div class="flex w-full items-center justify-center">
-            <div class="flex justify-center gap-2 w-1/2 cursor-pointer items-center text-gray-300" @click="toggleLike">
+            <div class="flex justify-center gap-2 w-1/3 cursor-pointer items-center text-gray-300" @click="toggleLike">
 
                 <Transition name="like" @leave="leave" @enter="open">
                     <i v-if="isLiked" class="fa-solid text-xl absolute fa-heart text-red-500"></i>
@@ -116,7 +116,7 @@
                     {{ postLikes }}
                 </p>
             </div>
-            <div class="flex gap-2 w-1/2 justify-center cursor-pointer items-center text-gray-300">
+            <div class="flex gap-2 w-1/3 justify-center cursor-pointer items-center text-gray-300">
                 <RouterLink :to="'/post/' + postContent.postId" class="flex gap-2 items-center justify-center">
                     <i class="fa-regular fa-comment text-xl"></i>
                     <p>
@@ -124,7 +124,11 @@
                     </p>
                 </RouterLink>
             </div>
-            <div class="w-1/12 justify-center cursor-pointer items-center text-gray-300">
+            <div class="w-1/3 flex gap-2 justify-center items-center text-gray-300">
+                <i class="fa-solid fa-chart-line"></i>
+                <p>{{ impressions }}</p>
+            </div>
+            <div class="mr-2 cursor-pointer items-center text-gray-300">
                 <i v-if="!copied" class="fa-solid fa-arrow-up-from-bracket" @click="sharePost"></i>
                 <i v-else class="fa-solid fa-check"></i>
             </div>
@@ -143,8 +147,7 @@
 
         <transition name="fade" @leave="leave">
             <div class="fixed top-0 left-0 w-screen h-screen backdrop-blur z-50 flex justify-center items-center"
-                @click.self="showModal = false"
-                v-if="showModal">
+                @click.self="showModal = false" v-if="showModal">
                 <div class="bg-gray-900 p-5 text-center max-w-[80svw] rounded-xl m-3 md:w-auto w-full" :class="{
                     'animation': showModal,
                 }">
@@ -169,8 +172,7 @@
         </transition>
         <transition name="fade" @leave="leave">
             <div class="fixed top-0 left-0 w-screen h-screen backdrop-blur z-50 flex justify-center items-center"
-                @click.self="showEditModal = false"
-                v-if="showEditModal">
+                @click.self="showEditModal = false" v-if="showEditModal">
                 <!-- <div v-if="ownProfileData.advancedUser"> -->
                 <div>
                     <div class="bg-gray-900 p-5 text-center rounded-xl m-3 max-w-[80svw] md:w-auto w-full" :class="{
@@ -204,8 +206,7 @@
         </transition>
         <transition name="fade" @leave="leave">
             <div class="fixed top-0 left-0 w-screen h-screen backdrop-blur z-50 flex justify-center items-center"
-                @click.self="showImageModal = false"
-                v-if="showImageModal">
+                @click.self="showImageModal = false" v-if="showImageModal">
                 <div class="bg-gray-900 p-5 text-center rounded-xl max-w-[80svw] m-3 md:w-auto w-full" :class="{
                     'animation': showImageModal,
                 }">
@@ -247,6 +248,7 @@ const showModal = ref(false);
 const showEditModal = ref(false);
 const threeDotsMenu = ref(false);
 const profile = ref({})
+const impressions = ref(0)
 
 let scrollpos = window.scrollY
 
@@ -500,7 +502,8 @@ function sharePost() {
 function reloadStats() {
     axios.get("https://api.faser.app/api/social/fetchPost", {
         headers: {
-            postId: postId.value
+            postId: postId.value,
+            token: Cookies.get("token")
         }
     })
         .then((response) => {
@@ -510,6 +513,8 @@ function reloadStats() {
             isLiked.value = postContent.value.likes.includes(props.ownProfileData.id)
 
             postLikes.value = response.data[0].likes.length
+
+            impressions.value = response.data[0].impressions.length
 
             postLikes.value = postContent.value.likes.length
 

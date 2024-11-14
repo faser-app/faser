@@ -6,7 +6,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
   const postId = to.params.post;
 
   const headers = {
-    postId: postId,
+    postId: postId
   };
 
   const { data, error } = await useFetch(url, {
