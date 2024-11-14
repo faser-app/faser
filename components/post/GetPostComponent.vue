@@ -62,17 +62,6 @@
                 </RouterLink>
                 <p class="ml-3 text-gray-400">{{ postCreatedAt }}</p>
                 <p class="ml-3 text-gray-400" v-if="postContent.edited">edited</p>
-
-                <div v-if="!postContent.appropriate" v-on:mouseover="hovered = true" v-on:mouseleave="hovered = false"
-                    class="w-8 h-8 ml-2 rounded-full bg-gray-500 text-gray-300 flex items-center justify-center">
-                    <i class="fa-solid fa-info"></i>
-                    <div class="absolute mb-20 bg-gray-600 p-2 rounded-xl flex justify-center items-end" v-if="hovered">
-                        <div class="bg-gray-600 z-10">
-                            {{ postContent.appropriateDescription }}
-                        </div>
-                        <div class="absolute rotate-45 w-4 h-4 bg-gray-600 translate-y-4"></div>
-                    </div>
-                </div>
             </div>
 
             <div v-if="isAuthor === 'true' || isAuthor === true || props.ownProfile === true" class="flex ml-auto">
@@ -182,7 +171,8 @@
             <div class="fixed top-0 left-0 w-screen h-screen backdrop-blur z-50 flex justify-center items-center"
                 @click.self="showEditModal = false"
                 v-if="showEditModal">
-                <div v-if="ownProfileData.advancedUser">
+                <!-- <div v-if="ownProfileData.advancedUser"> -->
+                <div>
                     <div class="bg-gray-900 p-5 text-center rounded-xl m-3 max-w-[80svw] md:w-auto w-full" :class="{
                         'animation': showEditModal,
                     }">
@@ -207,9 +197,9 @@
                         </div>
                     </div>
                 </div>
-                <div v-else>
+                <!-- <div v-else>
                     <AdvancedComponent :showModal="showEditModal" @closeModal="showEditModal = false" />
-                </div>
+                </div> -->
             </div>
         </transition>
         <transition name="fade" @leave="leave">
