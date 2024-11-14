@@ -110,7 +110,8 @@
   </div>
 
   <Transition name="fade" @leave="leave" @enter="open">
-    <div class="fixed top-0 w-screen h-screen backdrop-blur-lg z-50 flex items-center justify-center" v-if="expandedSearch">
+    <div class="fixed top-0 w-screen h-screen backdrop-blur-lg z-50 flex items-center justify-center"
+      v-if="expandedSearch" @click.self="toggleSearch">
       <div
         class="max-w-[90rem] md:w-[80svw] w-[95svw] text-white max-h-[70svh] overflow-auto bg-gray-800 p-2 rounded-xl">
         <div class="w-full flex items-center justify-between text-2xl font-bold">
@@ -126,7 +127,7 @@
 
   <Transition name="fade" @leave="leave" @enter="open">
     <div class="fixed top-0 left-0 w-screen h-screen backdrop-blur-lg z-50 flex items-center justify-center"
-      v-if="openMessages">
+      @click.self="closeUserMessages" v-if="openMessages">
       <div
         class="max-w-[90rem] md:w-[80svw] w-[95svw] text-white max-h-[70svh] overflow-auto bg-gray-800 p-2 rounded-xl">
         <div class="w-full flex items-center justify-between text-2xl font-bold">
@@ -303,7 +304,7 @@ function getUserMessages() {
 let scrollpos = window.scrollY;
 
 function openUserMessages() {
-  openMessages.value = !openMessages.value
+  openMessages.value = true
 
 
   scrollpos = window.scrollY;
