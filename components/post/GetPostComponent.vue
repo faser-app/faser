@@ -154,6 +154,7 @@
 
         <transition name="fade" @leave="leave">
             <div class="fixed top-0 left-0 w-screen h-screen backdrop-blur z-50 flex justify-center items-center"
+                @click.self="showModal = false"
                 v-if="showModal">
                 <div class="bg-gray-900 p-5 text-center max-w-[80svw] rounded-xl m-3 md:w-auto w-full" :class="{
                     'animation': showModal,
@@ -179,6 +180,7 @@
         </transition>
         <transition name="fade" @leave="leave">
             <div class="fixed top-0 left-0 w-screen h-screen backdrop-blur z-50 flex justify-center items-center"
+                @click.self="showEditModal = false"
                 v-if="showEditModal">
                 <div v-if="ownProfileData.advancedUser">
                     <div class="bg-gray-900 p-5 text-center rounded-xl m-3 max-w-[80svw] md:w-auto w-full" :class="{
@@ -212,6 +214,7 @@
         </transition>
         <transition name="fade" @leave="leave">
             <div class="fixed top-0 left-0 w-screen h-screen backdrop-blur z-50 flex justify-center items-center"
+                @click.self="showImageModal = false"
                 v-if="showImageModal">
                 <div class="bg-gray-900 p-5 text-center rounded-xl max-w-[80svw] m-3 md:w-auto w-full" :class="{
                     'animation': showImageModal,
