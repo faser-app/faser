@@ -534,7 +534,7 @@ onMounted(() => {
 })
 </script>
 <style scoped>
-@import url("/public/markdown.css");
+@import url("~/assets/css/markdown.css");
 
 .verifiedBadge {
     transform: translateY(1px);
