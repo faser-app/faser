@@ -69,11 +69,13 @@ const mobile = ref(false)
 async function sendMessage() {
     if (inputContent.value.trim() === "") return
 
-    messageHistory.value.push({
-        message: inputContent.value,
-        sender: ownProfile.value[0].id,
-        time: DateTime.now().toISO()
-    })
+    try {
+        messageHistory.value.push({
+            message: inputContent.value,
+            sender: ownProfile.value[0].id,
+            time: DateTime.now().toISO()
+        })
+    } catch (error) {}
 
     await axios.post("https://api.faser.app/api/messages/sendDM", {
         token: Cookies.get("token"),
@@ -84,7 +86,7 @@ async function sendMessage() {
     inputContent.value = ""
 
     setTimeout(() => {
-        window.scrollTo({ left: 0, top: document.body.scrollHeight, behavior: "smooth" });
+        window.scrollTo({ left: 0, top: document.body.scrollHeight });
     }, 100)
 }
 
