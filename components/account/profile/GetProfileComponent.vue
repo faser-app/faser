@@ -96,7 +96,7 @@
               allow="clipboard-write; encrypted-media;"></iframe>
           </div>
           <div class="w-full p-5">
-            <div class="flex gap-2">
+            <div class="flex flex-wrap md:flex-nowrap gap-2 justify-center">
               <div to="/account/settings" @click="openReport = true"
                 class="flex items-center gap-2 cursor-pointer justify-center rounded-xl p-2 w-1/2 bg-gray-700">
                 <i class="fa-solid fa-shield"></i>

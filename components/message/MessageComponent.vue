@@ -15,7 +15,10 @@
         </div>
 
         <div class="flex w-screen justify-center">
-            <div class="mb-16 mt-16 max-w-[90rem] w-screen">
+            <div class="mt-16 max-w-[90rem] w-screen" :class="{
+                'mb-16': !mobile,
+                'mb-32': mobile
+            }">
                 <div v-for="message in messageHistory" :key="message.time" class="flex" :class="{
                     'justify-start': message.sender === profile[0].id,
                     'justify-end': message.sender === ownProfile[0].id,
