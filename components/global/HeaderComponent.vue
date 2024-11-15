@@ -17,7 +17,7 @@
         <div v-for="link in links" :key="link.name" class="cursor-pointer">
           <RouterLink :to="link.href" class="text-white hover:scale">{{
             link.name
-            }}</RouterLink>
+          }}</RouterLink>
         </div>
       </div>
       <div class="h-full flex items-center">
@@ -204,6 +204,34 @@
 
                 </div>
                 <p class="text-gray-400">Has started following you</p>
+              </RouterLink>
+            </div>
+          </div>
+          <div v-else-if="message.type === 'message'" class="flex pb-2 mb-2" :class="{
+            'border-b border-gray-500': index < messages.length - 1
+          }">
+            <div class="h-full items-center">
+              <div class="flex justify-center items-center w-8 h-8 bg-gray-700 rounded-full text-sky-300 mr-2">
+                <i class="fa-solid fa-message"></i>
+              </div>
+            </div>
+            <div>
+              <RouterLink @click="closeUserMessages" :to="'/messages/' + message.userProfile[0].id">
+                <div class="flex w-full items-center">
+
+                  <p class="flex">{{ message.userProfile[0].displayName }}</p>
+                  <p class="text-gray-400">(@{{ message.userProfile[0].username }})</p>
+                  <div v-if="message.userProfile[0].businessAccount"
+                    class="flex ml-2 justify-center text-xs items-center bg-yellow-600 border w-6 h-6 border-yellow-300 rounded-full">
+                    <i class="fa-solid verifiedBadge fa-check"></i>
+                  </div>
+                  <div v-else-if="message.userProfile[0].verifiedAccount"
+                    class="flex ml-2 justify-center text-xs items-center bg-sky-600 border w-6 h-6 border-sky-300 rounded-full">
+                    <i class="fa-solid verifiedBadge fa-check"></i>
+                  </div>
+
+                </div>
+                <p class="text-gray-400">Has sent you "{{ message.message }}"</p>
               </RouterLink>
             </div>
           </div>

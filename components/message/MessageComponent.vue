@@ -50,12 +50,13 @@
 
 <script setup>
 import { DateTime } from "luxon";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import axios from "axios";
 import Cookies from "js-cookie";
 
 const inputContent = ref("")
 const route = useRoute()
+const router = useRouter()
 const messageHistory = ref([])
 const profile = ref({})
 const loaded = ref(false)
@@ -65,19 +66,19 @@ const mobile = ref(false)
 async function sendMessage() {
     if (inputContent.value.trim() === "") return
 
-    await axios.post("https://api.faser.app/api/messages/sendDM", {
-        token: Cookies.get("token"),
-        otherAccount: profile.value[0].id,
-        message: inputContent.value
-    })
-    
-    inputContent.value = ""
-
     messageHistory.value.push({
         message: inputContent.value,
         sender: ownProfile.value[0].id,
         time: DateTime.now().toISO()
     })
+
+    await axios.post("https://api.faser.app/api/messages/sendDM", {
+        token: Cookies.get("token"),
+        otherAccount: profile.value[0].id,
+        message: inputContent.value
+    })
+
+    inputContent.value = ""
 
     setTimeout(() => {
         window.scrollTo({ left: 0, top: document.body.scrollHeight, behavior: "smooth" });
@@ -119,7 +120,9 @@ onMounted(async () => {
 
     messageHistory.value = dmsResponse.data.messages
 
-    console.log(dmsResponse.data.messages)
+    if (profileResponse.data[0].id === ownProfileResponse.data[0].id) {
+        router.push("/")
+    }
 
     loaded.value = true
 })
