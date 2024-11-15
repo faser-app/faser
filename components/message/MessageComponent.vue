@@ -1,6 +1,9 @@
 <template>
     <div class="bg-gray-950 min-h-screen text-white" v-if="loaded">
-        <div class="w-full flex justify-between pl-2 bg-gray-900 items-center fixed top-[4.5rem] p-2">
+        <div class="w-full flex justify-between pl-2 bg-gray-900 items-center fixed p-2" :class="{
+            'top-[4.5rem]': !mobile,
+            'top-0': mobile
+        }">
             <div class="flex items-center gap-2">
                 <img :src="'https://api.faser.app/api/profile/getProfilePhoto?username=' + profile[0].username"
                     class="h-12 w-12 rounded-full">
@@ -55,7 +58,7 @@ const messageHistory = ref([])
 const profile = ref({})
 const loaded = ref(false)
 const ownProfile = ref({})
-const dms = ref([])
+const mobile = ref(false)
 
 async function sendMessage() {
     if (inputContent.value.trim() === "") return
@@ -109,4 +112,8 @@ onMounted(async () => {
 
     loaded.value = true
 })
+
+if (window.navigator.standalone && window.navigator.userAgent.match(/(iPhone|iPod|iPad|Macintosh)/i)) {
+    mobile.value = true
+}
 </script>
