@@ -70,14 +70,14 @@ async function sendMessage() {
         otherAccount: profile.value[0].id,
         message: inputContent.value
     })
+    
+    inputContent.value = ""
 
     messageHistory.value.push({
         message: inputContent.value,
         sender: ownProfile.value[0].id,
         time: DateTime.now().toISO()
     })
-
-    inputContent.value = ""
 
     setTimeout(() => {
         window.scrollTo({ left: 0, top: document.body.scrollHeight, behavior: "smooth" });
