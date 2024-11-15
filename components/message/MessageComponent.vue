@@ -35,7 +35,9 @@
         </div>
 
 
-        <div class="flex h-16 items-center bg-gray-900 p-2 fixed bottom-0 w-screen">
+        <div class="flex h-16 items-center bg-gray-900 p-2 fixed bottom-0 w-screen" :class="{
+            'bottom-20': mobile
+        }">
             <input type="text" class="w-full p-2 rounded-xl bg-gray-800 text-white" maxlength="1000"
                 placeholder="Message" v-model="inputContent" v-on:keyup.enter="sendMessage" />
             <div class="bg-gray-800 w-10 h-10 rounded-full flex justify-center items-center ml-2 cursor-pointer"
