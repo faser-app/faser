@@ -459,13 +459,13 @@ function formatTimeDifference(timestamp) {
     const words = postContent.value.content.split(" ").length
 
     for (let i = 0; i < words; i++) {
-        // if (postContent.value.content.split(" ")[i].includes("https://")) {
-        //     postValue.value = postValue.value.replace(postContent.value.content.split(" ")[i], `<a style="text-decoration: underline;" class="underline" href="${postContent.value.content.split(" ")[i]}" target="_blank">${postContent.value.content.split(" ")[i]}</a>`)
-        // }
+        if (postContent.value.content.split(" ")[i].includes("https://")) {
+            postValue.value = postValue.value.replace(postContent.value.content.split(" ")[i], `<a style="text-decoration: underline;" class="underline" href="${postContent.value.content.split(" ")[i]}" target="_blank">${postContent.value.content.split(" ")[i]}</a>`)
+        }
 
-        // if (postContent.value.content.split(" ")[i].includes("@")) {
-        //     postValue.value = postValue.value.replace(postContent.value.content.split(" ")[i], `<a style="text-decoration: underline;" href="https://faser.app/${postContent.value.content.split(" ")[i].replace("@", "")}">${postContent.value.content.split(" ")[i]}</a>`)
-        // }
+        if (postContent.value.content.split(" ")[i].includes("@")) {
+            postValue.value = postValue.value.replace(postContent.value.content.split(" ")[i], `<a style="text-decoration: underline;" href="https://faser.app/${postContent.value.content.split(" ")[i].replace("@", "")}">${postContent.value.content.split(" ")[i]}</a>`)
+        }
     }
 
     const units = [
