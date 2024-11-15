@@ -98,16 +98,25 @@
           <div class="w-full p-5">
             <div class="flex gap-2">
               <div to="/account/settings" @click="openReport = true"
-                class="flex cursor-pointer justify-center rounded-xl p-2 w-1/2 bg-gray-700">
+                class="flex items-center gap-2 cursor-pointer justify-center rounded-xl p-2 w-1/2 bg-gray-700">
+                <i class="fa-solid fa-shield"></i>
                 Report Profile
               </div>
               <div to="/account/settings" @click="alertNotImplemented"
-                class="flex cursor-pointer justify-center rounded-xl p-2 w-1/2 bg-gray-700">
+                class="flex items-center gap-2 cursor-pointer justify-center rounded-xl p-2 w-1/2 bg-gray-700">
+                <i class="fa-solid fa-ban"></i>
                 Block User
               </div>
-              <div @click="shareProfile" class="flex cursor-pointer justify-center rounded-xl p-2 w-1/2 bg-gray-700">
+              <div @click="shareProfile"
+                class="flex items-center gap-2 cursor-pointer justify-center rounded-xl p-2 w-1/2 bg-gray-700">
+                <i class="fa-solid fa-arrow-up-from-bracket"></i>
                 Share Profile
               </div>
+              <RouterLink :to="'/messages/' + profileData.id"
+                class="flex items-center gap-2 cursor-pointer justify-center rounded-xl p-2 w-1/2 bg-gray-700">
+                <i class="fa-solid fa-message"></i>
+                Message
+              </RouterLink>
             </div>
           </div>
           <div class="w-full p-5 bg-gray-700 mb-2">

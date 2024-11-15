@@ -1,6 +1,9 @@
 <script setup>
 import { useGtag, useHead, definePageMeta } from '#imports';
 import Cookies from "js-cookie";
+import { useRoute } from "vue-router";
+
+const route = useRoute()
 
 useHead({
   meta: [
@@ -10,6 +13,10 @@ useHead({
     }
   ]
 })
+
+const pagesWithoutFooter = ref([
+  "messages"
+])
 
 const gTag = useGtag()
 
@@ -28,6 +35,8 @@ const accepted = ref(false)
 if (Cookies.get("accepted") || Cookies.get("essential")) {
   accepted.value = true
 }
+
+console.log()
 </script>
 
 <template>
@@ -36,7 +45,7 @@ if (Cookies.get("accepted") || Cookies.get("essential")) {
       <HeaderComponent />
       <NuxtPage />
       <CookieBannerComponent v-if="!accepted" />
-      <FooterComponent />
+      <FooterComponent v-if="!route.fullPath.includes(route.path.split('/')[1])" />
     </NuxtLayout>
   </TooltipProvider>
 </template>

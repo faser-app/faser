@@ -70,16 +70,20 @@
             </div>
           </div>
           <div v-if="music.songAuthor" class="w-full flex gap-3 text-gray-300">
-            <iframe :src="'https://open.spotify.com/embed/track/' + music.songId"
-              class="md:w-96 w-full mx-5" width="100%" height="80rem" frameBorder="0" allowfullscreen=""
+            <iframe :src="'https://open.spotify.com/embed/track/' + music.songId" class="md:w-96 w-full mx-5"
+              width="100%" height="80rem" frameBorder="0" allowfullscreen=""
               allow="clipboard-write; encrypted-media;"></iframe>
           </div>
           <div class="w-full p-5">
             <div class="flex gap-2">
-              <RouterLink to="/account/settings" class="flex justify-center rounded-xl p-2 w-1/2 bg-gray-700">
+              <RouterLink to="/account/settings"
+                class="flex items-center gap-2 justify-center rounded-xl p-2 w-1/2 bg-gray-700">
+                <i class="fa-solid fa-gear"></i>
                 Account Settings
               </RouterLink>
-              <div @click="shareProfile" class="flex cursor-pointer justify-center rounded-xl p-2 w-1/2 bg-gray-700">
+              <div @click="shareProfile"
+                class="flex items-center gap-2 cursor-pointer justify-center rounded-xl p-2 w-1/2 bg-gray-700">
+                <i class="fa-solid fa-arrow-up-from-bracket"></i>
                 Share Profile
               </div>
             </div>
