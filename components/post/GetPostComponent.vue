@@ -1,6 +1,6 @@
 <template>
     <div v-if="postVisible" class="w-full bg-gray-700 p-2 mb-2 rounded-xl text-white">
-        <div class="flex items-center" v-if="postType === 'comment'">
+        <div class="flex items-center" v-if="postType === 'comment' && !route.fullPath.split('/')[2].includes(parentPost)">
             <div class="rounded-tl-lg border-t-2 border-l-2 border-gray-500 h-4 w-4 ml-8"></div>
             <RouterLink :to="'/post/' + parentPost" class="ml-2 mb-4 text-gray-400 underline cursor-pointer">Go to
                 parent post</RouterLink>
@@ -224,9 +224,10 @@
 import axios from "axios";
 import MarkdownIt from "markdown-it";
 import Cookies from "js-cookie";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 
 const router = useRouter();
+const route = useRoute();
 const md = new MarkdownIt();
 const showImageModal = ref(false);
 const threeDotElementOpen = ref(false)
