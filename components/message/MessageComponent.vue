@@ -110,6 +110,8 @@ onMounted(async () => {
         headers: {
             token: Cookies.get("token")
         }
+    }).catch (() => {
+        router.push("/login")
     })
 
     ownProfile.value = ownProfileResponse.data
