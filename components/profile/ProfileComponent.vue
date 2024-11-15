@@ -180,7 +180,10 @@ import { useRouter } from "vue-router";
 import MarkdownIt from "markdown-it";
 import { FastAverageColor } from 'fast-average-color';
 
-const md = new MarkdownIt();
+const md = new MarkdownIt({
+  html: false,
+  linkify: false,
+}).disable(["code", "table", "heading", "hr", "image"])
 const router = useRouter()
 const url = "https://api.faser.app/api/account/getOwnProfile";
 const accountData = ref({});

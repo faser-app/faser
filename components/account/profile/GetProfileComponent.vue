@@ -248,7 +248,10 @@ useHead({
 })
 
 const router = useRouter()
-const md = new MarkdownIt();
+const md = new MarkdownIt({
+  html: false,
+  linkify: false,
+}).disable(["code", "table", "heading", "hr", "image"])
 const url = "https://api.faser.app/api/account/getProfile";
 const profileData = ref({});
 const sinceString = ref("");
