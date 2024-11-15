@@ -45,7 +45,7 @@ console.log()
       <HeaderComponent />
       <NuxtPage />
       <CookieBannerComponent v-if="!accepted" />
-      <FooterComponent v-if="!route.fullPath.includes(route.path.split('/')[1])" />
+      <FooterComponent v-if="!route.fullPath.includes(pagesWithoutFooter)" />
     </NuxtLayout>
   </TooltipProvider>
 </template>
