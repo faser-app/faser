@@ -85,13 +85,18 @@ async function sendMessage() {
     }, 100)
 }
 
-setInterval(async () => {
-    const dmsResponse = await axios.post("https://api.faser.app/api/messages/getDMs", {
-        token: Cookies.get("token"),
-        otherAccount: profile.value[0].id,
-    })
+const interval = setInterval(async () => {
 
-    messageHistory.value = dmsResponse.data.messages
+    if (route.path.split("/")[2] === String(profile.value[0].id)) {
+        const dmsResponse = await axios.post("https://api.faser.app/api/messages/getDMs", {
+            token: Cookies.get("token"),
+            otherAccount: profile.value[0].id,
+        })
+
+        messageHistory.value = dmsResponse.data.messages
+    } else {
+        clearInterval(interval)
+    }
 }, 3000)
 
 onMounted(async () => {
