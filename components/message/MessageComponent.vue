@@ -1,6 +1,6 @@
 <template>
     <div class="bg-gray-950 min-h-screen text-white" v-if="loaded">
-        <div class="w-full flex justify-between pl-2 bg-gray-900 items-center fixed p-2" :class="{
+        <div class="w-full flex justify-between z-50 pl-2 bg-gray-900 items-center fixed p-2" :class="{
             'top-[4.5rem]': !mobile,
             'top-0': mobile
         }">
@@ -23,16 +23,7 @@
                     'justify-start': message.sender === profile[0].id,
                     'justify-end': message.sender === ownProfile[0].id,
                 }">
-                    <div class="bg-gray-900 p-2 rounded-xl m-2 max-w-[80svw]">
-                        <p class="break-words">{{ message.message }}</p>
-                        <div class="w-full flex" :class="{
-                            'justify-start': message.sender === profile[0].id,
-                            'justify-end': message.sender === ownProfile[0].id,
-                        }">
-                            <p class="text-xs text-gray-400">{{
-                                DateTime.fromISO(message.time).toLocaleString(DateTime.DATETIME_MED) }}</p>
-                        </div>
-                    </div>
+                    <MessageContentComponent :message="message" :profile="profile" :ownProfile="ownProfile" />
                 </div>
             </div>
         </div>
