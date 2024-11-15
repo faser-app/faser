@@ -82,6 +82,15 @@ async function sendMessage() {
     }, 100)
 }
 
+setInterval(async () => {
+    const dmsResponse = await axios.post("https://api.faser.app/api/messages/getDMs", {
+        token: Cookies.get("token"),
+        otherAccount: profile.value[0].id,
+    })
+
+    messageHistory.value = dmsResponse.data.messages
+}, 3000)
+
 onMounted(async () => {
     window.scrollTo({ left: 0, top: document.body.scrollHeight });
 
