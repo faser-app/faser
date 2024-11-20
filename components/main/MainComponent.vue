@@ -2,14 +2,14 @@
   <div class="min-h-screen md:flex pl-2 bg-gray-950 text-white">
     <div class="md:w-1/4 w-full justify-center pr-2 pt-2 min-h-full">
       <div class="md:hidden w-full block">
-        <PostCreatePostComponent text="Post" mobile="false" />
+        <PostCreatePostComponent text="Post" mobile="false" :ownProfile="ownAccountData" />
       </div>
     </div>
     <div class="md:w-3/4 w-full max-w-[100rem] pt-5 pr-2">
       <div v-if="loggedIn && posts.length > 0">
         <div v-for="post in posts" key="post">
           <PostGetPostComponent :postId="post" ownProfile="false" :profile="profileData" :ownProfile="ownProfile"
-            :account="accountData" :ownProfileData="ownProfileData" />
+            :account="ownAccountData" :ownProfileData="ownProfileData" />
         </div>
       </div>
       <div v-else-if="loggedIn && noPosts">
@@ -35,7 +35,7 @@
     </div>
     <div class="md:w-1/4 w-full flex justify-center pr-2 mt-2 min-h-full">
       <div class="w-32 md:block hidden" v-if="loggedIn">
-        <PostCreatePostComponent text="post" mobile="false" />
+        <PostCreatePostComponent text="post" mobile="false" :ownProfile="ownAccountData" />
       </div>
     </div>
   </div>
@@ -110,6 +110,7 @@ function loadPosts() {
 }
 
 const ownProfileData = ref({})
+const ownAccountData = ref({})
 
 axios.get("https://api.faser.app/api/account/getOwnProfile", {
   headers: {
@@ -117,6 +118,7 @@ axios.get("https://api.faser.app/api/account/getOwnProfile", {
   },
 }).then((ownResponse) => {
   ownProfileData.value = ownResponse.data[0];
+  ownAccountData.value = ownResponse.data[1];
   loggedIn.value = true
 }).catch((error) => {
   loggedIn.value = false

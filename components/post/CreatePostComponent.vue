@@ -10,8 +10,7 @@
 
         <div v-if="showModal"
             class="h-full z-100 pb-5 w-full fixed top-0 left-0 flex justify-center md:pt-36 items-end md:items-start"
-            @click.self="closeModal"
-            :class="{
+            @click.self="closeModal" :class="{
                 'fadeIn': showModal,
                 'backdrop-blur-xl': !props.mobile !== undefined ? props.mobile : false
             }">
@@ -35,7 +34,8 @@
                             placeholder="What are you thinking about?"></textarea>
 
                         <div v-if="selectedTrack">
-                            <div class="flex absolute bg-gray-700 w-8 h-8 justify-center items-center p-2 rounded-xl cursor-pointer" @click="selectedTrack = null">
+                            <div class="flex absolute bg-gray-700 w-8 h-8 justify-center items-center p-2 rounded-xl cursor-pointer"
+                                @click="selectedTrack = null">
                                 <i class="fa-solid fa-xmark"></i>
                             </div>
                             <iframe v-if="selectedTrack"
@@ -65,6 +65,16 @@
                                 </div>
                             </template>
                         </div>
+                    </div>
+                    <div class="mt-4" v-if="isAdult">
+                        <label class="inline-flex items-center cursor-pointer">
+                            <input type="checkbox" value="" class="sr-only peer" v-model="nsfw">
+                            <div
+                                class="relative w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-500">
+                            </div>
+                            <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">NSFW <i
+                                    class="fa-solid fa-triangle-exclamation"></i></span>
+                        </label>
                     </div>
                     <p v-if="error" class="text-red-500 mt-1">{{ error }}</p>
                     <div class="flex md:flex-nowrap flex-wrap justify-end mt-2 gap-2">
@@ -102,6 +112,8 @@ const mobile = ref(false)
 const loading = ref(false)
 const searchSong = ref(false)
 const selectedTrack = ref(null)
+const nsfw = ref(false)
+const isAdult = ref(false)
 
 function getPreviewImage(file) {
     return URL.createObjectURL(file);
@@ -143,7 +155,22 @@ function closeModal() {
 
 const props = defineProps({
     text: String,
-    mobile: String
+    mobile: String,
+    ownProfile: Object
+})
+
+onMounted(() => {
+    const today = new Date()
+    const birthDate = new Date(props.ownProfile.birthday)
+
+    const age = today.getFullYear() - birthDate.getFullYear()
+    const month = today.getMonth() - birthDate.getMonth()
+
+    if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
+        isAdult.value = age - 1 >= 18
+    } else {
+        isAdult.value = age >= 18
+    }
 })
 
 function selectSong(song) {
@@ -160,7 +187,8 @@ function uploadPost() {
         lang: "en",
         type: 'post',
         music: selectedTrack.value ? selectedTrack.value.songId : null,
-        images: images.value.length
+        images: images.value.length,
+        nsfw: nsfw.value
     })
         .then(response => {
             loading.value = false

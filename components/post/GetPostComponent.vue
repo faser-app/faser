@@ -1,6 +1,7 @@
 <template>
     <div v-if="postVisible" class="w-full bg-gray-700 p-2 mb-2 rounded-xl text-white">
-        <div class="flex items-center" v-if="postType === 'comment' && !route.fullPath.split('/')[2].includes(parentPost)">
+        <div class="flex items-center"
+            v-if="postType === 'comment' && !route.fullPath.split('/')[2].includes(parentPost)">
             <div class="rounded-tl-lg border-t-2 border-l-2 border-gray-500 h-4 w-4 ml-8"></div>
             <RouterLink :to="'/post/' + parentPost" class="ml-2 mb-4 text-gray-400 underline cursor-pointer">Go to
                 parent post</RouterLink>
@@ -62,6 +63,12 @@
                 </RouterLink>
                 <p class="ml-3 text-gray-400">{{ postCreatedAt }}</p>
                 <p class="ml-3 text-gray-400" v-if="postContent.edited">edited</p>
+                <p class="ml-3 bg-red-500 px-2 rounded-full text-sm cursor-pointer select-none" v-if="postContent.nsfw"
+                    @click="toggleNSFW">
+                    NSFW
+                    <i class="fa-solid fa-eye" v-if="showPost"></i>
+                    <i class="fa-solid fa-eye-slash" v-else></i>
+                </p>
             </div>
 
             <div v-if="isAuthor === 'true' || isAuthor === true || props.ownProfile === true" class="flex ml-auto">
@@ -90,14 +97,29 @@
             </div>
 
         </div>
-        <p class="ml-2" v-html="postValue"></p>
-        <div class="overflow-x-scroll scroll-snap-x">
-            <div class="inline-flex gap-2 mt-2">
-                <div v-for="image in postContent.images" :key="image"
-                    class="bg-gray-700 p-2 rounded-xl inline-block scroll-snap-item">
-                    <img @click="openImage('https://api.faser.app/api/social/getPostImage?postId=' + postContent.postId + '&imageId=' + image)"
-                        :src="'https://api.faser.app/api/social/getPostImage?postId=' + postContent.postId + '&imageId=' + image"
-                        class="min-w-48 h-48 object-cover rounded-lg cursor-pointer" />
+        <div v-if="isAdult || !postContent.nsfw" :class="{
+            'blur-lg': !showPost && postContent.nsfw
+        }">
+            <p class="ml-2" v-html="postValue"></p>
+            <div class="overflow-x-scroll scroll-snap-x">
+                <div class="inline-flex gap-2 mt-2">
+                    <div v-for="image in postContent.images" :key="image"
+                        class="bg-gray-700 p-2 rounded-xl inline-block scroll-snap-item">
+                        <img @click="openImage('https://api.faser.app/api/social/getPostImage?postId=' + postContent.postId + '&imageId=' + image)"
+                            :src="'https://api.faser.app/api/social/getPostImage?postId=' + postContent.postId + '&imageId=' + image"
+                            class="min-w-48 h-48 object-cover rounded-lg cursor-pointer" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div v-else class="flex w-full justify-center items-center h-36 bg-gray-600 rounded-xl mb-2">
+            <div class="w-full flex justify-center flex-wrap">
+                <div
+                    class="border border-red-500 bg-red-900 p-4 rounded-full text-xl w-12 h-12 flex items-center justify-center">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                </div>
+                <div class="w-full text-center">
+                    <p>This post is marked as NSFW. You have to be 18 years or older to view this post.</p>
                 </div>
             </div>
         </div>
@@ -110,8 +132,7 @@
                 <Transition name="like" @leave="leave" @enter="open">
                     <i v-if="isLiked" class="fa-solid text-xl absolute fa-heart text-red-500"></i>
                 </Transition>
-                <i v-if="!isLiked"
-                    class="fa-regular absolute text-xl fa-heart transition-colors duration-150"></i>
+                <i v-if="!isLiked" class="fa-regular absolute text-xl fa-heart transition-colors duration-150"></i>
                 <p class="ml-10">
                     {{ postLikes }}
                 </p>
@@ -253,6 +274,8 @@ const showEditModal = ref(false);
 const threeDotsMenu = ref(false);
 const profile = ref({})
 const impressions = ref(0)
+const showPost = ref(false)
+const isAdult = ref(false)
 
 let scrollpos = window.scrollY
 
@@ -338,6 +361,12 @@ function postComment() {
         })
 }
 
+function toggleNSFW() {
+    if (isAdult.value) {
+        showPost.value = !showPost.value
+    }
+}
+
 const props = defineProps({
     postId: String,
     ownProfile: Boolean,
@@ -349,6 +378,19 @@ onMounted(() => {
     author.value.displayName = profile.displayName
     author.value.verifiedAccount = profile.verifiedAccount
     author.value.businessAccount = profile.businessAccount
+
+    const today = new Date()
+    const birthdate = new Date(props.account.birthday)
+
+    let age = today.getFullYear() - birthdate.getFullYear();
+    let m = today.getMonth() - birthdate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthdate.getDate())) {
+        age--;
+    }
+
+    if (age >= 18) {
+        isAdult.value = true
+    }
 })
 
 function openMenu() {
@@ -445,8 +487,10 @@ function editPost() {
 const isAuthor = ref(props.ownProfile)
 
 function openImage(imageSrcValue) {
-    showImageModal.value = true
-    imageSrc.value = imageSrcValue
+    if (isAdult.value && showPost.value) {
+        showImageModal.value = true
+        imageSrc.value = imageSrcValue
+    }
 }
 
 function formatTimeDifference(timestamp) {

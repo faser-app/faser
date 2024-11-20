@@ -1,7 +1,7 @@
 <template>
     <div class="min-h-screen bg-gray-950 text-white px-5 py-6">
         <h1 class="text-2xl font-bold mb-4">Terms of Service</h1>
-        <p><strong>Effective Date:</strong> October 10, 2024</p>
+        <p><strong>Effective Date:</strong> November 20, 2024</p>
         <p>Welcome to faser.app! These Terms of Service ("ToS") govern your use of the faser.app platform ("the App")
             and apply to all users aged 13 and older. By accessing or using the App, you agree to be bound by these
             Terms of Service. If you do not agree, please do not use the App.</p><br>
@@ -199,9 +199,32 @@
                 App and its features.</p><br>
         </div>
 
-        <h2 class="text-xl font-semibold mt-6 mb-2">12. Contact</h2>
+        <h2 class="text-xl font-semibold mt-6 mb-2">12. NSFW Content Policy</h2>
         <div class="ml-5">
-            <h3 class="text-lg font-semibold mt-4">12.1 Contact Information</h3>
+            <h3 class="text-lg font-semibold mt-4">12.1 Definition of NSFW Content</h3>
+            <p>NSFW ("Not Safe For Work") content includes material that is explicit, graphic, or otherwise
+                inappropriate for general audiences. This includes but is not limited to sexual, violent, or otherwise
+                sensitive content.</p>
+
+            <h3 class="text-lg font-semibold mt-4">12.2 Posting NSFW Content</h3>
+            <p>If you intend to post NSFW content, you are required to clearly mark it by checking the "NSFW" checkbox
+                when creating your post. Failure to label NSFW content appropriately may result in the removal of the
+                content and/or suspension of your account.</p>
+
+            <h3 class="text-lg font-semibold mt-4">12.3 Visibility and Restrictions</h3>
+            <p>NSFW content will only be visible to users who have enabled viewing such content in their settings. Users
+                under the age of 18 are prohibited from accessing NSFW material.</p>
+
+            <h3 class="text-lg font-semibold mt-4">12.4 Compliance and Responsibility</h3>
+            <p>It is your responsibility to ensure that any NSFW content complies with these Terms of Service and
+                applicable laws. We reserve the right to review and remove content that is mislabeled or violates our
+                policies.</p>
+        </div>
+
+
+        <h2 class="text-xl font-semibold mt-6 mb-2">13. Contact</h2>
+        <div class="ml-5">
+            <h3 class="text-lg font-semibold mt-4">13.1 Contact Information</h3>
             <p>If you have any questions or comments regarding these Terms of Service, please contact us at
                 <a href="mailto:support@faser.app" class="underline">support@faser.app</a>.
             </p>
