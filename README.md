@@ -41,16 +41,6 @@ Faser is a social media app that allows users to create and share posts in real-
 - **Backend**: Node.js, Express
 - **Database**: MongoDB
 
-## Contributing
-
-Contributions are welcome! To contribute, please follow these steps:
-
-1. Fork the repository
-2. Create a new branch ('git checkout -b feature/my-new-feature')
-3. Commit your changes ('git commit -am 'Add some feature'')
-4. Push to the branch ('git push origin feature/my-new-feature')
-5. Create a Pull Request
-
 ## Contact
 
 For any questions or support, you can reach us at [support@faser.app](mailto:support@faser.app).
