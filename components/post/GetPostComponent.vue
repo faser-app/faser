@@ -111,7 +111,7 @@
                     <i v-if="isLiked" class="fa-solid text-xl absolute fa-heart text-red-500"></i>
                 </Transition>
                 <i v-if="!isLiked"
-                    class="fa-regular absolute text-xl fa-heart hover:text-red-500 transition-colors duration-150"></i>
+                    class="fa-regular absolute text-xl fa-heart transition-colors duration-150"></i>
                 <p class="ml-10">
                     {{ postLikes }}
                 </p>
