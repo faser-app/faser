@@ -73,7 +73,8 @@
                   </div>
                 </div>
                 <div v-else>
-                  <button @click="musicModal = true" class="mt-3 bg-gray-600 p-3 rounded-xl border-gray-400 border">Set profile Song</button>
+                  <button @click="musicModal = true" class="mt-3 bg-gray-600 p-3 rounded-xl border-gray-400 border">Set
+                    profile Song</button>
                 </div>
               </div>
             </div>
@@ -119,6 +120,24 @@
               </button>
             </div>
           </div>
+          <div class="bg-gray-900 md:w-[calc(50%-0.25rem)] w-full flex justify-center items-center p-5 rounded-xl">
+            <div class="flex flex-wrap justify-center">
+              <h1 class="text-xl font-bold">Birth Date</h1>
+              <div class="w-full"></div>
+
+              <div class="w-full flex justify-center">
+                <p v-if="accountData.birthday" class="mt-4">Your birthday is: {{ formatBirthday(accountData.birthday) }}</p>
+              </div>
+
+              <button v-if="!accountData.birthday" class="mt-4 bg-[#220000] p-2 border-red-700 border rounded-xl"
+                @click="birthModal = true">
+                Add Bith Date
+              </button>
+              <button v-else class="mt-4 bg-[#220000] p-2 border-red-700 border rounded-xl" @click="birthModal = true">
+                Change Bith Date
+              </button>
+            </div>
+          </div>
         </div>
       </div>
       <div>
@@ -133,6 +152,7 @@
     <AccountChangeDisplayNameModal />
     <DeleteAccountModal :showModal="deleteAccountModal" @close="deleteAccountModal = false" />
     <AccountChangeSongModal :showModal="musicModal" @close="musicModal = false" />
+    <AccountChangeBirthdayModal :showModal="birthModal" @close="birthModal = false" @success="changeBirthday" />
   </div>
 </template>
 <script setup>
@@ -159,6 +179,7 @@ const file = ref(null);
 const color = ref("")
 const musicModal = ref(false);
 const haveMusic = ref(false);
+const birthModal = ref(false);
 
 function logout() {
   Cookies.remove("token");
@@ -212,6 +233,12 @@ function saveBio() {
     });
 }
 
+function changeBirthday(data) {
+  birthModal.value = false;
+
+  accountData.value.birthday = data.birthday;
+}
+
 function upload() {
   const formData = new FormData();
   formData.append("file", file.value);
@@ -228,6 +255,10 @@ function upload() {
     .then((response) => {
       router.push("/profile");
     });
+}
+
+function formatBirthday() {
+  return DateTime.fromISO(accountData.value.birthday).toLocaleString(DateTime.DATE_FULL);
 }
 
 onMounted(() => {
