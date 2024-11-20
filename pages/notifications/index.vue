@@ -18,7 +18,7 @@ axios.post("https://api.faser.app/api/profile/getUserMessages", {
         messages.value = response.data.messages
     });
 
-if (!window.navigator.standalone && window.navigator.userAgent.match(/(iPhone|iPod|iPad|Macintosh)/i)) {
+if (window.navigator.standalone && window.navigator.userAgent.match(/(iPhone|iPod|iPad|Macintosh)/i)) {
     mobile.value = true
 }
 </script>
