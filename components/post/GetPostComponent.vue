@@ -502,10 +502,8 @@ function editPost() {
 const isAuthor = ref(props.ownProfile)
 
 function openImage(imageSrcValue) {
-    if (isAdult.value && showPost.value) {
-        showImageModal.value = true
-        imageSrc.value = imageSrcValue
-    }
+    showImageModal.value = true
+    imageSrc.value = imageSrcValue
 }
 
 function formatTimeDifference(timestamp) {
