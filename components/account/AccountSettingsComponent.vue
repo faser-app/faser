@@ -131,10 +131,10 @@
 
               <button v-if="!accountData.birthday" class="mt-4 bg-[#220000] p-2 border-red-700 border rounded-xl"
                 @click="birthModal = true">
-                Add Bith Date
+                Add Birth Date
               </button>
               <button v-else class="mt-4 bg-[#220000] p-2 border-red-700 border rounded-xl" @click="birthModal = true">
-                Change Bith Date
+                Change Birth Date
               </button>
             </div>
           </div>
