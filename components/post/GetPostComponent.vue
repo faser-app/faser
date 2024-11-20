@@ -374,6 +374,21 @@ const props = defineProps({
     ownProfileData: Object
 })
 
+watch(() => props.account, (account) => {
+    const today = new Date()
+    const birthdate = new Date(account.birthday)
+
+    let age = today.getFullYear() - birthdate.getFullYear();
+    let m = today.getMonth() - birthdate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthdate.getDate())) {
+        age--;
+    }
+
+    if (age >= 18) {
+        isAdult.value = true
+    }
+})
+
 onMounted(() => {
     author.value.displayName = profile.displayName
     author.value.verifiedAccount = profile.verifiedAccount

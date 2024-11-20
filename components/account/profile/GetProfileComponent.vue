@@ -280,6 +280,7 @@ const openReport = ref(false)
 const music = ref([])
 const color = ref("")
 const openMusicModalValue = ref(false)
+const accountData = ref({})
 
 function shareProfile() {
   navigator.share({
@@ -355,6 +356,8 @@ async function main() {
   ownProfileData.value = ownResponse.data[0];
   ownId.value = ownResponse.data[0].id
 
+  accountData.value = ownResponse.data[1]
+
   if (response.data[0].id === ownResponse.data[0].id) {
     isAbleToFollow.value = false
   }
@@ -416,25 +419,6 @@ function toggleFollow() {
 }
 
 let scrollpos = window.scrollY;
-
-function toggleMusicModal() {
-  openMusicModalValue.value = !openMusicModalValue.value
-
-  if (openMusicModalValue.value) {
-    scrollpos = window.scrollY;
-
-    document.body.style.position = 'fixed';
-    document.body.style.width = '100%';
-    document.body.style.top = "-" + scrollpos + "px";
-    document.body.classList.add("overflow-hidden")
-  }
-  else {
-    document.body.style.position = '';
-    document.body.style.top = '';
-    document.body.classList.remove("overflow-hidden")
-    window.scrollTo(0, scrollpos);
-  }
-}
 </script>
 
 <style scoped>
