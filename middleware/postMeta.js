@@ -6,7 +6,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
   const postId = to.params.post;
 
   const headers = {
-    postId: postId
+    postId: postId,
   };
 
   const { data, error } = await useFetch(url, {
@@ -44,16 +44,22 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
         {
           hid: "og-description",
           property: "og:description",
-          content: data.value[0].content,
+          content:
+            data.value[0].nsfw === false
+              ? data.value[0].content
+              : "This content is not available due to the NSFW filter.",
         },
         {
           hid: "og-image",
           property: "og:image",
-          content: [
-            "https://api.faser.app/api/social/getPostImage?postId=" +
-              postId +
-              "&imageId=1",
-          ],
+          content:
+            data.value[0].nsfw === false
+              ? [
+                  "https://api.faser.app/api/social/getPostImage?postId=" +
+                    postId +
+                    "&imageId=1",
+                ]
+              : [""],
         },
         {
           hid: "og-url",
