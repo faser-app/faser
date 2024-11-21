@@ -1,8 +1,12 @@
 <template>
     <div class="min-h-screen text-white">
         <div v-for="post in posts" :key="post.id">
-            <PostGetPostComponent :postId="post.postId" ownProfile="true" :profile="profileData" :ownProfile="ownProfile"
-                :account="accountData" :ownProfileData="ownProfileData" :admin="true" />
+            <PostGetPostComponent :postId="post.postId" ownProfile="true" :profile="profileData"
+                :ownProfile="ownProfile" :account="accountData" :ownProfileData="ownProfileData" :admin="true" />
+        </div>
+
+        <div v-if="posts.length == 0" class="w-full flex justify-center">
+            <p>No disabled posts</p>
         </div>
     </div>
 </template>
@@ -25,21 +29,21 @@ axios.get("https://api.faser.app/api/account/getOwnProfile", {
         token: token
     }
 })
-.then((response) => {
-    if(!response.data[1].admin) {
-        router.push("/?error=You%20are%20not%20an%20admin")
-    }
-
-    profileData.value = response.data[0]
-    accountData.value = response.data[1]
-    ownProfileData.value = response.data[0]
-    ownProfile.value = true
-
-    axios.post("https://api.faser.app/api/admin/getDisabledPosts", {
-        token: token
-    })
     .then((response) => {
-        posts.value = response.data
+        if (!response.data[1].admin) {
+            router.push("/?error=You%20are%20not%20an%20admin")
+        }
+
+        profileData.value = response.data[0]
+        accountData.value = response.data[1]
+        ownProfileData.value = response.data[0]
+        ownProfile.value = true
+
+        axios.post("https://api.faser.app/api/admin/getDisabledPosts", {
+            token: token
+        })
+            .then((response) => {
+                posts.value = response.data
+            })
     })
-})
 </script>
