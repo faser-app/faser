@@ -37,6 +37,10 @@ const faqItems = ref([
         content: "faser is a social media platform that allows users to connect, share, and engage with each other. It offers a unique space for discussions, sharing media, and staying updated with the latest trends."
     },
     {
+        title: "Who is the person behind faser?",
+        content: "Hi, it's me, the person behind faser. My name is Neo, I live in Germany and I'm the one and only person who created faser. @timbo made the logo but I did the rest. From the design to the development, it's all me. I hope you enjoy using faser! When you have any Problems, feel free to contact me using the contact form below."
+    },
+    {
         title: "How do I create an account on faser?",
         content: "To create an account, simply visit our website at faser.app, click on the 'Login' button and then go to 'create account'. Follow the on-screen instructions to set up your profile and start using faser."
     },
