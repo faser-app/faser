@@ -40,11 +40,6 @@ const accordionItems = [
         advanced: "2000",
     },
     {
-        title: "Edit Messages",
-        basic: "No",
-        advanced: "Yes",
-    },
-    {
         title: "Extra faser Advanced Badge",
         basic: "No badge",
         advanced: "Advanced badge",
