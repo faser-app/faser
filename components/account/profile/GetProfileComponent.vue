@@ -222,8 +222,8 @@
             <i class="fa-solid fa-xmark mr-2 cursor-pointer" @click="openReport = false"></i>
           </div>
           <SupportFieldsComponent :predefinedSubject="'User Report for ' + profileData.displayName"
-            :predefinedMessage="'I want to report this person because...\n\nProfile Link: https://faser.app' + route.path" />
-          <p class="ml-2">Please provide the Profile link for the Person you want to report.</p>
+            :predefinedMessage="'I want to report this person because...\n\nUser ID: ' + profileData.id" />
+          <p class="ml-2">Please provide the User ID for the Person you want to report.</p>
         </div>
       </div>
     </Transition>
