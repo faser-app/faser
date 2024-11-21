@@ -43,7 +43,7 @@
         <div class="flex w-screen justify-center">
             <div class="mt-16 max-w-[90rem] w-screen" :class="{
                 'mb-16': !mobile,
-                'mb-32': mobile
+                'mb-36': mobile
             }">
                 <div v-for="(message, index) in messageHistory" :key="message.time">
                     <div v-if="isNewDay(message, messageHistory[index - 1])"
