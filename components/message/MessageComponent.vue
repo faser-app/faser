@@ -5,13 +5,39 @@
             'top-0': mobile
         }">
             <div class="flex items-center gap-2">
-                <img :src="'https://api.faser.app/api/profile/getProfilePhoto?username=' + profile[0].username"
-                    class="h-12 w-12 rounded-full">
-                <p>{{ profile[0].displayName }}</p>
+                <img v-if="haveProfile"
+                    :src="'https://api.faser.app/api/profile/getProfilePhoto?username=' + profile[0].username" :class="{
+                        'rounded-full': !profile[0].businessAccount,
+                        'rounded-xl': profile[0].businessAccount
+                    }" class="h-12 w-12 rounded-full" @error="haveProfile = false">
+                <div v-else class="h-12 w-12 flex border justify-center items-center border-[#96969627] bg-[#1118276c]"
+                    :class="{
+                        'rounded-full': !profile[0].businessAccount,
+                        'rounded-xl': profile[0].businessAccount
+                    }">
+                    <i class="fa-solid fa-user rounded-full text-xl"></i>
+                </div>
+                <div class="flex items-center gap-2">
+                    <div>
+                        <div class="flex">
+                            <p>{{ profile[0].displayName }}</p>
+                            <div v-if="profile[0].businessAccount"
+                                class="flex ml-2 justify-center text-xs items-center bg-yellow-600 border w-6 h-6 border-yellow-300 rounded-full">
+                                <i class="fa-solid verifiedBadge fa-check"></i>
+                            </div>
+                            <div v-else-if="profile[0].verifiedAccount"
+                                class="flex ml-2 justify-center text-xs items-center bg-sky-600 border w-6 h-6 border-sky-300 rounded-full">
+                                <i class="fa-solid verifiedBadge fa-check"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="flex items-center mr-4 bg-gray-800 w-10 h-10 justify-center rounded-full">
+
+
+            <!-- <div class="flex items-center mr-4 bg-gray-800 w-10 h-10 justify-center rounded-full">
                 <i class="fa-solid fa-ellipsis-vertical"></i>
-            </div>
+            </div> -->
         </div>
 
         <div class="flex w-screen justify-center">
@@ -19,12 +45,23 @@
                 'mb-16': !mobile,
                 'mb-32': mobile
             }">
-                <div v-for="message in messageHistory" :key="message.time" class="flex" :class="{
-                    'justify-start': message.sender === profile[0].id,
-                    'justify-end': message.sender === ownProfile[0].id,
-                }">
-                    <MessageContentComponent :message="message" :profile="profile" :ownProfile="ownProfile" />
+                <div v-for="(message, index) in messageHistory" :key="message.time">
+                    <div v-if="isNewDay(message, messageHistory[index - 1])"
+                        class="flex justify-center my-4 items-center gap-4">
+                        <hr class="w-1/4 border-gray-700">
+                        <p class="text-gray-400">
+                            {{ DateTime.fromISO(message.time).toRelativeCalendar() }}
+                        </p>
+                        <hr class="w-1/4 border-gray-700">
+                    </div>
+                    <div :class="{
+                        'justify-start': message.sender === profile[0].id,
+                        'justify-end': message.sender === ownProfile[0].id,
+                    }" class="flex">
+                        <MessageContentComponent :message="message" :profile="profile" :ownProfile="ownProfile" />
+                    </div>
                 </div>
+
             </div>
         </div>
 
@@ -56,6 +93,7 @@ const profile = ref({})
 const loaded = ref(false)
 const ownProfile = ref({})
 const mobile = ref(false)
+const haveProfile = ref(true)
 
 async function sendMessage() {
     if (inputContent.value.trim() === "") return
@@ -66,7 +104,7 @@ async function sendMessage() {
             sender: ownProfile.value[0].id,
             time: DateTime.now().toISO()
         })
-    } catch (error) {}
+    } catch (error) { }
 
     await axios.post("https://api.faser.app/api/messages/sendDM", {
         token: Cookies.get("token"),
@@ -110,7 +148,7 @@ onMounted(async () => {
         headers: {
             token: Cookies.get("token")
         }
-    }).catch (() => {
+    }).catch(() => {
         router.push("/login")
     })
 
@@ -133,4 +171,14 @@ onMounted(async () => {
 if (window.navigator.standalone && window.navigator.userAgent.match(/(iPhone|iPod|iPad|Macintosh)/i)) {
     mobile.value = true
 }
+
+function isNewDay(currentMessage, previousMessage) {
+    const currentDate = DateTime.fromISO(currentMessage.time).toFormat("yyyy-MM-dd");
+    const previousDate = previousMessage
+        ? DateTime.fromISO(previousMessage.time).toFormat("yyyy-MM-dd")
+        : null;
+
+    return currentDate !== previousDate;
+}
+
 </script>
