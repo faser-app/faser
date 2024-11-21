@@ -46,4 +46,7 @@ axios.get("https://api.faser.app/api/account/getOwnProfile", {
                 posts.value = response.data
             })
     })
+    .catch((error) => {
+        router.push("/?error=You%20are%20not%20an%20admin")
+    })
 </script>

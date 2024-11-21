@@ -21,13 +21,16 @@ axios.get("https://api.faser.app/api/account/getOwnProfile", {
         token: token
     }
 })
-.then((response) => {
-    if(!response.data[1].admin) {
-        router.push("/?error=You%20are%20not%20an%20admin")
-    } else {
-        loaded.value = true
-    }
+    .then((response) => {
+        if (!response.data[1].admin) {
+            router.push("/?error=You%20are%20not%20an%20admin")
+        } else {
+            loaded.value = true
+        }
 
-})
+    })
+    .catch((error) => {
+        router.push("/?error=You%20are%20not%20an%20admin")
+    })
 
 </script>

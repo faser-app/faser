@@ -88,5 +88,8 @@ axios.get("https://api.faser.app/api/account/getOwnProfile", {
         }
 
     })
+    .catch((error) => {
+        router.push("/?error=You%20are%20not%20an%20admin")
+    })
 
 </script>
