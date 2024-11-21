@@ -134,16 +134,15 @@ const interval = setInterval(async () => {
 }, 3000)
 
 onMounted(async () => {
-    window.scrollTo({ left: 0, top: document.body.scrollHeight });
-
+    
     const profileResponse = await axios.get("https://api.faser.app/api/account/getProfile", {
         headers: {
             userId: route.path.split("/")[2]
         }
     })
-
+    
     profile.value = profileResponse.data
-
+    
     const ownProfileResponse = await axios.get("https://api.faser.app/api/account/getOwnProfile", {
         headers: {
             token: Cookies.get("token")
@@ -151,20 +150,23 @@ onMounted(async () => {
     }).catch(() => {
         router.push("/login")
     })
-
+    
     ownProfile.value = ownProfileResponse.data
-
+    
     const dmsResponse = await axios.post("https://api.faser.app/api/messages/getDMs", {
         token: Cookies.get("token"),
         otherAccount: profileResponse.data[0].id,
     })
-
+    
     messageHistory.value = dmsResponse.data.messages
-
+    
     if (profileResponse.data[0].id === ownProfileResponse.data[0].id) {
         router.push("/")
     }
-
+    
+    setTimeout(() => {
+        window.scrollTo({ left: 0, top: document.body.scrollHeight });
+    }, 250)
     loaded.value = true
 })
 
