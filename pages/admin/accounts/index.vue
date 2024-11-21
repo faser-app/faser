@@ -5,8 +5,8 @@
                 <h1>Active Accounts</h1>
 
                 <div v-for="account in activeAccounts" :key="account.id">
-                    <div class="flex items-center gap-2 mb-4">
-                        <div class="flex justify-between w-full">
+                    <div class="flex items-center gap-2 mb-2">
+                        <div class="flex justify-between w-full border-b border-gray-500 pb-2">
                             <div class="flex items-center gap-2">
                                 <img :src="'https://api.faser.app/api/profile/getProfilePhoto?username=' + account.username"
                                     class="h-12 w-12 rounded-full" />
