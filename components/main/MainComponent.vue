@@ -1,4 +1,7 @@
 <template>
+  <div v-if="error" class="w-full md:w-[80%] md:ml-[10svw] py-6 rounded-xl bg-red-900 border border-red-500 text-white text-center">
+    {{ error }}
+  </div>
   <div class="min-h-screen md:flex pl-2 bg-gray-950 text-white">
     <div class="md:w-1/4 w-full justify-center pr-2 pt-2 min-h-full">
       <div class="md:hidden w-full block">
@@ -46,10 +49,13 @@
 import { ref } from 'vue';
 import axios from 'axios';
 import Cookies from "js-cookie"
+import { useRoute } from 'vue-router';
 
 const posts = ref([]);
 const loggedIn = ref(false)
 const lastTimestamp = ref(Date.now())
+const error = ref("")
+const route = useRoute()
 
 onMounted(() => {
   loadPosts()
@@ -60,6 +66,11 @@ const noPosts = ref(true)
 const noMorePosts = ref(false)
 const lastRequest = ref(0)
 
+onMounted(() => {
+  if (route.query.error) {
+    error.value = route.query.error
+  }
+})
 
 document.addEventListener("scroll", (event) => {
   if (document.body.offsetHeight - 2000 < window.scrollY && !loading.value) {

@@ -371,7 +371,8 @@ const props = defineProps({
     postId: String,
     ownProfile: Boolean,
     account: Object,
-    ownProfileData: Object
+    ownProfileData: Object,
+    admin: Boolean
 })
 
 watch(() => props.account, (account) => {
@@ -477,14 +478,25 @@ const postId = ref(props.postId)
 const imageSrc = ref('')
 
 function deletePost() {
-    axios.post("https://api.faser.app/api/social/deletePost", {
-        postid: postId.value,
-        token: Cookies.get("token")
-    })
-        .then(() => {
-            postVisible.value = false
-            showModal.value = false
+    if(!props.admin) {
+        axios.post("https://api.faser.app/api/social/deletePost", {
+            postid: postId.value,
+            token: Cookies.get("token")
         })
+            .then(() => {
+                postVisible.value = false
+                showModal.value = false
+            })
+    } else {
+        axios.post("https://api.faser.app/api/admin/deletePost", {
+            postId: postId.value,
+            token: Cookies.get("token")
+        })
+            .then(() => {
+                postVisible.value = false
+                showModal.value = false
+        })
+    }
 }
 
 function editPost() {
