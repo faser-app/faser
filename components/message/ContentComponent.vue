@@ -4,7 +4,10 @@
         @click="deleteMessage">
         <i class="fa-solid fa-trash"></i>
     </div>
-    <div class="bg-gray-900 p-2 rounded-xl m-2 max-w-[80svw]" @mouseenter="hover = true" @mouseleave="hover = false">
+    <div class="p-2 rounded-xl m-2 max-w-[80svw]" @mouseenter="hover = true" :class="{
+        'bg-gray-700': message.sender === ownProfile[0].id,
+        'bg-gray-800': message.sender === profile[0].id,
+    }" @mouseleave="hover = false">
         <p class="break-words" v-html="convertedToUrl(message.message)"></p>
         <div class="w-full flex" :class="{
             'justify-start': message.sender === profile[0].id,
