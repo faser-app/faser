@@ -125,8 +125,11 @@
                     class="border border-red-500 bg-red-900 p-4 rounded-full text-xl w-12 h-12 flex items-center justify-center">
                     <i class="fa-solid fa-triangle-exclamation"></i>
                 </div>
-                <div class="w-full text-center">
+                <div class="w-full text-center" v-if="loggedIn">
                     <p>This post is marked as NSFW. You have to be 18 years or older to view this post.</p>
+                </div>
+                <div class="w-full text-center" v-else>
+                    <p>This post is marked as NSFW. You have to be logged in and 18 years or older to view this post.</p>
                 </div>
             </div>
         </div>
@@ -299,6 +302,7 @@ const impressions = ref(0)
 const showPost = ref(false)
 const isAdult = ref(false)
 const showReport = ref(false)
+const loggedIn = ref(Cookies.get("token") !== undefined)
 
 let scrollpos = window.scrollY
 
