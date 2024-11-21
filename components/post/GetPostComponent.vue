@@ -71,25 +71,32 @@
                 </p>
             </div>
 
-            <div v-if="isAuthor === 'true' || isAuthor === true || props.ownProfile === true" class="flex ml-auto">
+            <div class="flex ml-auto">
                 <Transition name="fade" @leave="leave" @enter="open">
                     <div v-if="threeDotsMenu">
                         <div
                             class="flex flex-col gap-2 bg-gray-600 z-10 p-2 rounded-xl absolute -translate-x-16 translate-y-2">
-                            <div class="p-2 rounded-xl w-full flex items-center cursor-pointer"
+                            <div class="p-2 rounded-xl w-full flex items-center cursor-pointer" v-if="isAuthor === 'true'"
                                 @click="openDeleteModal">
                                 <i class="fa-solid fa-trash mr-2"></i>
                                 <p>Delete</p>
                             </div>
-                            <hr class="border-gray-400" />
-                            <div class="p-2 rounded-xl w-full flex items-center cursor-pointer" @click="openEditModal">
+                            <hr class="border-gray-400" v-if="isAuthor === 'true'" />
+                            <div class="p-2 rounded-xl w-full flex items-center cursor-pointer" @click="openEditModal" v-if="isAuthor === 'true'">
                                 <i class="fa-solid fa-edit mr-2"></i>
                                 <p>Edit</p>
+                            </div>
+                            <hr class="border-gray-400" v-if="isAuthor === 'true'" />
+                            <div class="p-2 rounded-xl w-full flex items-center cursor-pointer"
+                                @click="showReport = true">
+                                <i class="fa-solid fa-triangle-exclamation mr-2"></i>
+                                <p>Report</p>
                             </div>
                         </div>
                     </div>
                 </Transition>
-
+            </div>
+            <div class="flex ml-auto">
                 <div @click="openMenu"
                     class="flex z-0 cursor-pointer items-center w-12 h-12 justify-center bg-gray-600 rounded-xl">
                     <i class="fa-solid fa-ellipsis-vertical"></i>
@@ -239,6 +246,21 @@
                 </div>
             </div>
         </transition>
+
+        <Transition name="fade" @leave="leave" @enter="enter">
+            <div v-if="showReport"
+                class="fixed h-full z-100 z-50 w-full backdrop-blur top-0 left-0 flex justify-center items-center">
+                <div class="bg-gray-800 w-[60rem] max-h-[80svh] overflow-y-scroll mx-4 p-2 rounded-xl">
+                    <div class="w-full flex items-center justify-center text-xl font-bold">
+                        <h1 class="w-full text-center">Report Post</h1>
+                        <i class="fa-solid fa-xmark mr-2 cursor-pointer" @click="showReport = false"></i>
+                    </div>
+                    <SupportFieldsComponent :predefinedSubject="'Post Report for ' + author.displayName"
+                        :predefinedMessage="'I want to report this post because...\n\nPost ID: ' + postId" />
+                    <p class="ml-2">Please provide the Post ID for the Person you want to report.</p>
+                </div>
+            </div>
+        </Transition>
     </div>
 </template>
 <script setup>
@@ -276,6 +298,7 @@ const profile = ref({})
 const impressions = ref(0)
 const showPost = ref(false)
 const isAdult = ref(false)
+const showReport = ref(false)
 
 let scrollpos = window.scrollY
 
@@ -478,7 +501,7 @@ const postId = ref(props.postId)
 const imageSrc = ref('')
 
 function deletePost() {
-    if(!props.admin) {
+    if (!props.admin) {
         axios.post("https://api.faser.app/api/social/deletePost", {
             postid: postId.value,
             token: Cookies.get("token")
@@ -495,7 +518,7 @@ function deletePost() {
             .then(() => {
                 postVisible.value = false
                 showModal.value = false
-        })
+            })
     }
 }
 
@@ -509,6 +532,10 @@ function editPost() {
             showEditModal.value = false
             reloadStats()
         })
+}
+
+function openreport() {
+    openReport.value = true
 }
 
 const isAuthor = ref(props.ownProfile)
