@@ -121,6 +121,9 @@ function changeSong() {
         albumId: selectedTrack.value.albumId,
     })
         .then((response) => {
+
+            props.showModal = false;
+
             router.push("/profile");
         })
 }

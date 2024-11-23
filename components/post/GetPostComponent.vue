@@ -12,7 +12,7 @@
                     <div v-if="props.ownProfile === 'false'">
                         <img v-if="author.hasProfilePicture" @error="author.hasProfilePicture = false"
                             :src="'https://api.faser.app/api/profile/getProfilePhoto?username=' + author.username"
-                            alt="profile picture" class="h-14 w-14 m-2" :class="{
+                            alt="profile picture" class="h-14 w-14 m-2 object-cover" :class="{
                                 'rounded-full': !author.businessAccount,
                                 'rounded-lg': author.businessAccount
                             }" />
@@ -38,7 +38,7 @@
                 <RouterLink v-else :to="'/' + author.username" class="flex items-center">
                     <img v-if="author.hasProfilePicture" @error="author.hasProfilePicture = false"
                         :src="'https://api.faser.app/api/profile/getProfilePhoto?username=' + author.username"
-                        alt="profile picture" class="h-14 w-14 m-2" :class="{
+                        alt="profile picture" class="h-14 w-14 m-2 object-cover" :class="{
                             'rounded-full': !author.businessAccount,
                             'rounded-lg': author.businessAccount
                         }" />
