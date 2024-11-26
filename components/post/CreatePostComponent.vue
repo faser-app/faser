@@ -191,15 +191,16 @@ function uploadPost() {
         nsfw: nsfw.value
     })
         .then(response => {
-            loading.value = false
-
+            
             if (images.value.length === 0) {
                 document.body.style.position = '';
                 document.body.style.top = '';
                 document.body.classList.remove("overflow-hidden")
                 window.scrollTo(0, scrollpos);
-
+                
                 router.push("/profile")
+
+                loading.value = false
             }
 
             if (images.value.length > 0) {
@@ -224,6 +225,8 @@ function uploadPost() {
                                 window.scrollTo(0, scrollpos);
 
                                 router.push("/profile")
+
+                                loading.value = false
                             }
                         })
                 }
