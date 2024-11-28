@@ -127,6 +127,24 @@ function selectFile() {
 
     input.onchange = (e) => {
         const file = e.target.files[0];
+
+        if (e.target.files[0].size / 1024 / 1024 >= 2) {
+            error.value = "Image is too large. Max size is 2MB."
+            return
+        }
+
+        if (images.value.length >= 10) {
+            error.value = "You can only upload 10 images."
+            return
+        }
+
+        if (e.target.files[0].type.split('/')[0] !== 'image') {
+            error.value = "File is not an image."
+            return
+        }
+
+        error.value = ""
+
         images.value.push(file);
     };
 }

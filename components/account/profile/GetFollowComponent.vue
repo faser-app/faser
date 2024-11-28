@@ -3,7 +3,7 @@
         <div class="flex min-w-full items-center">
             <img v-if="user.hasProfilePicture" @error="user.hasProfilePicture = false"
                 :src="'https://api.faser.app/api/profile/getProfilePhoto?username=' + user.username"
-                class="h-12 w-12 bg-cover" :class="{
+                class="h-12 w-12 bg-cover object-cover" :class="{
                     'rounded-full': !user.businessAccount,
                     'rounded-lg': user.businessAccount
                 }" />
