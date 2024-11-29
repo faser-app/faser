@@ -156,10 +156,12 @@
       </div>
       <div class="flex md:hidden mt-2 flex-wrap md:w-60 gap-2 justify-center">
         <div v-for="community in communities" :key="community.name">
-          <div class="w-full flex mr-8 h-fit truncate items-center rounded-xl bg-gray-800">
-            <img src="https://via.placeholder.com/150" alt="profile picture" class="rounded-full h-8 w-8 m-2" />
-            {{ community.name }}
-          </div>
+          <RouterLink :to="'/communities/' + community.id">
+            <div class="w-full flex mr-8 h-fit truncate items-center rounded-xl bg-gray-800">
+              <img src="https://picsum.photos/200" alt="profile picture" class="rounded-full h-8 w-8 m-2" />
+              {{ community.displayname }}
+            </div>
+          </RouterLink>
         </div>
       </div>
     </div>
