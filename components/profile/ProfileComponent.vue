@@ -1,14 +1,24 @@
 <template>
   <div class="bg-gray-950 min-h-screen text-white">
     <div class="md:flex w-full">
-      <div class="md:flex hidden flex-wrap md:w-60 gap-2 justify-center">
-        <!-- <div v-for="community in communities" :key="community.name">
-          <div class="w-full flex mr-8 h-fit truncate items-center rounded-xl bg-gray-800">
-            <img src="https://via.placeholder.com/150" alt="profile picture" class="rounded-full h-8 w-8 m-2" />
-            {{ community.name }}
-          </div>
+      <div class="md:w-1/5 gap-2 md:block px-2 hidden">
+        <div v-if="communities.length > 0" class="flex w-full justify-center">
+          <h2>Communities</h2>
         </div>
-        <p v-if="communities.length === 0">No Communites yet</p> -->
+        <div v-for="community in communities" :key="community.name">
+          <RouterLink :to="'/communities/' + community.id">
+            <div class="w-full flex mr-8 h-fit truncate items-center rounded-xl bg-gray-800">
+              <img src="https://picsum.photos/200" alt="profile picture" class="rounded-full h-8 w-8 m-2" />
+              {{ community.displayName }}
+            </div>
+          </RouterLink>
+        </div>
+        <div class="flex w-full justify-center">
+          <p v-if="communities.length === 0 && !privateAccount">
+            No Communites yet
+          </p>
+        </div>
+        <p v-if="privateAccount">Private account</p>
       </div>
       <div class="md:w-4/5 w-full mr-4">
         <div class="flex flex-wrap bg-gray-800 md:w-full ml-2 md:ml-1 rounded-xl items-center mr-2 h-fit">
@@ -112,19 +122,6 @@
         </div>
       </div>
     </div>
-    <!-- <div>
-      <div v-if="communities.length !== 0" class="flex md:hidden w-full justify-center text-xl mt-2">
-        <p>Communities</p>
-      </div>
-      <div class="flex md:hidden mt-2 flex-wrap md:w-60 gap-2 justify-center">
-        <div v-for="community in communities" :key="community.name">
-          <div class="w-full flex mr-8 h-fit truncate items-center rounded-xl bg-gray-800">
-            <img src="https://via.placeholder.com/150" alt="profile picture" class="rounded-full h-8 w-8 m-2" />
-            {{ community.name }}
-          </div>
-        </div>
-      </div>
-    </div> -->
 
     <Transition name="fade" @leave="leave" @enter="enter">
       <div v-if="openFollower"
@@ -226,6 +223,15 @@ axios
     badges.value = response.data[0].badges;
 
     ownProfileData.value = response.data[0];
+
+    for (let i = 0; i < response.data[0].communities.length; i++) {
+      axios.post("https://api.faser.app/api/community/getCommunity", {
+        communityId: response.data[0].communities[i]
+      })
+        .then((response) => {
+          communities.value.push(response.data.community)
+        })
+    }
 
     posts.value = response.data[0].posts.length;
     followers.value = response.data[0].follower.length;
