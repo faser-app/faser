@@ -166,8 +166,8 @@ const links = [
     href: "/",
   },
   {
-    name: "FAQ",
-    href: "/faq",
+    name: "Communities",
+    href: "/communities",
   },
   {
     name: "Support",

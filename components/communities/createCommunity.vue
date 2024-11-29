@@ -1,6 +1,9 @@
 <template>
     <div class="min-h-screen text-white">
         <div class="w-full flex justify-center">
+            <span class="text-gray-400">This feature is only available with Beta access</span>
+        </div>
+        <div class="w-full flex justify-center">
             <h1 class="text-2xl font-bold">Create a Community</h1>
         </div>
 
@@ -142,14 +145,14 @@ function createCommunity() {
         nsfw: community.value.nsfw,
         private: community.value.private
     }).then((response) => {
-            if (response.data.error) {
-                errors.value.push({
-                    message: response.data.error,
-                    part: "community"
-                })
-            } else {
-                window.location.href = "/communities/" + response.data.community.id
-            }
-        })
+        if (response.data.error) {
+            errors.value.push({
+                message: response.data.error,
+                part: "community"
+            })
+        } else {
+            window.location.href = "/communities/" + response.data.community.id
+        }
+    })
 }
 </script>
