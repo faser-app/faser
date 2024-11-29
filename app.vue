@@ -35,8 +35,6 @@ const accepted = ref(false)
 if (Cookies.get("accepted") || Cookies.get("essential")) {
   accepted.value = true
 }
-
-console.log()
 </script>
 
 <template>
@@ -51,24 +49,4 @@ console.log()
 </template>
 
 <style>
-.page-enter-active,
-.page-leave-active {
-  transition: all 0.4s ease;
-}
-
-.page-enter-from {
-  transform: translateX(100%);
-}
-
-.page-enter-to {
-  transform: translateX(0);
-}
-
-.page-leave-from {
-  transform: translateX(0);
-}
-
-.page-leave-to {
-  transform: translateX(-100%);
-}
 </style>
