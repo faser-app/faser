@@ -71,37 +71,52 @@
                 </p>
             </div>
 
-            <div class="flex ml-auto">
-                <Transition name="fade" @leave="leave" @enter="open">
-                    <div v-if="threeDotsMenu">
-                        <div
-                            class="flex flex-col gap-2 bg-gray-600 z-10 p-2 rounded-xl absolute -translate-x-16 translate-y-2">
-                            <div class="p-2 rounded-xl w-full flex items-center cursor-pointer" v-if="isAuthor === 'true'"
-                                @click="openDeleteModal">
-                                <i class="fa-solid fa-trash mr-2"></i>
-                                <p>Delete</p>
-                            </div>
-                            <hr class="border-gray-400" v-if="isAuthor === 'true'" />
-                            <div class="p-2 rounded-xl w-full flex items-center cursor-pointer" @click="openEditModal" v-if="isAuthor === 'true'">
-                                <i class="fa-solid fa-edit mr-2"></i>
-                                <p>Edit</p>
-                            </div>
-                            <hr class="border-gray-400" v-if="isAuthor === 'true'" />
-                            <div class="p-2 rounded-xl w-full flex items-center cursor-pointer"
-                                @click="showReport = true">
-                                <i class="fa-solid fa-triangle-exclamation mr-2"></i>
-                                <p>Report</p>
-                            </div>
-                        </div>
-                    </div>
-                </Transition>
-            </div>
-            <div class="flex ml-auto">
-                <div @click="openMenu"
-                    class="flex z-0 cursor-pointer items-center w-12 h-12 justify-center bg-gray-600 rounded-xl">
-                    <i class="fa-solid fa-ellipsis-vertical"></i>
+            <Menu as="div" class="relative inline-block text-left z-[2]">
+                <div>
+                    <MenuButton
+                        class="inline-flex w-full justify-center rounded-md px-4 py-2 text-sm font-medium text-white">
+                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                    </MenuButton>
                 </div>
-            </div>
+
+                <transition enter-active-class="transition duration-100 ease-out"
+                    enter-from-class="transform scale-95 opacity-0" enter-to-class="transform scale-100 opacity-100"
+                    leave-active-class="transition duration-75 ease-in"
+                    leave-from-class="transform scale-100 opacity-100" leave-to-class="transform scale-95 opacity-0">
+                    <MenuItems
+                        class="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-gray-950 shadow-lg ring-1 ring-black/5 focus:outline-none">
+                        <div class="px-1 py-1">
+                            <MenuItem v-slot="{ active }" v-if="isAuthor === 'true'">
+                            <button :class="[
+                                active ? 'bg-gray-600 text-white' : 'text-gray-200',
+                                'group flex w-full items-center rounded-md px-2 py-2 text-sm',
+                            ]" @click="openDeleteModal">
+                                <i class="fa-solid fa-trash mr-2"></i>
+                                Delete
+                            </button>
+                            </MenuItem>
+                            <MenuItem v-slot="{ active }" v-if="isAuthor === 'true'">
+                            <button :class="[
+                                active ? 'bg-gray-600 text-white' : 'text-gray-200',
+                                'group flex w-full items-center rounded-md px-2 py-2 text-sm',
+                            ]" @click="openEditModal">
+                                <i class="fa-solid fa-edit mr-2"></i>
+                                Edit
+                            </button>
+                            </MenuItem>
+                            <MenuItem v-slot="{ active }">
+                            <button :class="[
+                                active ? 'bg-gray-600 text-white' : 'text-gray-200',
+                                'group flex w-full items-center rounded-md px-2 py-2 text-sm',
+                            ]" @click="showReport = true">
+                                <i class="fa-solid fa-triangle-exclamation mr-2"></i>
+                                Report
+                            </button>
+                            </MenuItem>
+                        </div>
+                    </MenuItems>
+                </transition>
+            </Menu>
 
         </div>
         <div v-if="isAdult || !postContent.nsfw" :class="{
@@ -129,7 +144,8 @@
                     <p>This post is marked as NSFW. You have to be 18 years or older to view this post.</p>
                 </div>
                 <div class="w-full text-center" v-else>
-                    <p>This post is marked as NSFW. You have to be logged in and 18 years or older to view this post.</p>
+                    <p>This post is marked as NSFW. You have to be logged in and 18 years or older to view this post.
+                    </p>
                 </div>
             </div>
         </div>
@@ -241,9 +257,11 @@
                 <div class="bg-gray-900 p-5 text-center rounded-xl max-w-[80svw] m-3 md:w-auto w-full" :class="{
                     'animation': showImageModal,
                 }">
-                    <img :src="imageSrc" class="w-full select-none h-full object-cover rounded-lg max-w-[85svw] max-h-[85svh]" />
+                    <img :src="imageSrc"
+                        class="w-full select-none h-full object-cover rounded-lg max-w-[85svw] max-h-[85svh]" />
 
-                    <button @click="showImageModal = false" class="md:w-1/3 select-none mt-2 bg-gray-500 p-2 rounded-xl">
+                    <button @click="showImageModal = false"
+                        class="md:w-1/3 select-none mt-2 bg-gray-500 p-2 rounded-xl">
                         Close
                     </button>
                 </div>
@@ -271,6 +289,7 @@ import axios from "axios";
 import MarkdownIt from "markdown-it";
 import Cookies from "js-cookie";
 import { useRouter, useRoute } from "vue-router";
+import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
 
 const router = useRouter();
 const route = useRoute();
