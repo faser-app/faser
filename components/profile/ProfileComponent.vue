@@ -127,7 +127,8 @@
     </div> -->
 
     <Transition name="fade" @leave="leave" @enter="enter">
-      <div v-if="openFollower" class="fixed h-full w-full backdrop-blur top-0 left-0 flex justify-center items-center">
+      <div v-if="openFollower"
+        class="fixed z-[100] h-full w-full backdrop-blur top-0 left-0 flex justify-center items-center">
         <div class="bg-gray-800 w-[60rem] max-h-[80rem] overflow-y-scroll mx-4 p-2 rounded-xl">
           <div class="w-full flex items-center justify-center text-xl font-bold">
             <h1 class="w-full text-center">Followers ({{ followers }})</h1>
@@ -149,7 +150,8 @@
     </Transition>
 
     <Transition name="fade" @leave="leave" @enter="enter">
-      <div v-if="openFollowing" class="fixed h-full w-full backdrop-blur top-0 left-0 flex justify-center items-center">
+      <div v-if="openFollowing"
+        class="fixed z-[100] h-full w-full backdrop-blur top-0 left-0 flex justify-center items-center">
         <div class="bg-gray-800 w-[60rem] max-h-[80svh] overflow-y-scroll mx-4 p-2 rounded-xl">
           <div class="w-full flex items-center justify-center text-xl font-bold">
             <h1 class="w-full text-center">Following ({{ following }})</h1>
