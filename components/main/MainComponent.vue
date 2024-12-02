@@ -4,7 +4,7 @@
   </div>
   <div class="min-h-screen md:flex pl-2 bg-gray-950 text-white">
     <div class="md:w-1/4 w-full justify-center pr-2 pt-2 min-h-full">
-      <div class="md:hidden w-full block">
+      <div class="md:hidden w-full block" v-if="loggedIn">
         <PostCreatePostComponent text="Post" mobile="false" :ownProfile="ownAccountData" />
       </div>
     </div>
