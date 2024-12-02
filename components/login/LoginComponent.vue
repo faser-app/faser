@@ -48,7 +48,7 @@ function login() {
       lang: navigator.language || navigator.userLanguage,
     })
     .then((response) => {
-      Cookies.set("token", response.data.token, { expires: 5 });
+      Cookies.set("token", response.data.token, { expires: 365 });
       router.push("/profile");
     })
     .catch((err) => {
