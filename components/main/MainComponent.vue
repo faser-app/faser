@@ -1,5 +1,6 @@
 <template>
-  <div v-if="error" class="w-full md:w-[80%] md:ml-[10svw] py-6 rounded-xl bg-red-900 border border-red-500 text-white text-center">
+  <div v-if="error"
+    class="w-full md:w-[80%] md:ml-[10svw] py-6 rounded-xl bg-red-900 border border-red-500 text-white text-center">
     {{ error }}
   </div>
   <div class="min-h-screen md:flex pl-2 bg-gray-950 text-white">

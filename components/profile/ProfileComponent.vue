@@ -5,11 +5,15 @@
         <div v-if="communities.length > 0" class="flex w-full justify-center">
           <h2>Communities</h2>
         </div>
-        <div v-for="community in communities" :key="community.name">
+        <div v-for="(community, index) in communities" :key="community.name">
           <RouterLink :to="'/communities/' + community.id">
-            <div class="w-full flex mr-8 h-fit truncate items-center rounded-xl bg-gray-800">
-              <img src="https://picsum.photos/200" alt="profile picture" class="rounded-full h-8 w-8 m-2" />
-              {{ community.displayName }}
+            <div class="w-full flex mr-8 h-fit truncate items-center pr-3 justify-between rounded-xl bg-gray-800">
+              <div class="flex items-center">
+                <img src="https://picsum.photos/200" alt="profile picture" class="rounded-full h-8 w-8 m-2" />
+                {{ community.displayName }}
+              </div>
+              <i class="fa-solid fa-eye-slash"></i>
+
             </div>
           </RouterLink>
         </div>
@@ -226,7 +230,7 @@ axios
 
     for (let i = 0; i < response.data[0].communities.length; i++) {
       axios.post("https://api.faser.app/api/community/getCommunity", {
-        communityId: response.data[0].communities[i]
+        communityId: response.data[0].communities[i].id
       })
         .then((response) => {
           communities.value.push(response.data.community)

@@ -486,6 +486,10 @@ axios.get("https://api.faser.app/api/profile/getPostProfile", {
     })
 
 function toggleLike() {
+    if (!isAdult.value && postContent.value.nsfw) {
+        return
+    }
+
     isLiked.value = !isLiked.value
 
     if (isLiked.value) {

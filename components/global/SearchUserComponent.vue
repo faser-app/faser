@@ -1,13 +1,13 @@
 <template>
   <div>
-    <input id="search"
-      class="h-full border-0 shadow-none w-full outline-none bg-gray-700 p-3 rounded-xl text-white" :class="{
+    <input id="search" class="h-full border-0 shadow-none w-full outline-none bg-gray-700 p-3 rounded-xl text-white"
+      :class="{
         'md:w-auto': !props.page
-      }"
-      v-model="query" @input="searchUsers" placeholder="Search for user" @focus="focus = true" />
+      }" v-model="query" @input="searchUsers" placeholder="Search for user" @focus="focus = true" />
   </div>
   <div v-if="query.length > 0 && focus"
-    class="top-16 mt-2 rounded-xl border border-gray-500 shadow-lg shadow-gray-900 text-white right-96 bg-gray-700 p-2 overflow-hidden" :class="{
+    class="top-16 mt-2 rounded-xl border border-gray-500 shadow-lg shadow-gray-900 text-white right-96 bg-gray-700 p-2 overflow-hidden"
+    :class="{
       'md:absolute md:w-64': !props.page
     }">
     <div v-if="users.length !== 0" v-for="user in users" :key="user.username" class="p-2" :class="{

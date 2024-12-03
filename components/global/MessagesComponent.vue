@@ -144,7 +144,7 @@ function clearMessages() {
 // let scrollpos = window.scrollY;
 
 function closeUserMessages() {
-    if(!props.standalone) {
+    if (!props.standalone) {
         emit('closeMessages')
 
         // document.body.style.position = '';

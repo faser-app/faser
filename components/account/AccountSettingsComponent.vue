@@ -126,7 +126,8 @@
               <div class="w-full"></div>
 
               <div class="w-full flex justify-center">
-                <p v-if="accountData.birthday" class="mt-4">Your birthday is: {{ formatBirthday(accountData.birthday) }}</p>
+                <p v-if="accountData.birthday" class="mt-4">Your birthday is: {{ formatBirthday(accountData.birthday) }}
+                </p>
               </div>
 
               <button v-if="!accountData.birthday" class="mt-4 bg-[#220000] p-2 border-red-700 border rounded-xl"

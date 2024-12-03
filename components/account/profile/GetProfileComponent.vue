@@ -333,7 +333,7 @@ async function main() {
 
   for (let i = 0; i < response.data[0].communities.length; i++) {
     axios.post("https://api.faser.app/api/community/getCommunity", {
-      communityId: response.data[0].communities[i]
+      communityId: response.data[0].communities[i].id
     })
       .then((response) => {
         communities.value.push(response.data.community)
