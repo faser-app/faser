@@ -36,7 +36,6 @@
 <script setup>
 import axios from "axios";
 import Cookies from "js-cookie";
-import { useRouter } from "vue-router";
 
 const birthday = ref("");
 const error = ref("");
@@ -65,6 +64,21 @@ watch(() => props.showModal, (value) => {
         window.scrollTo(0, scrollpos);
     }
 })
+
+axios
+    .get("https://api.faser.app/api/account/getOwnProfile", {
+        headers: {
+            token: Cookies.get("token"),
+        },
+    })
+    .then((response) => {
+        birthday.value = response.data[1].birthday;
+    })
+    .catch((error) => {
+        if (error.response.data.status === "error") {
+            router.push("/login");
+        }
+    });
 
 function addBirthday() {
     axios.post("https://api.faser.app/api/account/changeBirthday", {

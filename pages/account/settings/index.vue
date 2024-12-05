@@ -1,3 +1,3 @@
 <template>
-    <AccountSettingsComponent />
+    <AccountSettingsMainComponent />
 </template>
