@@ -337,11 +337,7 @@ if (localStorage.getItem("hideNSFW") === "true") {
 }
 
 watch(() => postContent.value, (value) => {
-    console.log(value.nsfw, hideNSFW.value)
-
     if(value.nsfw && hideNSFW.value) {
-        console.log("sos")
-
         postVisible.value = false
     }
 })
