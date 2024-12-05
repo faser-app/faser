@@ -45,7 +45,7 @@
         </RouterLink> -->
         <Menu as="div" class="relative inline-block text-left z-[2]">
           <div>
-            <MenuButton class="inline-flex w-full justify-center rounded-md px-4 py-2 text-sm font-medium text-white">
+            <MenuButton class="inline-flex w-full justify-center rounded-md pl-4 py-2 text-sm font-medium text-white">
               <div
                 class="border w-12 h-12 flex items-center justify-center rounded-full border-[#96969627] bg-[#1118276c] cursor-pointer">
                 <img v-if="haveProfilePicture && loaded" @error="haveProfilePicture = false"
