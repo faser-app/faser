@@ -62,7 +62,12 @@
                     </div>
                 </RouterLink>
                 <div class="flex flex-wrap">
-                    <p class="ml-3 text-gray-400">{{ postCreatedAt }}</p>
+                    <p class="ml-3 text-gray-400 cursor-default" @mouseover="showTooltip = true" @mouseleave="showTooltip = false">
+                        {{ postCreatedAt }}
+                    <div class="absolute -mt-12" v-if="showTooltip">
+                        {{ localDateTime }}
+                    </div>
+                    </p>
                     <p class="ml-3 text-gray-400" v-if="postContent.edited">edited</p>
                     <div class="flex px-2 ml-3 items-center bg-red-500 rounded-full text-sm cursor-pointer select-none gap-2"
                         v-if="postContent.nsfw" @click="toggleNSFW">
@@ -292,6 +297,7 @@
 import axios from "axios";
 import MarkdownIt from "markdown-it";
 import Cookies from "js-cookie";
+import { DateTime } from "luxon";
 import { useRouter, useRoute } from "vue-router";
 import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
 
@@ -327,6 +333,8 @@ const isAdult = ref(false)
 const showReport = ref(false)
 const loggedIn = ref(Cookies.get("token") !== undefined)
 const hideNSFW = ref(false)
+const showTooltip = ref(false)
+const localDateTime = ref("")
 
 
 if (localStorage.getItem("nsfw") === "true") {
@@ -337,7 +345,7 @@ if (localStorage.getItem("hideNSFW") === "true") {
 }
 
 watch(() => postContent.value, (value) => {
-    if(value.nsfw && hideNSFW.value) {
+    if (value.nsfw && hideNSFW.value) {
         postVisible.value = false
     }
 })
@@ -473,19 +481,6 @@ onMounted(() => {
         isAdult.value = true
     }
 })
-
-function openMenu() {
-    threeDotElementOpen.value = true
-
-
-    threeDotsMenu.value = true
-
-    setTimeout(() => {
-        if (threeDotElementOpen.value) {
-            closeMenu()
-        }
-    }, 5000)
-}
 
 function closeMenu() {
     threeDotElementOpen.value = false
@@ -665,6 +660,8 @@ function reloadStats() {
             postLikes.value = postContent.value.likes.length
 
             postComments.value = postContent.value.comments.length
+
+            localDateTime.value = DateTime.fromMillis(postContent.value.creationDate).toLocaleString(DateTime.MED)
 
             postType.value = response.data[0].postType
             parentPost.value = response.data[0].parentPost
