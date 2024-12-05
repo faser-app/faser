@@ -30,16 +30,6 @@
                 </div>
             </div>
             <div class="w-full bg-gray-800 mt-0.5 flex justify-between items-center p-2 gap-2 py-4 cursor-pointer"
-                @click="birthModal = true">
-                <div class="flex items-center gap-2">
-                    <i class="fa-solid fa-key"></i>
-                    <p>Change Birth</p>
-                </div>
-                <div>
-                    <i class="fa-solid fa-chevron-up rotate-90 mr-2"></i>
-                </div>
-            </div>
-            <div class="w-full bg-gray-800 mt-0.5 flex justify-between items-center p-2 gap-2 py-4 cursor-pointer"
                 @click="bioModal = true">
                 <div class="flex items-center gap-2">
                     <i class="fa-solid fa-file-lines"></i>
@@ -54,6 +44,16 @@
                 <div class="flex items-center gap-2">
                     <i class="fa-solid fa-music"></i>
                     <p>Change Song</p>
+                </div>
+                <div>
+                    <i class="fa-solid fa-chevron-up rotate-90 mr-2"></i>
+                </div>
+            </div>
+            <div class="w-full bg-gray-800 mt-0.5 flex justify-between items-center p-2 gap-2 py-4 cursor-pointer"
+                @click="birthModal = true">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-key"></i>
+                    <p>Change Birth</p>
                 </div>
                 <div>
                     <i class="fa-solid fa-chevron-up rotate-90 mr-2"></i>
