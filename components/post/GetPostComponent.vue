@@ -327,6 +327,10 @@ const isAdult = ref(false)
 const showReport = ref(false)
 const loggedIn = ref(Cookies.get("token") !== undefined)
 
+if (localStorage.getItem("nsfw") === "true") {
+    showPost.value = true
+}
+
 let scrollpos = window.scrollY
 
 watch(() => showImageModal.value, (value) => {

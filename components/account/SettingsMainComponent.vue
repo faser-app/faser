@@ -13,6 +13,12 @@
                     class="fa-solid fa-user-gear text-xl bg-gray-700 p-1 rounded-lg w-10 h-10 flex items-center justify-center"></i>
                 <p>Profile Settings</p>
             </div>
+            <div class="p-2 mb-0.5 flex gap-2 items-center cursor-pointer" @click="active = 'app'"
+                :class="{ 'bg-gray-800': active === 'app', 'bg-gray-900': active !== 'app' }">
+                <i
+                    class="fa-solid fa-sliders text-xl bg-gray-700 p-1 rounded-lg w-10 h-10 flex items-center justify-center"></i>
+                <p>App Settings</p>
+            </div>
             <div class="text-red-500 p-2 mb-0.5 flex gap-2 items-center cursor-pointer" @click="active = 'dangerous'"
                 :class="{ 'bg-gray-800': active === 'dangerous', 'bg-gray-900': active !== 'dangerous' }">
                 <i
@@ -24,6 +30,7 @@
             <AccountSettingsAccountComponent v-if="active === 'account'" />
             <AccountSettingsProfileComponent v-if="active === 'profile'" />
             <AccountSettingsDangerousComponent v-if="active === 'dangerous'" />
+            <AccountSettingsAppComponent v-if="active === 'app'" />
         </div>
     </div>
 </template>
