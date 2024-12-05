@@ -81,6 +81,14 @@
                   Settings
                 </button>
                 </MenuItem>
+                <MenuItem v-slot="{ active }">
+                <button @click="logout" :class="[
+                  active ? 'bg-gray-600 text-red-500' : 'text-red-500',
+                  'group flex w-full items-center rounded-md px-2 py-2 text-sm',
+                ]">
+                  Logout
+                </button>
+                </MenuItem>
               </div>
             </MenuItems>
           </transition>
@@ -167,6 +175,14 @@
                   Settings
                 </button>
                 </MenuItem>
+                <MenuItem v-slot="{ active }">
+                <button @click="logout" :class="[
+                  active ? 'bg-gray-600 text-red-500' : 'text-red-500',
+                  'group flex w-full items-center rounded-md px-2 py-2 text-sm',
+                ]">
+                  Logout
+                </button>
+                </MenuItem>
               </div>
             </MenuItems>
           </transition>
@@ -206,7 +222,8 @@
   <Transition name="fade" @leave="leave" @enter="open">
     <div class="fixed top-0 left-0 w-screen h-screen backdrop-blur-lg z-50 flex items-center justify-center"
       @click.self="closeUserMessages" v-if="openMessages">
-      <LazyMessagesComponent :standalone="mobile" :messages="messages" @close-messages="closeUserMessages" @clear-messages="messages = []" />
+      <LazyMessagesComponent :standalone="mobile" :messages="messages" @close-messages="closeUserMessages"
+        @clear-messages="messages = []" />
     </div>
   </Transition>
 
@@ -294,6 +311,11 @@ function getUserMessages() {
 }
 
 let scrollpos = window.scrollY;
+
+function logout() {
+  Cookies.remove("token");
+  window.location.href = "/login";
+}
 
 function openUserMessages() {
   openMessages.value = true
