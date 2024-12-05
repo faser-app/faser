@@ -14,7 +14,7 @@
                     </button>
                 </div>
                 <div class="flex justify-end w-full">
-                    <button @click="removeImage" class="place-self-end text-gray-400">
+                    <button @click="removeImage" class="place-self-end mr-2 text-gray-400">
                         Remove image
                     </button>
                 </div>
