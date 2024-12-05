@@ -51,7 +51,7 @@
                 <img v-if="haveProfilePicture && loaded" @error="haveProfilePicture = false"
                   :src="'https://s3.faser.app/profilepictures/' + id + '/image.png' + '?t=' + new Date().getTime()"
                   class="rounded-full w-12 h-12 object-cover" />
-                <i v-else-if="!haveProfilePicture" class="fa-solid fa-user rounded-full text-3xl"></i>
+                <i v-else class="fa-solid fa-user rounded-full text-3xl"></i>
               </div>
             </MenuButton>
           </div>
