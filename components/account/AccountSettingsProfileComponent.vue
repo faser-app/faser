@@ -52,7 +52,7 @@
             <div class="w-full bg-gray-800 mt-0.5 flex justify-between items-center p-2 gap-2 py-4 cursor-pointer"
                 @click="birthModal = true">
                 <div class="flex items-center gap-2">
-                    <i class="fa-solid fa-key"></i>
+                    <i class="fa-solid fa-cake-candles"></i>
                     <p>Change Birth</p>
                 </div>
                 <div>
