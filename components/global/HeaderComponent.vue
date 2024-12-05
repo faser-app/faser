@@ -34,7 +34,7 @@
             </div>
           </div>
         </div>
-        <RouterLink to="/profile" class="ml-4">
+        <!-- <RouterLink to="/profile" class="ml-4">
           <div
             class="border w-12 h-12 flex items-center justify-center rounded-full border-[#96969627] bg-[#1118276c] cursor-pointer">
             <img v-if="haveProfilePicture && loaded" @error="haveProfilePicture = false"
@@ -42,7 +42,49 @@
               class="rounded-full w-12 h-12 object-cover" />
             <i v-else-if="!haveProfilePicture" class="fa-solid fa-user rounded-full text-3xl"></i>
           </div>
-        </RouterLink>
+        </RouterLink> -->
+        <Menu as="div" class="relative inline-block text-left z-[2]">
+          <div>
+            <MenuButton class="inline-flex w-full justify-center rounded-md px-4 py-2 text-sm font-medium text-white">
+              <div
+                class="border w-12 h-12 flex items-center justify-center rounded-full border-[#96969627] bg-[#1118276c] cursor-pointer">
+                <img v-if="haveProfilePicture && loaded" @error="haveProfilePicture = false"
+                  :src="'https://s3.faser.app/profilepictures/' + id + '/image.png' + '?t=' + new Date().getTime()"
+                  class="rounded-full w-12 h-12 object-cover" />
+                <i v-else-if="!haveProfilePicture" class="fa-solid fa-user rounded-full text-3xl"></i>
+              </div>
+            </MenuButton>
+          </div>
+
+          <transition enter-active-class="transition duration-100 ease-out"
+            enter-from-class="transform scale-95 opacity-0" enter-to-class="transform scale-100 opacity-100"
+            leave-active-class="transition duration-75 ease-in" leave-from-class="transform scale-100 opacity-100"
+            leave-to-class="transform scale-95 opacity-0">
+            <MenuItems
+              class="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-gray-950 shadow-lg ring-1 ring-black/5 focus:outline-none">
+              <div class="px-1 py-1">
+                <MenuItem v-slot="{ active }">
+                <button @click="changePage('/profile')" :class="[
+                  active ? 'bg-gray-600 text-white' : 'text-gray-200',
+                  'group flex w-full items-center rounded-md px-2 py-2 text-sm',
+                ]">
+                  <i class="fa-solid fa-user mr-2"></i>
+                  Profile
+                </button>
+                </MenuItem>
+                <MenuItem v-slot="{ active }">
+                <button @click="changePage('/account/settings')" :class="[
+                  active ? 'bg-gray-600 text-white' : 'text-gray-200',
+                  'group flex w-full items-center rounded-md px-2 py-2 text-sm',
+                ]">
+                  <i class="fa-solid fa-gear mr-2"></i>
+                  Settings
+                </button>
+                </MenuItem>
+              </div>
+            </MenuItems>
+          </transition>
+        </Menu>
       </div>
     </div>
   </div>
@@ -84,16 +126,51 @@
         </RouterLink>
       </div>
       <div class="flex justify-center">
-        <RouterLink to="/profile" class="flex justify-center flex-wrap">
-          <div
-            class="border w-8 h-8 flex items-center justify-center rounded-full border-[#96969627] bg-[#1118276c] cursor-pointer">
-            <i v-if="!haveProfilePicture" class="fa-solid fa-user rounded-full"></i>
-            <img v-else-if="haveProfilePicture && loaded"
-              :src="'https://s3.faser.app/profilepictures/' + id + '/image.png' + '?t=' + new Date().getTime()"
-              class="rounded-full w-8 h-8 object-cover" />
+        <Menu as="div" class="relative inline-block text-left z-[2]">
+          <div>
+            <MenuButton class="inline-flex w-full justify-center rounded-md px-4 py-2 text-sm font-medium text-white">
+              <div class="flex justify-center flex-wrap">
+                <div
+                  class="border w-8 h-8 flex items-center justify-center rounded-full border-[#96969627] bg-[#1118276c] cursor-pointer">
+                  <i v-if="!haveProfilePicture" class="fa-solid fa-user rounded-full"></i>
+                  <img v-else-if="haveProfilePicture && loaded"
+                    :src="'https://s3.faser.app/profilepictures/' + id + '/image.png' + '?t=' + new Date().getTime()"
+                    class="rounded-full w-8 h-8 object-cover" />
+                </div>
+                <p class="w-full">Profile</p>
+              </div>
+            </MenuButton>
           </div>
-          <p class="w-full">Profile</p>
-        </RouterLink>
+
+          <transition enter-active-class="transition duration-100 ease-out"
+            enter-from-class="transform scale-95 opacity-0" enter-to-class="transform scale-100 opacity-100"
+            leave-active-class="transition duration-75 ease-in" leave-from-class="transform scale-100 opacity-100"
+            leave-to-class="transform scale-95 opacity-0">
+            <MenuItems
+              class="absolute right-0 bottom-full mb-2 w-56 origin-bottom-right divide-y divide-gray-100 rounded-md bg-gray-900 shadow-lg ring-1 ring-black/5 focus:outline-none">
+              <div class="px-1 py-1">
+                <MenuItem v-slot="{ active }">
+                <button @click="changePage('/profile')" :class="[
+                  active ? 'bg-gray-600 text-white' : 'text-gray-200',
+                  'group flex w-full items-center rounded-md px-2 py-2 text-sm',
+                ]">
+                  <i class="fa-solid fa-user mr-2"></i>
+                  Profile
+                </button>
+                </MenuItem>
+                <MenuItem v-slot="{ active }">
+                <button @click="changePage('/account/settings')" :class="[
+                  active ? 'bg-gray-600 text-white' : 'text-gray-200',
+                  'group flex w-full items-center rounded-md px-2 py-2 text-sm',
+                ]">
+                  <i class="fa-solid fa-gear mr-2"></i>
+                  Settings
+                </button>
+                </MenuItem>
+              </div>
+            </MenuItems>
+          </transition>
+        </Menu>
       </div>
     </div>
   </div>
@@ -149,6 +226,8 @@
 <script setup>
 import axios from "axios";
 import Cookies from "js-cookie";
+import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
+import { useRouter } from "vue-router";
 
 const expanded = ref(false);
 const username = ref("");
@@ -160,6 +239,8 @@ const mobile = ref(false)
 const expandedSearch = ref(false)
 const openMessages = ref(false)
 const id = ref(0)
+
+const router = useRouter()
 
 const links = [
   {
@@ -179,6 +260,10 @@ const links = [
     href: "/faq#advanced"
   },
 ];
+
+function changePage(page) {
+  router.push(page);
+}
 
 onMounted(() => {
   const url = "https://api.faser.app/api/account/getOwnProfile";
@@ -264,7 +349,7 @@ if (!window.navigator.standalone && window.navigator.userAgent.match(/(iPhone|iP
   showBanner.value = true
 }
 
-if (window.navigator.standalone && window.navigator.userAgent.match(/(iPhone|iPod|iPad|Macintosh)/i)) {
+if (!window.navigator.standalone && window.navigator.userAgent.match(/(iPhone|iPod|iPad|Macintosh)/i)) {
   mobile.value = true
 }
 </script>
