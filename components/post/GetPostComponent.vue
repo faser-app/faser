@@ -326,10 +326,25 @@ const showPost = ref(false)
 const isAdult = ref(false)
 const showReport = ref(false)
 const loggedIn = ref(Cookies.get("token") !== undefined)
+const hideNSFW = ref(false)
+
 
 if (localStorage.getItem("nsfw") === "true") {
     showPost.value = true
 }
+if (localStorage.getItem("hideNSFW") === "true") {
+    hideNSFW.value = true
+}
+
+watch(() => postContent.value, (value) => {
+    console.log(value.nsfw, hideNSFW.value)
+
+    if(value.nsfw && hideNSFW.value) {
+        console.log("sos")
+
+        postVisible.value = false
+    }
+})
 
 let scrollpos = window.scrollY
 
