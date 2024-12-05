@@ -6,7 +6,8 @@
         }">
             <div class="flex items-center gap-2">
                 <img v-if="haveProfile"
-                    :src="'https://api.faser.app/api/profile/getProfilePhoto?username=' + profile[0].username" :class="{
+                    :src="'https://s3.faser.app/profilepictures/' + profile[0].id + '/image.png' + '?t=' + new Date().getTime()"
+                    :class="{
                         'rounded-full': !profile[0].businessAccount,
                         'rounded-xl': profile[0].businessAccount
                     }" class="h-12 w-12 rounded-full" @error="haveProfile = false">

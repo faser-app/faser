@@ -17,7 +17,7 @@
         <div v-for="link in links" :key="link.name" class="cursor-pointer">
           <RouterLink :to="link.href" class="text-white hover:scale">{{
             link.name
-          }}</RouterLink>
+            }}</RouterLink>
         </div>
       </div>
       <div class="h-full flex items-center">
@@ -37,10 +37,10 @@
         <RouterLink to="/profile" class="ml-4">
           <div
             class="border w-12 h-12 flex items-center justify-center rounded-full border-[#96969627] bg-[#1118276c] cursor-pointer">
-            <i v-if="!haveProfilePicture" class="fa-solid fa-user rounded-full text-3xl"></i>
-            <img v-else-if="haveProfilePicture && loaded" :src="'https://api.faser.app/api/profile/getProfilePhoto?username=' +
-              username
-              " class="rounded-full w-12 h-12 object-cover" />
+            <img v-if="haveProfilePicture && loaded" @error="haveProfilePicture = false"
+              :src="'https://s3.faser.app/profilepictures/' + id + '/image.png' + '?t=' + new Date().getTime()"
+              class="rounded-full w-12 h-12 object-cover" />
+            <i v-else-if="!haveProfilePicture" class="fa-solid fa-user rounded-full text-3xl"></i>
           </div>
         </RouterLink>
       </div>
@@ -88,9 +88,9 @@
           <div
             class="border w-8 h-8 flex items-center justify-center rounded-full border-[#96969627] bg-[#1118276c] cursor-pointer">
             <i v-if="!haveProfilePicture" class="fa-solid fa-user rounded-full"></i>
-            <img v-else-if="haveProfilePicture && loaded" :src="'https://api.faser.app/api/profile/getProfilePhoto?username=' +
-              username
-              " class="rounded-full w-8 h-8 object-cover" />
+            <img v-else-if="haveProfilePicture && loaded"
+              :src="'https://s3.faser.app/profilepictures/' + id + '/image.png' + '?t=' + new Date().getTime()"
+              class="rounded-full w-8 h-8 object-cover" />
           </div>
           <p class="w-full">Profile</p>
         </RouterLink>
@@ -153,12 +153,13 @@ import Cookies from "js-cookie";
 const expanded = ref(false);
 const username = ref("");
 const loaded = ref(false);
-const haveProfilePicture = ref(false);
+const haveProfilePicture = ref(true);
 const messages = ref([]);
 const showBanner = ref(false)
 const mobile = ref(false)
 const expandedSearch = ref(false)
 const openMessages = ref(false)
+const id = ref(0)
 
 const links = [
   {
@@ -190,19 +191,9 @@ onMounted(() => {
     })
     .then((response) => {
       username.value = response.data[1].username;
-      axios.get("https://api.faser.app/api/profile/getProfilePhoto", {
-        params: {
-          username: response.data[1].username,
-        },
-      })
-        .then((response) => {
-          loaded.value = true;
-          haveProfilePicture.value = true;
-        })
-        .catch((err) => {
-          loaded.value = true;
-          haveProfilePicture.value = false;
-        });
+      id.value = response.data[0].id;
+
+      loaded.value = true
     });
 
   getUserMessages()

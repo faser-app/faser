@@ -31,8 +31,11 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
           hid: "og-image",
           property: "og:image",
           content:
-            "https://api.faser.app/api/profile/getProfilePhoto?username=" +
-            username,
+            "https://s3.faser.app/profilepictures/" +
+            data.value[0].id +
+            "/image.png" +
+            "?t=" +
+            new Date().getTime(),
         },
       ],
     });

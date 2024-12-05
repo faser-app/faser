@@ -26,9 +26,9 @@
       </div>
       <div class="md:w-4/5 w-full mr-4">
         <div class="flex flex-wrap bg-gray-800 md:w-full ml-2 md:ml-1 rounded-xl items-center mr-2 h-fit">
-          <img v-if="hasProfilePicture && loaded" :src="'https://api.faser.app/api/profile/getProfilePhoto?username=' +
-            accountData.username
-            " alt="profile picture" class="rounded-full h-24 w-24 m-5 object-cover" />
+          <img v-if="hasProfilePicture && loaded"
+            :src="'https://s3.faser.app/profilepictures/' + profileData.id + '/image.png?t=' + new Date().getTime()"
+            @error="hasProfilePicture = false" alt="profile picture" class="rounded-full h-24 w-24 m-5 object-cover" />
           <div v-else
             class="rounded-full h-24 w-24 m-5 flex border justify-center items-center border-[#96969627] bg-[#1118276c]">
             <i class="fa-solid fa-user rounded-full text-4xl"></i>
@@ -199,7 +199,7 @@ const postsValue = ref([])
 const sinceString = ref("");
 const openFollower = ref(false)
 const openFollowing = ref(false)
-const hasProfilePicture = ref(false);
+const hasProfilePicture = ref(true);
 const loaded = ref(false);
 const markdownHTML = ref("");
 const badges = ref([]);
@@ -243,19 +243,21 @@ axios
 
     postsValue.value = response.data[0].posts.reverse();
 
-    axios
-      .get(
-        "https://api.faser.app/api/profile/getProfilePhoto?username=" +
-        accountData.value.username
-      )
-      .then((response) => {
-        hasProfilePicture.value = true;
-        loaded.value = true;
-      })
-      .catch((error) => {
-        hasProfilePicture.value = false;
-        loaded.value = true;
-      });
+    loaded.value = true
+
+    // axios
+    //   .get(
+    //     "https://api.faser.app/api/profile/getProfilePhoto?username=" +
+    //     accountData.value.username
+    //   )
+    //   .then((response) => {
+    //     hasProfilePicture.value = true;
+    //     loaded.value = true;
+    //   })
+    //   .catch((error) => {
+    //     hasProfilePicture.value = false;
+    //     loaded.value = true;
+    //   });
   })
   .catch((error) => {
     if (error.response.data.status === "error") {

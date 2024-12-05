@@ -128,8 +128,8 @@ function selectFile() {
     input.onchange = (e) => {
         const file = e.target.files[0];
 
-        if (e.target.files[0].size / 1024 / 1024 >= 2) {
-            error.value = "Image is too large. Max size is 2MB."
+        if (e.target.files[0].size / 1024 / 1024 >= 10) {
+            error.value = "Image is too large. Max size is 10MB."
             return
         }
 
@@ -209,13 +209,13 @@ function uploadPost() {
         nsfw: nsfw.value
     })
         .then(response => {
-            
+
             if (images.value.length === 0) {
                 document.body.style.position = '';
                 document.body.style.top = '';
                 document.body.classList.remove("overflow-hidden")
                 window.scrollTo(0, scrollpos);
-                
+
                 router.push("/profile")
 
                 loading.value = false

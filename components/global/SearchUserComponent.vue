@@ -15,9 +15,8 @@
     }">
       <div class="flex items-center cursor-pointer">
         <div class="flex items-center" @click="openUser('/' + user.username)">
-          <img :src="'https://api.faser.app/api/profile/getProfilePhoto?username=' +
-            user.username
-            " v-if="user.hasProfilePicture" alt="profile picture" class="h-8 w-8 m-2"
+          <img :src="'https://s3.faser.app/profilepictures/' + user.id + '/image.png?t=' + new Date().getTime()"
+            v-if="user.hasProfilePicture" alt="profile picture" class="h-8 w-8 m-2"
             :class="{ 'rounded-full': !user.businessAccount, 'rounded-lg': user.businessAccount }"
             @error="user.hasProfilePicture = false" />
           <div v-else

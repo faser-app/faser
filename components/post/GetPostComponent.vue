@@ -11,7 +11,7 @@
                 <RouterLink v-if="props.ownProfile === 'false'" :to="'/' + author.username" class="flex items-center">
                     <div v-if="props.ownProfile === 'false'">
                         <img v-if="author.hasProfilePicture" @error="author.hasProfilePicture = false"
-                            :src="'https://api.faser.app/api/profile/getProfilePhoto?username=' + author.username"
+                            :src="'https://s3.faser.app/profilepictures/' + author.id + '/image.png' + '?t=' + new Date().getTime()"
                             alt="profile picture" class="h-14 w-14 m-2 object-cover" :class="{
                                 'rounded-full': !author.businessAccount,
                                 'rounded-lg': author.businessAccount
@@ -37,7 +37,7 @@
                 </RouterLink>
                 <RouterLink v-else :to="'/' + author.username" class="flex items-center">
                     <img v-if="author.hasProfilePicture" @error="author.hasProfilePicture = false"
-                        :src="'https://api.faser.app/api/profile/getProfilePhoto?username=' + author.username"
+                        :src="'https://s3.faser.app/profilepictures/' + author.id + '/image.png' + '?t=' + new Date().getTime()"
                         alt="profile picture" class="h-14 w-14 m-2 object-cover" :class="{
                             'rounded-full': !author.businessAccount,
                             'rounded-lg': author.businessAccount
@@ -127,8 +127,8 @@
                 <div class="inline-flex gap-2 mt-2">
                     <div v-for="image in postContent.images" :key="image"
                         class="bg-gray-700 p-2 rounded-xl inline-block scroll-snap-item">
-                        <img @click="openImage('https://api.faser.app/api/social/getPostImage?postId=' + postContent.postId + '&imageId=' + image)"
-                            :src="'https://api.faser.app/api/social/getPostImage?postId=' + postContent.postId + '&imageId=' + image"
+                        <img @click="openImage('https://s3.faser.app/postimages/' + author.id + '/' + postContent.postId + '/' + image + '.png')"
+                            :src="'https://s3.faser.app/postimages/' + author.id + '/' + postContent.postId + '/' + image + '.png'"
                             class="min-w-48 h-48 object-cover rounded-lg cursor-pointer" />
                     </div>
                 </div>

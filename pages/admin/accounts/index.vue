@@ -8,7 +8,7 @@
                     <div class="flex items-center gap-2 mb-2">
                         <div class="flex justify-between w-full border-b border-gray-500 pb-2">
                             <div class="flex items-center gap-2">
-                                <img :src="'https://api.faser.app/api/profile/getProfilePhoto?username=' + account.username"
+                                <img :src="'https://s3.faser.app/profilepictures/' + account.id + '/image.png' + '?t=' + new Date().getTime()"
                                     class="h-12 w-12 rounded-full" />
                                 <div>
                                     <p>{{ account.username }}</p>
@@ -29,7 +29,7 @@
 
                 <div v-for="account in terminatedAccounts" :key="account.id">
                     <div class="flex items-center gap-2">
-                        <img :src="'https://api.faser.app/api/profile/getProfilePhoto?username=' + account.username"
+                        <img :src="'https://s3.faser.app/profilepictures/' + account.id + '/image.png' + '?t=' + new Date().getTime()"
                             class="h-12 w-12 rounded-full" />
                         <div>
                             <p>{{ account.displayName }}</p>

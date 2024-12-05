@@ -22,9 +22,9 @@
       </div>
       <div class="md:w-4/5 w-full mr-4">
         <div class="flex flex-wrap bg-gray-800 md:w-full ml-2 md:ml-1 rounded-xl items-center mr-2 h-fit">
-          <img v-if="hasProfilePicture && imageLoaded" :src="'https://api.faser.app/api/profile/getProfilePhoto?username=' +
-            route.params.user.replace('@', '')
-            " alt="profile picture" class="h-24 w-24 m-5 object-cover" :class="{
+          <img v-if="hasProfilePicture && loaded"
+            :src="'https://s3.faser.app/profilepictures/' + profileData.id + '/image.png?t=' + new Date().getTime()"
+            @error="hasProfilePicture = false" alt="profile picture" class="h-24 w-24 m-5 object-cover" :class="{
               'rounded-full': !profileData.businessAccount,
               'rounded-xl': profileData.businessAccount
             }" />
@@ -276,7 +276,7 @@ const openFollowing = ref(false)
 const privateAccount = ref(false);
 const isAbleToFollow = ref(true)
 const followed = ref(false)
-const hasProfilePicture = ref(false);
+const hasProfilePicture = ref(true);
 const imageLoaded = ref(false);
 const markdownHTML = ref("");
 const ownId = ref(0)
@@ -349,19 +349,6 @@ async function main() {
   const accountCreated = new Date(response.data[1].memberSince);
   const accountCreatedString = accountCreated.toLocaleDateString();
   sinceString.value = accountCreatedString;
-
-  axios
-    .get(
-      "https://api.faser.app/api/profile/getProfilePhoto?username=" + username
-    )
-    .then((response) => {
-      hasProfilePicture.value = true;
-      imageLoaded.value = true;
-    })
-    .catch((error) => {
-      hasProfilePicture.value = false;
-      imageLoaded.value = true;
-    });
 
   const ownResponse = await axios.get("https://api.faser.app/api/account/getOwnProfile", {
     headers: {

@@ -28,11 +28,7 @@
           Upload profile picture
         </button>
       </div>
-      <div v-if="fileTooBig" class="flex bg-[#220000] border border-red-700 rounded-xl w-full justify-center p-2 mt-2">
-        <p>File is too big</p>
-      </div>
-      <div class="grid grid-cols-2 w-full">
-        <span class="text-gray-500 text-sm ml-0.5">Max. 2MB</span>
+      <div class="flex justify-end w-full">
         <button @click="removeImage" class="place-self-end text-gray-400">
           Remove image
         </button>
@@ -204,15 +200,9 @@ function changeDisplayName() {
 }
 
 function changePicture(event) {
-  if (event.target.files[0].size / 1024 / 1024 >= 2) {
-    fileTooBig.value = true;
-    buttonDisabled.value = true;
-    return;
-  } else {
-    fileTooBig.value = false;
-    buttonDisabled.value = false;
-    file.value = event.target.files[0];
-  }
+  fileTooBig.value = false;
+  buttonDisabled.value = false;
+  file.value = event.target.files[0];
 }
 
 const bioError = ref("");
