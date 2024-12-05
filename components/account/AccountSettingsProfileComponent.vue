@@ -39,11 +39,34 @@
                     <i class="fa-solid fa-chevron-up rotate-90 mr-2"></i>
                 </div>
             </div>
+            <div class="w-full bg-gray-800 mt-0.5 flex justify-between items-center p-2 gap-2 py-4 cursor-pointer"
+                @click="bioModal = true">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-file-lines"></i>
+                    <p>Change Bio</p>
+                </div>
+                <div>
+                    <i class="fa-solid fa-chevron-up rotate-90 mr-2"></i>
+                </div>
+            </div>
+            <div class="w-full bg-gray-800 mt-0.5 flex justify-between items-center p-2 gap-2 py-4 cursor-pointer"
+                @click="musicModal = true">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-music"></i>
+                    <p>Change Song</p>
+                </div>
+                <div>
+                    <i class="fa-solid fa-chevron-up rotate-90 mr-2"></i>
+                </div>
+            </div>
+            
         </div>
     </div>
 
     <ChangeDisplayNameModal />
     <AccountChangeBirthdayModal :showModal="birthModal" @close="birthModal = false" @success="changeBirthday" />
+    <AccountChangeBioModal :showModal="bioModal" @close="bioModal = false" @success="updateBio" />
+    <AccountChangeSongModal :showModal="musicModal" @close="musicModal = false" @success="updateSong" />
 </template>
 
 <script setup>
@@ -55,6 +78,8 @@ import { changeDisplayNameModal } from "~/scripts/account/changeDisplayName";
 import ChangeDisplayNameModal from "./ChangeDisplayNameModal.vue";
 
 let birthModal = ref(false);
+const bioModal = ref(false)
+const musicModal = ref(false)
 let buttonDisabled = ref(false);
 let file = ref(null);
 let fileTooBig = ref(false);
@@ -69,6 +94,18 @@ function changePicture(event) {
     fileTooBig.value = false;
     buttonDisabled.value = false;
     file.value = event.target.files[0];
+}
+
+function changeBirthday(data) {
+    birthModal.value = false;
+
+    accountData.value.birthday = data.birthday;
+}
+
+function updateSong(data) {
+    birthModal.value = false;
+
+    accountData.value.birthday = data.birthday;
 }
 
 function upload() {
