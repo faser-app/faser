@@ -353,8 +353,6 @@ watch(() => postContent.value, (value) => {
 let scrollpos = window.scrollY
 
 watch(() => showImageModal.value, (value) => {
-    console.log("sosenmann")
-
     if (value) {
         scrollpos = window.scrollY;
 
