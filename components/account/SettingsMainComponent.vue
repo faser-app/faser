@@ -20,7 +20,7 @@
                 <p>Dangerous Zone</p>
             </div>
         </div>
-        <div class="flex flex-col w-full md:w-2/3 overflow-scroll max-h-screen">
+        <div class="flex flex-col w-full md:w-2/3 overflow-scroll max-h-screen mt-4 md:mt-0">
             <AccountSettingsAccountComponent v-if="active === 'account'" />
             <AccountSettingsProfileComponent v-if="active === 'profile'" />
             <AccountSettingsDangerousComponent v-if="active === 'dangerous'" />
