@@ -1,15 +1,15 @@
 <template>
     <div>
         <div class="w-full">
-            <div class="w-full bg-gray-800 flex">
-                <div class="md:flex w-full">
+            <div class="w-full bg-gray-800 flex flex-col">
+                <div class="w-full px-2">
                     <div
                         class="flex w-full items-center text-sm p-2 py-4 rounded-xl cursor-pointer text-gray-50 focus:outline-none">
                         <i class="fa-solid fa-image text-2xl mr-2"></i>
                         <input class="block" id="file_input" type="file" accept="image/*" @change="changePicture" />
                     </div>
                     <button @click="upload" :disabled="buttonDisabled"
-                        class="md:ml-2 px-4 w-full md:w-auto md:mt-0 mt-2 disabled:text-gray-500 disabled:cursor-default block p-2 text-sm border border-gray-800 rounded-xl cursor-pointer bg-gray-900 text-gray-50 focus:outline-none">
+                        class="px-4 w-full mt-0 disabled:text-gray-500 disabled:cursor-default block p-2 text-sm border border-gray-800 rounded-xl cursor-pointer bg-gray-900 text-gray-50 focus:outline-none">
                         Upload profile picture
                     </button>
                 </div>
