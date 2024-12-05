@@ -57,18 +57,21 @@
                         <i class="fa-solid verifiedBadge fa-check"></i>
                     </div>
                     <div v-else-if="author.verifiedAccount"
-                        class="flex ml-2 justify-center text-xs items-center bg-sky-600 border w-6 h-6 border-sky-300 rounded-full">
+                        class="flex ml-2 justify-center text-xs items-center bg-sky-600 border min-w-6 h-6 border-sky-300 rounded-full">
                         <i class="fa-solid verifiedBadge fa-check"></i>
                     </div>
                 </RouterLink>
-                <p class="ml-3 text-gray-400">{{ postCreatedAt }}</p>
-                <p class="ml-3 text-gray-400" v-if="postContent.edited">edited</p>
-                <p class="ml-3 bg-red-500 px-2 rounded-full text-sm cursor-pointer select-none" v-if="postContent.nsfw"
-                    @click="toggleNSFW">
-                    NSFW
-                    <i class="fa-solid fa-eye" v-if="showPost"></i>
-                    <i class="fa-solid fa-eye-slash" v-else></i>
-                </p>
+                <div class="flex flex-wrap">
+                    <p class="ml-3 text-gray-400">{{ postCreatedAt }}</p>
+                    <p class="ml-3 text-gray-400" v-if="postContent.edited">edited</p>
+                    <div class="flex px-2 ml-3 items-center bg-red-500 rounded-full text-sm cursor-pointer select-none gap-2"
+                        v-if="postContent.nsfw" @click="toggleNSFW">
+                        <p>NSFW</p>
+
+                        <i class="fa-solid fa-eye" v-if="showPost"></i>
+                        <i class="fa-solid fa-eye-slash" v-else></i>
+                    </div>
+                </div>
             </div>
 
             <Menu as="div" class="relative inline-block text-left z-[2]">
@@ -144,7 +147,8 @@
                     <p>This post is marked as NSFW. You have to be 18 years or older to view this post.</p>
                 </div>
                 <div class="w-full text-center" v-else>
-                    <p>This post is marked as NSFW. You have to be logged in and 18 years or older to view this post.
+                    <p>This post is marked as NSFW. You have to be logged in and 18 years or older to view this
+                        post.
                     </p>
                 </div>
             </div>
