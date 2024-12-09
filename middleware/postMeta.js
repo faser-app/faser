@@ -54,7 +54,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
           property: "og:image",
           content:
             data.value[0].nsfw === false
-              ? ["https://s3.faser.app/postimages/" + authorUser.data[0].id + "/" + postId + "/1.png"]
+              ? ["https://s3.faser.app/postimages/" + authorUser.data[1].id + "/" + postId + "/1.png"]
               : [""],
         },
         {
