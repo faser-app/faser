@@ -62,7 +62,8 @@
                     </div>
                 </RouterLink>
                 <div class="flex flex-wrap">
-                    <p class="ml-3 text-gray-400 cursor-default" @mouseover="showTooltip = true" @mouseleave="showTooltip = false">
+                    <p class="ml-3 text-gray-400 cursor-default" @mouseover="showTooltip = true"
+                        @mouseleave="showTooltip = false">
                         {{ postCreatedAt }}
                     <div class="absolute -mt-12" v-if="showTooltip">
                         {{ localDateTime }}
@@ -94,6 +95,25 @@
                     <MenuItems
                         class="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-gray-950 shadow-lg ring-1 ring-black/5 focus:outline-none">
                         <div class="px-1 py-1">
+                            <MenuItem>
+                            <div class="group flex w-full items-center rounded-md px-1 py-1 text-sm">
+                                <div class="flex gap-2 w-full items-center">
+                                    <div class="w-1/2 bg-gray-900 p-2 rounded-lg py-3" @click="sharePost">
+                                        <div
+                                            class="mr-2 flex w-full cursor-pointer justify-center items-center text-gray-300">
+                                            <i class="fa-solid fa-arrow-up-from-bracket"></i>
+                                        </div>
+                                    </div>
+                                    <div class="w-1/2 bg-gray-900 p-2 rounded-lg py-3" @click="toggleSave">
+                                        <div
+                                            class="mr-2 flex w-full cursor-pointer justify-center items-center text-gray-300">
+                                            <i v-if="!savedPost" class="fa-regular fa-bookmark"></i>
+                                            <i v-else class="fa-solid fa-bookmark"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </MenuItem>
                             <MenuItem v-slot="{ active }" v-if="isAuthor === 'true'">
                             <button :class="[
                                 active ? 'bg-gray-600 text-white' : 'text-gray-200',
@@ -183,10 +203,6 @@
             <div class="w-1/3 flex gap-2 justify-center items-center text-gray-300">
                 <i class="fa-solid fa-chart-line"></i>
                 <p>{{ impressions }}</p>
-            </div>
-            <div class="mr-2 cursor-pointer items-center text-gray-300">
-                <i v-if="!copied" class="fa-solid fa-arrow-up-from-bracket" @click="sharePost"></i>
-                <i v-else class="fa-solid fa-check"></i>
             </div>
         </div>
         <div class="flex w-full gap-2 mt-2">
@@ -335,6 +351,7 @@ const loggedIn = ref(Cookies.get("token") !== undefined)
 const hideNSFW = ref(false)
 const showTooltip = ref(false)
 const localDateTime = ref("")
+const savedPost = ref(false)
 
 
 if (localStorage.getItem("nsfw") === "true") {
@@ -446,6 +463,34 @@ const props = defineProps({
     admin: Boolean
 })
 
+function toggleSave() {
+    if (savedPost.value) {
+        unsavePost()
+    } else {
+        savePost()
+    }
+}
+
+function savePost() {
+    axios.post("https://api.faser.app/api/social/savePost", {
+        postId: postId.value,
+        token: Cookies.get("token")
+    })
+        .then(() => {
+            savedPost.value = true
+        })
+}
+
+function unsavePost() {
+    axios.post("https://api.faser.app/api/social/unsavePost", {
+        postId: postId.value,
+        token: Cookies.get("token")
+    })
+        .then(() => {
+            savedPost.value = false
+        })
+}
+
 watch(() => props.account, (account) => {
     const today = new Date()
     const birthdate = new Date(account.birthday)
@@ -477,6 +522,10 @@ onMounted(() => {
 
     if (age >= 18) {
         isAdult.value = true
+    }
+
+    if (props.ownProfileData.savedPosts.includes(postId.value)) {
+        savedPost.value = true
     }
 })
 

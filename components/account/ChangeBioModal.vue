@@ -7,8 +7,7 @@
                 'border border-red-500': error,
             }">
                 <div class="flex flex-wrap gap-2 w-full justify-center">
-                    <div
-                        class="bg-gray-900 w-full flex justify-center items-center p-3 rounded-xl">
+                    <div class="bg-gray-900 w-full flex justify-center items-center p-3 rounded-xl">
                         <div class="flex flex-wrap justify-center">
                             <h1 class="text-xl font-bold mb-2">Edit Bio</h1>
                             <div class="w-full"></div>
