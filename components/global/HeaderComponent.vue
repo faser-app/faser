@@ -95,6 +95,7 @@
                   active ? 'bg-gray-600 text-red-500' : 'text-red-500',
                   'group flex w-full items-center rounded-md px-2 py-2 text-sm',
                 ]">
+                  <i class="fa-solid fa-arrow-right-from-bracket mr-2"></i>
                   Logout
                 </button>
                 </MenuItem>
@@ -198,6 +199,7 @@
                   active ? 'bg-gray-600 text-red-500' : 'text-red-500',
                   'group flex w-full items-center rounded-md px-2 py-2 text-sm',
                 ]">
+                  <i class="fa-solid fa-arrow-right-from-bracket mr-2"></i>
                   Logout
                 </button>
                 </MenuItem>

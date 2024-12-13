@@ -4,6 +4,11 @@
             <RouterLink to="/admin/posts" class="py-3 px-5 rounded-xl bg-gray-800 text-white">Posts</RouterLink>
             <RouterLink to="/admin/accounts" class="py-3 px-5 rounded-xl bg-gray-800 text-white">Accounts</RouterLink>
         </div>
+        <div class="flex w-full justify-center mt-2">
+            <button @click="restart" class="py-3 px-5 rounded-xl bg-gray-800 text-white">
+                Restart API
+            </button>
+        </div>
     </div>
 </template>
 
@@ -15,6 +20,12 @@ import { useRouter } from 'vue-router';
 const token = Cookies.get('token')
 const router = useRouter()
 const loaded = ref(false)
+
+function restart() {
+    axios.post("https://api.faser.app/api/admin/restart", {
+        token: token
+    })
+}
 
 axios.get("https://api.faser.app/api/account/getOwnProfile", {
     headers: {
