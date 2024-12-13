@@ -16,7 +16,7 @@ import Cookies from "js-cookie";
 
 const postsValue = ref([]);
 const loadedPosts = ref([]);
-const ownProfileData = ref([]);
+const ownProfileData = ref({});
 const lastRequest = ref(0)
 const postIndex = ref(0)
 const accountData = ref([])
@@ -30,7 +30,6 @@ axios.get(url, {
         token: Cookies.get("token")
     }
 }).then((response) => {
-    console.log(response.data)
 
     postsValue.value = response.data[0].savedPosts
 

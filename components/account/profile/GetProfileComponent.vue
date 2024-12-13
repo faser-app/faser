@@ -144,7 +144,7 @@
             </div>
             <div v-else v-for="post in loadedPosts" :key="post" class="w-full block">
               <PostGetPostComponent :postId="post" ownProfile="false" :profile="profileData" :ownProfile="ownProfile"
-                :account="accountData" :ownProfileData="ownProfileData" />
+                :account="accountData" :own-profile-data="ownProfileData" />
             </div>
           </div>
         </div>
@@ -305,6 +305,34 @@ function alertNotImplemented() {
 }
 
 async function main() {
+  axios.get("https://api.faser.app/api/account/getOwnProfile", {
+    headers: {
+      token: Cookies.get("token"),
+    },
+  })
+    .then((ownResponse) => {
+      if (ownResponse && ownResponse.data) {
+        ownProfileData.value = ownResponse.data[0];
+        ownId.value = ownResponse.data[0].id;
+        accountData.value = ownResponse.data[1];
+
+        console.log(ownProfileData.value)
+
+        if (response.data[0].id === ownResponse.data[0].id) {
+          isAbleToFollow.value = false;
+        }
+
+        if (response.data[0].follower.includes(ownId.value)) {
+          followed.value = true;
+        }
+      } else {
+        console.error("Die API hat keine gültigen Daten zurückgegeben.");
+      }
+    })
+    .catch((error) => {
+      console.error("Fehler beim Abrufen des eigenen Profils:", error);
+    });
+
   const response = await axios
     .get(url, {
       headers: {
@@ -330,50 +358,31 @@ async function main() {
   badges.value = response.data[0].badges;
 
   markdownHTML.value = md.render(response.data[0].bio);
-  
+
   posts.value = response.data[0].posts.length;
   followers.value = response.data[0].follower.length;
   following.value = response.data[0].following.length;
-  
+
   for (let i = 0; i < response.data[0].communities.length; i++) {
     axios.post("https://api.faser.app/api/community/getCommunity", {
       communityId: response.data[0].communities[i].id
     })
-    .then((response) => {
-      communities.value.push(response.data.community)
-    })
+      .then((response) => {
+        communities.value.push(response.data.community)
+      })
   }
-  
+
   music.value = response.data[0].music
-  
+
   postsValue.value = response.data[0].posts.reverse();
-  
+
   privateAccount.value = response.data[0].privateAccount;
-  
+
   loadPosts(3)
 
   const accountCreated = new Date(response.data[1].memberSince);
   const accountCreatedString = accountCreated.toLocaleDateString();
   sinceString.value = accountCreatedString;
-
-  const ownResponse = await axios.get("https://api.faser.app/api/account/getOwnProfile", {
-    headers: {
-      token: Cookies.get("token"),
-    },
-  }).catch(error => { })
-
-  ownProfileData.value = ownResponse.data[0];
-  ownId.value = ownResponse.data[0].id
-
-  accountData.value = ownResponse.data[1]
-
-  if (response.data[0].id === ownResponse.data[0].id) {
-    isAbleToFollow.value = false
-  }
-
-  if (response.data[0].follower.includes(ownId.value)) {
-    followed.value = true
-  }
 }
 
 
