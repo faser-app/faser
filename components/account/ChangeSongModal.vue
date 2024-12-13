@@ -63,6 +63,9 @@
                         <l-zoomies size="80" stroke="5" bg-opacity="0.1" speed="1.4" color="white"></l-zoomies>
                     </button>
                 </div>
+                <button v-if="props.profileSelector" @click="removeSong" class="w-full mt-2 text-gray-400">
+                    Remove song
+                </button>
             </div>
         </div>
     </transition>
@@ -74,6 +77,7 @@ import { useRouter } from "vue-router";
 
 const props = defineProps({
     showModal: Boolean,
+    profileSelector: Boolean,
 })
 
 let scrollpos = window.scrollY;
@@ -122,6 +126,17 @@ function changeSong() {
     })
         .then((response) => {
 
+            props.showModal = false;
+
+            router.push("/profile");
+        })
+}
+
+function removeSong() {
+    axios.post("https://api.faser.app/api/spotify/removeTrack", {
+        token: Cookies.get("token"),
+    })
+        .then((response) => {
             props.showModal = false;
 
             router.push("/profile");

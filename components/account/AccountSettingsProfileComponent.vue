@@ -66,7 +66,7 @@
     <ChangeDisplayNameModal />
     <AccountChangeBirthdayModal :showModal="birthModal" @close="birthModal = false" @success="changeBirthday" />
     <AccountChangeBioModal :showModal="bioModal" @close="bioModal = false" @success="updateBio" />
-    <AccountChangeSongModal :showModal="musicModal" @close="musicModal = false" @success="updateSong" />
+    <AccountChangeSongModal :showModal="musicModal" :profile-selector="true" @close="musicModal = false" @success="updateSong" />
 </template>
 
 <script setup>
