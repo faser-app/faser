@@ -98,15 +98,15 @@
                             <MenuItem>
                             <div class="group flex w-full items-center rounded-md px-1 py-1 text-sm">
                                 <div class="flex gap-2 w-full items-center">
-                                    <div class="w-1/2 bg-gray-900 p-2 rounded-lg py-3" @click="sharePost">
-                                        <div
-                                            class="mr-2 flex w-full cursor-pointer justify-center items-center text-gray-300">
+                                    <div class="w-1/2 bg-gray-900 p-2 cursor-pointer rounded-lg py-3"
+                                        @click="sharePost">
+                                        <div class="mr-2 flex w-full justify-center items-center text-gray-300">
                                             <i class="fa-solid fa-arrow-up-from-bracket"></i>
                                         </div>
                                     </div>
-                                    <div class="w-1/2 bg-gray-900 p-2 rounded-lg py-3" @click="toggleSave">
-                                        <div
-                                            class="mr-2 flex w-full cursor-pointer justify-center items-center text-gray-300">
+                                    <div class="w-1/2 bg-gray-900 p-2 cursor-pointer rounded-lg py-3"
+                                        @click="toggleSave">
+                                        <div class="mr-2 flex w-full justify-center items-center text-gray-300">
                                             <i v-if="!savedPost" class="fa-regular fa-bookmark"></i>
                                             <i v-else class="fa-solid fa-bookmark"></i>
                                         </div>
