@@ -82,6 +82,15 @@
                 </button>
                 </MenuItem>
                 <MenuItem v-slot="{ active }">
+                <button @click="changePage('/saved')" :class="[
+                  active ? 'bg-gray-600 text-white' : 'text-gray-200',
+                  'group flex w-full items-center rounded-md px-2 py-2 text-sm',
+                ]">
+                  <i class="fa-solid fa-bookmark mr-2"></i>
+                  Saved Posts
+                </button>
+                </MenuItem>
+                <MenuItem v-slot="{ active }">
                 <button @click="logout" :class="[
                   active ? 'bg-gray-600 text-red-500' : 'text-red-500',
                   'group flex w-full items-center rounded-md px-2 py-2 text-sm',
@@ -173,6 +182,15 @@
                 ]">
                   <i class="fa-solid fa-gear mr-2"></i>
                   Settings
+                </button>
+                </MenuItem>
+                <MenuItem v-slot="{ active }">
+                <button @click="changePage('/saved')" :class="[
+                  active ? 'bg-gray-600 text-white' : 'text-gray-200',
+                  'group flex w-full items-center rounded-md px-2 py-2 text-sm',
+                ]">
+                  <i class="fa-solid fa-bookmark mr-2"></i>
+                  Saved Posts
                 </button>
                 </MenuItem>
                 <MenuItem v-slot="{ active }">

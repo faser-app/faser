@@ -19,12 +19,6 @@
                     class="fa-solid fa-sliders text-xl bg-gray-700 p-1 rounded-lg w-10 h-10 flex items-center justify-center"></i>
                 <p>App Settings</p>
             </div>
-            <div class="p-2 mb-0.5 flex gap-2 items-center cursor-pointer" @click="active = 'saved'"
-                :class="{ 'bg-gray-800': active === 'saved', 'bg-gray-900': active !== 'saved' }">
-                <i
-                    class="fa-solid fa-bookmark text-xl bg-gray-700 p-1 rounded-lg w-10 h-10 flex items-center justify-center"></i>
-                <p>Saved Posts</p>
-            </div>
             <div class="text-red-500 p-2 mb-0.5 flex gap-2 items-center cursor-pointer" @click="active = 'dangerous'"
                 :class="{ 'bg-gray-800': active === 'dangerous', 'bg-gray-900': active !== 'dangerous' }">
                 <i
@@ -37,7 +31,6 @@
             <AccountSettingsProfileComponent v-if="active === 'profile'" />
             <AccountSettingsDangerousComponent v-if="active === 'dangerous'" />
             <AccountSettingsAppComponent v-if="active === 'app'" />
-            <AccountSettingsSavedComponent v-if="active === 'saved'" />
         </div>
     </div>
 </template>
