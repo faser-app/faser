@@ -52,11 +52,11 @@
                   <div>
                     <div class="flex">
                       <p>{{ profileData.displayName }}</p>
-                      <div v-if="profileData.verifiedAccount && profileData.businessAccount"
+                      <div v-if="profileData.businessAccount"
                         class="flex ml-2 justify-center text-xs items-center bg-yellow-600 border w-6 h-6 border-yellow-300 rounded-full">
                         <i class="fa-solid verifiedBadge fa-check"></i>
                       </div>
-                      <div v-else-if="profileData.verifiedAccount"
+                      <div v-else-if="profileData.verifiedAccount && !profileData.businessAccount"
                         class="flex ml-2 justify-center text-xs items-center bg-sky-600 border w-6 h-6 border-sky-300 rounded-full">
                         <i class="fa-solid verifiedBadge fa-check"></i>
                       </div>
