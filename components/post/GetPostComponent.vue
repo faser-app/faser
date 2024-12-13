@@ -506,6 +506,16 @@ watch(() => props.account, (account) => {
     }
 })
 
+watch(() => props.ownProfileData, (ownProfileData) => {
+    console.log(ownProfileData.savedPosts)
+
+    if (ownProfileData.savedPosts !== undefined) {
+        if (ownProfileData.savedPosts.includes(postId.value)) {
+            savedPost.value = true
+        }
+    }
+})
+
 onMounted(() => {
     author.value.displayName = profile.displayName
     author.value.verifiedAccount = profile.verifiedAccount
@@ -522,10 +532,6 @@ onMounted(() => {
 
     if (age >= 18) {
         isAdult.value = true
-    }
-
-    if (props.ownProfileData.savedPosts.includes(postId.value)) {
-        savedPost.value = true
     }
 })
 

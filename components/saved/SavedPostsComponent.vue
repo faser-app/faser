@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="px-2">
         <div v-if="postsValue == 0" class="h-36 flex justify-center items-center">
             <p class="italic text-gray-400">No saved Posts</p>
         </div>
