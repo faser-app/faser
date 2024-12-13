@@ -524,8 +524,6 @@ onMounted(() => {
         isAdult.value = true
     }
 
-    console.log("props", props)
-
     if (props.ownProfileData.savedPosts.includes(postId.value)) {
         savedPost.value = true
     }

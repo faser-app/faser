@@ -316,8 +316,6 @@ async function main() {
         ownId.value = ownResponse.data[0].id;
         accountData.value = ownResponse.data[1];
 
-        console.log(ownProfileData.value)
-
         if (response.data[0].id === ownResponse.data[0].id) {
           isAbleToFollow.value = false;
         }
