@@ -142,7 +142,7 @@
             <div v-if="posts == 0" class="h-36 flex justify-center items-center">
               <p class="italic text-gray-400">No posts yet</p>
             </div>
-            <div v-else v-for="post in postsValue" :key="post.id" class="w-full block">
+            <div v-else v-for="post in loadedPosts" :key="post" class="w-full block">
               <PostGetPostComponent :postId="post" ownProfile="false" :profile="profileData" :ownProfile="ownProfile"
                 :account="accountData" :ownProfileData="ownProfileData" />
             </div>
@@ -288,6 +288,10 @@ const username = route.params.user.replace("@", "");
 const openReport = ref(false)
 const music = ref([])
 const accountData = ref({})
+const loadedPosts = ref([])
+const postIndex = ref(0)
+const loading = ref(false)
+const lastRequest = ref(0)
 
 function shareProfile() {
   navigator.share({
@@ -326,25 +330,27 @@ async function main() {
   badges.value = response.data[0].badges;
 
   markdownHTML.value = md.render(response.data[0].bio);
-
+  
   posts.value = response.data[0].posts.length;
   followers.value = response.data[0].follower.length;
   following.value = response.data[0].following.length;
-
+  
   for (let i = 0; i < response.data[0].communities.length; i++) {
     axios.post("https://api.faser.app/api/community/getCommunity", {
       communityId: response.data[0].communities[i].id
     })
-      .then((response) => {
-        communities.value.push(response.data.community)
-      })
+    .then((response) => {
+      communities.value.push(response.data.community)
+    })
   }
-
+  
   music.value = response.data[0].music
-
+  
   postsValue.value = response.data[0].posts.reverse();
-
+  
   privateAccount.value = response.data[0].privateAccount;
+  
+  loadPosts(3)
 
   const accountCreated = new Date(response.data[1].memberSince);
   const accountCreatedString = accountCreated.toLocaleDateString();
@@ -370,7 +376,27 @@ async function main() {
   }
 }
 
+
+document.addEventListener("scroll", (event) => {
+  if (document.body.offsetHeight - 2000 < window.scrollY) {
+    if (lastRequest.value + 1000 < Date.now()) {
+      lastRequest.value = Date.now()
+
+      loadPosts(3)
+    }
+  }
+})
+
 main();
+
+function loadPosts(postsToLoad) {
+  for (let i = 0; i < postsToLoad; i++) {
+    if (postIndex.value < postsValue.value.length) {
+      loadedPosts.value.push(postsValue.value[postIndex.value])
+      postIndex.value++
+    }
+  }
+}
 
 function toggleFollow() {
   let url = ""
@@ -420,8 +446,6 @@ function toggleFollow() {
 
   followed.value = !followed.value
 }
-
-let scrollpos = window.scrollY;
 </script>
 
 <style scoped>

@@ -118,7 +118,7 @@
             <div v-if="posts == 0" class="h-36 flex justify-center items-center">
               <p class="italic text-gray-400">No posts yet</p>
             </div>
-            <div v-else v-for="post in postsValue" :key="post.id" class="w-full block">
+            <div v-else v-for="post in loadedPosts" :key="post.id" class="w-full block">
               <PostGetPostComponent :postId="post" ownProfile="true" :profile="profileData" :ownProfile="ownProfile"
                 :account="accountData" :ownProfileData="ownProfileData" />
             </div>
@@ -205,6 +205,10 @@ const markdownHTML = ref("");
 const badges = ref([]);
 const communities = ref([]);
 const music = ref([])
+const loadedPosts = ref([])
+const postIndex = ref(0)
+const loading = ref(false)
+const lastRequest = ref(0)
 
 axios
   .get(url, {
@@ -243,6 +247,8 @@ axios
 
     postsValue.value = response.data[0].posts.reverse();
 
+    loadPosts(3)
+
     loaded.value = true
 
     // axios
@@ -264,6 +270,26 @@ axios
       router.push("/login");
     }
   });
+
+
+document.addEventListener("scroll", (event) => {
+  if (document.body.offsetHeight - 2000 < window.scrollY) {
+    if (lastRequest.value + 1000 < Date.now()) {
+      lastRequest.value = Date.now()
+
+      loadPosts(3)
+    }
+  }
+})
+
+function loadPosts(postsToLoad) {
+  for (let i = 0; i < postsToLoad; i++) {
+    if (postIndex.value < postsValue.value.length) {
+      loadedPosts.value.push(postsValue.value[postIndex.value])
+      postIndex.value++
+    }
+  }
+}
 
 function shareProfile() {
   navigator.share({
