@@ -240,8 +240,8 @@
   <Transition name="fade" @leave="leave" @enter="open">
     <div class="fixed top-0 left-0 w-screen h-screen backdrop-blur-lg z-50 flex items-center justify-center"
       @click.self="closeUserMessages" v-if="openMessages">
-      <LazyMessagesComponent :standalone="mobile" :messages="messages" @close-messages="closeUserMessages"
-        @clear-messages="messages = []" />
+      <MessagesComponent :standalone="mobile" :messages="messages" @close-messages="closeUserMessages"
+        @clear-messages="clearMessages" />
     </div>
   </Transition>
 
@@ -333,6 +333,10 @@ let scrollpos = window.scrollY;
 function logout() {
   Cookies.remove("token");
   window.location.href = "/login";
+}
+
+function clearMessages() {
+  messages.value = []
 }
 
 function openUserMessages() {

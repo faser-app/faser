@@ -135,9 +135,7 @@ function clearMessages() {
     })
         .then((response) => {
             emit('closeMessages')
-            setTimeout(() => {
-                emit('clearMessages')
-            }, 500)
+            emit('clearMessages')
         });
 }
 
