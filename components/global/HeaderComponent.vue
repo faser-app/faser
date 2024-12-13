@@ -107,14 +107,13 @@
     </div>
   </div>
   <div v-if="mobile" class="fixed z-100 bottom-0 h-20 pb-5 backdrop-blur-xl w-full">
-    <div class="grid grid-cols-4 text-center items-center h-full text-white">
+    <div class="grid grid-cols-5 text-center items-center h-full text-white">
       <div>
         <RouterLink to="/">
           <div class="text-center">
             <div class="flex items-center h-8 justify-center">
               <i class="fa-solid fa-home"></i>
             </div>
-            <p>Home</p>
           </div>
         </RouterLink>
       </div>
@@ -123,7 +122,13 @@
           <div class="flex items-center h-8 justify-center">
             <i class="fa-solid fa-magnifying-glass"></i>
           </div>
-          <p>Search</p>
+        </RouterLink>
+      </div>
+      <div class="text-center">
+        <RouterLink to="/messages">
+          <div class="flex items-center h-8 justify-center">
+            <i class="fa-solid fa-message"></i>
+          </div>
         </RouterLink>
       </div>
       <div class="text-center">
@@ -140,7 +145,6 @@
               {{ messages.length }}
             </div>
           </div>
-          <p>Notifications</p>
         </RouterLink>
       </div>
       <div class="flex justify-center">
@@ -155,7 +159,6 @@
                     :src="'https://s3.faser.app/profilepictures/' + id + '/image.png' + '?t=' + new Date().getTime()"
                     class="rounded-full w-8 h-8 object-cover" />
                 </div>
-                <p class="w-full">Profile</p>
               </div>
             </MenuButton>
           </div>
@@ -287,6 +290,10 @@ const links = [
   {
     name: "Communities",
     href: "/communities",
+  },
+  {
+    name: "Messages",
+    href: "/messages",
   },
   {
     name: "Support",
