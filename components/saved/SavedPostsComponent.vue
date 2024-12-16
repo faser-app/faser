@@ -31,7 +31,7 @@ axios.get(url, {
     }
 }).then((response) => {
 
-    postsValue.value = response.data[0].savedPosts
+    postsValue.value = response.data[0].savedPosts.reverse()
 
     ownProfileData.value = response.data[0]
 
