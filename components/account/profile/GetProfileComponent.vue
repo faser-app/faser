@@ -315,14 +315,6 @@ async function main() {
         ownProfileData.value = ownResponse.data[0];
         ownId.value = ownResponse.data[0].id;
         accountData.value = ownResponse.data[1];
-
-        if (response.data[0].id === ownResponse.data[0].id) {
-          isAbleToFollow.value = false;
-        }
-
-        if (response.data[0].follower.includes(ownId.value)) {
-          followed.value = true;
-        }
       } else {
         console.error("Die API hat keine gültigen Daten zurückgegeben.");
       }
@@ -349,6 +341,14 @@ async function main() {
   if (response.status === 200) {
     loaded.value = true;
     success.value = true;
+  }
+
+  if (response.data[0].id === ownProfileData.value.id) {
+    isAbleToFollow.value = false;
+  }
+
+  if (response.data[0].follower.includes(ownId.value)) {
+    followed.value = true;
   }
 
   profileData.value = response.data[0];
