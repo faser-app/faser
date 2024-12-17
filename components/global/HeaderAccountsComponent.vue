@@ -110,6 +110,7 @@ onMounted(() => {
                 }
             }).then((response) => {
                 accountList.value.push(response.data[0])
+                accountList.value[i].token = tokens[i]
             })
                 .catch(() => console.log())
         }
