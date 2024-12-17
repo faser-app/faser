@@ -1,7 +1,7 @@
 <template>
     <div class="min-h-screen bg-gray-950 text-white px-5 py-6">
         <h1 class="text-2xl font-bold mb-4">Terms of Service</h1>
-        <p><strong>Effective Date:</strong> November 20, 2024</p>
+        <p><strong>Effective Date:</strong> December 17, 2024</p>
         <p>Welcome to faser.app! These Terms of Service ("ToS") govern your use of the faser.app platform ("the App")
             and apply to all users aged 13 and older. By accessing or using the App, you agree to be bound by these
             Terms of Service. If you do not agree, please do not use the App.</p><br>
@@ -221,10 +221,30 @@
                 policies.</p>
         </div>
 
-
-        <h2 class="text-xl font-semibold mt-6 mb-2">13. Contact</h2>
+        <h2 class="text-xl font-semibold mt-6 mb-2">13. AI-Generated Content Policy</h2>
         <div class="ml-5">
-            <h3 class="text-lg font-semibold mt-4">13.1 Contact Information</h3>
+            <h3 class="text-lg font-semibold mt-4">13.1 Definition of AI-Generated Content</h3>
+            <p>AI-generated content refers to any material (text, images, or media) created, in part or entirely, using
+                artificial intelligence tools or models.</p>
+
+            <h3 class="text-lg font-semibold mt-4">13.2 Mandatory Disclosure</h3>
+            <p>If you post content that has been generated using AI tools, you are required to enable the "AI-Generated"
+                toggle when creating the post. This ensures transparency for all users.</p>
+
+            <h3 class="text-lg font-semibold mt-4">13.3 Failure to Disclose AI-Generated Content</h3>
+            <p>Failure to properly label AI-generated content may result in content removal, temporary suspension, or
+                other actions taken against your account.</p>
+
+            <h3 class="text-lg font-semibold mt-4">13.4 Compliance Responsibility</h3>
+            <p>It is your responsibility to ensure AI-generated content complies with these Terms of Service and all
+                applicable laws. Misleading or mislabeled AI content will not be tolerated.</p>
+        </div>
+
+
+
+        <h2 class="text-xl font-semibold mt-6 mb-2">14. Contact</h2>
+        <div class="ml-5">
+            <h3 class="text-lg font-semibold mt-4">14.1 Contact Information</h3>
             <p>If you have any questions or comments regarding these Terms of Service, please contact us at
                 <a href="mailto:support@faser.app" class="underline">support@faser.app</a>.
             </p>
