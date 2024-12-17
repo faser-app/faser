@@ -101,19 +101,7 @@ onMounted(() => {
             Cookies.set('tokenList', JSON.stringify(newTokenList))
         }
 
-        for (let i = 0; i < tokenList.value.length; i++) {
-            const tokens = tokenList.value
-
-            axios.get('https://api.faser.app/api/account/getOwnProfile', {
-                headers: {
-                    token: tokens[i]
-                }
-            }).then((response) => {
-                accountList.value.push(response.data[0])
-                accountList.value[i].token = tokens[i]
-            })
-                .catch(() => console.log())
-        }
+        getProfile(tokenList.value[0], 0)
 
     } else {
         if(token !== undefined) {
@@ -123,4 +111,20 @@ onMounted(() => {
         }
     }
 })
+
+function getProfile(token, index) {
+    axios.get('https://api.faser.app/api/account/getOwnProfile', {
+        headers: {
+            token: token
+        }
+    }).then((response) => {
+        accountList.value.push(response.data[0])
+
+        if (index < tokenList.value.length - 1) {
+            console.log('next')
+            getProfile(tokenList.value[index + 1], index + 1)
+        }
+    })
+        .catch(() => console.log())
+}
 </script>
