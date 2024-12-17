@@ -49,26 +49,22 @@ function login() {
     })
     .then((response) => {
       Cookies.set("token", response.data.token, { expires: 365 });
+      const tokenList = Cookies.get("tokenList");
+      if (tokenList) {
+        if (tokenList.includes(response.data.token)) {
+          console.log("Token already in list");
+        } else {
+          const newTokenList = JSON.parse(tokenList);
+          newTokenList.push(response.data.token);
+          Cookies.set("tokenList", JSON.stringify(newTokenList));
+        }
+      } else {
+        Cookies.set("tokenList", JSON.stringify([response.data.token]));
+      }
       router.push("/profile");
     })
     .catch((err) => {
       error.value = err.response.data.message;
     });
 }
-
-onMounted(() => {
-  if (Cookies.get("token")) {
-    const url = "https://api.faser.app/api/account/getOwnProfile";
-
-    axios
-      .get(url, {
-        headers: {
-          token: Cookies.get("token"),
-        },
-      })
-      .then((response) => {
-        router.push("/");
-      });
-  }
-});
 </script>
