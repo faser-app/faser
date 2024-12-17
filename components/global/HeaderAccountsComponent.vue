@@ -115,6 +115,10 @@ onMounted(() => {
                 .catch(() => console.log())
         }
 
+        accountList.value.sort((a, b) => {
+            return a.displayName.localeCompare(b.displayName)
+        })
+
     } else {
         if(token !== undefined) {
             Cookies.set('tokenList', JSON.stringify([token]))
