@@ -70,6 +70,7 @@
                     </div>
                     </p>
                     <p class="ml-3 text-gray-400" v-if="postContent.edited">edited</p>
+                    <p class="ml-3 text-gray-400" v-if="postContent.ai">AI <i class="fa-solid fa-robot"></i></p>
                     <div class="flex px-2 ml-3 items-center bg-red-500 rounded-full text-sm cursor-pointer select-none gap-2"
                         v-if="postContent.nsfw" @click="toggleNSFW">
                         <p>NSFW</p>

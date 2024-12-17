@@ -66,15 +66,27 @@
                             </template>
                         </div>
                     </div>
-                    <div class="mt-4" v-if="isAdult">
-                        <label class="inline-flex items-center cursor-pointer">
-                            <input type="checkbox" value="" class="sr-only peer" v-model="nsfw">
-                            <div
-                                class="relative w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-500">
-                            </div>
-                            <p class="ms-3 select-none text-sm font-medium dark:text-gray-300">NSFW <i
-                                    class="fa-solid fa-triangle-exclamation"></i></p>
-                        </label>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div class="mt-4">
+                            <label class="inline-flex items-center cursor-pointer">
+                                <input type="checkbox" value="" class="sr-only peer" v-model="ai">
+                                <div
+                                    class="relative w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-500">
+                                </div>
+                                <p class="ms-3 select-none text-sm font-medium dark:text-gray-300">AI <i
+                                        class="fa-solid fa-robot"></i></p>
+                            </label>
+                        </div>
+                        <div class="mt-4 w-full text-end" v-if="isAdult">
+                            <label class="inline-flex items-center cursor-pointer">
+                                <input type="checkbox" value="" class="sr-only peer" v-model="nsfw">
+                                <div
+                                    class="relative w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-500">
+                                </div>
+                                <p class="ms-3 select-none text-sm font-medium dark:text-gray-300">NSFW <i
+                                        class="fa-solid fa-triangle-exclamation"></i></p>
+                            </label>
+                        </div>
                     </div>
                     <p v-if="error" class="text-red-500 mt-1">{{ error }}</p>
                     <div class="flex md:flex-nowrap flex-wrap justify-end mt-2 gap-2">
@@ -114,6 +126,7 @@ const searchSong = ref(false)
 const selectedTrack = ref(null)
 const nsfw = ref(false)
 const isAdult = ref(false)
+const ai = ref(false)
 
 function getPreviewImage(file) {
     return URL.createObjectURL(file);
@@ -206,7 +219,8 @@ function uploadPost() {
         type: 'post',
         music: selectedTrack.value ? selectedTrack.value.songId : null,
         images: images.value.length,
-        nsfw: nsfw.value
+        nsfw: nsfw.value,
+        ai: ai.value
     })
         .then(response => {
 
