@@ -103,7 +103,6 @@ onMounted(() => {
 
         for (let i = 0; i < tokenList.value.length; i++) {
             const tokens = tokenList.value
-            console.log(tokens[i])
 
             axios.get('https://api.faser.app/api/account/getOwnProfile', {
                 headers: {
