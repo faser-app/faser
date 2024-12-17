@@ -2,7 +2,7 @@
     <Menu as="div" class="relative w-full inline-block text-left z-[2]">
         <div>
             <MenuButton class="group flex w-full text-red-500 items-center rounded-md text-sm">
-                <i class="fa-solid fa-user mr-2"></i>
+                <i class="fa-solid fa-users mr-2"></i>
                 Accounts
             </MenuButton>
         </div>
