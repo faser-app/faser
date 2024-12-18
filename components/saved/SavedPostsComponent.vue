@@ -3,7 +3,7 @@
         <div v-if="postsValue == 0" class="h-36 flex justify-center items-center">
             <p class="italic text-gray-400">No saved Posts</p>
         </div>
-        <div v-else v-for="post in loadedPosts" :key="post" class="w-full block">
+        <div v-else v-for="post in loadedPosts" :key="post" class="w-full flex justify-center">
             <PostGetPostComponent :postId="post" ownProfile="false" :profile="profileData" :ownProfile="ownProfile"
                 :account="accountData" :ownProfileData="ownProfileData" />
         </div>

@@ -1,6 +1,6 @@
 <template>
   <div class="bg-gray-950 min-h-screen text-white">
-    <div class="md:flex w-full" v-if="loaded && success">
+    <div class="md:flex w-full justify-center" v-if="loaded && success">
       <div class="md:block px-2 hidden md:w-1/5 gap-2 justify-center">
         <div class="flex w-full justify-center" v-if="communities.length > 0">
           <h2>Communities</h2>
@@ -20,7 +20,7 @@
         </div>
         <p v-if="privateAccount">Private account</p>
       </div>
-      <div class="md:w-4/5 w-full mr-4">
+      <div class="md:w-4/5 max-w-[90rem] w-full mr-4">
         <div class="flex flex-wrap bg-gray-800 md:w-full ml-2 md:ml-1 rounded-xl items-center mr-2 h-fit">
           <img v-if="hasProfilePicture && loaded"
             :src="'https://s3.faser.app/profilepictures/' + profileData.id + '/image.png?t=' + new Date().getTime()"

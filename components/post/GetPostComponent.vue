@@ -1,5 +1,5 @@
 <template>
-    <div v-if="postVisible" class="w-full bg-gray-700 p-2 mb-2 rounded-xl text-white">
+    <div v-if="postVisible" class="w-full max-w-[90rem] bg-gray-700 p-2 mb-2 rounded-xl text-white">
         <div class="flex items-center"
             v-if="postType === 'comment' && !route.fullPath.split('/')[2].includes(parentPost)">
             <div class="rounded-tl-lg border-t-2 border-l-2 border-gray-500 h-4 w-4 ml-8"></div>
