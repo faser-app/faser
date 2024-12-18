@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen pl-2 bg-gray-950 text-white">
+  <div class="min-h-screen pl-2 bg-black text-white">
     <div class="flex flex-col h-svh justify-center items-center">
       <h1 class="text-3xl text-transparent bg-gradient-to-tr from-[#24c7ce] to-[#1ed794] bg-clip-text font-extrabold">
         faser register

@@ -1,5 +1,7 @@
 <template>
-    <div v-if="postVisible" class="w-full max-w-[90rem] bg-gray-700 p-2 mb-2 rounded-xl text-white">
+    <div v-if="postVisible" class="w-full max-w-[90rem] bg-gray-900 p-2 pb-4 text-white" :class="{
+        'border-b border-gray-700': border,
+    }">
         <div class="flex items-center"
             v-if="postType === 'comment' && !route.fullPath.split('/')[2].includes(parentPost)">
             <div class="rounded-tl-lg border-t-2 border-l-2 border-gray-500 h-4 w-4 ml-8"></div>
@@ -94,7 +96,7 @@
                     leave-active-class="transition duration-75 ease-in"
                     leave-from-class="transform scale-100 opacity-100" leave-to-class="transform scale-95 opacity-0">
                     <MenuItems
-                        class="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-gray-950 shadow-lg ring-1 ring-black/5 focus:outline-none">
+                        class="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-black shadow-lg ring-1 ring-black/5 focus:outline-none">
                         <div class="px-1 py-1">
                             <MenuItem>
                             <div class="group flex w-full items-center rounded-md px-1 py-1 text-sm">
@@ -155,7 +157,7 @@
             <div class="overflow-x-scroll scroll-snap-x">
                 <div class="inline-flex gap-2 mt-2">
                     <div v-for="image in postContent.images" :key="image"
-                        class="bg-gray-700 p-2 rounded-xl inline-block scroll-snap-item">
+                        class="bg-gray-900 p-2 rounded-xl inline-block scroll-snap-item">
                         <img @click="openImage('https://s3.faser.app/postimages/' + author.id + '/' + postContent.postId + '/' + image + '.png')"
                             :src="'https://s3.faser.app/postimages/' + author.id + '/' + postContent.postId + '/' + image + '.png'"
                             class="max-w-80 max-h-80 rounded-lg cursor-pointer" />
@@ -207,9 +209,9 @@
             </div>
         </div>
         <div class="flex w-full gap-2 mt-2">
-            <input type="text" class="w-3/4 bg-gray-600 p-2 rounded-xl focus:outline-none"
+            <input type="text" class="w-3/4 bg-gray-800 p-2 rounded-xl focus:outline-none"
                 placeholder="Write a comment..." v-model="commentText" />
-            <button v-if="!runningCommentRequest" class="w-1/4 bg-gray-600 p-2 rounded-xl"
+            <button v-if="!runningCommentRequest" class="w-1/4 bg-gray-800 p-2 rounded-xl"
                 @click="postComment">Comment</button>
             <button v-else class="w-1/4 bg-gray-600 p-2 rounded-xl">
                 <l-line-wobble size="80" stroke="5" bg-opacity="0.1" speed="1.75" color="black"></l-line-wobble>
@@ -460,7 +462,8 @@ const props = defineProps({
     ownProfile: Boolean,
     account: Object,
     ownProfileData: Object,
-    admin: Boolean
+    admin: Boolean,
+    border: Boolean,
 })
 
 function toggleSave() {

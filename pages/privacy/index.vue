@@ -1,5 +1,5 @@
 <template>
-    <div class="p-4 max-w-screen-sm min-h-screen bg-gray-950 text-white">
+    <div class="p-4 max-w-screen-sm min-h-screen bg-black text-white">
         <h1 class="text-4xl font-bold mb-4">Privacy Policy</h1>
         <h2 id="m716" class="text-2xl font-semibold mt-8 mb-4">Preamble</h2>
         <p class="mb-4">
@@ -47,8 +47,7 @@
             Email address: <a href="mailto:support@faser.app" class="underline">support@faser.app</a>
         </p>
         <p class="mb-4">
-            Imprint: <a href="https://faser.app/imprint" target="_blank"
-                class="underline">https://faser.app/imprint</a>
+            Imprint: <a href="https://faser.app/imprint" target="_blank" class="underline">https://faser.app/imprint</a>
         </p>
 
         <h2 id="mOverview" class="text-2xl font-semibold mt-8 mb-4">Overview of Processing Activities</h2>
@@ -189,8 +188,8 @@
             In addition, as part of the "Data Privacy Framework" (DPF), the EU Commission has also recognized the level
             of data protection for certain companies from the USA as secure based on the adequacy decision dated
             10.07.2023. You can find the list of certified companies and further information on the DPF on the website
-            of the US Department of Commerce at <a href="https://www.dataprivacyframework.gov/"
-                class="underline " target="_blank">https://www.dataprivacyframework.gov/</a>.
+            of the US Department of Commerce at <a href="https://www.dataprivacyframework.gov/" class="underline "
+                target="_blank">https://www.dataprivacyframework.gov/</a>.
         </p>
 
         <h2 id="m12" class="text-2xl font-semibold mt-8 mb-4">General Information on Data Retention and Deletion</h2>
@@ -803,8 +802,7 @@
                 <a href="https://policies.google.com/privacy" target="_blank"
                     class="underline ">https://policies.google.com/privacy</a>; <strong>Data Processing
                     Agreement:</strong> <a href="https://cloud.google.com/terms/data-processing-addendum"
-                    target="_blank"
-                    class="underline ">https://cloud.google.com/terms/data-processing-addendum</a>.
+                    target="_blank" class="underline ">https://cloud.google.com/terms/data-processing-addendum</a>.
                 <strong>Basis for third country transfers:</strong> Data Privacy Framework (DPF).
             </li>
         </ul>
@@ -967,9 +965,8 @@
                 sending messages, subscribing to profiles and pages; <strong>Service provider:</strong> Meta Platforms
                 Ireland Limited, Merrion Road, Dublin 4, D04 X2K5, Ireland; <span class=""><strong>Legal bases:</strong>
                     Legitimate interests (Art. 6 para. 1 sent. 1 lit. f) GDPR); </span><strong>Website:</strong> <a
-                    href="https://www.instagram.com" target="_blank"
-                    class="underline">https://www.instagram.com</a>; <strong>Privacy Policy:</strong> <a
-                    href="https://privacycenter.instagram.com/policy/" target="_blank"
+                    href="https://www.instagram.com" target="_blank" class="underline">https://www.instagram.com</a>;
+                <strong>Privacy Policy:</strong> <a href="https://privacycenter.instagram.com/policy/" target="_blank"
                     class="underline">https://privacycenter.instagram.com/policy/</a>. <strong>Basis for
                     third country transfers:</strong> Data Privacy Framework (DPF).
             </li>
@@ -979,8 +976,7 @@
                         bases:</strong> Legitimate interests (Art. 6 para. 1 sent. 1 lit. f) GDPR);
                 </span><strong>Website:</strong> <a href="https://x.com" target="_blank"
                     class="underline">https://x.com</a>; <strong>Privacy Policy:</strong> <a
-                    href="https://x.com/de/privacy" target="_blank"
-                    class="underline">https://x.com/de/privacy</a>.
+                    href="https://x.com/de/privacy" target="_blank" class="underline">https://x.com/de/privacy</a>.
             </li>
         </ul>
 

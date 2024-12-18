@@ -3,17 +3,17 @@
     class="w-full md:w-[80%] md:ml-[10svw] py-6 rounded-xl bg-red-900 border border-red-500 text-white text-center">
     {{ error }}
   </div>
-  <div class="min-h-screen md:flex pl-2 bg-gray-950 text-white">
-    <div class="md:w-1/4 w-full justify-center pr-2 pt-2 min-h-full">
+  <div class="min-h-screen md:flex px-2 bg-black text-white">
+    <div class="md:w-1/4 w-full justify-center pt-2 min-h-full">
       <div class="md:hidden w-full block" v-if="loggedIn">
         <PostCreatePostComponent text="Post" mobile="false" :ownProfile="ownAccountData" />
       </div>
     </div>
-    <div class="md:w-3/4 w-full max-w-[100rem] pt-5 pr-2">
+    <div class="md:w-3/4 w-full max-w-[100rem] bg-gray-900 rounded-xl mt-4 p-2">
       <div v-if="loggedIn && posts.length > 0">
-        <div v-for="post in posts" key="post">
+        <div v-for="(post, index) in posts" key="post">
           <PostGetPostComponent :postId="post" ownProfile="false" :profile="profileData" :ownProfile="ownProfile"
-            :account="ownAccountData" :ownProfileData="ownProfileData" />
+            :account="ownAccountData" :ownProfileData="ownProfileData" :border="index !== posts.length - 1" />
         </div>
       </div>
       <div v-else-if="loggedIn && noPosts">

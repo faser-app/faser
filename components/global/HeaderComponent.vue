@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!mobile" class="bg-[#0206176c] h-[4.5rem] flex top-0 fixed backdrop-blur text-white w-full z-100">
+  <div v-if="!mobile" class="bg-[#0000006c] h-[4.5rem] flex top-0 fixed backdrop-blur text-white w-full z-100">
     <RouterLink to="/">
       <div class="flex h-full w-full justify-center md:justify-start fixed pointer-events-none">
         <img src="/assets/img/icon/logo.png" alt="Logo"
@@ -238,7 +238,7 @@
     </div>
   </Transition>
 
-  <div v-if="!mobile" class="h-20 bg-gray-950"></div>
+  <div v-if="!mobile" class="h-20 bg-black"></div>
   <div v-if="showBanner"
     class="w-full flex justify-center mb-2 p-5 text-white items-center bg-gradient-to-tr from-[#24c7ce] to-[#1ed794]">
     <div class="text-center">

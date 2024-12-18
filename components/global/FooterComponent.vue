@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-gray-950" :class="{
+  <div class="bg-black" :class="{
     'mb-20': mobile
   }">
     <div class="bg-gray-900 text-white text-center p-4 rounded-t-xl">

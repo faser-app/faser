@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-gray-950 min-h-screen text-white" v-if="loaded">
+    <div class="bg-black min-h-screen text-white" v-if="loaded">
         <div class="w-full flex justify-between z-50 pl-2 bg-gray-900 items-center fixed p-2" :class="{
             'top-[4.5rem]': !mobile,
             'top-0': mobile
@@ -135,15 +135,15 @@ const interval = setInterval(async () => {
 }, 3000)
 
 onMounted(async () => {
-    
+
     const profileResponse = await axios.get("https://api.faser.app/api/account/getProfile", {
         headers: {
             userId: route.path.split("/")[2]
         }
     })
-    
+
     profile.value = profileResponse.data
-    
+
     const ownProfileResponse = await axios.get("https://api.faser.app/api/account/getOwnProfile", {
         headers: {
             token: Cookies.get("token")
@@ -151,20 +151,20 @@ onMounted(async () => {
     }).catch(() => {
         router.push("/login")
     })
-    
+
     ownProfile.value = ownProfileResponse.data
-    
+
     const dmsResponse = await axios.post("https://api.faser.app/api/messages/getDMs", {
         token: Cookies.get("token"),
         otherAccount: profileResponse.data[0].id,
     })
-    
+
     messageHistory.value = dmsResponse.data.messages
-    
+
     if (profileResponse.data[0].id === ownProfileResponse.data[0].id) {
         router.push("/")
     }
-    
+
     setTimeout(() => {
         window.scrollTo({ left: 0, top: document.body.scrollHeight });
     }, 250)

@@ -1,11 +1,11 @@
 <template>
-    <div class="px-2">
+    <div class="rounded-xl p-2 bg-gray-900 mx-2">
         <div v-if="postsValue == 0" class="h-36 flex justify-center items-center">
             <p class="italic text-gray-400">No saved Posts</p>
         </div>
-        <div v-else v-for="post in loadedPosts" :key="post" class="w-full flex justify-center">
+        <div v-else v-for="(post, index) in loadedPosts" :key="post" class="w-full flex justify-center">
             <PostGetPostComponent :postId="post" ownProfile="false" :profile="profileData" :ownProfile="ownProfile"
-                :account="accountData" :ownProfileData="ownProfileData" />
+                :account="accountData" :ownProfileData="ownProfileData" :border="index !== loadedPosts.length - 1" />
         </div>
     </div>
 </template>

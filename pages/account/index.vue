@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-gray-950"></div>
+  <div class="min-h-screen bg-black"></div>
 </template>
 
 <script setup>
@@ -8,6 +8,6 @@ import { useRouter } from "vue-router";
 const router = useRouter();
 
 onMounted(() => {
-    router.push("/account/settings");
+  router.push("/account/settings");
 });
 </script>

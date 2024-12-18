@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-gray-950 min-h-screen text-white">
+    <div class="bg-black min-h-screen text-white">
         <div class="mx-5 py-2">
             <h1 class="text-2xl font-bold">faser FAQ</h1>
 

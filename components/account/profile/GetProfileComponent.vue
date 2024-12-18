@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-gray-950 min-h-screen text-white">
+  <div class="bg-black min-h-screen text-white">
     <div class="md:flex w-full justify-center" v-if="loaded && success">
       <div class="md:block px-2 hidden md:w-1/5 gap-2 justify-center">
         <div class="flex w-full justify-center" v-if="communities.length > 0">
@@ -21,7 +21,7 @@
         <p v-if="privateAccount">Private account</p>
       </div>
       <div class="md:w-4/5 max-w-[90rem] w-full mr-4">
-        <div class="flex flex-wrap bg-gray-800 md:w-full ml-2 md:ml-1 rounded-xl items-center mr-2 h-fit">
+        <div class="flex flex-wrap bg-gray-900 md:w-full ml-2 md:ml-1 rounded-xl items-center mr-2 h-fit">
           <img v-if="hasProfilePicture && loaded"
             :src="'https://s3.faser.app/profilepictures/' + profileData.id + '/image.png?t=' + new Date().getTime()"
             @error="hasProfilePicture = false" alt="profile picture" class="h-24 w-24 m-5 object-cover" :class="{
@@ -75,7 +75,7 @@
             class="ml-5 cursor-pointer h-10 w-24 select-none rounded-xl flex items-center justify-center bg-gradient-to-tr from-[#24c7ce] to-[#1ed794] ">
             <p class="absolute">Followed</p>
             <div
-              class="z-20 flex items-center select-none justify-center transition-all duration-500 ease-out px-5 bg-gray-700 shadow-2xl rounded-xl text-gray-100"
+              class="z-20 flex items-center select-none justify-center transition-all duration-500 ease-out px-5 bg-gray-800 shadow-2xl rounded-xl text-gray-100"
               :class="{
                 'h-10 w-24': !followed,
                 'h-0 w-0 overflow-hidden': followed
@@ -105,28 +105,28 @@
           <div class="w-full p-5">
             <div class="flex flex-wrap md:flex-nowrap gap-2 justify-center">
               <div to="/account/settings" @click="openReport = true"
-                class="flex items-center gap-2 cursor-pointer justify-center rounded-xl p-2 w-1/2 bg-gray-700">
+                class="flex items-center gap-2 cursor-pointer justify-center rounded-xl p-2 w-1/2 bg-gray-800">
                 <i class="fa-solid fa-shield"></i>
                 Report Profile
               </div>
               <div to="/account/settings" @click="alertNotImplemented"
-                class="flex items-center gap-2 cursor-pointer justify-center rounded-xl p-2 w-1/2 bg-gray-700">
+                class="flex items-center gap-2 cursor-pointer justify-center rounded-xl p-2 w-1/2 bg-gray-800">
                 <i class="fa-solid fa-ban"></i>
                 Block User
               </div>
               <div @click="shareProfile"
-                class="flex items-center gap-2 cursor-pointer justify-center rounded-xl p-2 w-1/2 bg-gray-700">
+                class="flex items-center gap-2 cursor-pointer justify-center rounded-xl p-2 w-1/2 bg-gray-800">
                 <i class="fa-solid fa-arrow-up-from-bracket"></i>
                 Share Profile
               </div>
               <RouterLink :to="'/messages/' + profileData.id"
-                class="flex items-center gap-2 cursor-pointer justify-center rounded-xl p-2 w-1/2 bg-gray-700">
+                class="flex items-center gap-2 cursor-pointer justify-center rounded-xl p-2 w-1/2 bg-gray-800">
                 <i class="fa-solid fa-message"></i>
                 Message
               </RouterLink>
             </div>
           </div>
-          <div class="w-full p-5 bg-gray-700 mb-2">
+          <div class="w-full p-5 bg-gray-800 mb-2">
             <p v-if="profileData.bio" v-html="markdownHTML"></p>
             <p v-else class="italic text-gray-300">
               No bio. Just imagine something cool here.
@@ -134,17 +134,14 @@
           </div>
           <p class="w-full pl-5 pb-3">Member since {{ sinceString }}</p>
         </div>
-        <div class="flex flex-wrap mt-2 bg-gray-800 mb-2 md:w-full ml-2 md:ml-1 rounded-xl items-center mr-2 h-fit">
-          <div class="p-2 mt-2 bg-gray-800 w-full pr-3 ml-2 md:ml-1 rounded-xl items-center h-fit">
-            <div class="w-full flex justify-center">
-              <p class="text-xl mt-2 mb-2">Posts</p>
-            </div>
+        <div class="flex flex-wrap mt-2 bg-gray-900 mb-2 md:w-full ml-2 md:ml-1 rounded-xl items-center pl-1 pr-2 mr-2 h-fit">
+          <div class="p-2 mt-2 bg-gray-900 w-full pr-3 ml-2 md:ml-1 rounded-xl items-center h-fit">
             <div v-if="posts == 0" class="h-36 flex justify-center items-center">
               <p class="italic text-gray-400">No posts yet</p>
             </div>
-            <div v-else v-for="post in loadedPosts" :key="post" class="w-full block">
+            <div v-else v-for="(post, index) in loadedPosts" :key="post" class="w-full block">
               <PostGetPostComponent :postId="post" ownProfile="false" :profile="profileData" :ownProfile="ownProfile"
-                :account="accountData" :own-profile-data="ownProfileData" />
+                :account="accountData" :own-profile-data="ownProfileData" :border="index !== loadedPosts.length - 1" />
             </div>
           </div>
         </div>
