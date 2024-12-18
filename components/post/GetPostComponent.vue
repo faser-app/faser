@@ -278,18 +278,17 @@
             </div>
         </transition>
         <transition name="fade" @leave="leave">
-            <div class="fixed top-0 left-0 w-screen h-screen backdrop-blur z-50 flex justify-center items-center"
+            <div class="fixed top-0 z-[200] left-0 w-screen h-screen backdrop-blur flex justify-center items-center"
                 @click.self="showImageModal = false" v-if="showImageModal">
                 <div class="bg-gray-900 p-5 text-center rounded-xl max-w-[80svw] m-3 md:w-auto w-full" :class="{
                     'animation': showImageModal,
                 }">
-                    <img :src="imageSrc"
-                        class="w-full select-none h-full object-cover rounded-lg max-w-[85svw] max-h-[85svh]" />
+                    <div class="flex w-full justify-end p-0 m-0 mb-4 text-xl">
+                        <i class="fa-solid fa-xmark cursor-pointer" @click="showImageModal = false"></i>
+                    </div>
 
-                    <button @click="showImageModal = false"
-                        class="md:w-1/3 select-none mt-2 bg-gray-500 p-2 rounded-xl">
-                        Close
-                    </button>
+                    <img :src="imageSrc"
+                        class="w-full select-none h-full object-cover rounded-lg max-w-[95svw] max-h-[92svh]" />
                 </div>
             </div>
         </transition>
