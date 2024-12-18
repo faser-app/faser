@@ -158,7 +158,7 @@
                         class="bg-gray-700 p-2 rounded-xl inline-block scroll-snap-item">
                         <img @click="openImage('https://s3.faser.app/postimages/' + author.id + '/' + postContent.postId + '/' + image + '.png')"
                             :src="'https://s3.faser.app/postimages/' + author.id + '/' + postContent.postId + '/' + image + '.png'"
-                            class="min-w-48 h-48 object-cover rounded-lg cursor-pointer" />
+                            class="max-w-80 max-h-80 rounded-lg cursor-pointer" />
                     </div>
                 </div>
             </div>
