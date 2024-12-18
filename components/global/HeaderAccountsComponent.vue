@@ -11,8 +11,7 @@
             enter-from-class="transform scale-95 opacity-0" enter-to-class="transform scale-100 opacity-100"
             leave-active-class="transition duration-75 ease-in" leave-from-class="transform scale-100 opacity-100"
             leave-to-class="transform scale-95 opacity-0">
-            <MenuItems
-                class="">
+            <MenuItems class="">
                 <div class="px-1 py-1">
 
                     <MenuItem v-for="(account, index) in accountList" :key="account" v-slot="{ active }">
@@ -60,13 +59,29 @@ const router = useRouter()
 const accountList = ref([])
 const tokenList = ref({})
 
+function filterTokenList() {
+    const filteredTokenList = tokenList.value.filter(item => item !== null);
+
+    filteredTokenList.forEach((item, index) => {
+        if (item === undefined) {
+            filteredTokenList.splice(index, 1);
+        }
+    });
+
+    tokenList.value = filteredTokenList;
+
+    Cookies.set('tokenList', JSON.stringify(filteredTokenList), { expires: 365 });
+
+    return filteredTokenList;
+}
+
 function logout() {
     const token = Cookies.get('token');
-    const tokenList = Cookies.get('tokenList');
+    // const tokenList = Cookies.get('tokenList');
 
     if (tokenList) {
         try {
-            const newTokenList = JSON.parse(tokenList);
+            const newTokenList = tokenList.value;
 
             const index = newTokenList.indexOf(token);
 
@@ -78,19 +93,17 @@ function logout() {
                 }
             }
 
-            const filteredTokenList = newTokenList.filter(item => item !== null);
+            tokenList.value = newTokenList;
 
-            Cookies.set('tokenList', JSON.stringify(filteredTokenList), {
-                expires: 365,
-                secure: true,
-                sameSite: 'Strict',
-            });
+            console.log(newTokenList)
+
+            Cookies.set('tokenList', JSON.stringify(filterTokenList()), { expires: 365 });
         } catch (error) {
             console.error('Error processing tokenList:', error);
         }
     }
 
-    Cookies.remove('token', { secure: true, sameSite: 'Strict' });
+    Cookies.remove('token');
     router.push('/login');
 }
 
@@ -109,7 +122,6 @@ onMounted(() => {
 
 
     if (Cookies.get('tokenList')) {
-        console.log(Cookies.get('tokenList'))
         tokenList.value = JSON.parse(Cookies.get('tokenList'))
 
         if (!tokenList.value.includes(token)) {
@@ -118,10 +130,12 @@ onMounted(() => {
             Cookies.set('tokenList', JSON.stringify(newTokenList), { expires: 365 })
         }
 
+        filterTokenList()
+
         getProfile(tokenList.value[0], 0)
 
     } else {
-        if(token !== undefined) {
+        if (token !== undefined) {
             Cookies.set('tokenList', JSON.stringify([token]), { expires: 365 })
         } else {
             Cookies.set('tokenList', JSON.stringify([]), { expires: 365 })
