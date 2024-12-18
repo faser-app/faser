@@ -61,23 +61,39 @@ const accountList = ref([])
 const tokenList = ref({})
 
 function logout() {
-    const token = Cookies.get('token')
-
-    const tokenList = Cookies.get('tokenList')
+    const token = Cookies.get('token');
+    const tokenList = Cookies.get('tokenList');
 
     if (tokenList) {
-        const newTokenList = JSON.parse(tokenList)
-        const index = newTokenList.indexOf(token)
-        if (index > -1) {
-            newTokenList.splice(index, 1)
-            accountList.value.splice(index, 1)
+        try {
+            const newTokenList = JSON.parse(tokenList);
+
+            const index = newTokenList.indexOf(token);
+
+            if (index > -1) {
+                newTokenList.splice(index, 1);
+
+                if (accountList.value && index < accountList.value.length) {
+                    accountList.value.splice(index, 1);
+                }
+            }
+
+            const filteredTokenList = newTokenList.filter(item => item !== null);
+
+            Cookies.set('tokenList', JSON.stringify(filteredTokenList), {
+                expires: 365,
+                secure: true,
+                sameSite: 'Strict',
+            });
+        } catch (error) {
+            console.error('Error processing tokenList:', error);
         }
-        Cookies.set('tokenList', JSON.stringify(newTokenList), { expires: 365 })
     }
 
-    Cookies.remove('token')
-    router.push('/login')
+    Cookies.remove('token', { secure: true, sameSite: 'Strict' });
+    router.push('/login');
 }
+
 
 function addAccount() {
     router.push('/login')
