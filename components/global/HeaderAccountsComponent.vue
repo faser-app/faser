@@ -72,7 +72,7 @@ function logout() {
             newTokenList.splice(index, 1)
             accountList.value.splice(index, 1)
         }
-        Cookies.set('tokenList', JSON.stringify(newTokenList))
+        Cookies.set('tokenList', JSON.stringify(newTokenList), { expires: 365 })
     }
 
     Cookies.remove('token')
@@ -98,16 +98,16 @@ onMounted(() => {
         if (!tokenList.value.includes(token)) {
             const newTokenList = tokenList.value
             newTokenList.push(token)
-            Cookies.set('tokenList', JSON.stringify(newTokenList))
+            Cookies.set('tokenList', JSON.stringify(newTokenList), { expires: 365 })
         }
 
         getProfile(tokenList.value[0], 0)
 
     } else {
         if(token !== undefined) {
-            Cookies.set('tokenList', JSON.stringify([token]))
+            Cookies.set('tokenList', JSON.stringify([token]), { expires: 365 })
         } else {
-            Cookies.set('tokenList', JSON.stringify([]))
+            Cookies.set('tokenList', JSON.stringify([]), { expires: 365 })
         }
     }
 })
