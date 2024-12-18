@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen pl-2 bg-gray-950 text-white">
+  <div class="min-h-screen pl-2 bg-black text-white">
     <div class="flex flex-col h-svh justify-center items-center">
       <h1 class="text-3xl text-transparent bg-gradient-to-tr from-[#24c7ce] to-[#1ed794] bg-clip-text font-extrabold">
         faser login
@@ -56,10 +56,10 @@ function login() {
         } else {
           const newTokenList = JSON.parse(tokenList);
           newTokenList.push(response.data.token);
-          Cookies.set("tokenList", JSON.stringify(newTokenList));
+          Cookies.set("tokenList", JSON.stringify(newTokenList), { expires: 365 });
         }
       } else {
-        Cookies.set("tokenList", JSON.stringify([response.data.token]));
+        Cookies.set("tokenList", JSON.stringify([response.data.token]), { expires: 365 });
       }
       router.push("/profile");
     })

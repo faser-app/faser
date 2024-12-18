@@ -92,7 +92,8 @@ onMounted(() => {
     const token = Cookies.get('token')
 
 
-    if (Cookies.get('tokenList') !== undefined) {
+    if (Cookies.get('tokenList')) {
+        console.log(Cookies.get('tokenList'))
         tokenList.value = JSON.parse(Cookies.get('tokenList'))
 
         if (!tokenList.value.includes(token)) {
