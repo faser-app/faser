@@ -156,6 +156,14 @@ function getProfile(token, index) {
             getProfile(tokenList.value[index + 1], index + 1)
         }
     })
-        .catch(() => console.log())
+        .catch(() => {
+            console.error('Error getting profile')
+            tokenList.value.splice(index, 1)
+            filterTokenList()
+
+            if (index < tokenList.value.length) {
+                getProfile(tokenList.value[index], index)
+            }
+        })
 }
 </script>
