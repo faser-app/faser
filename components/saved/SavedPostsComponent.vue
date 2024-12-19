@@ -1,5 +1,5 @@
 <template>
-    <div class="rounded-xl p-2 bg-gray-900 mx-2">
+    <div class="rounded-xl p-2 md:bg-gray-900 bg-black mx-2">
         <div v-if="postsValue == 0" class="h-36 flex justify-center items-center">
             <p class="italic text-gray-400">No saved Posts</p>
         </div>

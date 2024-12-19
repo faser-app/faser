@@ -157,7 +157,7 @@
             <div class="overflow-x-scroll scroll-snap-x">
                 <div class="inline-flex gap-2 mt-2">
                     <div v-for="image in postContent.images" :key="image"
-                        class="bg-gray-900 p-2 rounded-xl inline-block scroll-snap-item">
+                        class="md:bg-gray-900 bg-black p-2 rounded-xl inline-block scroll-snap-item">
                         <img @click="openImage('https://s3.faser.app/postimages/' + author.id + '/' + postContent.postId + '/' + image + '.png')"
                             :src="'https://s3.faser.app/postimages/' + author.id + '/' + postContent.postId + '/' + image + '.png'"
                             class="max-w-80 max-h-80 rounded-lg cursor-pointer" />
