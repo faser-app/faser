@@ -94,6 +94,8 @@ function deleteImage() {
     })
     .then((response) => {
       changePasswordModal(false);
+      Cookies.remove("token");
+      Cookies.remove("tokenList");
       router.push("/profile");
     })
     .catch((err) => {
