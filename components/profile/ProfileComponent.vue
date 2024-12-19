@@ -110,8 +110,8 @@
           </div>
           <p class="w-full pl-5 pb-3">Member since {{ sinceString }}</p>
         </div>
-        <div class="flex flex-wrap mt-2 md:bg-gray-900 bg-black mb-2 md:w-full ml-2 md:ml-1 rounded-xl pl-1 pr-2 items-center mr-2 h-fit">
-          <div class="p-2 mt-2 md:bg-gray-900 bg-black w-full pr-3 ml-2 md:ml-1 rounded-xl items-center h-fit">
+        <div class="flex flex-wrap mt-2 md:bg-gray-900 bg-black mb-2 md:w-full md:ml-2 rounded-xl pl-1 md:pr-2 items-center md:mr-2 h-fit">
+          <div class="p-2 mt-2 md:bg-gray-900 bg-black w-full md:pr-3 md:ml-2 rounded-xl items-center h-fit">
             <div v-if="posts == 0" class="h-36 flex justify-center items-center">
               <p class="italic text-gray-400">No posts yet</p>
             </div>
