@@ -39,7 +39,7 @@
     </div>
     <div class="md:w-1/4 w-full flex justify-center pr-2 mt-2 min-h-full">
       <div class="w-32 md:block hidden" v-if="loggedIn">
-        <PostCreatePostComponent text="post" mobile="false" :ownProfile="ownAccountData" />
+        <PostCreatePostComponent text="Post" mobile="false" :ownProfile="ownAccountData" />
       </div>
     </div>
   </div>
