@@ -9,7 +9,7 @@
         <PostCreatePostComponent text="Post" mobile="false" :ownProfile="ownAccountData" />
       </div>
     </div>
-    <div class="md:w-3/4 w-full max-w-[90rem] md:bg-gray-900 bg-black rounded-xl mt-4 p-2 px-4">
+    <div class="md:w-3/4 w-full max-w-[90rem] md:bg-gray-900 bg-black rounded-xl mt-4 p-2 md:px-4">
       <div v-if="loggedIn && posts.length > 0">
         <div v-for="(post, index) in posts" key="post">
           <PostGetPostComponent :postId="post" ownProfile="false" :profile="profileData" :ownProfile="ownProfile"
