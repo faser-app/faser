@@ -446,7 +446,7 @@ function postComment() {
             runningCommentRequest.value = false
 
             if (error.response.status === 429) {
-                alert("You are beeing rate limited")
+                alert("You are being rate limited")
             }
         })
 }
@@ -574,7 +574,7 @@ function toggleLike() {
             }
 
             if (error.response.status === 429) {
-                alert("You are beeing rate limited")
+                alert("You are being rate limited")
 
                 isLiked.value = !isLiked.value
 
