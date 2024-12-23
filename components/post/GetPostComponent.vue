@@ -184,6 +184,26 @@
         <iframe v-if="postContent.music" :src="'https://open.spotify.com/embed/track/' + postContent.music"
             class="md:w-96 w-full mb-2" width="100%" height="80rem" frameBorder="0" allowfullscreen=""
             allow="clipboard-write; encrypted-media;"></iframe>
+
+
+        <a v-if="embed.url || embed.image || embed.title || embed.description" :href="embed.url" target="_blank"
+            class="w-fit no-underline flex mb-2 items-center gap-2">
+            <div class="md:w-48 w-full">
+                <img v-if="embed.image" :src="embed.image" class="h-48 object-cover" :class="{
+                    'rounded-lg' : !embed.title,
+                    'rounded-t-lg' : embed.title
+                }" />
+                <div v-if="embed.title || embed.description" class="flex flex-col w-full p-2 bg-gray-800" :class="{
+                    'rounded-lg' : !embed.image,
+                    'rounded-b-lg' : embed.image
+                }">
+                    <p v-if="embed.title" class="font-bold">{{ embed.title }}</p>
+                    <p v-if="embed.description">{{ embed.description }}</p>
+                </div>
+            </div>
+        </a>
+
+
         <div class="flex w-full items-center justify-center">
             <div class="flex justify-center gap-2 w-1/3 cursor-pointer items-center text-gray-300" @click="toggleLike">
 
@@ -196,7 +216,7 @@
                 </p>
             </div>
             <div class="flex gap-2 w-1/3 justify-center cursor-pointer items-center text-gray-300">
-                <RouterLink :to="'/post/' + postContent.postId" class="flex gap-2 items-center justify-center">
+                <RouterLink :to="'/post/' + postContent.postId" class="flex no-underline gap-2 items-center justify-center">
                     <i class="fa-regular fa-comment text-xl"></i>
                     <p>
                         {{ postComments }}
@@ -354,6 +374,13 @@ const hideNSFW = ref(false)
 const showTooltip = ref(false)
 const localDateTime = ref("")
 const savedPost = ref(false)
+const embed = ref({
+    url: "",
+    title: "",
+    description: "",
+    image: "",
+    type: ""
+})
 
 
 if (localStorage.getItem("nsfw") === "true") {
@@ -647,7 +674,11 @@ function formatTimeDifference(timestamp) {
 
     for (let i = 0; i < words; i++) {
         if (postContent.value.content.split(" ")[i].includes("https://")) {
-            postValue.value = postValue.value.replace(postContent.value.content.split(" ")[i], `<a style="text-decoration: underline;" class="underline" href="${postContent.value.content.split(" ")[i]}" target="_blank">${postContent.value.content.split(" ")[i]}</a>`)
+            // postValue.value = postValue.value.replace(postContent.value.content.split(" ")[i], `<a style="text-decoration: underline;" class="underline" href="${postContent.value.content.split(" ")[i]}" target="_blank">${postContent.value.content.split(" ")[i]}</a>`
+
+            const url = postContent.value.content.split(" ")[i]
+
+            loadEmbed(url)
         }
 
         if (postContent.value.content.split(" ")[i].includes("@")) {
@@ -672,6 +703,15 @@ function formatTimeDifference(timestamp) {
         }
     }
     return "just now";
+}
+
+function loadEmbed(url) {
+    axios.post("https://api.faser.app/api/social/embed", {
+        url: url
+    })
+        .then((response) => {
+            embed.value = response.data
+        })
 }
 
 function openDeleteModal() {
