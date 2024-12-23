@@ -343,7 +343,7 @@ const router = useRouter();
 const route = useRoute();
 const md = new MarkdownIt({
     html: false,
-    linkify: true,
+    linkify: false,
 }).disable(["code", "table", "heading", "hr", "image"]);
 const showImageModal = ref(false);
 const threeDotElementOpen = ref(false)
@@ -674,7 +674,7 @@ function formatTimeDifference(timestamp) {
 
     for (let i = 0; i < words; i++) {
         if (postContent.value.content.split(" ")[i].includes("https://")) {
-            // postValue.value = postValue.value.replace(postContent.value.content.split(" ")[i], `<a style="text-decoration: underline;" class="underline" href="${postContent.value.content.split(" ")[i]}" target="_blank">${postContent.value.content.split(" ")[i]}</a>`
+            postValue.value = postValue.value.replace(postContent.value.content.split(" ")[i], `<a style="text-decoration: underline;" class="underline text-blue-500" href="${postContent.value.content.split(" ")[i]}" target="_blank">${postContent.value.content.split(" ")[i]}</a>`)
 
             const url = postContent.value.content.split(" ")[i]
 
