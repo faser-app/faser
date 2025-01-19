@@ -31,14 +31,34 @@
                     </label>
                 </div>
             </div>
+            <div v-if="mobile && !notificationsActivated && loggedIn"
+                class="w-full mt-0.5 bg-gray-800 flex justify-between items-center p-2 gap-2 py-4 cursor-pointer"
+                @click="subscribeToPushNotifications">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-bell"></i>
+                    <p>Activate Notifications</p>
+                </div>
+            </div>
+            <div v-else-if="mobile && notificationsActivated"
+                class="w-full mt-0.5 bg-gray-800 flex justify-between items-center p-2 gap-2 py-4 cursor-pointer">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-bell"></i>
+                    <p>Notifications activated</p>
+                </div>
+            </div>
         </div>
     </div>
 </template>
 
 <script setup>
+import Cookies from "js-cookie";
+import axios from "axios";
 
 const nsfw = ref(false)
 const hideNSFW = ref(false)
+const mobile = ref(false)
+const notificationsActivated = ref(false)
+const loggedIn = ref(false)
 
 watch(() => nsfw.value, (value) => {
     localStorage.setItem("nsfw", value)
@@ -49,12 +69,76 @@ watch(() => hideNSFW.value, (value) => {
 })
 
 onMounted(() => {
-    if(localStorage.getItem("nsfw") === "true") {
+    if (localStorage.getItem("nsfw") === "true") {
         nsfw.value = true
     }
-    if(localStorage.getItem("hideNSFW") === "true") {
+    if (localStorage.getItem("hideNSFW") === "true") {
         hideNSFW.value = true
     }
+
+    if (Cookies.get("token")) {
+        loggedIn.value = true
+    }
+
+    if (window.navigator.standalone && window.navigator.userAgent.match(/(iPhone|iPod|iPad)/i)) {
+        mobile.value = true
+    }
+
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js')
+            .then((registration) => {
+                console.log('Service Worker registriert:', registration);
+            })
+            .catch(console.error);
+    }
+
+    if ('PushManager' in window) {
+        navigator.serviceWorker.ready
+            .then((registration) => {
+                registration.pushManager.getSubscription()
+                    .then((subscription) => {
+                        notificationsActivated.value = subscription !== null
+                    })
+            })
+    }
 })
+
+async function subscribeToPushNotifications() {
+    const publicVapidKey = 'BEPR3h9VaQvFvlh16jWSR_mODSV1hKkq2pIhRsFo5ak7GVJxrBNgndGRdbcRVSA55p8JafuN6U8h_Ct4fbZ0fdk';
+    const registration = await navigator.serviceWorker.ready;
+
+    const applicationServerKey = base64ToUint8Array(publicVapidKey);
+
+    const subscription = await registration.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey,
+    });
+
+    axios.post("https://api.faser.app/api/community/saveSubscription", {
+        subscription: subscription,
+        token: Cookies.get("token")
+    })
+        .then((response) => {
+            notificationsActivated.value = true
+        })
+        .catch((error) => {
+            console.error(error.response.data.message);
+            alert("An error occurred. Please try again later.")
+        });
+}
+
+
+function base64ToUint8Array(base64String) {
+    const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
+    const base64 = (base64String + padding)
+        .replace(/\-/g, '+')
+        .replace(/_/g, '/');
+    const rawData = window.atob(base64);
+    const outputArray = new Uint8Array(rawData.length);
+    for (let i = 0; i < rawData.length; ++i) {
+        outputArray[i] = rawData.charCodeAt(i);
+    }
+    return outputArray;
+}
 
 </script>

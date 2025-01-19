@@ -2,7 +2,9 @@
 import { useGtag, useHead, definePageMeta } from '#imports';
 import Cookies from "js-cookie";
 import { useRoute } from "vue-router";
+import axios from "axios";
 
+const mobile = ref(false)
 const route = useRoute()
 
 useHead({
@@ -48,5 +50,4 @@ if (Cookies.get("accepted") || Cookies.get("essential")) {
   </TooltipProvider>
 </template>
 
-<style>
-</style>
+<style></style>

@@ -216,7 +216,8 @@
                 </p>
             </div>
             <div class="flex gap-2 w-1/3 justify-center cursor-pointer items-center text-gray-300">
-                <RouterLink :to="'/post/' + postContent.postId" class="flex no-underline gap-2 items-center justify-center">
+                <RouterLink :to="'/post/' + postContent.postId"
+                    class="flex no-underline gap-2 items-center justify-center">
                     <i class="fa-regular fa-comment text-xl"></i>
                     <p>
                         {{ postComments }}
@@ -554,8 +555,10 @@ onMounted(() => {
         isAdult.value = true
     }
 
-    if (props.ownProfileData.savedPosts.includes(postId.value)) {
-        savedPost.value = true
+    if(props.ownProfileData.savedPosts) {   
+        if (props.ownProfileData.savedPosts.includes(postId.value)) {
+            savedPost.value = true
+        }
     }
 })
 

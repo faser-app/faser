@@ -85,14 +85,14 @@ function addBirthday() {
         birthday: birthday.value,
         token: Cookies.get("token")
     })
-    .then((response) => {
-        emit("success", {
-            birthday: birthday.value
-        });
-    })
-    .catch((err) => {
-        error.value = err.response.data.error;
-    })
+        .then((response) => {
+            emit("success", {
+                birthday: birthday.value
+            });
+        })
+        .catch((err) => {
+            error.value = err.response.data.error;
+        })
 }
 
 </script>
