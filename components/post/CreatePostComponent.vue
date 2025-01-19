@@ -1,7 +1,7 @@
 <template>
     <div :class="{
         'h-12 w-12': props.mobile === 'true',
-    }" class="p-2 z-100 select-none cursor-pointer text-xl bottom-5 right-5 bg-gradient-to-tr hover:backdrop-brightness-0 from-[#24c7ce] to-[#1ed794] flex justify-center items-center rounded-full"
+    }" class="p-2 px-4 z-100 select-none cursor-pointer text-xl bottom-5 right-5 bg-gradient-to-tr hover:backdrop-brightness-0 from-[#24c7ce] to-[#1ed794] flex justify-center items-center rounded-full"
         @click="openModal">
         {{ props.text }}
     </div>
@@ -128,6 +128,15 @@ const nsfw = ref(false)
 const isAdult = ref(false)
 const ai = ref(false)
 
+const props = defineProps({
+    text: String,
+    mobile: String,
+    ownProfile: Object,
+    community: Boolean,
+    communityId: String,
+    communityObject: Object,
+})
+
 function getPreviewImage(file) {
     return URL.createObjectURL(file);
 }
@@ -184,12 +193,6 @@ function closeModal() {
     window.scrollTo(0, scrollpos);
 }
 
-const props = defineProps({
-    text: String,
-    mobile: String,
-    ownProfile: Object
-})
-
 onMounted(() => {
     const today = new Date()
     const birthDate = new Date(props.ownProfile.birthday)
@@ -202,6 +205,10 @@ onMounted(() => {
     } else {
         isAdult.value = age >= 18
     }
+
+    if (props.communityObject?.nsfw) {
+        isAdult.value = true
+    }
 })
 
 function selectSong(song) {
@@ -212,6 +219,8 @@ function selectSong(song) {
 function uploadPost() {
     loading.value = true
 
+    console.log(props.community)
+
     axios.post("https://api.faser.app/api/social/createPost", {
         token: Cookies.get("token"),
         message: postContent.value,
@@ -220,7 +229,9 @@ function uploadPost() {
         music: selectedTrack.value ? selectedTrack.value.songId : null,
         images: images.value.length,
         nsfw: nsfw.value,
-        ai: ai.value
+        ai: ai.value,
+        community: props.community,
+        communityId: props.communityId
     })
         .then(response => {
 
@@ -230,7 +241,7 @@ function uploadPost() {
                 document.body.classList.remove("overflow-hidden")
                 window.scrollTo(0, scrollpos);
 
-                router.push("/profile")
+                router.go(0)
 
                 loading.value = false
             }

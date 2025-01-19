@@ -16,10 +16,6 @@ export default defineNuxtConfig({
       title: "faser.app",
       link: [
         {
-          rel: "stylesheet",
-          href: "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css",
-        },
-        {
           rel: "icon",
           type: "image/x-icon",
           href: "/favicon.ico",
@@ -35,12 +31,6 @@ export default defineNuxtConfig({
       ],
       meta: [
         {
-          hid: "keywords",
-          name: "keywords",
-          content:
-            "faser app, social media app, microblogging, post short messages, online community, social network, app for short posts, social platform, microblogging platform, app for discussions, share trends, social media interactions, gain followers, create posts, social sharing, social networks, social media exchange, trending topics, user-generated content, social connection",
-        },
-        {
           name: "apple-mobile-web-app-capable",
           content: "yes",
         },
@@ -52,16 +42,6 @@ export default defineNuxtConfig({
           name: "viewport",
           content:
             "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0",
-        },
-      ],
-      script: [
-        {
-          src: "https://cdn.jsdelivr.net/npm/ldrs/dist/auto/lineWobble.js",
-          type: "module",
-        },
-        {
-          src: "https://cdn.jsdelivr.net/npm/ldrs/dist/auto/zoomies.js",
-          type: "module",
         },
       ],
     },

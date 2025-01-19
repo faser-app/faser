@@ -7,13 +7,12 @@
         </div>
         <div v-for="(community, index) in communities" :key="community.name">
           <RouterLink :to="'/communities/' + community.id">
-            <div class="w-full flex mr-8 h-fit truncate items-center pr-3 justify-between rounded-xl bg-gray-800">
+            <div class="w-full mb-2 flex mr-8 h-fit truncate items-center pr-3 justify-between rounded-xl bg-gray-800">
               <div class="flex items-center">
-                <img src="https://picsum.photos/200" alt="profile picture" class="rounded-full h-8 w-8 m-2" />
+                <i class="fa-solid fa-users p-2 text-lg"></i>
                 {{ community.displayName }}
               </div>
-              <i class="fa-solid fa-eye-slash"></i>
-
+              <i v-if="community.private" class="fa-solid fa-lock"></i>
             </div>
           </RouterLink>
         </div>
@@ -110,7 +109,8 @@
           </div>
           <p class="w-full pl-5 pb-3">Member since {{ sinceString }}</p>
         </div>
-        <div class="flex flex-wrap mt-2 md:bg-gray-900 bg-black mb-2 md:w-full md:ml-1 rounded-xl pl-1 md:pr-2 items-center md:mr-2 h-fit">
+        <div
+          class="flex flex-wrap mt-2 md:bg-gray-900 bg-black mb-2 md:w-full md:ml-1 rounded-xl pl-1 md:pr-2 items-center md:mr-2 h-fit">
           <div class="p-2 mt-2 md:bg-gray-900 bg-black w-full md:pr-3 md:ml-2 rounded-xl items-center h-fit">
             <div v-if="posts == 0" class="h-36 flex justify-center items-center">
               <p class="italic text-gray-400">No posts yet</p>

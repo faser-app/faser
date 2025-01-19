@@ -59,14 +59,15 @@
                     <i class="fa-solid fa-chevron-up rotate-90 mr-2"></i>
                 </div>
             </div>
-            
+
         </div>
     </div>
 
     <ChangeDisplayNameModal />
     <AccountChangeBirthdayModal :showModal="birthModal" @close="birthModal = false" @success="changeBirthday" />
     <AccountChangeBioModal :showModal="bioModal" @close="bioModal = false" @success="updateBio" />
-    <AccountChangeSongModal :showModal="musicModal" :profile-selector="true" @close="musicModal = false" @success="updateSong" />
+    <AccountChangeSongModal :showModal="musicModal" :profile-selector="true" @close="musicModal = false"
+        @success="updateSong" />
 </template>
 
 <script setup>
