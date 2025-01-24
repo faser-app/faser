@@ -53,7 +53,7 @@
                                 <button :class="[
                                         active ? 'bg-gray-600 text-green-500' : 'text-green-500',
                                         'group flex w-full items-center rounded-md px-2 py-2 text-sm',
-                                    ]">
+                                    ]" @click="joinCommunity">
                                     Join Community
                                 </button>
                                 </MenuItem>
@@ -61,8 +61,17 @@
                                 <button :class="[
                                         active ? 'bg-gray-600 text-red-500' : 'text-red-500',
                                         'group flex w-full items-center rounded-md px-2 py-2 text-sm',
-                                    ]">
+                                    ]" @click="leaveCommunity">
                                     Leave Community
+                                </button>
+                                </MenuItem>
+                                <MenuItem v-if="communityObject.owner === ownProfileData.id" v-slot="{ active }">
+                                <button :class="[
+                                        active ? 'bg-gray-600 text-red-500' : 'text-red-500',
+                                        'group flex w-full items-center rounded-md px-2 py-2 text-sm',
+                                    ]" @click="deleteCommunity">
+                                    <i class="fa-solid fa-triangle-exclamation mr-2"></i>
+                                    Delete Community
                                 </button>
                                 </MenuItem>
                             </div>
@@ -100,8 +109,16 @@
                 <div
                     class="flex flex-wrap mt-2 md:bg-gray-900 bg-black mb-2 md:w-full md:ml-1 rounded-xl pl-1 md:pr-2 items-center md:mr-2 h-fit">
                     <div class="p-2 mt-2 md:bg-gray-900 bg-black w-full md:pr-3 md:ml-2 rounded-xl items-center h-fit">
-                        <div v-if="posts === 0" class="h-36 flex justify-center items-center">
+                        <div v-if="posts === 0 && !communityObject.private"
+                            class="h-36 flex justify-center items-center">
                             <p class="italic text-gray-400">No posts yet</p>
+                        </div>
+                        <div v-else-if="posts === 0 && communityObject.private"
+                            class="h-36 flex justify-center items-center">
+                            <p class="text-gray-400 italic text-center">This community is private. You need to be
+                                invited to
+                                see
+                                posts.</p>
                         </div>
                         <div v-else v-for="(post, index) in loadedPosts" :key="post" class="w-full block">
                             <PostGetPostComponent :postId="post" ownProfile="false" :is-community="true"
@@ -116,7 +133,8 @@
     </div>
 
     <ViewRulesModal :showModal="showRulesModal" :rules="rules" @close="showRulesModal = false" class="z-[100]" />
-    <CreateInviteLinkModal :showModal="showInviteLinkModal" :community-id="communityObject.id" @close="showInviteLinkModal = false" class="z-[100]" />
+    <CreateInviteLinkModal :showModal="showInviteLinkModal" :community-id="communityObject.id"
+        @close="showInviteLinkModal = false" class="z-[100]" />
 </template>
 
 <script setup>
@@ -198,6 +216,45 @@ function getMembers() {
     })
         .then((response) => {
             memberArray.value = response.data.members
+        })
+}
+
+function leaveCommunity() {
+    axios.post("https://api.faser.app/api/community/leaveCommunity", {
+        token: Cookie.get("token"),
+        communityId: props.communityId
+    })
+        .then((response) => {
+            getMembers()
+        })
+        .catch((error) => {
+            alert(error.response.data.message)
+        })
+}
+
+function joinCommunity() {
+    axios.post("https://api.faser.app/api/community/joinCommunity", {
+        token: Cookie.get("token"),
+        communityId: props.communityId
+    })
+        .then((response) => {
+            getMembers()
+        })
+        .catch((error) => {
+            alert(error.response.data.message)
+        })
+}
+
+function deleteCommunity() {
+    axios.post("https://api.faser.app/api/community/deleteCommunity", {
+        token: Cookie.get("token"),
+        communityId: props.communityId
+    })
+        .then((response) => {
+            router.push("/communities")
+        })
+        .catch((error) => {
+            alert(error.response.data.message)
         })
 }
 
