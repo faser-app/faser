@@ -91,7 +91,7 @@ function loadPosts() {
       loading.value = true
       axios.post("https://api.faser.app/api/posts/loadPosts", {
         token: Cookies.get("token"),
-        loadPosts: 3,
+        loadPosts: 5,
         lastTimestamp: lastTimestamp.value,
       })
         .then((response) => {
