@@ -127,4 +127,13 @@ function upload() {
         });
 }
 
+function removeImage() {
+    axios.post("https://api.faser.app/api/profile/removeProfilePhoto", {
+        token: Cookies.get("token")
+    })
+    .then((response) => {
+        router.push("/profile");
+    });
+}
+
 </script>
