@@ -3,12 +3,16 @@
         <div v-if="isLoading" class="text-center mt-5">Loading...</div>
         <div v-else>
             <div class="w-full justify-center">
-                <PostGetPostComponent :postId="postId" :ownProfile="false" :ownProfileData="ownProfileData"
-                    :account="accountData" />
-                <div class="mt-5">
-                    <div v-for="(comment, index) in comments" :key="comment">
-                        <PostGetPostComponent :postId="comment" :ownProfile="ownProfileArray[index]"
-                            :ownProfileData="ownProfileData" :account="accountData" />
+                <div class="flex justify-center">
+                    <PostGetPostComponent :postId="postId" :ownProfile="false" :ownProfileData="ownProfileData"
+                        :account="accountData" class="rounded-xl" />
+                </div>
+                <div class="mt-5 rounded-xö flex justify-center">
+                    <div class="flex flex-col max-w-[90rem] w-full overflow-hidden rounded-xl">
+                        <div v-for="(comment, index) in comments" :key="comment">
+                            <PostGetPostComponent :postId="comment" :ownProfile="ownProfileArray[index]"
+                                :ownProfileData="ownProfileData" :account="accountData" />
+                        </div>
                     </div>
                 </div>
             </div>
