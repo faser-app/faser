@@ -82,7 +82,9 @@ function changeUses(act) {
 }
 
 function generateInviteLink() {
-    console.log(uses.value, expirationDate.value.value)
+    if (uses.value === 0) {
+        uses.value = -1
+    }
     axios.post("https://api.faser.app/api/community/createInvite", {
         token: Cookies.get("token"),
         communityId: props.communityId,

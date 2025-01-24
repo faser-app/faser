@@ -31,6 +31,23 @@
                             {{ tag }}
                         </div>
                     </div>
+                    <div class="mt-3">
+                        <p class="text-gray-400">Rules</p>
+                        <div>
+                            {{ community.rules }}
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        <p class="text-gray-400" v-if="community.nsfw || community.private">General info</p>
+                        <div class="flex gap-2">
+                            <div v-if="community.nsfw" class="bg-red-500 p-2 rounded-lg">
+                                <p class="text-white">NSFW</p>
+                            </div>
+                            <div v-if="community.private" class="bg-blue-500 p-2 rounded-lg">
+                                <p class="text-white">Private</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="md:w-1/2 text-center flex flex-col items-end justify-center">
                     <img src="https://faser.app/icon/logo.png" alt="Faser Logo" class="w-fzull">
