@@ -65,20 +65,4 @@ function login() {
       error.value = err.response.data.message;
     });
 }
-
-onMounted(() => {
-  if (Cookies.get("token")) {
-    const url = "https://api.faser.app/api/account/getOwnProfile";
-
-    axios
-      .get(url, {
-        headers: {
-          token: Cookies.get("token"),
-        },
-      })
-      .then((response) => {
-        router.push("/");
-      });
-  }
-});
 </script>

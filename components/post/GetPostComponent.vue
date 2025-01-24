@@ -107,7 +107,8 @@
                                             <i class="fa-solid fa-arrow-up-from-bracket"></i>
                                         </div>
                                     </div>
-                                    <div class="w-1/2 md:bg-gray-900 bg-black p-2 cursor-pointer rounded-lg py-3"
+                                    <div v-if="!props.isCommunity"
+                                        class="w-1/2 md:bg-gray-900 bg-black p-2 cursor-pointer rounded-lg py-3"
                                         @click="toggleSave">
                                         <div class="mr-2 flex w-full justify-center items-center text-gray-300">
                                             <i v-if="!savedPost" class="fa-regular fa-bookmark"></i>
@@ -117,7 +118,7 @@
                                 </div>
                             </div>
                             </MenuItem>
-                            <MenuItem v-slot="{ active }" v-if="isAuthor === 'true'">
+                            <MenuItem v-slot="{ active }" v-if="isAuthor">
                             <button :class="[
                                 active ? 'bg-gray-600 text-white' : 'text-gray-200',
                                 'group flex w-full items-center rounded-md px-2 py-2 text-sm',
@@ -126,7 +127,7 @@
                                 Delete
                             </button>
                             </MenuItem>
-                            <MenuItem v-slot="{ active }" v-if="isAuthor === 'true'">
+                            <MenuItem v-slot="{ active }" v-if="isAuthor">
                             <button :class="[
                                 active ? 'bg-gray-600 text-white' : 'text-gray-200',
                                 'group flex w-full items-center rounded-md px-2 py-2 text-sm',
@@ -242,7 +243,7 @@
 
 
         <transition name="fade" @leave="leave">
-            <div class="fixed top-0 left-0 w-screen h-screen backdrop-blur z-50 flex justify-center items-center"
+            <div class="fixed top-0 left-0 w-screen h-screen backdrop-blur z-[200] flex justify-center items-center"
                 @click.self="showModal = false" v-if="showModal">
                 <div class="bg-gray-900 p-5 text-center max-w-[80svw] rounded-xl m-3 md:w-auto w-full" :class="{
                     'animation': showModal,
@@ -267,7 +268,7 @@
             </div>
         </transition>
         <transition name="fade" @leave="leave">
-            <div class="fixed top-0 left-0 w-screen h-screen backdrop-blur z-50 flex justify-center items-center"
+            <div class="fixed top-0 left-0 w-screen h-screen backdrop-blur z-[200] flex justify-center items-center"
                 @click.self="showEditModal = false" v-if="showEditModal">
                 <!-- <div v-if="ownProfileData.advancedUser"> -->
                 <div>
@@ -318,7 +319,7 @@
 
         <Transition name="fade" @leave="leave" @enter="enter">
             <div v-if="showReport"
-                class="fixed h-full z-100 z-50 w-full backdrop-blur top-0 left-0 flex justify-center items-center">
+                class="fixed h-full z-[200] w-full backdrop-blur top-0 left-0 flex justify-center items-center">
                 <div class="bg-gray-800 w-[60rem] max-h-[80svh] overflow-y-scroll mx-4 p-2 rounded-xl">
                     <div class="w-full flex items-center justify-center text-xl font-bold">
                         <h1 class="w-full text-center">Report Post</h1>
@@ -380,9 +381,21 @@ const embed = ref({
     title: "",
     description: "",
     image: "",
-    type: ""
+    type: "",
 })
 
+const props = defineProps({
+    postId: String,
+    ownProfile: Boolean,
+    account: Object,
+    ownProfileData: Object,
+    admin: Boolean,
+    border: Boolean,
+    isCommunity: Boolean || false,
+    communityId: String,
+})
+
+const isAuthor = ref(false)
 
 if (localStorage.getItem("nsfw") === "true") {
     showPost.value = true
@@ -395,6 +408,8 @@ watch(() => postContent.value, (value) => {
     if (value.nsfw && hideNSFW.value) {
         postVisible.value = false
     }
+
+    isAuthor.value = props.ownProfileData.id === value.authorId
 })
 
 let scrollpos = window.scrollY
@@ -459,7 +474,8 @@ function postComment() {
         lang: "en",
         type: 'comment',
         parentPost: postId.value,
-        images: 0
+        images: 0,
+        community: postContent.value.postId.includes("cmt"),
     })
         .then(() => {
             if (router.currentRoute.value.path.startsWith("/post/")) {
@@ -485,15 +501,6 @@ function toggleNSFW() {
     }
 }
 
-const props = defineProps({
-    postId: String,
-    ownProfile: Boolean,
-    account: Object,
-    ownProfileData: Object,
-    admin: Boolean,
-    border: Boolean,
-})
-
 function toggleSave() {
     if (savedPost.value) {
         unsavePost()
@@ -505,7 +512,7 @@ function toggleSave() {
 function savePost() {
     axios.post("https://api.faser.app/api/social/savePost", {
         postId: postId.value,
-        token: Cookies.get("token")
+        token: Cookies.get("token"),
     })
         .then(() => {
             savedPost.value = true
@@ -515,7 +522,7 @@ function savePost() {
 function unsavePost() {
     axios.post("https://api.faser.app/api/social/unsavePost", {
         postId: postId.value,
-        token: Cookies.get("token")
+        token: Cookies.get("token"),
     })
         .then(() => {
             savedPost.value = false
@@ -555,7 +562,7 @@ onMounted(() => {
         isAdult.value = true
     }
 
-    if(props.ownProfileData.savedPosts) {   
+    if (props.ownProfileData.savedPosts) {
         if (props.ownProfileData.savedPosts.includes(postId.value)) {
             savedPost.value = true
         }
@@ -570,7 +577,8 @@ function closeMenu() {
 
 axios.get("https://api.faser.app/api/profile/getPostProfile", {
     headers: {
-        postId: props.postId
+        postId: props.postId,
+        community: props.isCommunity,
     }
 })
     .then((response) => {
@@ -594,7 +602,8 @@ function toggleLike() {
 
     axios.post("https://api.faser.app/api/social/toggleLike", {
         postId: postId.value,
-        token: Cookies.get("token")
+        token: Cookies.get("token"),
+        community: props.isCommunity
     })
         .then(() => {
         })
@@ -625,7 +634,9 @@ function deletePost() {
     if (!props.admin) {
         axios.post("https://api.faser.app/api/social/deletePost", {
             postid: postId.value,
-            token: Cookies.get("token")
+            token: Cookies.get("token"),
+            community: props.isCommunity,
+            communityId: props.communityId
         })
             .then(() => {
                 postVisible.value = false
@@ -634,7 +645,8 @@ function deletePost() {
     } else {
         axios.post("https://api.faser.app/api/admin/deletePost", {
             postId: postId.value,
-            token: Cookies.get("token")
+            token: Cookies.get("token"),
+            community: props.isCommunity
         })
             .then(() => {
                 postVisible.value = false
@@ -647,7 +659,8 @@ function editPost() {
     axios.post("https://api.faser.app/api/social/editPost", {
         postId: postId.value,
         token: Cookies.get("token"),
-        message: postContent.value.content
+        message: postContent.value.content,
+        community: props.isCommunity
     })
         .then(() => {
             showEditModal.value = false
@@ -658,8 +671,6 @@ function editPost() {
 function openreport() {
     openReport.value = true
 }
-
-const isAuthor = ref(props.ownProfile)
 
 function openImage(imageSrcValue) {
     showImageModal.value = true
@@ -737,10 +748,12 @@ function reloadStats() {
     axios.get("https://api.faser.app/api/social/fetchPost", {
         headers: {
             postId: postId.value,
+            community: props.isCommunity,
             token: Cookies.get("token")
         }
     })
         .then((response) => {
+
             postContent.value = response.data[0]
             postCreatedAt.value = formatTimeDifference(postContent.value.creationDate)
 
@@ -759,9 +772,15 @@ function reloadStats() {
             postType.value = response.data[0].postType
             parentPost.value = response.data[0].parentPost
         })
+        .catch((err) => {
+            console.error(err)
+
+            console.log(props)
+        })
 }
 
 onMounted(() => {
+
     reloadStats()
 })
 </script>

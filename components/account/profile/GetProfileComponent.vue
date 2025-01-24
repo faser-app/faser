@@ -7,9 +7,12 @@
         </div>
         <div v-for="community in communities" :key="community.name">
           <RouterLink :to="'/communities/' + community.id">
-            <div class="w-full flex mr-8 h-fit truncate items-center rounded-xl bg-gray-800">
-              <img src="https://picsum.photos/200" alt="profile picture" class="rounded-full h-8 w-8 m-2" />
-              {{ community.displayName }}
+            <div class="w-full mb-2 flex mr-8 h-fit truncate items-center pr-3 justify-between rounded-xl bg-gray-800">
+              <div class="flex items-center">
+                <i class="fa-solid fa-users p-2 text-lg"></i>
+                {{ community.displayName }}
+              </div>
+              <i v-if="community.private" class="fa-solid fa-lock"></i>
             </div>
           </RouterLink>
         </div>
