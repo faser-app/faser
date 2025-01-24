@@ -87,9 +87,9 @@ function joinCommunity() {
         })
         .catch((error) => {
             console.log(error.response)
-            if (error.response.data.message === "Already a member") {
+            if (error.response.data.message) {
                 disableJoinButton.value = true
-                joinButtonText.value = "Already a member"
+                joinButtonText.value = error.response.data.message
             }
         })
 }
