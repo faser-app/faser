@@ -51,8 +51,6 @@
             </div>
         </div>
     </Transition>
-
-    {{ props.showModal }}
 </template>
 
 <script setup>
