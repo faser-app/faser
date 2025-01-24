@@ -30,7 +30,7 @@
                         'border border-red-500': error
                     }">
                         <textarea class="w-full h-40 bg-gray-800 text-white pt-0 mt-2 resize-none focus:outline-none"
-                            v-model="postContent" @input="error = ''"
+                            v-model="postContent" @input="error = ''" @paste="checkPaste"
                             placeholder="What are you thinking about?"></textarea>
 
                         <div v-if="selectedTrack">
@@ -215,6 +215,26 @@ function selectSong(song) {
     selectedTrack.value = song
     searchSong.value = false
 }
+
+function checkPaste(event) {
+    const items = (event.clipboardData || event.originalEvent.clipboardData).items;
+
+    for (let index in items) { // 'let' hinzugefügt
+        const item = items[index];
+
+        if (item.kind === 'file') {
+            const blob = item.getAsFile();
+            const reader = new FileReader();
+
+            reader.onload = function () {
+                images.value.push(blob);
+            };
+
+            reader.readAsDataURL(blob);
+        }
+    }
+}
+
 
 function uploadPost() {
     loading.value = true
