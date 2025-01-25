@@ -302,17 +302,25 @@
             </div>
         </transition>
         <transition name="fade" @leave="leave">
-            <div class="fixed top-0 z-[200] left-0 w-screen h-screen backdrop-blur flex justify-center items-center"
+            <div class="fixed md:bg-transparent bg-black top-0 z-[200] left-0 w-screen h-screen backdrop-blur flex justify-center items-center"
                 @click.self="showImageModal = false" v-if="showImageModal">
-                <div class="bg-gray-900 p-5 text-center rounded-xl max-w-[80svw] m-3 md:w-auto w-full" :class="{
+                <div class="md:p-5 overflow-auto text-center md:rounded-xl md:max-w-[80svw] md:m-3 md:w-auto w-full"
+                    :class="{
                     'animation': showImageModal,
                 }">
-                    <div class="flex w-full justify-end p-0 m-0 mb-4 text-xl">
+                    <div class="md:flex md:w-full md:justify-end md:p-0 md:m-0 md:mb-4 text-xl fixed top-2 right-2">
                         <i class="fa-solid fa-xmark cursor-pointer" @click="showImageModal = false"></i>
                     </div>
 
-                    <img :src="imageSrc"
-                        class="w-full select-none h-full object-cover rounded-lg max-w-[95svw] max-h-[92svh]" />
+                    <div class="overflow-x-scroll scroll-snap-x">
+                        <div class="inline-flex md:gap-2 mt-2">
+                            <div v-for="image in postContent.images" :key="image"
+                                class="md:bg-transparent bg-black md:p-2 rounded-xl flex items-center scroll-snap-item">
+                                <img :src="'https://s3.faser.app/postimages/' + author.id + '/' + postContent.postId + '/' + image + '.png'"
+                                    class="md:max-w-80 max-w-[100vw] h-fit md:rounded-lg cursor-pointer" />
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </transition>
