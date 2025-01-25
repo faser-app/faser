@@ -306,6 +306,7 @@
                 @click.self="showImageModal = false" v-if="showImageModal">
                 <div class="overflow-auto text-center md:rounded-xl md:w-auto w-full" :class="{
                     'animation': showImageModal,
+                    'transition-all duration-150': !isDragging
                 }" @touchstart="handleTouchStart" @touchmove="handleTouchMove" @touchend="handleTouchEnd"
                     :style="{ transform: `translateY(${translateY}px)` }">
 
@@ -473,11 +474,11 @@ const handleTouchMove = (event) => {
 
 const handleTouchEnd = () => {
     isDragging.value = false;
-    // translateY.value = 0;
-
+    
     if (translateY.value > 200) {
         showImageModal.value = false
     }
+    translateY.value = 0;
 };
 
 watch(() => showModal.value, (value) => {
