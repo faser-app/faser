@@ -313,11 +313,11 @@
                     </div>
 
                     <div class="overflow-x-scroll scroll-snap-x">
-                        <div class="inline-flex md:gap-2 md:mt-2">
+                        <div class="inline-flex md:gap-2 mt-2">
                             <div v-for="image in postContent.images" :key="image"
-                                class="md:bg-transparent bg-black md:p-2 rounded-xl scroll-snap-item" @click.self="showImageModal = false">
+                                class="md:bg-transparent bg-black md:p-2 rounded-xl flex items-center scroll-snap-item">
                                 <img :src="'https://s3.faser.app/postimages/' + author.id + '/' + postContent.postId + '/' + image + '.png'"
-                                    class="max-w-[100vw] min-w-[100vw] max-h-screen md:rounded-lg md:max-w-[80svw] md:min-w-fit md:max-h-[80svh]" />
+                                    class="md:max-w-80 max-w-[100vw] h-fit md:rounded-lg cursor-pointer" />
                             </div>
                         </div>
                     </div>
