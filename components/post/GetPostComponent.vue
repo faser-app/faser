@@ -304,7 +304,7 @@
         <transition name="fade" @leave="leave">
             <div class="fixed md:bg-transparent bg-black top-0 z-[200] left-0 w-screen h-screen backdrop-blur flex justify-center items-center"
                 @click.self="showImageModal = false" v-if="showImageModal">
-                <div class="md:p-5 overflow-auto text-center md:rounded-xl md:max-w-[80svw] md:m-3 md:w-auto w-full"
+                <div class="overflow-auto text-center md:rounded-xl md:w-auto w-full"
                     :class="{
                     'animation': showImageModal,
                 }">
@@ -313,11 +313,11 @@
                     </div>
 
                     <div class="overflow-x-scroll scroll-snap-x">
-                        <div class="inline-flex md:gap-2 mt-2">
+                        <div class="inline-flex md:gap-2 md:mt-2">
                             <div v-for="image in postContent.images" :key="image"
-                                class="md:bg-transparent bg-black md:p-2 rounded-xl flex items-center scroll-snap-item">
+                                class="md:bg-transparent w-screen md:w-auto justify-center bg-black md:p-2 rounded-xl flex items-center scroll-snap-item" @click.self="showImageModal = false">
                                 <img :src="'https://s3.faser.app/postimages/' + author.id + '/' + postContent.postId + '/' + image + '.png'"
-                                    class="md:max-w-80 max-w-[100vw] h-fit md:rounded-lg cursor-pointer" />
+                                    class="max-w-[100vw] max-h-screen md:rounded-lg md:max-w-[80svw] md:w-auto md:max-h-[80svh]" />
                             </div>
                         </div>
                     </div>
