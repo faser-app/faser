@@ -304,10 +304,10 @@
         <transition name="fade" @leave="leave">
             <div class="fixed md:bg-transparent bg-black top-0 z-[200] left-0 w-screen h-screen backdrop-blur flex justify-center items-center"
                 @click.self="showImageModal = false" v-if="showImageModal">
-                <div class="overflow-auto text-center md:rounded-xl md:w-auto w-full"
-                    :class="{
+                <div class="overflow-auto text-center md:rounded-xl md:w-auto w-full" :class="{
                     'animation': showImageModal,
-                }">
+                }" @touchstart="handleTouchStart" @touchmove="handleTouchMove" @touchend="handleTouchEnd"
+                    :style="{ transform: `translateY(${translateY}px)` }">
                     <div class="md:flex md:w-full md:justify-end md:p-0 md:m-0 md:mb-4 text-xl fixed top-2 right-2">
                         <i class="fa-solid fa-xmark cursor-pointer" @click="showImageModal = false"></i>
                     </div>
@@ -315,7 +315,8 @@
                     <div class="overflow-x-scroll scroll-snap-x">
                         <div class="inline-flex md:gap-2 md:mt-2">
                             <div v-for="image in postContent.images" :key="image"
-                                class="md:bg-transparent w-screen md:w-auto justify-center bg-black md:p-2 rounded-xl flex items-center scroll-snap-item" @click.self="showImageModal = false">
+                                class="md:bg-transparent w-screen md:w-auto justify-center bg-black md:p-2 rounded-xl flex items-center scroll-snap-item"
+                                @click.self="showImageModal = false">
                                 <img :src="'https://s3.faser.app/postimages/' + author.id + '/' + postContent.postId + '/' + image + '.png'"
                                     class="max-w-[100vw] max-h-screen md:rounded-lg md:max-w-[80svw] md:w-auto md:max-h-[80svh]" />
                             </div>
@@ -384,6 +385,10 @@ const hideNSFW = ref(false)
 const showTooltip = ref(false)
 const localDateTime = ref("")
 const savedPost = ref(false)
+const isDragging = ref(false)
+const startY = ref(0)
+const currentY = ref(0)
+const translateY = ref(0)
 const embed = ref({
     url: "",
     title: "",
@@ -455,6 +460,28 @@ watch(() => showEditModal, (value) => {
         window.scrollTo(0, scrollpos);
     }
 })
+
+const handleTouchStart = (event) => {
+    isDragging.value = true;
+    startY.value = event.touches[0].clientY;
+};
+
+const handleTouchMove = (event) => {
+    if (!isDragging.value) return;
+    currentY.value = event.touches[0].clientY;
+    if (currentY.value - startY.value > 0) {
+        translateY.value = currentY.value - startY.value;
+    }
+};
+
+const handleTouchEnd = () => {
+    isDragging.value = false;
+    // translateY.value = 0;
+
+    if (translateY.value > 200) {
+        showImageModal.value = false
+    }
+};
 
 watch(() => showModal.value, (value) => {
     if (value) {
@@ -683,6 +710,7 @@ function openreport() {
 function openImage(imageSrcValue) {
     showImageModal.value = true
     imageSrc.value = imageSrcValue
+    translateY.value = 0
 }
 
 function formatTimeDifference(timestamp) {
