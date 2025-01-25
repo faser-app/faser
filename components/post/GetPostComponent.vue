@@ -308,9 +308,6 @@
                     'animation': showImageModal,
                 }" @touchstart="handleTouchStart" @touchmove="handleTouchMove" @touchend="handleTouchEnd"
                     :style="{ transform: `translateY(${translateY}px)` }">
-                    <div class="md:flex md:w-full md:justify-end md:p-0 md:m-0 md:mb-4 text-xl fixed top-2 right-2">
-                        <i class="fa-solid fa-xmark cursor-pointer" @click="showImageModal = false"></i>
-                    </div>
 
                     <div class="overflow-x-scroll scroll-snap-x">
                         <div class="inline-flex md:gap-2 md:mt-2">
