@@ -1,8 +1,20 @@
 import { useFetch, useHead } from "#app";
 
 export default defineNuxtRouteMiddleware(async (to, from) => {
-  const url = "https://api.faser.app/api/social/fetchPost";
+  const userAgent = process.server
+    ? useRequestHeaders()["user-agent"]
+    : navigator.userAgent;
 
+  // Prüfen, ob der User-Agent auf einen Bot hinweist
+  const isBot = /discordbot|facebookexternalhit|Twitterbot|Slackbot/i.test(
+    userAgent
+  );
+
+  if (!isBot) {
+    return; // Keine Requests oder Head-Meta-Tags für normale User
+  }
+
+  const url = "https://api.faser.app/api/social/fetchPost";
   const postId = to.params.post;
 
   const headers = {
