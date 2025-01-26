@@ -306,7 +306,7 @@
                 @click.self="showImageModal = false" v-if="showImageModal">
                 <div class="overflow-auto text-center md:rounded-xl md:w-auto w-full" :class="{
                     'animation': showImageModal,
-                    'transition-all duration-150': !isDragging
+                    'transition-back duration-300': !isDragging
                 }" @touchstart="handleTouchStart" @touchmove="handleTouchMove" @touchend="handleTouchEnd"
                     :style="{ transform: `translateY(${translateY}px)` }">
 
@@ -909,5 +909,9 @@ onMounted(() => {
 
 i {
     z-index: 0;
+}
+
+.transition-back {
+    transition: all 500ms cubic-bezier(.46, 0, 0, 1.31);
 }
 </style>
