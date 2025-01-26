@@ -39,11 +39,18 @@
                     <p>Activate Notifications</p>
                 </div>
             </div>
-            <div v-else-if="mobile && notificationsActivated"
+            <div v-if="mobile && notificationsActivated"
                 class="w-full mt-0.5 bg-gray-800 flex justify-between items-center p-2 gap-2 py-4 cursor-pointer">
                 <div class="flex items-center gap-2">
                     <i class="fa-solid fa-bell"></i>
                     <p>Notifications activated</p>
+                </div>
+            </div>
+            <div v-if="mobile && notificationsActivated" @click="removeSubscription"
+                class="w-full mt-0.5 bg-gray-800 flex justify-between items-center p-2 gap-2 py-4 cursor-pointer">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-bell"></i>
+                    <p>Disable Notifications</p>
                 </div>
             </div>
         </div>
@@ -116,7 +123,7 @@ async function subscribeToPushNotifications() {
 
     axios.post("https://api.faser.app/api/community/saveSubscription", {
         subscription: subscription,
-        token: Cookies.get("token")
+        tokens: JSON.parse(Cookies.get("tokenList"))
     })
         .then((response) => {
             notificationsActivated.value = true
@@ -127,6 +134,11 @@ async function subscribeToPushNotifications() {
         });
 }
 
+async function removeSubscription() {
+    const registration = await navigator.serviceWorker.ready;
+    const subscription = await registration.pushManager.getSubscription();
+    subscription.unsubscribe();
+}
 
 function base64ToUint8Array(base64String) {
     const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
