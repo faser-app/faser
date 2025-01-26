@@ -4,7 +4,7 @@
             'top-[4.5rem]': !mobile,
             'top-0': mobile
         }">
-            <div class="flex items-center gap-2">
+            <RouterLink :to="'/' + profile[0].username" class="flex items-center gap-2">
                 <img v-if="haveProfile"
                     :src="'https://s3.faser.app/profilepictures/' + profile[0].id + '/image.png' + '?t=' + new Date().getTime()"
                     :class="{
@@ -33,7 +33,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </RouterLink>
 
 
             <!-- <div class="flex items-center mr-4 bg-gray-800 w-10 h-10 justify-center rounded-full">
