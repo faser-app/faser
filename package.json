@@ -21,6 +21,7 @@
     "nuxt": "^3.12.4",
     "nuxt-gtag": "^3.0.1",
     "nuxt-og-image": "^3.0.4",
+    "posthog-js": "^1.214.0",
     "vue": "latest"
   },
   "devDependencies": {

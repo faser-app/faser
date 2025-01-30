@@ -31,9 +31,6 @@
 
 <script setup>
 import Cookie from "js-cookie";
-import { useGtag } from "#imports";
-
-const gTag = useGtag();
 const mobile = ref(false);
 
 const links = ref([
@@ -64,11 +61,6 @@ if (window.navigator.standalone && window.navigator.userAgent.match(/(iPhone|iPo
 }
 
 function resetCookies() {
-  gTag.gtag('consent', 'update', {
-    ad_storage: 'denied',
-    analytics_storage: 'denied'
-  });
-
   Object.keys(Cookie.get()).forEach((cookie) => {
     Cookie.remove(cookie);
   });

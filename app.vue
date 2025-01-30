@@ -1,8 +1,9 @@
 <script setup>
-import { useGtag, useHead, definePageMeta } from '#imports';
 import Cookies from "js-cookie";
 import { useRoute } from "vue-router";
 import axios from "axios";
+import posthog from 'posthog-js'
+
 
 const mobile = ref(false)
 const route = useRoute()
@@ -20,22 +21,19 @@ const pagesWithoutFooter = ref([
   "messages"
 ])
 
-const gTag = useGtag()
-
-if (Cookies.get("token")) {
-  gTag.gtag('event', 'logged_in', {
-    'logged_in': 'true'
-  });
-} else {
-  gTag.gtag('event', 'not_logged_in', {
-    'not_logged_in': 'true'
-  });
-}
-
 const accepted = ref(false)
 
 if (Cookies.get("accepted") || Cookies.get("essential")) {
   accepted.value = true
+}
+
+if (Cookies.get("accepted")) {
+  posthog.init('phc_KiJYjTkcLZtWEX9HM20Sybwv8HiR8UMCTCf5adoKJPf',
+    {
+      api_host: 'https://eu.i.posthog.com',
+      person_profiles: 'always'
+    }
+  )
 }
 </script>
 

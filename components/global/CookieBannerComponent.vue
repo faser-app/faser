@@ -21,28 +21,15 @@
 
 <script setup>
 import Cookies from "js-cookie"
-import { useGtag } from "#imports"
-
-const gTag = useGtag()
 
 function acceptAllCookies() {
     Cookies.set("accepted", true, { expires: 365 });
-
-    gTag.gtag('consent', 'update', {
-        ad_storage: 'granted',
-        analytics_storage: 'granted'
-    });
 
     window.location.reload();
 }
 
 function acceptEssentialCookies() {
     Cookies.set("essential", true, { expires: 365 });
-
-    gTag.gtag('consent', 'update', {
-        ad_storage: 'denied',
-        analytics_storage: 'denied'
-    });
 
     window.location.reload();
 }
