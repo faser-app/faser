@@ -2,8 +2,6 @@
 import Cookies from "js-cookie";
 import { useRoute } from "vue-router";
 import axios from "axios";
-import posthog from 'posthog-js'
-
 
 const mobile = ref(false)
 const route = useRoute()
@@ -25,15 +23,6 @@ const accepted = ref(false)
 
 if (Cookies.get("accepted") || Cookies.get("essential")) {
   accepted.value = true
-}
-
-if (Cookies.get("accepted")) {
-  posthog.init('phc_KiJYjTkcLZtWEX9HM20Sybwv8HiR8UMCTCf5adoKJPf',
-    {
-      api_host: 'https://eu.i.posthog.com',
-      person_profiles: 'always'
-    }
-  )
 }
 </script>
 
