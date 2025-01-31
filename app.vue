@@ -26,7 +26,7 @@ if (Cookies.get("accepted") || Cookies.get("essential")) {
   accepted.value = true
 }
 
-if (Cookies.get("accepted")) {
+if (Cookies.get("accepted") && Cookies.get("token")) {
   // if (!window.location.host.includes('127.0.0.1') && !window.location.host.includes('localhost')) {
     posthog.init('phc_KiJYjTkcLZtWEX9HM20Sybwv8HiR8UMCTCf5adoKJPf', { api_host: 'https://eu.i.posthog.com' })
   // }
