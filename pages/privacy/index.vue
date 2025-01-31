@@ -10,7 +10,7 @@
             social media profiles (hereinafter collectively referred to as "Online Offer").
         </p>
         <p class="mb-4">The terms used are not gender-specific.</p>
-        <p class="mb-4">Last updated: October 10, 2024</p>
+        <p class="mb-4">Last updated: January 31, 2025</p>
 
         <h2 class="text-2xl font-semibold mt-8 mb-4">Table of Contents</h2>
         <ul class="list-disc pl-6 mb-4 space-y-2">
@@ -872,40 +872,25 @@
         </p>
         <ul class="list-disc pl-6 mb-4 space-y-2">
             <li>
-                <strong>Google Analytics:</strong> We use Google Analytics to measure and analyze the use of our online
-                offer based on a pseudonymous user identification number. This identification number does not contain
-                any unique data such as names or email addresses. It is used to associate analysis information with a
-                device to recognize which content users accessed within one or more usage processes, which search terms
-                they used, and how they interacted with our online offer. The time and duration of use as well as the
-                sources of the users referring to our online offer and technical aspects of their devices and browsers
-                are also recorded.<br>
-                Pseudonymous profiles of users are created with information from the use of different devices, and
-                cookies may be used. Google Analytics does not record or store individual IP addresses for EU users.
-                Analytics provides rough geographic location data by deriving the following metadata from IP addresses:
-                city (and derived latitude and longitude of the city), continent, country, region, subcontinent (and
-                ID-based counterparts). For EU traffic, IP address data is used solely to derive geolocation data before
-                being immediately deleted. It is not logged, not accessible, and not used for other purposes. When
-                Google Analytics collects measurement data, all IP address queries are conducted on EU-based servers
-                before the traffic is forwarded for processing to Analytics servers; <strong>Service provider:</strong>
-                Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Ireland; <span class=""><strong>Legal
-                        bases:</strong> Consent (Art. 6 para. 1 sent. 1 lit. a) GDPR); </span><strong>Website:</strong>
-                <a href="https://marketingplatform.google.com/about/analytics/" target="_blank"
-                    class="underline ">https://marketingplatform.google.com/about/analytics/</a>;
-                <strong>Security measures:</strong> IP masking (pseudonymization of the IP address); <strong>Privacy
-                    Policy:</strong> <a href="https://policies.google.com/privacy" target="_blank"
-                    class="underline ">https://policies.google.com/privacy</a>; <strong>Data Processing
-                    Agreement:</strong> <a href="https://business.safety.google/adsprocessorterms/" target="_blank"
-                    class="underline">https://business.safety.google/adsprocessorterms/</a>; <strong>Basis
-                    for third country transfers:</strong> Data Privacy Framework (DPF); <strong>Opt-out option:</strong>
-                Opt-out plugin: <a href="https://tools.google.com/dlpage/gaoptout?hl=en" target="_blank"
-                    class="underline">https://tools.google.com/dlpage/gaoptout?hl=en</a>, settings for
-                displaying ads: <a href="https://myadcenter.google.com/personalizationoff" target="_blank"
-                    class="underline">https://myadcenter.google.com/personalizationoff</a>. <strong>More
-                    information:</strong> <a href="https://business.safety.google/adsservices/" target="_blank"
-                    class="underline">https://business.safety.google/adsservices/</a> (types of processing
-                and processed data).
+                <strong>PostHog:</strong> We use PostHog to analyze user interactions within our online platform. This
+                helps us improve our services by understanding how users navigate and interact with our website. PostHog
+                collects data such as page views, clicks, and session durations. If users opt for "only essential" in
+                our cookie banner, PostHog will not collect any tracking data.<br>
+                Data is processed via PostHog Cloud, meaning that information is transmitted to PostHog’s servers. By
+                default, PostHog may collect metadata such as device type, browser information, and general geolocation
+                data derived from IP addresses, but we do not track personal information like names or email
+                addresses.<br>
+                <strong>Service provider:</strong> PostHog Inc., 2261 Market Street #4008, San Francisco, CA 94114, USA;
+                <strong>Legal bases:</strong> Consent (Art. 6 para. 1 sent. 1 lit. a) GDPR);
+                <strong>Website:</strong> <a href="https://posthog.com/" target="_blank"
+                    class="underline">https://posthog.com/</a>;
+                <strong>Privacy Policy:</strong> <a href="https://posthog.com/privacy" target="_blank"
+                    class="underline">https://posthog.com/privacy</a>;
+                <strong>Opt-out option:</strong> Users can disable tracking by selecting "Only essential" in our
+                cookie banner.
             </li>
         </ul>
+
 
         <h2 id="m136" class="text-2xl font-semibold mt-8 mb-4">Presence in Social Networks (Social Media)</h2>
         <p class="mb-4">

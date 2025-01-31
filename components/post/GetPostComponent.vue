@@ -474,7 +474,7 @@ const handleTouchMove = (event) => {
 
 const handleTouchEnd = () => {
     isDragging.value = false;
-    
+
     if (translateY.value > 200) {
         showImageModal.value = false
     }

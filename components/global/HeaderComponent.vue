@@ -214,6 +214,28 @@
     </div>
   </div>
 
+  <div v-if="!accepted"
+    class="w-screen h-screen bg-black bg-opacity-80 flex items-center justify-center fixed top-0 left-0 z-[100]">
+    <div class="max-w-[90rem] bg-gray-800 p-4 rounded-xl w-fit flex flex-col items-center justify-center">
+      <div class="">
+        <h1 class="font-bold text-2xl">
+          Oh, good to see you.
+        </h1>
+        <p>
+          We have to tell you, that we've changed our Privacy Policy. Please take a look at the changes.
+        </p>
+        <p>
+          <RouterLink to="/privacy#m263" class="underline">Privacy Policy</RouterLink>
+        </p>
+        <div class="w-full justify-center">
+          <button class="bg-gray-700 text-white py-1 px-4 rounded mt-2" @click="acceptPrivacy">
+            Accept
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <Transition name="fade" @leave="leave" @enter="open">
     <div class="fixed top-0 w-screen h-screen backdrop-blur-lg z-50 flex items-center justify-center"
       v-if="expandedSearch" @click.self="toggleSearch">
@@ -267,6 +289,7 @@ const mobile = ref(false)
 const expandedSearch = ref(false)
 const openMessages = ref(false)
 const id = ref(0)
+const accepted = ref(true)
 
 const router = useRouter()
 
@@ -297,6 +320,15 @@ function changePage(page) {
   router.push(page);
 }
 
+function acceptPrivacy() {
+  axios.post("https://api.faser.app/api/account/accept", {
+    token: Cookies.get("token")
+  })
+    .then(() => {
+      accepted.value = true
+    });
+}
+
 onMounted(() => {
   const url = "https://api.faser.app/api/account/getOwnProfile";
 
@@ -309,6 +341,12 @@ onMounted(() => {
     .then((response) => {
       username.value = response.data[1].username;
       id.value = response.data[0].id;
+
+      if (!response.data[1].accepted) {
+        Cookies.remove("accepted")
+        Cookies.remove("essential")
+      }
+      accepted.value = response.data[1].accepted
 
       loaded.value = true
     });
