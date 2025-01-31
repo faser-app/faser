@@ -87,7 +87,7 @@ onMounted(() => {
         loggedIn.value = true
     }
 
-    if (window.navigator.standalone && window.navigator.userAgent.match(/(iPhone|iPod|iPad)/i)) {
+    if (window.navigator.standalone) {
         mobile.value = true
     }
 
