@@ -12,7 +12,8 @@
         </div>
     </div>
 
-    <div v-show="category === 'post'" class="rounded-xl p-2 md:bg-gray-900 bg-black mx-2">
+    <div v-show="category === 'post'" class="rounded-xl p-2 md:bg-gray-900 bg-black mx-2 mb-2">
+        <p class="mb-2 text-gray-300">{{ postsValue.length }} results</p>
         <div v-if="postsValue == 0" class="h-36 flex justify-center items-center">
             <p class="italic text-gray-400">No liked Posts</p>
         </div>
@@ -22,7 +23,8 @@
         </div>
     </div>
 
-    <div v-show="category === 'community'" class="rounded-xl p-2 md:bg-gray-900 bg-black mx-2">
+    <div v-show="category === 'community'" class="rounded-xl p-2 md:bg-gray-900 bg-black mx-2 mb-2">
+        <p class="mb-2 text-gray-300">{{ communityValue.length }} results</p>
         <div v-if="communityValue == 0" class="h-36 flex justify-center items-center">
             <p class="italic text-gray-400">No liked Communities</p>
         </div>
