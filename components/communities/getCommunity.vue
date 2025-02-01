@@ -164,11 +164,14 @@ const ownProfile = ref({})
 const loaded = ref(false)
 const memberArray = ref([])
 const posts = ref(0)
-const loadedPosts = ref([])
 const accountData = ref([])
 const ownProfileData = ref([])
 const profileData = ref([])
 const communityObject = ref([])
+const postsValue = ref([])
+const postIndex = ref(0)
+const lastRequest = ref(0)
+const loadedPosts = ref([])
 
 
 onMounted(() => {
@@ -204,7 +207,9 @@ onMounted(() => {
     })
         .then((response) => {
             posts.value = response.data.posts.length
-            loadedPosts.value = response.data.posts
+            postsValue.value = response.data.posts
+
+            loadPosts(3)
         })
 
     getMembers()
@@ -256,6 +261,25 @@ function deleteCommunity() {
         .catch((error) => {
             alert(error.response.data.message)
         })
+}
+
+document.addEventListener("scroll", (event) => {
+    if (document.body.offsetHeight - 2000 < window.scrollY) {
+        if (lastRequest.value + 1000 < Date.now()) {
+            lastRequest.value = Date.now()
+
+            loadPosts(3)
+        }
+    }
+})
+
+function loadPosts(postsToLoad) {
+    for (let i = 0; i < postsToLoad; i++) {
+        if (postIndex.value < postsValue.value.length) {
+            loadedPosts.value.push(postsValue.value[postIndex.value])
+            postIndex.value++
+        }
+    }
 }
 
 </script>
