@@ -70,4 +70,10 @@ export default defineNuxtConfig({
   server: {
     port: 3100,
   },
+
+  runtimeConfig: {
+    public: {
+      apiUrlServer: process.env.API_URL_SERVER || "https://api.faser.app",
+    },
+  },
 });

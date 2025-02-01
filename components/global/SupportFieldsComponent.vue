@@ -63,6 +63,8 @@ const loading = ref(false);
 const errors = ref([]);
 const success = ref(false)
 const supportId = ref(0)
+const runtimeConfig = useRuntimeConfig()
+
 
 function sendMessage() {
     if (!email.value) {
@@ -87,7 +89,7 @@ function sendMessage() {
 
     loading.value = true;
 
-    axios.post("https://api.faser.app/api/support/createSupportRequest", {
+    axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/support/createSupportRequest", {
         email: email.value,
         subject: subject.value,
         message: message.value,

@@ -55,6 +55,9 @@ const newPassword = ref("");
 const retypedPassword = ref("");
 const error = ref("");
 
+const runtimeConfig = useRuntimeConfig()
+
+
 let scrollpos = window.scrollY;
 
 onMounted(() => {
@@ -85,7 +88,7 @@ function deleteImage() {
   }
 
   axios
-    .post("https://api.faser.app/api/account/changePassword", {
+    .post("https://" + runtimeConfig.public.apiUrlServer + "/api/account/changePassword", {
       oldToken: Cookies.get("token"),
       email: email.value,
       password: password.value,

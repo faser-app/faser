@@ -59,6 +59,8 @@ const router = useRouter()
 
 const accountList = ref([])
 const tokenList = ref({})
+const runtimeConfig = useRuntimeConfig()
+
 
 function filterTokenList() {
     const filteredTokenList = tokenList.value.filter(item => item !== null);
@@ -145,7 +147,7 @@ onMounted(() => {
 })
 
 function getProfile(token, index) {
-    axios.get('https://api.faser.app/api/account/getOwnProfile', {
+    axios.get("https://" + runtimeConfig.public.apiUrlServer + "/api/account/getOwnProfile", {
         headers: {
             token: token
         }

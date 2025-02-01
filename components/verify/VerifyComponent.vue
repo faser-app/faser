@@ -31,9 +31,11 @@ import { useRouter } from "vue-router";
 const router = useRouter();
 const code = ref("");
 const error = ref("");
+const runtimeConfig = useRuntimeConfig()
+
 
 function verify() {
-  const url = "https://api.faser.app/api/account/verifyEmail";
+  const url = "https://" + runtimeConfig.public.apiUrlServer + "/api/account/verifyEmail";
 
   axios
     .post(url, {
@@ -50,7 +52,7 @@ function verify() {
 }
 
 function resend() {
-  const url = "https://api.faser.app/api/account/resendEmail";
+  const url = "https://" + runtimeConfig.public.apiUrlServer + "/api/account/resendEmail";
 
   axios
     .post(url, {
@@ -68,7 +70,7 @@ function resend() {
 
 onMounted(() => {
   if (Cookies.get("token")) {
-    const url = "https://api.faser.app/api/account/getOwnProfile";
+    const url = "https://" + runtimeConfig.public.apiUrlServer + "/api/account/getOwnProfile";
 
     axios
       .get(url, {

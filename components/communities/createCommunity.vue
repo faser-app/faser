@@ -101,6 +101,8 @@ const community = ref({
 const tag = ref('')
 
 const errors = ref([])
+const runtimeConfig = useRuntimeConfig()
+
 
 function saveTag() {
     if (community.value.tags.includes(tag.value)) {
@@ -136,7 +138,7 @@ function saveTag() {
 }
 
 function createCommunity() {
-    axios.post("https://api.faser.app/api/community/createCommunity", {
+    axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/community/createCommunity", {
         token: Cookies.get("token"),
         communityName: community.value.communityName,
         description: community.value.description,

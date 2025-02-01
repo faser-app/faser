@@ -394,6 +394,8 @@ const embed = ref({
     image: "",
     type: "",
 })
+const runtimeConfig = useRuntimeConfig()
+
 
 const props = defineProps({
     postId: String,
@@ -501,7 +503,7 @@ watch(() => showModal.value, (value) => {
 function postComment() {
     runningCommentRequest.value = true
 
-    axios.post("https://api.faser.app/api/social/createPost", {
+    axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/social/createPost", {
         token: Cookies.get("token"),
         message: commentText.value,
         lang: "en",
@@ -543,7 +545,7 @@ function toggleSave() {
 }
 
 function savePost() {
-    axios.post("https://api.faser.app/api/social/savePost", {
+    axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/social/savePost", {
         postId: postId.value,
         token: Cookies.get("token"),
     })
@@ -553,7 +555,7 @@ function savePost() {
 }
 
 function unsavePost() {
-    axios.post("https://api.faser.app/api/social/unsavePost", {
+    axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/social/unsavePost", {
         postId: postId.value,
         token: Cookies.get("token"),
     })
@@ -608,7 +610,7 @@ function closeMenu() {
     threeDotsMenu.value = false
 }
 
-axios.get("https://api.faser.app/api/profile/getPostProfile", {
+axios.get("https://" + runtimeConfig.public.apiUrlServer + "/api/profile/getPostProfile", {
     headers: {
         postId: props.postId,
         community: props.isCommunity,
@@ -633,7 +635,7 @@ function toggleLike() {
         postLikes.value--
     }
 
-    axios.post("https://api.faser.app/api/social/toggleLike", {
+    axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/social/toggleLike", {
         postId: postId.value,
         token: Cookies.get("token"),
         community: props.isCommunity
@@ -665,7 +667,7 @@ const imageSrc = ref('')
 
 function deletePost() {
     if (!props.admin) {
-        axios.post("https://api.faser.app/api/social/deletePost", {
+        axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/social/deletePost", {
             postid: postId.value,
             token: Cookies.get("token"),
             community: props.isCommunity,
@@ -676,7 +678,7 @@ function deletePost() {
                 showModal.value = false
             })
     } else {
-        axios.post("https://api.faser.app/api/admin/deletePost", {
+        axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/admin/deletePost", {
             postId: postId.value,
             token: Cookies.get("token"),
             community: props.isCommunity
@@ -689,7 +691,7 @@ function deletePost() {
 }
 
 function editPost() {
-    axios.post("https://api.faser.app/api/social/editPost", {
+    axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/social/editPost", {
         postId: postId.value,
         token: Cookies.get("token"),
         message: postContent.value.content,
@@ -754,7 +756,7 @@ function formatTimeDifference(timestamp) {
 }
 
 function loadEmbed(url) {
-    axios.post("https://api.faser.app/api/social/embed", {
+    axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/social/embed", {
         url: url
     })
         .then((response) => {
@@ -779,7 +781,7 @@ function sharePost() {
 }
 
 function reloadStats() {
-    axios.get("https://api.faser.app/api/social/fetchPost", {
+    axios.get("https://" + runtimeConfig.public.apiUrlServer + "/api/social/fetchPost", {
         headers: {
             postId: postId.value,
             community: props.isCommunity,

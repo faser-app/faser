@@ -45,6 +45,9 @@ const showModal = ref(false);
 const newUsername = ref("");
 const error = ref("");
 
+const runtimeConfig = useRuntimeConfig()
+
+
 let scrollpos = window.scrollY;
 
 onMounted(() => {
@@ -70,7 +73,7 @@ onMounted(() => {
 
 function deleteImage() {
   axios
-    .post("https://api.faser.app/api/account/changeUsername", {
+    .post("https://" + runtimeConfig.public.apiUrlServer + "/api/account/changeUsername", {
       token: Cookies.get("token"),
       newUsername: newUsername.value,
       lang: navigator.language || navigator.userLanguage,

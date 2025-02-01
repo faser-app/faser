@@ -47,12 +47,14 @@ const ownProfileData = ref([]);
 const accountData = ref([]);
 const ownProfileArray = ref([]);
 const postId = ref(route.params.post);
+const runtimeConfig = useRuntimeConfig()
+
 
 const isLoading = ref(true);
 
 onMounted(async () => {
     try {
-        const postValue = await axios.get("https://api.faser.app/api/social/fetchPost", {
+        const postValue = await axios.get("https://" + runtimeConfig.public.apiUrlServer + "/api/social/fetchPost", {
             headers: {
                 token: Cookies.get("token"),
                 postId: postId.value
@@ -61,7 +63,7 @@ onMounted(async () => {
 
         comments.value = postValue.data[0].comments;
 
-        const url = "https://api.faser.app/api/account/getOwnProfile";
+        const url = "https://" + runtimeConfig.public.apiUrlServer + "/api/account/getOwnProfile";
 
         const ownProfileValue = await axios.get(url, {
             headers: {
@@ -74,7 +76,7 @@ onMounted(async () => {
         accountData.value = ownProfileValue.data[1];
 
         for (let i = 0; i < postValue.data[0].comments.length; i++) {
-            const commentValue = await axios.get("https://api.faser.app/api/social/fetchPost", {
+            const commentValue = await axios.get("https://" + runtimeConfig.public.apiUrlServer + "/api/social/fetchPost", {
                 headers: {
                     token: Cookies.get("token"),
                     postId: postValue.data[0].comments[i]

@@ -67,6 +67,8 @@ const mobile = ref(false)
 const notificationsActivated = ref(false)
 const loggedIn = ref(false)
 
+const runtimeConfig = useRuntimeConfig()
+
 watch(() => nsfw.value, (value) => {
     localStorage.setItem("nsfw", value)
 })
@@ -121,7 +123,7 @@ async function subscribeToPushNotifications() {
         applicationServerKey,
     });
 
-    axios.post("https://api.faser.app/api/community/saveSubscription", {
+    axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/community/saveSubscription", {
         subscription: subscription,
         tokens: JSON.parse(Cookies.get("tokenList"))
     })

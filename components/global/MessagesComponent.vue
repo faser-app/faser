@@ -118,6 +118,8 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { defineProps, defineEmits } from 'vue';
+const runtimeConfig = useRuntimeConfig()
+
 
 const emit = defineEmits([
     'closeMessages',
@@ -130,7 +132,7 @@ const props = defineProps([
 ])
 
 function clearMessages() {
-    axios.post("https://api.faser.app/api/profile/clearUserMessages", {
+    axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/profile/clearUserMessages", {
         token: Cookies.get("token")
     })
         .then((response) => {

@@ -172,10 +172,12 @@ const postsValue = ref([])
 const postIndex = ref(0)
 const lastRequest = ref(0)
 const loadedPosts = ref([])
+const runtimeConfig = useRuntimeConfig()
+
 
 
 onMounted(() => {
-    axios.get("https://api.faser.app/api/account/getOwnProfile", {
+    axios.get("https://" + runtimeConfig.public.apiUrlServer + "/api/account/getOwnProfile", {
         headers: {
             token: Cookie.get("token")
         }
@@ -186,7 +188,7 @@ onMounted(() => {
             accountData.value = response.data[1];
         })
 
-    axios.post("https://api.faser.app/api/community/getCommunity", {
+    axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/community/getCommunity", {
         token: Cookie.get("token"),
         communityId: props.communityId
     }).then(response => {
@@ -201,7 +203,7 @@ onMounted(() => {
     })
 
 
-    axios.post("https://api.faser.app/api/community/getPosts", {
+    axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/community/getPosts", {
         token: Cookie.get("token"),
         communityId: props.communityId
     })
@@ -216,7 +218,7 @@ onMounted(() => {
 })
 
 function getMembers() {
-    axios.post("https://api.faser.app/api/community/getMembers", {
+    axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/community/getMembers", {
         communityId: props.communityId
     })
         .then((response) => {
@@ -225,7 +227,7 @@ function getMembers() {
 }
 
 function leaveCommunity() {
-    axios.post("https://api.faser.app/api/community/leaveCommunity", {
+    axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/community/leaveCommunity", {
         token: Cookie.get("token"),
         communityId: props.communityId
     })
@@ -238,7 +240,7 @@ function leaveCommunity() {
 }
 
 function joinCommunity() {
-    axios.post("https://api.faser.app/api/community/joinCommunity", {
+    axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/community/joinCommunity", {
         token: Cookie.get("token"),
         communityId: props.communityId
     })
@@ -251,7 +253,7 @@ function joinCommunity() {
 }
 
 function deleteCommunity() {
-    axios.post("https://api.faser.app/api/community/deleteCommunity", {
+    axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/community/deleteCommunity", {
         token: Cookie.get("token"),
         communityId: props.communityId
     })

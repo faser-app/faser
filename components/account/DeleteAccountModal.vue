@@ -47,6 +47,9 @@ const props = defineProps({
 
 let scrollpos = window.scrollY;
 
+const runtimeConfig = useRuntimeConfig()
+
+
 watch(() => props.showModal, (value) => {
     if (value) {
         scrollpos = window.scrollY;
@@ -72,7 +75,7 @@ const error = ref("");
 
 
 function deleteAccount() {
-    axios.post("https://api.faser.app/api/account/deleteAccount", {
+    axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/account/deleteAccount", {
         "token": Cookies.get("token"),
         "password": password.value,
         "email": email.value

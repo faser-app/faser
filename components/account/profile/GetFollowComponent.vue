@@ -47,8 +47,11 @@ const props = defineProps({
     id: Number,
 })
 
+const runtimeConfig = useRuntimeConfig()
+
+
 onMounted(async () => {
-    const response = await axios.get("https://api.faser.app/api/account/getProfile", {
+    const response = await axios.get("https://" + runtimeConfig.public.apiUrlServer + "/api/account/getProfile", {
         headers: {
             userId: props.id
         }

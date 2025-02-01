@@ -95,6 +95,8 @@ const loaded = ref(false)
 const ownProfile = ref({})
 const mobile = ref(false)
 const haveProfile = ref(true)
+const runtimeConfig = useRuntimeConfig()
+
 
 async function sendMessage() {
     if (inputContent.value.trim() === "") return
@@ -107,7 +109,7 @@ async function sendMessage() {
         })
     } catch (error) { }
 
-    await axios.post("https://api.faser.app/api/messages/sendDM", {
+    await axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/messages/sendDM", {
         token: Cookies.get("token"),
         otherAccount: profile.value[0].id,
         message: inputContent.value
@@ -123,7 +125,7 @@ async function sendMessage() {
 const interval = setInterval(async () => {
 
     if (route.path.split("/")[2] === String(profile.value[0].id)) {
-        const dmsResponse = await axios.post("https://api.faser.app/api/messages/getDMs", {
+        const dmsResponse = await axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/messages/getDMs", {
             token: Cookies.get("token"),
             otherAccount: profile.value[0].id,
         })
@@ -136,7 +138,7 @@ const interval = setInterval(async () => {
 
 onMounted(async () => {
 
-    const profileResponse = await axios.get("https://api.faser.app/api/account/getProfile", {
+    const profileResponse = await axios.get("https://" + runtimeConfig.public.apiUrlServer + "/api/account/getProfile", {
         headers: {
             userId: route.path.split("/")[2]
         }
@@ -144,7 +146,7 @@ onMounted(async () => {
 
     profile.value = profileResponse.data
 
-    const ownProfileResponse = await axios.get("https://api.faser.app/api/account/getOwnProfile", {
+    const ownProfileResponse = await axios.get("https://" + runtimeConfig.public.apiUrlServer + "/api/account/getOwnProfile", {
         headers: {
             token: Cookies.get("token")
         }
@@ -154,7 +156,7 @@ onMounted(async () => {
 
     ownProfile.value = ownProfileResponse.data
 
-    const dmsResponse = await axios.post("https://api.faser.app/api/messages/getDMs", {
+    const dmsResponse = await axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/messages/getDMs", {
         token: Cookies.get("token"),
         otherAccount: profileResponse.data[0].id,
     })

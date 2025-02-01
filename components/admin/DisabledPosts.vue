@@ -24,7 +24,10 @@ const ownProfile = ref(false)
 const accountData = ref({})
 const ownProfileData = ref({})
 
-axios.get("https://api.faser.app/api/account/getOwnProfile", {
+const runtimeConfig = useRuntimeConfig()
+
+
+axios.get("https://" + runtimeConfig.public.apiUrlServer + "/api/account/getOwnProfile", {
     headers: {
         token: token
     }
@@ -39,7 +42,7 @@ axios.get("https://api.faser.app/api/account/getOwnProfile", {
         ownProfileData.value = response.data[0]
         ownProfile.value = true
 
-        axios.post("https://api.faser.app/api/admin/getDisabledPosts", {
+        axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/admin/getDisabledPosts", {
             token: token
         })
             .then((response) => {

@@ -65,8 +65,10 @@ const query = ref("");
 const users = ref([]);
 const loaded = ref(false);
 const focus = ref(false);
+const runtimeConfig = useRuntimeConfig()
 
-const url = "https://api.faser.app/api/profile/searchProfiles";
+
+const url = "https://" + runtimeConfig.public.apiUrlServer + "/api/profile/searchProfiles";
 
 const props = defineProps([
   'page'

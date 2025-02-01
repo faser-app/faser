@@ -39,6 +39,8 @@ import { useRouter } from "vue-router";
 const router = useRouter();
 const showModal = ref(false);
 
+v
+
 onMounted(() => {
   watch(getModalState(), (value) => {
     showModal.value = value;
@@ -47,7 +49,7 @@ onMounted(() => {
 
 function deleteImage() {
   axios
-    .post("https://api.faser.app/api/profile/removeProfilePhoto", {
+    .post("https://" + runtimeConfig.public.apiUrlServer + "/api/profile/removeProfilePhoto", {
       token: Cookies.get("token"),
       lang: navigator.language || navigator.userLanguage,
     })

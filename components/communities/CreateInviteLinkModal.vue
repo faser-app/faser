@@ -62,6 +62,9 @@ const props = defineProps({
     communityId: String
 })
 
+const runtimeConfig = useRuntimeConfig()
+
+
 const uses = ref(0)
 const expirationDate = ref("")
 const inviteLink = ref("")
@@ -83,7 +86,7 @@ function generateInviteLink() {
     if (uses.value === 0) {
         uses.value = -1
     }
-    axios.post("https://api.faser.app/api/community/createInvite", {
+    axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/community/createInvite", {
         token: Cookies.get("token"),
         communityId: props.communityId,
         expDate: expirationDate.value.value,

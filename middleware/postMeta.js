@@ -1,6 +1,8 @@
 import { useFetch, useHead } from "#app";
 
 export default defineNuxtRouteMiddleware(async (to, from) => {
+  const runtimeConfig = useRuntimeConfig();
+
   const userAgent = process.server
     ? useRequestHeaders()["user-agent"]
     : navigator.userAgent;
@@ -14,7 +16,8 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     return; // Keine Requests oder Head-Meta-Tags für normale User
   }
 
-  const url = "https://api.faser.app/api/social/fetchPost";
+  const url =
+    "https://" + runtimeConfig.public.apiUrlServer + "/api/social/fetchPost";
   const postId = to.params.post;
 
   const headers = {
@@ -26,14 +29,16 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
   });
 
   const postAuthor = await useFetch(
-    "https://api.faser.app/api/profile/getPostProfile",
+    "https://" +
+      runtimeConfig.public.apiUrlServer +
+      "/api/profile/getPostProfile",
     {
       headers: headers,
     }
   );
 
   const authorUser = await useFetch(
-    "https://api.faser.app/api/account/getProfile",
+    "https://" + runtimeConfig.public.apiUrlServer + "/api/account/getProfile",
     {
       headers: {
         userid: postAuthor.data.value[0].id,

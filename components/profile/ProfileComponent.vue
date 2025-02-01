@@ -239,7 +239,9 @@ const md = new MarkdownIt({
   linkify: false,
 }).disable(["code", "table", "heading", "hr", "image"])
 const router = useRouter()
-const url = "https://api.faser.app/api/account/getOwnProfile";
+const runtimeConfig = useRuntimeConfig()
+
+const url = "https://" + runtimeConfig.public.apiUrlServer + "/api/account/getOwnProfile";
 const accountData = ref({});
 const profileData = ref({});
 const ownProfileData = ref({});
@@ -284,7 +286,7 @@ axios
     ownProfileData.value = response.data[0];
 
     for (let i = 0; i < response.data[0].communities.length; i++) {
-      axios.post("https://api.faser.app/api/community/getCommunity", {
+      axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/community/getCommunity", {
         communityId: response.data[0].communities[i].id
       })
         .then((response) => {
@@ -304,7 +306,7 @@ axios
 
     // axios
     //   .get(
-    //     "https://api.faser.app/api/profile/getProfilePhoto?username=" +
+    //     "https://" + runtimeConfig.public.apiUrlServer + "/api/profile/getProfilePhoto?username=" +
     //     accountData.value.username
     //   )
     //   .then((response) => {

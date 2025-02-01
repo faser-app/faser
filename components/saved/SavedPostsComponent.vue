@@ -22,8 +22,10 @@ const postIndex = ref(0)
 const accountData = ref([])
 const ownProfile = ref([])
 const profileData = ref([])
+const runtimeConfig = useRuntimeConfig()
 
-const url = "https://api.faser.app/api/account/getOwnProfile"
+
+const url = "https://" + runtimeConfig.public.apiUrlServer + "/api/account/getOwnProfile"
 
 axios.get(url, {
     headers: {

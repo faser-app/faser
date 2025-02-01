@@ -90,6 +90,15 @@
                   Saved Posts
                 </button>
                 </MenuItem>
+                <MenuItem v-slot="{ active }">
+                <button @click="changePage('/likes')" :class="[
+                  active ? 'bg-gray-600 text-white' : 'text-gray-200',
+                  'group flex w-full items-center rounded-md px-2 py-2 text-sm',
+                ]">
+                  <i class="fa-solid fa-heart mr-2"></i>
+                  Liked Posts
+                </button>
+                </MenuItem>
                 <div class="px-2 py-1">
                   <HeaderAccountsComponent />
                 </div>
@@ -191,6 +200,15 @@
                   Saved Posts
                 </button>
                 </MenuItem>
+                <MenuItem v-slot="{ active }">
+                <button @click="changePage('/likes')" :class="[
+                  active ? 'bg-gray-600 text-white' : 'text-gray-200',
+                  'group flex w-full items-center rounded-md px-2 py-2 text-sm',
+                ]">
+                  <i class="fa-solid fa-heart mr-2"></i>
+                  Liked Posts
+                </button>
+                </MenuItem>
                 <div class="px-2 py-1">
                   <HeaderAccountsComponent />
                 </div>
@@ -290,6 +308,8 @@ const expandedSearch = ref(false)
 const openMessages = ref(false)
 const id = ref(0)
 const accepted = ref(true)
+const runtimeConfig = useRuntimeConfig()
+
 
 const router = useRouter()
 
@@ -321,7 +341,7 @@ function changePage(page) {
 }
 
 function acceptPrivacy() {
-  axios.post("https://api.faser.app/api/account/accept", {
+  axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/account/accept", {
     token: Cookies.get("token")
   })
     .then(() => {
@@ -330,7 +350,7 @@ function acceptPrivacy() {
 }
 
 onMounted(() => {
-  const url = "https://api.faser.app/api/account/getOwnProfile";
+  const url = "https://" + runtimeConfig.public.apiUrlServer + "/api/account/getOwnProfile";
 
   axios
     .get(url, {
@@ -355,7 +375,7 @@ onMounted(() => {
 });
 
 function getUserMessages() {
-  axios.post("https://api.faser.app/api/profile/getUserMessages", {
+  axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/profile/getUserMessages", {
     token: Cookies.get("token")
   })
     .then((response) => {

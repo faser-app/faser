@@ -74,6 +74,8 @@ import { useRouter } from "vue-router";
 const props = defineProps({
     showModal: Boolean,
 })
+const runtimeConfig = useRuntimeConfig()
+
 
 let scrollpos = window.scrollY;
 
@@ -103,7 +105,7 @@ const songDataRaw = ref({});
 const selectedTrack = ref(null)
 
 function searchSong() {
-    axios.post("https://api.faser.app/api/spotify/searchTrack", {
+    axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/spotify/searchTrack", {
         query: songSearch.value,
     }).then((response) => {
         console.log(response.data);

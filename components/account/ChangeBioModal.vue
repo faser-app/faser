@@ -36,6 +36,9 @@ const props = defineProps({
     showModal: Boolean,
 })
 
+const runtimeConfig = useRuntimeConfig()
+
+
 let scrollpos = window.scrollY;
 
 const bio = ref("")
@@ -62,7 +65,7 @@ const error = ref("");
 
 onMounted(() => {
     axios
-        .get("https://api.faser.app/api/account/getOwnProfile", {
+        .get("https://" + runtimeConfig.public.apiUrlServer + "/api/account/getOwnProfile", {
             headers: {
                 token: Cookies.get("token"),
             },
@@ -79,7 +82,7 @@ onMounted(() => {
 
 function saveBio() {
     axios
-        .post("https://api.faser.app/api/profile/changeBio", {
+        .post("https://" + runtimeConfig.public.apiUrlServer + "/api/profile/changeBio", {
             token: Cookies.get("token"),
             bio: bio.value,
             lang: navigator.language || navigator.userLanguage,

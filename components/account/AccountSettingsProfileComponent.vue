@@ -85,6 +85,8 @@ let buttonDisabled = ref(false);
 let file = ref(null);
 let fileTooBig = ref(false);
 
+const runtimeConfig = useRuntimeConfig()
+
 const router = useRouter();
 
 function changeDisplayName() {
@@ -116,7 +118,7 @@ function upload() {
     buttonDisabled.value = true;
 
     axios
-        .post("https://api.faser.app/api/profile/changeProfilePhoto", formData, {
+        .post("https://" + runtimeConfig.public.apiUrlServer + "/api/profile/changeProfilePhoto", formData, {
             headers: {
                 token: Cookies.get("token"),
                 "Content-Type": "multipart/form-data",
@@ -128,7 +130,7 @@ function upload() {
 }
 
 function removeImage() {
-    axios.post("https://api.faser.app/api/profile/removeProfilePhoto", {
+    axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/profile/removeProfilePhoto", {
         token: Cookies.get("token")
     })
         .then((response) => {

@@ -23,14 +23,16 @@ import Cookies from "js-cookie"
 
 const participants = ref([])
 const haveProfilePicture = ref(true)
+const runtimeConfig = useRuntimeConfig()
 
-axios.post("https://api.faser.app/api/social/getDirectMessages", {
+
+axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/social/getDirectMessages", {
     token: Cookies.get("token")
 }).then((response) => {
     console.log(response.data.participants)
 
     for (let i = 0; i < response.data.participants.length; i++) {
-        axios.get("https://api.faser.app/api/account/getProfile", {
+        axios.get("https://" + runtimeConfig.public.apiUrlServer + "/api/account/getProfile", {
             headers: {
                 userid: response.data.participants[i],
             }

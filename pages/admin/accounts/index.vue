@@ -50,13 +50,15 @@ const token = Cookies.get('token')
 const terminatedAccounts = ref([])
 const activeAccounts = ref([])
 const loaded = ref(false)
+const runtimeConfig = useRuntimeConfig()
+
 
 onMounted(() => {
     loadList()
 })
 
 function loadList() {
-    axios.post("https://api.faser.app/api/admin/getAccounts", {
+    axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/admin/getAccounts", {
         token: token
     })
         .then((response) => {
@@ -66,7 +68,7 @@ function loadList() {
 }
 
 function terminateAccount(id) {
-    axios.post("https://api.faser.app/api/admin/terminateAccount", {
+    axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/admin/terminateAccount", {
         token: token,
         accountId: id
     })
@@ -75,7 +77,7 @@ function terminateAccount(id) {
         })
 }
 
-axios.get("https://api.faser.app/api/account/getOwnProfile", {
+axios.get("https://" + runtimeConfig.public.apiUrlServer + "/api/account/getOwnProfile", {
     headers: {
         token: token
     }

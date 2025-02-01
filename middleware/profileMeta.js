@@ -2,8 +2,11 @@
 import { useFetch, useHead } from "#app";
 
 export default defineNuxtRouteMiddleware(async (to, from) => {
+  const runtimeConfig = useRuntimeConfig();
+
   const username = to.params.user.replace("@", "");
-  const url = "https://api.faser.app/api/account/getProfile/";
+  const url =
+    "https://" + runtimeConfig.public.apiUrlServer + "/api/account/getProfile/";
 
   const headers = {
     username: username,

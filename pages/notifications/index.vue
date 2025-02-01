@@ -10,8 +10,10 @@ import Cookies from "js-cookie";
 
 const messages = ref([]);
 const mobile = ref(false)
+const runtimeConfig = useRuntimeConfig()
 
-axios.post("https://api.faser.app/api/profile/getUserMessages", {
+
+axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/profile/getUserMessages", {
     token: Cookies.get("token")
 })
     .then((response) => {

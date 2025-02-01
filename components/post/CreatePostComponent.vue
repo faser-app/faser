@@ -127,6 +127,8 @@ const selectedTrack = ref(null)
 const nsfw = ref(false)
 const isAdult = ref(false)
 const ai = ref(false)
+const runtimeConfig = useRuntimeConfig()
+
 
 const props = defineProps({
     text: String,
@@ -241,7 +243,7 @@ function uploadPost() {
 
     console.log(props.community)
 
-    axios.post("https://api.faser.app/api/social/createPost", {
+    axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/social/createPost", {
         token: Cookies.get("token"),
         message: postContent.value,
         lang: "en",
@@ -271,7 +273,7 @@ function uploadPost() {
                     const formData = new FormData();
                     formData.append('file', images.value[i]);
 
-                    axios.post("https://api.faser.app/api/social/uploadImage", formData, {
+                    axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/social/uploadImage", formData, {
                         headers: {
                             'Content-Type': 'multipart/form-data',
                             'token': Cookies.get('token'),

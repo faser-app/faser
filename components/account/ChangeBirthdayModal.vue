@@ -40,6 +40,9 @@ import Cookies from "js-cookie";
 const birthday = ref("");
 const error = ref("");
 
+const runtimeConfig = useRuntimeConfig()
+
+
 const emit = defineEmits(["close"]);
 
 const props = defineProps({
@@ -66,7 +69,7 @@ watch(() => props.showModal, (value) => {
 })
 
 axios
-    .get("https://api.faser.app/api/account/getOwnProfile", {
+    .get("https://" + runtimeConfig.public.apiUrlServer + "/api/account/getOwnProfile", {
         headers: {
             token: Cookies.get("token"),
         },
@@ -81,7 +84,7 @@ axios
     });
 
 function addBirthday() {
-    axios.post("https://api.faser.app/api/account/changeBirthday", {
+    axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/account/changeBirthday", {
         birthday: birthday.value,
         token: Cookies.get("token")
     })

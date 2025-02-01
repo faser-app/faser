@@ -82,6 +82,9 @@ const props = defineProps({
 
 let scrollpos = window.scrollY;
 
+const runtimeConfig = useRuntimeConfig()
+
+
 watch(() => props.showModal, (value) => {
     if (value) {
         scrollpos = window.scrollY;
@@ -108,7 +111,7 @@ const songDataRaw = ref({});
 const selectedTrack = ref(null)
 
 function searchSong() {
-    axios.post("https://api.faser.app/api/spotify/searchTrack", {
+    axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/spotify/searchTrack", {
         query: songSearch.value,
     }).then((response) => {
         console.log(response.data);
@@ -119,7 +122,7 @@ function searchSong() {
 }
 
 function changeSong() {
-    axios.post("https://api.faser.app/api/spotify/saveTrack", {
+    axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/spotify/saveTrack", {
         token: Cookies.get("token"),
         songId: selectedTrack.value.songId,
         albumId: selectedTrack.value.albumId,
@@ -133,7 +136,7 @@ function changeSong() {
 }
 
 function removeSong() {
-    axios.post("https://api.faser.app/api/spotify/removeTrack", {
+    axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/spotify/removeTrack", {
         token: Cookies.get("token"),
     })
         .then((response) => {

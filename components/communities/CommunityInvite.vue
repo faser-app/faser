@@ -77,8 +77,11 @@ const disableJoinButton = ref(false)
 const joinButtonText = ref("Join Community")
 const router = useRouter()
 
+const runtimeConfig = useRuntimeConfig()
+
+
 onMounted(() => {
-    axios.post("https://api.faser.app/api/community/getCommunityByInvite", {
+    axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/community/getCommunityByInvite", {
         inviteCode: props.inviteCode
     })
         .then((response) => {
@@ -95,7 +98,7 @@ onMounted(() => {
 })
 
 function joinCommunity() {
-    axios.post("https://api.faser.app/api/community/joinCommunityByInvite", {
+    axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/community/joinCommunityByInvite", {
         inviteCode: props.inviteCode,
         token: Cookies.get("token")
     })

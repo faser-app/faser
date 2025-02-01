@@ -16,18 +16,20 @@
 import axios from 'axios'
 import Cookies from 'js-cookie'
 import { useRouter } from 'vue-router';
+const runtimeConfig = useRuntimeConfig()
+
 
 const token = Cookies.get('token')
 const router = useRouter()
 const loaded = ref(false)
 
 function restart() {
-    axios.post("https://api.faser.app/api/admin/restart", {
+    axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/admin/restart", {
         token: token
     })
 }
 
-axios.get("https://api.faser.app/api/account/getOwnProfile", {
+axios.get("https://" + runtimeConfig.public.apiUrlServer + "/api/account/getOwnProfile", {
     headers: {
         token: token
     }

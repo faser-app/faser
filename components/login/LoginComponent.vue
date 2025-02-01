@@ -37,9 +37,11 @@ const router = useRouter();
 const email = ref("");
 const password = ref("");
 const error = ref("");
+const runtimeConfig = useRuntimeConfig()
+
 
 function login() {
-  const url = "https://api.faser.app/api/account/login";
+  const url = "https://" + runtimeConfig.public.apiUrlServer + "/api/account/login";
 
   axios
     .post(url, {

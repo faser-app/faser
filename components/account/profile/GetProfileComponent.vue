@@ -277,7 +277,10 @@ const md = new MarkdownIt({
   html: false,
   linkify: false,
 }).disable(["code", "table", "heading", "hr", "image"])
-const url = "https://api.faser.app/api/account/getProfile";
+
+const runtimeConfig = useRuntimeConfig()
+
+const url = "https://" + runtimeConfig.public.apiUrlServer + "/api/account/getProfile";
 const profileData = ref({});
 const sinceString = ref("");
 const badges = ref([]);
@@ -321,7 +324,7 @@ function alertNotImplemented() {
 }
 
 async function main() {
-  axios.get("https://api.faser.app/api/account/getOwnProfile", {
+  axios.get("https://" + runtimeConfig.public.apiUrlServer + "/api/account/getOwnProfile", {
     headers: {
       token: Cookies.get("token"),
     },
@@ -384,7 +387,7 @@ async function getProfile() {
   following.value = response.data[0].following.length;
 
   for (let i = 0; i < response.data[0].communities.length; i++) {
-    axios.post("https://api.faser.app/api/community/getCommunity", {
+    axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/community/getCommunity", {
       communityId: response.data[0].communities[i].id
     })
       .then((response) => {
@@ -431,10 +434,10 @@ function toggleFollow() {
   let url = ""
 
   if (followed.value) {
-    url = "https://api.faser.app/api/social/unfollowUser"
+    url = "https://" + runtimeConfig.public.apiUrlServer + "/api/social/unfollowUser"
     followers.value--
   } else {
-    url = "https://api.faser.app/api/social/followUser"
+    url = "https://" + runtimeConfig.public.apiUrlServer + "/api/social/followUser"
     followers.value++
   }
 
@@ -448,10 +451,10 @@ function toggleFollow() {
         alert(error.response.data.message)
 
         if (followed.value) {
-          url = "https://api.faser.app/api/social/unfollowUser"
+          url = "https://" + runtimeConfig.public.apiUrlServer + "/api/social/unfollowUser"
           followers.value--
         } else {
-          url = "https://api.faser.app/api/social/followUser"
+          url = "https://" + runtimeConfig.public.apiUrlServer + "/api/social/followUser"
           followers.value++
         }
 
@@ -460,10 +463,10 @@ function toggleFollow() {
         alert(error.response.data)
 
         if (followed.value) {
-          url = "https://api.faser.app/api/social/unfollowUser"
+          url = "https://" + runtimeConfig.public.apiUrlServer + "/api/social/unfollowUser"
           followers.value--
         } else {
-          url = "https://api.faser.app/api/social/followUser"
+          url = "https://" + runtimeConfig.public.apiUrlServer + "/api/social/followUser"
           followers.value++
         }
 

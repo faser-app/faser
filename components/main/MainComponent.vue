@@ -16,9 +16,18 @@
             :account="ownAccountData" :ownProfileData="ownProfileData" :border="index !== posts.length - 1" />
         </div>
       </div>
-      <div v-else-if="loggedIn && noPosts">
+      <div v-else-if="loggedIn && posts.length > 0">
         <div v-for="i in 10">
           <PostFakePostComponent />
+        </div>
+      </div>
+      <div v-else-if="loggedIn && noPosts">
+        <div class="w-full min-h-screen flex items-center justify-center">
+          <div class="text-center">
+            <h1 class="text-3xl font-bold text-transparent bg-gradient-to-tr from-[#24c7ce] to-[#1ed794] bg-clip-text">
+              No posts available</h1>
+            <p class="mb-4">You have to follow some people to see posts on your home page</p>
+          </div>
         </div>
       </div>
       <div v-else>
@@ -53,6 +62,8 @@ const loggedIn = ref(true)
 const lastTimestamp = ref(Date.now())
 const error = ref("")
 const route = useRoute()
+const runtimeConfig = useRuntimeConfig()
+
 
 onMounted(() => {
   loadPosts()
@@ -85,7 +96,7 @@ function loadPosts() {
   if (Cookies.get("token")) {
     if (!noMorePosts.value) {
       loading.value = true
-      axios.post("https://api.faser.app/api/posts/loadPosts", {
+      axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/posts/loadPosts", {
         token: Cookies.get("token"),
         loadPosts: 5,
         lastTimestamp: lastTimestamp.value,
@@ -120,7 +131,7 @@ function loadPosts() {
 const ownProfileData = ref({})
 const ownAccountData = ref({})
 
-axios.get("https://api.faser.app/api/account/getOwnProfile", {
+axios.get("https://" + runtimeConfig.public.apiUrlServer + "/api/account/getOwnProfile", {
   headers: {
     token: Cookies.get("token"),
   },
