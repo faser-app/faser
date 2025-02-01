@@ -80,7 +80,7 @@
                 class="ml-5 cursor-pointer h-10 w-24 select-none rounded-xl flex items-center justify-center bg-gradient-to-tr from-[#24c7ce] to-[#1ed794] ">
                 <p class="absolute">Followed</p>
                 <div
-                  class="z-20 flex items-center select-none justify-center transition-all duration-500 ease-out px-5 bg-gray-800 shadow-2xl rounded-xl text-gray-100"
+                  class="z-2 z-[2] flex items-center select-none justify-center transition-all duration-500 ease-out px-5 bg-gray-800 shadow-2xl rounded-xl text-gray-100"
                   :class="{
                 'h-10 w-24': !followed,
                 'h-0 w-0 overflow-hidden': followed
@@ -90,7 +90,7 @@
               </div>
             </div>
             <div class="mr-2 mt-3">
-              <Menu as="div" class="relative md:hidden inline-block text-left z-[100]">
+              <Menu as="div" class="relative z-[3] md:hidden inline-block text-left">
                 <div>
                   <MenuButton
                     class="inline-flex w-full justify-center rounded-md px-4 py-2 text-sm font-medium text-white">
