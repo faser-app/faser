@@ -25,65 +25,99 @@
       </div>
       <div class="md:w-4/5 max-w-[90rem] w-full mr-4">
         <div class="flex flex-wrap bg-gray-900 md:w-full ml-2 md:ml-1 rounded-xl items-center mr-2 h-fit">
-          <img v-if="hasProfilePicture && loaded"
-            :src="'https://s3.faser.app/profilepictures/' + profileData.id + '/image.png?t=' + new Date().getTime()"
-            @error="hasProfilePicture = false" alt="profile picture" class="h-24 w-24 m-5 object-cover" :class="{
+          <div class="flex justify-between w-full">
+            <div class="flex items-center">
+              <img v-if="hasProfilePicture && loaded"
+                :src="'https://s3.faser.app/profilepictures/' + profileData.id + '/image.png?t=' + new Date().getTime()"
+                @error="hasProfilePicture = false" alt="profile picture" class="h-24 w-24 m-5 object-cover" :class="{
               'rounded-full': !profileData.businessAccount,
               'rounded-xl': profileData.businessAccount
             }" />
-          <div v-else class="h-24 w-24 m-5 flex border justify-center items-center border-[#96969627] bg-[#1118276c]"
-            :class="{
+              <div v-else
+                class="h-24 w-24 m-5 flex border justify-center items-center border-[#96969627] bg-[#1118276c]" :class="{
               'rounded-full': !profileData.businessAccount,
               'rounded-xl': profileData.businessAccount
             }">
-            <i class="fa-solid fa-user rounded-full text-4xl"></i>
-          </div>
-          <div class="grid">
-            <div class="flex items-center">
-              <div>
-                <div class="flex max-w-[60vw] flex-wrap gap-2 text-sm mb-2" v-if="badges.length !== 0">
-                  <div v-for="badge in badges" :key="badge.name" class="bg-black rounded-full">
-                    <div class="flex items-center cursor-default border rounded-full px-2 p-1" :style="'background-color: ' +
+                <i class="fa-solid fa-user rounded-full text-4xl"></i>
+              </div>
+              <div class="grid">
+                <div class="flex items-center">
+                  <div>
+                    <div class="flex max-w-[60vw] flex-wrap gap-2 text-sm mb-2" v-if="badges.length !== 0">
+                      <div v-for="badge in badges" :key="badge.name" class="bg-black rounded-full">
+                        <div class="flex items-center cursor-default border rounded-full px-2 p-1" :style="'background-color: ' +
                       badge.color +
                       '55; border: 1px solid ' +
                       badge.color +
                       ';'
                       ">
-                      {{ badge.name }}
-                    </div>
-                  </div>
-                </div>
-                <div class="flex items-center gap-2">
-                  <div>
-                    <div class="flex">
-                      <p>{{ profileData.displayName }}</p>
-                      <div v-if="profileData.businessAccount"
-                        class="flex ml-2 justify-center text-xs items-center bg-yellow-600 border w-6 h-6 border-yellow-300 rounded-full">
-                        <i class="fa-solid verifiedBadge fa-check"></i>
-                      </div>
-                      <div v-else-if="profileData.verifiedAccount"
-                        class="flex ml-2 justify-center text-xs items-center bg-sky-600 border w-6 h-6 border-sky-300 rounded-full">
-                        <i class="fa-solid verifiedBadge fa-check"></i>
+                          {{ badge.name }}
+                        </div>
                       </div>
                     </div>
-                    <p class="text text-gray-400">
-                      <span>@</span>{{ route.params.user.replace("@", "") }}
-                    </p>
+                    <div class="flex items-center gap-2">
+                      <div>
+                        <div class="flex">
+                          <p>{{ profileData.displayName }}</p>
+                          <div v-if="profileData.businessAccount"
+                            class="flex ml-2 justify-center text-xs items-center bg-yellow-600 border w-6 h-6 border-yellow-300 rounded-full">
+                            <i class="fa-solid verifiedBadge fa-check"></i>
+                          </div>
+                          <div v-else-if="profileData.verifiedAccount"
+                            class="flex ml-2 justify-center text-xs items-center bg-sky-600 border w-6 h-6 border-sky-300 rounded-full">
+                            <i class="fa-solid verifiedBadge fa-check"></i>
+                          </div>
+                        </div>
+                        <p class="text text-gray-400">
+                          <span>@</span>{{ route.params.user.replace("@", "") }}
+                        </p>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-          <div v-if="isAbleToFollow" @click="toggleFollow"
-            class="ml-5 cursor-pointer h-10 w-24 select-none rounded-xl flex items-center justify-center bg-gradient-to-tr from-[#24c7ce] to-[#1ed794] ">
-            <p class="absolute">Followed</p>
-            <div
-              class="z-20 flex items-center select-none justify-center transition-all duration-500 ease-out px-5 bg-gray-800 shadow-2xl rounded-xl text-gray-100"
-              :class="{
+              <div v-if="isAbleToFollow" @click="toggleFollow"
+                class="ml-5 cursor-pointer h-10 w-24 select-none rounded-xl flex items-center justify-center bg-gradient-to-tr from-[#24c7ce] to-[#1ed794] ">
+                <p class="absolute">Followed</p>
+                <div
+                  class="z-20 flex items-center select-none justify-center transition-all duration-500 ease-out px-5 bg-gray-800 shadow-2xl rounded-xl text-gray-100"
+                  :class="{
                 'h-10 w-24': !followed,
                 'h-0 w-0 overflow-hidden': followed
               }">
-              <p>Follow</p>
+                  <p>Follow</p>
+                </div>
+              </div>
+            </div>
+            <div class="mr-2 mt-3">
+              <Menu as="div" class="relative md:hidden inline-block text-left z-[100]">
+                <div>
+                  <MenuButton
+                    class="inline-flex w-full justify-center rounded-md px-4 py-2 text-sm font-medium text-white">
+                    <i class="fa-solid fa-users"></i>
+                  </MenuButton>
+                </div>
+
+                <transition enter-active-class="transition duration-100 ease-out"
+                  enter-from-class="transform scale-95 opacity-0" enter-to-class="transform scale-100 opacity-100"
+                  leave-active-class="transition duration-75 ease-in" leave-from-class="transform scale-100 opacity-100"
+                  leave-to-class="transform scale-95 opacity-0">
+                  <MenuItems
+                    class="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-black shadow-lg ring-1 ring-black/5 focus:outline-none">
+                    <div class="px-1 py-1">
+                      <MenuItem v-for="community in communities" v-slot="{ active }">
+                      <RouterLink :to="'/communities/' + community.id" :class="[
+                                active ? 'bg-gray-600 text-white' : 'text-gray-200',
+                                'group flex w-full items-center rounded-md px-2 py-2 text-sm',
+                            ]">
+                        <i class="fa-solid fa-users mr-2"></i>
+                        {{ community.displayName }}
+                      </RouterLink>
+                      </MenuItem>
+                    </div>
+                  </MenuItems>
+                </transition>
+              </Menu>
             </div>
           </div>
           <div class="min-w-full mb-3 sm:mb-0 sm:min-w-fit sm:ml-5 justify-center flex flex-wrap gap-4">
@@ -106,24 +140,24 @@
               allow="clipboard-write; encrypted-media;"></iframe>
           </div>
           <div class="w-full p-5">
-            <div class="flex flex-wrap md:flex-nowrap gap-2 justify-center">
+            <div class="md:flex md:flex-nowrap gap-2 justify-center grid grid-cols-2">
               <div to="/account/settings" @click="openReport = true"
-                class="flex items-center gap-2 cursor-pointer justify-center rounded-xl p-2 w-1/2 bg-gray-800">
+                class="flex items-center gap-2 cursor-pointer justify-center rounded-xl p-2 md:w-1/2 bg-gray-800">
                 <i class="fa-solid fa-shield"></i>
                 Report Profile
               </div>
               <div to="/account/settings" @click="alertNotImplemented"
-                class="flex items-center gap-2 cursor-pointer justify-center rounded-xl p-2 w-1/2 bg-gray-800">
+                class="flex items-center gap-2 cursor-pointer justify-center rounded-xl p-2 md:w-1/2 bg-gray-800">
                 <i class="fa-solid fa-ban"></i>
                 Block User
               </div>
               <div @click="shareProfile"
-                class="flex items-center gap-2 cursor-pointer justify-center rounded-xl p-2 w-1/2 bg-gray-800">
+                class="flex items-center gap-2 cursor-pointer justify-center rounded-xl p-2 md:w-1/2 bg-gray-800">
                 <i class="fa-solid fa-arrow-up-from-bracket"></i>
                 Share Profile
               </div>
               <RouterLink :to="'/messages/' + profileData.id"
-                class="flex items-center gap-2 cursor-pointer justify-center rounded-xl p-2 w-1/2 bg-gray-800">
+                class="flex items-center gap-2 cursor-pointer justify-center rounded-xl p-2 md:w-1/2 bg-gray-800">
                 <i class="fa-solid fa-message"></i>
                 Message
               </RouterLink>
@@ -149,26 +183,6 @@
             </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div>
-      <div v-if="communities.length !== 0" class="flex md:hidden w-full justify-center text-xl mt-2">
-        <p>Communities</p>
-      </div>
-      <div class="flex md:hidden mt-2 flex-wrap md:w-60 gap-2 justify-center">
-        <div v-for="community in communities" :key="community.name">
-          <RouterLink :to="'/communities/' + community.id">
-            <div class="w-full flex mr-8 h-fit truncate items-center rounded-xl bg-gray-800">
-              <img src="https://picsum.photos/200" alt="profile picture" class="rounded-full h-8 w-8 m-2" />
-              {{ community.displayname }}
-            </div>
-          </RouterLink>
-        </div>
-      </div>
-    </div>
-    <div v-if="!success && !loaded">
-      <div class="flex flex-wrap min-h-svh w-full justify-center items-center">
-        <p class="text-3xl text-gray-400">404 Not found</p>
       </div>
     </div>
     <div v-if="!success && loaded">
@@ -247,6 +261,7 @@ import { useRoute, useRouter } from "vue-router";
 import MarkdownIt from "markdown-it";
 import Cookies from "js-cookie";
 import { useHead } from "#app";
+import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
 
 useHead({
   meta: [

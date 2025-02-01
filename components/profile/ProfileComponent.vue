@@ -89,14 +89,14 @@
               allow="clipboard-write; encrypted-media;"></iframe>
           </div>
           <div class="w-full p-5">
-            <div class="flex gap-2">
+            <div class="md:flex gap-2 grid grid-cols-2">
               <RouterLink to="/account/settings"
-                class="flex items-center gap-2 justify-center rounded-xl p-2 w-1/2 bg-gray-800">
+                class="flex items-center gap-2 justify-center rounded-xl p-2 md:w-1/2 bg-gray-800">
                 <i class="fa-solid fa-gear"></i>
                 Account Settings
               </RouterLink>
               <div @click="shareProfile"
-                class="flex items-center gap-2 cursor-pointer justify-center rounded-xl p-2 w-1/2 bg-gray-800">
+                class="flex items-center gap-2 cursor-pointer justify-center rounded-xl p-2 md:w-1/2 bg-gray-800">
                 <i class="fa-solid fa-arrow-up-from-bracket"></i>
                 Share Profile
               </div>
