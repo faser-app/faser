@@ -73,7 +73,7 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      apiUrlServer: process.env.API_URL_SERVER || "https://api.faser.app",
+      apiUrlServer: process.env.API_URL_SERVER || "api.faser.app",
     },
   },
 });
