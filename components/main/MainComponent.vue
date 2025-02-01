@@ -17,12 +17,8 @@
         </div>
       </div>
       <div v-else-if="loggedIn && noPosts">
-        <div class="w-full min-h-screen flex items-center justify-center">
-          <div class="text-center">
-            <h1 class="text-3xl text-transparent bg-gradient-to-tr from-[#24c7ce] to-[#1ed794] bg-clip-text">No posts
-              available</h1>
-            <p>There are no posts to be shown. Follow more people to see posts.</p>
-          </div>
+        <div v-for="i in 10">
+          <PostFakePostComponent />
         </div>
       </div>
       <div v-else>
@@ -53,7 +49,7 @@ import Cookies from "js-cookie"
 import { useRoute } from 'vue-router';
 
 const posts = ref([]);
-const loggedIn = ref(false)
+const loggedIn = ref(true)
 const lastTimestamp = ref(Date.now())
 const error = ref("")
 const route = useRoute()

@@ -1,6 +1,19 @@
 <template>
     <div class="min-h-screen bg-black px-2 text-white">
-        <div v-if="isLoading" class="text-center mt-5">Loading...</div>
+        <div v-if="isLoading" class="text-center mt-5">
+            <div class="w-full justify-center">
+                <div class="flex justify-center">
+                    <PostFakePostComponent />
+                </div>
+                <div class="mt-5 rounded-xö flex justify-center">
+                    <div class="flex flex-col max-w-[90rem] w-full overflow-hidden rounded-xl">
+                        <div v-for="i in 10">
+                            <PostFakePostComponent />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div v-else>
             <div class="w-full justify-center">
                 <div class="flex justify-center">
