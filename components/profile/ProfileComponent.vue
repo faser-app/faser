@@ -8,7 +8,7 @@
         <div v-for="(community, index) in communities" :key="community.name">
           <RouterLink :to="'/communities/' + community.id">
             <div class="w-full mb-2 flex mr-8 h-fit truncate items-center pr-3 justify-between rounded-xl bg-gray-800">
-              <div class="flex items-center">
+              <div class="flex items-center ph-no-capture">
                 <i class="fa-solid fa-users p-2 text-lg"></i>
                 {{ community.displayName }}
               </div>
@@ -27,7 +27,8 @@
         <div class="flex flex-wrap bg-gray-900 md:w-full ml-2 md:ml-1 rounded-xl items-center mr-2 h-fit">
           <img v-if="hasProfilePicture && loaded"
             :src="'https://s3.faser.app/profilepictures/' + profileData.id + '/image.png?t=' + new Date().getTime()"
-            @error="hasProfilePicture = false" alt="profile picture" class="rounded-full h-24 w-24 m-5 object-cover" />
+            @error="hasProfilePicture = false" alt="profile picture"
+            class="ph-no-capture rounded-full h-24 w-24 m-5 object-cover" />
           <div v-else
             class="rounded-full h-24 w-24 m-5 flex border justify-center items-center border-[#96969627] bg-[#1118276c]">
             <i class="fa-solid fa-user rounded-full text-4xl"></i>
@@ -37,7 +38,7 @@
               <div>
                 <div class="flex max-w-[40vw] flex-wrap gap-2 text-sm mb-2" v-if="badges.length !== 0">
                   <div v-for="badge in badges" :key="badge.name" class="bg-black rounded-full">
-                    <div class="flex items-center cursor-default border rounded-full px-2 p-1" :style="'background-color: ' +
+                    <div class="flex ph-no-capture items-center cursor-default border rounded-full px-2 p-1" :style="'background-color: ' +
                       badge.color +
                       '55; border: 1px solid ' +
                       badge.color +
@@ -47,7 +48,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="flex flex-wrap items-center gap-2">
+                <div class="flex flex-wrap ph-no-capture items-center gap-2">
                   <div>
                     <div class="flex">
                       <p>{{ profileData.displayName }}</p>
@@ -71,18 +72,18 @@
           <div class="min-w-full mb-3 sm:mb-0 sm:min-w-fit sm:ml-5 justify-center flex flex-wrap gap-4">
             <div class="text-center text-gray-400 rounded-xl cursor-pointer select-none" @click="openFollower = true">
               <p>Follower</p>
-              <p>{{ followers }}</p>
+              <p class="ph-no-capture">{{ followers }}</p>
             </div>
             <div class="text-center text-gray-400 rounded-xl cursor-pointer select-none" @click="openFollowing = true">
               <p>Following</p>
-              <p>{{ following }}</p>
+              <p class="ph-no-capture">{{ following }}</p>
             </div>
             <div class="text-center text-gray-400 rounded-xl select-none">
               <p>Posts</p>
-              <p>{{ posts }}</p>
+              <p class="ph-no-capture">{{ posts }}</p>
             </div>
           </div>
-          <div v-if="music.songAuthor" class="w-full flex gap-3 text-gray-300">
+          <div v-if="music.songAuthor" class="w-full ph-no-capture flex gap-3 text-gray-300">
             <iframe :src="'https://open.spotify.com/embed/track/' + music.songId" class="md:w-96 w-full mx-5"
               width="100%" height="80rem" frameBorder="0" allowfullscreen=""
               allow="clipboard-write; encrypted-media;"></iframe>
@@ -107,7 +108,7 @@
               No bio. Just imagine something cool here.
             </p>
           </div>
-          <p class="w-full pl-5 pb-3">Member since {{ sinceString }}</p>
+          <p class="w-full pl-5 pb-3 ph-no-capture">Member since {{ sinceString }}</p>
         </div>
         <div
           class="flex flex-wrap mt-2 md:bg-gray-900 bg-black mb-2 md:w-full md:ml-1 rounded-xl pl-1 md:pr-2 items-center md:mr-2 h-fit">

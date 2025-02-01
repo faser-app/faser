@@ -50,7 +50,7 @@
                 class="border w-12 h-12 flex items-center justify-center rounded-full border-[#96969627] bg-[#1118276c] cursor-pointer">
                 <img v-if="haveProfilePicture && loaded" @error="haveProfilePicture = false"
                   :src="'https://s3.faser.app/profilepictures/' + id + '/image.png' + '?t=' + new Date().getTime()"
-                  class="rounded-full w-12 h-12 object-cover" />
+                  class="ph-no-capture rounded-full w-12 h-12 object-cover" />
                 <i v-else class="fa-solid fa-user rounded-full text-3xl"></i>
               </div>
             </MenuButton>
@@ -151,7 +151,7 @@
                   <i v-if="!haveProfilePicture" class="fa-solid fa-user rounded-full"></i>
                   <img v-else-if="haveProfilePicture && loaded"
                     :src="'https://s3.faser.app/profilepictures/' + id + '/image.png' + '?t=' + new Date().getTime()"
-                    class="rounded-full w-8 h-8 object-cover" />
+                    class="ph-no-capture rounded-full w-8 h-8 object-cover" />
                 </div>
               </div>
             </MenuButton>

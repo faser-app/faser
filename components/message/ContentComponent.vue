@@ -8,7 +8,7 @@
         'bg-gradient-to-tl from-gray-700 to-gray-800': message.sender === ownProfile[0].id,
         'bg-gradient-to-tr from-gray-700 to-gray-800': message.sender === profile[0].id,
     }" @mouseleave="hover = false">
-        <p class="break-words" v-html="convertedToUrl(message.message)"></p>
+        <p class="break-words ph-no-capture" v-html="convertedToUrl(message.message)"></p>
         <div class="w-full flex" :class="{
             'justify-start': message.sender === profile[0].id,
             'justify-end': message.sender === ownProfile[0].id,
