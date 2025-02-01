@@ -88,7 +88,6 @@
                   <p>Follow</p>
                 </div>
               </div>
-              {{ followed }}
             </div>
             <div class="mr-2 mt-3">
               <Menu as="div" class="relative md:hidden inline-block text-left z-[100]">
