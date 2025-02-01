@@ -88,6 +88,7 @@
                   <p>Follow</p>
                 </div>
               </div>
+              {{ followed }}
             </div>
             <div class="mr-2 mt-3">
               <Menu as="div" class="relative md:hidden inline-block text-left z-[100]">
@@ -326,7 +327,7 @@ async function main() {
       token: Cookies.get("token"),
     },
   })
-    .then((ownResponse) => {
+    .then(async (ownResponse) => {
       if (ownResponse && ownResponse.data) {
         ownProfileData.value = ownResponse.data[0];
         ownId.value = ownResponse.data[0].id;
@@ -334,11 +335,17 @@ async function main() {
       } else {
         console.error("Die API hat keine gültigen Daten zurückgegeben.");
       }
+
+      getProfile()
     })
     .catch((error) => {
       console.error("Fehler beim Abrufen des eigenen Profils:", error);
+      getProfile()
     });
 
+}
+
+async function getProfile() {
   const response = await axios
     .get(url, {
       headers: {
@@ -462,6 +469,12 @@ function toggleFollow() {
         }
 
         followed.value = !followed.value
+      } else if (error.response.data.message === "You are already following this user") {
+        if (url.includes("unfollow")) {
+          followers.value++
+        } else {
+          followers.value--
+        }
       } else {
         router.push("/login")
       }
