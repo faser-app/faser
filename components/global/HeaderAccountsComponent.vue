@@ -14,7 +14,8 @@
             <MenuItems class="">
                 <div class="px-1 py-1">
 
-                    <MenuItem v-for="(account, index) in accountList" :key="account" v-slot="{ active }">
+                    <MenuItem v-for="(account, index) in accountList" :key="account" v-slot="{ active }"
+                        class="ph-no-capture">
                     <button @click="switchAccount(tokenList[index])" :class="[
                     active ? 'bg-gray-600 text-white' : 'text-gray-200',
                     'group flex gap-2 w-full items-center rounded-md px-2 py-2 text-sm',

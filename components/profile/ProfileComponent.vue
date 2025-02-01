@@ -102,7 +102,7 @@
               </div>
             </div>
           </div>
-          <div class="w-full p-5 bg-gray-800 mb-2 bio">
+          <div class="w-full p-5 bg-gray-800 mb-2 bio ph-no-capture">
             <p v-if="profileData.bio" v-html="markdownHTML"></p>
             <p v-else class="italic text-gray-300">
               No bio. Just imagine something cool here.
