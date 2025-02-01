@@ -51,7 +51,7 @@
 
 <style scoped>
 .loading-animation {
-    background: linear-gradient(90deg, #1a1a1a, #2a2a2a, #1a1a1a);
+    background: linear-gradient(90deg, #263238, #37474f, #263238);
     background-size: 200% 100%;
     animation: loading 5s linear infinite;
 }
