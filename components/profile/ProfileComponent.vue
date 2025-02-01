@@ -5,7 +5,7 @@
         <div v-if="communities.length > 0" class="flex w-full justify-center">
           <h2>Communities</h2>
         </div>
-        <div v-for="(community, index) in communities" :key="community.name">
+        <div v-for="(community, index) in communities" :key="community.name" class="ph-no-capture">
           <RouterLink :to="'/communities/' + community.id">
             <div class="w-full mb-2 flex mr-8 h-fit truncate items-center pr-3 justify-between rounded-xl bg-gray-800">
               <div class="flex items-center ph-no-capture">
@@ -26,7 +26,7 @@
       <div class="md:w-4/5 max-w-[90rem] w-full mr-4">
         <div class="flex flex-wrap bg-gray-900 md:w-full ml-2 md:ml-1 rounded-xl items-center mr-2 h-fit">
           <div class="flex justify-between w-full">
-            <div class="flex items-center">
+            <div class="flex ph-no-capture items-center">
               <img v-if="hasProfilePicture && loaded"
                 :src="'https://s3.faser.app/profilepictures/' + profileData.id + '/image.png?t=' + new Date().getTime()"
                 @error="hasProfilePicture = false" alt="profile picture" class="h-24 w-24 m-5 object-cover" :class="{
@@ -43,7 +43,8 @@
               <div class="grid">
                 <div class="flex items-center">
                   <div>
-                    <div class="flex max-w-[60vw] flex-wrap gap-2 text-sm mb-2" v-if="badges.length !== 0">
+                    <div class="flex ph-no-capture max-w-[60vw] flex-wrap gap-2 text-sm mb-2"
+                      v-if="badges.length !== 0">
                       <div v-for="badge in badges" :key="badge.name" class="bg-black rounded-full">
                         <div class="flex items-center cursor-default border rounded-full px-2 p-1" :style="'background-color: ' +
                       badge.color +
@@ -60,15 +61,15 @@
                         <div class="flex">
                           <p>{{ profileData.displayName }}</p>
                           <div v-if="profileData.businessAccount"
-                            class="flex ml-2 justify-center text-xs items-center bg-yellow-600 border w-6 h-6 border-yellow-300 rounded-full">
+                            class="flex ph-no-capture ml-2 justify-center text-xs items-center bg-yellow-600 border w-6 h-6 border-yellow-300 rounded-full">
                             <i class="fa-solid verifiedBadge fa-check"></i>
                           </div>
                           <div v-else-if="profileData.verifiedAccount"
-                            class="flex ml-2 justify-center text-xs items-center bg-sky-600 border w-6 h-6 border-sky-300 rounded-full">
+                            class="flex ph-no-capture ml-2 justify-center text-xs items-center bg-sky-600 border w-6 h-6 border-sky-300 rounded-full">
                             <i class="fa-solid verifiedBadge fa-check"></i>
                           </div>
                         </div>
-                        <p class="text text-gray-400">
+                        <p class="text text-gray-400 ph-no-capture">
                           <span>@</span>{{ accountData.username }}
                         </p>
                       </div>
@@ -104,7 +105,7 @@
                   leave-to-class="transform scale-95 opacity-0">
                   <MenuItems
                     class="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-black shadow-lg ring-1 ring-black/5 focus:outline-none">
-                    <div class="px-1 py-1">
+                    <div class="px-1 py-1 ph-no-capture">
                       <MenuItem v-for="community in communities" v-slot="{ active }">
                       <RouterLink :to="'/communities/' + community.id" :class="[
                                 active ? 'bg-gray-600 text-white' : 'text-gray-200',
