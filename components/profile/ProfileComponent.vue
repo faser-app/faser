@@ -117,8 +117,9 @@
               <p class="italic text-gray-400">No posts yet</p>
             </div>
             <div v-else v-for="(post, index) in loadedPosts" :key="post.id" class="w-full block">
-              <PostGetPostComponent :postId="post" ownProfile="true" :profile="profileData" :ownProfile="ownProfile"
-                :account="accountData" :ownProfileData="ownProfileData" :border="index !== loadedPosts.length - 1" />
+              <PostGetPostComponent class="ph-no-capture" :postId="post" ownProfile="true" :profile="profileData"
+                :ownProfile="ownProfile" :account="accountData" :ownProfileData="ownProfileData"
+                :border="index !== loadedPosts.length - 1" />
             </div>
           </div>
         </div>
