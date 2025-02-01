@@ -134,7 +134,7 @@
               <p>{{ posts }}</p>
             </div>
           </div>
-          <div v-if="music.songAuthor" class="w-full flex gap-3 text-gray-300">
+          <div v-if="music.songAuthor" class="w-full mt-2 flex gap-3 text-gray-300">
             <iframe :src="'https://open.spotify.com/embed/track/' + music.songId" class="md:w-96 w-full mx-5"
               width="100%" height="80rem" frameBorder="0" allowfullscreen=""
               allow="clipboard-write; encrypted-media;"></iframe>

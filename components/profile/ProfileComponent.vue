@@ -25,48 +25,99 @@
       </div>
       <div class="md:w-4/5 max-w-[90rem] w-full mr-4">
         <div class="flex flex-wrap bg-gray-900 md:w-full ml-2 md:ml-1 rounded-xl items-center mr-2 h-fit">
-          <img v-if="hasProfilePicture && loaded"
-            :src="'https://s3.faser.app/profilepictures/' + profileData.id + '/image.png?t=' + new Date().getTime()"
-            @error="hasProfilePicture = false" alt="profile picture"
-            class="ph-no-capture rounded-full h-24 w-24 m-5 object-cover" />
-          <div v-else
-            class="rounded-full h-24 w-24 m-5 flex border justify-center items-center border-[#96969627] bg-[#1118276c]">
-            <i class="fa-solid fa-user rounded-full text-4xl"></i>
-          </div>
-          <div class="grid">
+          <div class="flex justify-between w-full">
             <div class="flex items-center">
-              <div>
-                <div class="flex max-w-[40vw] flex-wrap gap-2 text-sm mb-2" v-if="badges.length !== 0">
-                  <div v-for="badge in badges" :key="badge.name" class="bg-black rounded-full">
-                    <div class="flex ph-no-capture items-center cursor-default border rounded-full px-2 p-1" :style="'background-color: ' +
+              <img v-if="hasProfilePicture && loaded"
+                :src="'https://s3.faser.app/profilepictures/' + profileData.id + '/image.png?t=' + new Date().getTime()"
+                @error="hasProfilePicture = false" alt="profile picture" class="h-24 w-24 m-5 object-cover" :class="{
+              'rounded-full': !profileData.businessAccount,
+              'rounded-xl': profileData.businessAccount
+            }" />
+              <div v-else
+                class="h-24 w-24 m-5 flex border justify-center items-center border-[#96969627] bg-[#1118276c]" :class="{
+              'rounded-full': !profileData.businessAccount,
+              'rounded-xl': profileData.businessAccount
+            }">
+                <i class="fa-solid fa-user rounded-full text-4xl"></i>
+              </div>
+              <div class="grid">
+                <div class="flex items-center">
+                  <div>
+                    <div class="flex max-w-[60vw] flex-wrap gap-2 text-sm mb-2" v-if="badges.length !== 0">
+                      <div v-for="badge in badges" :key="badge.name" class="bg-black rounded-full">
+                        <div class="flex items-center cursor-default border rounded-full px-2 p-1" :style="'background-color: ' +
                       badge.color +
                       '55; border: 1px solid ' +
                       badge.color +
                       ';'
                       ">
-                      {{ badge.name }}
-                    </div>
-                  </div>
-                </div>
-                <div class="flex flex-wrap ph-no-capture items-center gap-2">
-                  <div>
-                    <div class="flex">
-                      <p>{{ profileData.displayName }}</p>
-                      <div v-if="profileData.businessAccount"
-                        class="flex ml-2 justify-center text-xs items-center bg-yellow-600 border w-6 h-6 border-yellow-300 rounded-full">
-                        <i class="fa-solid verifiedBadge fa-check"></i>
-                      </div>
-                      <div v-else-if="profileData.verifiedAccount && !profileData.businessAccount"
-                        class="flex ml-2 justify-center text-xs items-center bg-sky-600 border w-6 h-6 border-sky-300 rounded-full">
-                        <i class="fa-solid verifiedBadge fa-check"></i>
+                          {{ badge.name }}
+                        </div>
                       </div>
                     </div>
-                    <p class="text text-gray-400">
-                      <span>@</span>{{ accountData.username }}
-                    </p>
+                    <div class="flex items-center gap-2">
+                      <div>
+                        <div class="flex">
+                          <p>{{ profileData.displayName }}</p>
+                          <div v-if="profileData.businessAccount"
+                            class="flex ml-2 justify-center text-xs items-center bg-yellow-600 border w-6 h-6 border-yellow-300 rounded-full">
+                            <i class="fa-solid verifiedBadge fa-check"></i>
+                          </div>
+                          <div v-else-if="profileData.verifiedAccount"
+                            class="flex ml-2 justify-center text-xs items-center bg-sky-600 border w-6 h-6 border-sky-300 rounded-full">
+                            <i class="fa-solid verifiedBadge fa-check"></i>
+                          </div>
+                        </div>
+                        <p class="text text-gray-400">
+                          <span>@</span>{{ accountData.username }}
+                        </p>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
+              <div v-if="isAbleToFollow" @click="toggleFollow"
+                class="ml-5 cursor-pointer h-10 w-24 select-none rounded-xl flex items-center justify-center bg-gradient-to-tr from-[#24c7ce] to-[#1ed794] ">
+                <p class="absolute">Followed</p>
+                <div
+                  class="z-20 flex items-center select-none justify-center transition-all duration-500 ease-out px-5 bg-gray-800 shadow-2xl rounded-xl text-gray-100"
+                  :class="{
+                'h-10 w-24': !followed,
+                'h-0 w-0 overflow-hidden': followed
+              }">
+                  <p>Follow</p>
+                </div>
+              </div>
+            </div>
+            <div class="mr-2 mt-3">
+              <Menu as="div" class="relative md:hidden inline-block text-left z-[100]">
+                <div>
+                  <MenuButton
+                    class="inline-flex w-full justify-center rounded-md px-4 py-2 text-sm font-medium text-white">
+                    <i class="fa-solid fa-users"></i>
+                  </MenuButton>
+                </div>
+
+                <transition enter-active-class="transition duration-100 ease-out"
+                  enter-from-class="transform scale-95 opacity-0" enter-to-class="transform scale-100 opacity-100"
+                  leave-active-class="transition duration-75 ease-in" leave-from-class="transform scale-100 opacity-100"
+                  leave-to-class="transform scale-95 opacity-0">
+                  <MenuItems
+                    class="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-black shadow-lg ring-1 ring-black/5 focus:outline-none">
+                    <div class="px-1 py-1">
+                      <MenuItem v-for="community in communities" v-slot="{ active }">
+                      <RouterLink :to="'/communities/' + community.id" :class="[
+                                active ? 'bg-gray-600 text-white' : 'text-gray-200',
+                                'group flex w-full items-center rounded-md px-2 py-2 text-sm',
+                            ]">
+                        <i class="fa-solid fa-users mr-2"></i>
+                        {{ community.displayName }}
+                      </RouterLink>
+                      </MenuItem>
+                    </div>
+                  </MenuItems>
+                </transition>
+              </Menu>
             </div>
           </div>
           <div class="min-w-full mb-3 sm:mb-0 sm:min-w-fit sm:ml-5 justify-center flex flex-wrap gap-4">
@@ -83,7 +134,7 @@
               <p class="ph-no-capture">{{ posts }}</p>
             </div>
           </div>
-          <div v-if="music.songAuthor" class="w-full ph-no-capture flex gap-3 text-gray-300">
+          <div v-if="music.songAuthor" class="w-full mt-2 ph-no-capture flex gap-3 text-gray-300">
             <iframe :src="'https://open.spotify.com/embed/track/' + music.songId" class="md:w-96 w-full mx-5"
               width="100%" height="80rem" frameBorder="0" allowfullscreen=""
               allow="clipboard-write; encrypted-media;"></iframe>
@@ -180,7 +231,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { useRouter } from "vue-router";
 import MarkdownIt from "markdown-it";
-import { FastAverageColor } from 'fast-average-color';
+import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
 
 const md = new MarkdownIt({
   html: false,
