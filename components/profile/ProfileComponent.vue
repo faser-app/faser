@@ -58,7 +58,7 @@
                     </div>
                     <div class="flex items-center gap-2">
                       <div>
-                        <div class="flex">
+                        <div class="flex ph-no-capture">
                           <p>{{ profileData.displayName }}</p>
                           <div v-if="profileData.businessAccount"
                             class="flex ph-no-capture ml-2 justify-center text-xs items-center bg-yellow-600 border w-6 h-6 border-yellow-300 rounded-full">
