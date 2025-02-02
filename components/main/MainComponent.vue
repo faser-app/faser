@@ -16,12 +16,12 @@
             :account="ownAccountData" :ownProfileData="ownProfileData" :border="index !== posts.length - 1" />
         </div>
       </div>
-      <div v-else-if="loggedIn && posts.length > 0">
+      <div v-else-if="loggedIn && !loaded">
         <div v-for="i in 10">
           <PostFakePostComponent />
         </div>
       </div>
-      <div v-else-if="loggedIn && noPosts">
+      <div v-else-if="loggedIn && noPosts && loaded">
         <div class="w-full min-h-screen flex items-center justify-center">
           <div class="text-center">
             <h1 class="text-3xl font-bold text-transparent bg-gradient-to-tr from-[#24c7ce] to-[#1ed794] bg-clip-text">
@@ -63,6 +63,7 @@ const lastTimestamp = ref(Date.now())
 const error = ref("")
 const route = useRoute()
 const runtimeConfig = useRuntimeConfig()
+const loaded = ref(false)
 
 
 onMounted(() => {
@@ -117,6 +118,8 @@ function loadPosts() {
               posts.value.push(response.data.posts[i])
             }
           }
+
+          loaded.value = true
         })
         .catch((error) => {
           noPosts.value = true
