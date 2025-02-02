@@ -27,23 +27,26 @@ const runtimeConfig = useRuntimeConfig()
 
 const url = "https://" + runtimeConfig.public.apiUrlServer + "/api/account/getOwnProfile"
 
-axios.get(url, {
-    headers: {
-        token: Cookies.get("token")
-    }
-}).then((response) => {
+onMounted(() => {
+    axios.get(url, {
+        headers: {
+            token: Cookies.get("token")
+        }
+    }).then((response) => {
 
-    postsValue.value = response.data[0].savedPosts.reverse()
+        postsValue.value = response.data[0].savedPosts.reverse()
 
-    ownProfileData.value = response.data[0]
+        ownProfileData.value = response.data[0]
 
-    accountData.value = response.data[1]
+        accountData.value = response.data[1]
 
-    ownProfile.value = response.data[0]
+        ownProfile.value = response.data[0]
 
-    profileData.value = response.data[0]
+        profileData.value = response.data[0]
 
-    loadPosts(3)
+        loadPosts(3)
+    })
+
 })
 
 document.addEventListener("scroll", (event) => {
