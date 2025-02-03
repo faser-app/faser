@@ -76,4 +76,10 @@ export default defineNuxtConfig({
       apiUrlServer: process.env.API_URL_SERVER || "api.faser.app",
     },
   },
+
+  modules: ["@nuxtjs/sitemap"],
+
+  sitemap: {
+    sources: ["/api/__sitemap__/urls"],
+  },
 });

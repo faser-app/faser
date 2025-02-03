@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@headlessui/vue": "^1.7.23",
+    "@nuxtjs/sitemap": "^7.2.4",
     "animejs": "^3.2.2",
     "axios": "^1.7.4",
     "fast-average-color": "^9.4.0",
