@@ -4,7 +4,7 @@
         <div v-if="props.showModal" :class="{ animation: props.showModal, fadeOut: !props.showModal }"
             @click.self="$emit('close')"
             class="fixed flex justify-center items-center top-0 left-0 w-full h-full z-50 backdrop-blur">
-            <div class="bg-gray-800 p-5 rounded-xl m-3 md:w-auto w-full min-w-[50svw]" :class="{
+            <div class="p-5 rounded-xl m-3 md:w-auto w-full min-w-[50svw]" :style="{ backgroundColor: currentPalette.bg }" :class="{
                 'border border-red-500': error,
             }">
                 <h2 class="text-center font-bold">Rules</h2>
@@ -12,7 +12,7 @@
                     {{ props.rules }}
                 </div>
                 <div class="flex flex-col md:flex-row justify-center gap-2 mt-4">
-                    <button @click="$emit('close')" class="md:w-2/3 bg-gray-700 p-2 rounded-xl">
+                    <button @click="$emit('close')" class="md:w-2/3 p-2 rounded-xl" :style="{ backgroundColor: currentPalette.bgSecondary }">
                         Close
                     </button>
                 </div>
@@ -23,6 +23,8 @@
 </template>
 
 <script setup>
+
+import currentPalette from '~/vars/getColors';
 
 const props = defineProps({
     showModal: Boolean,

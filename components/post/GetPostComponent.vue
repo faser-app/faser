@@ -1,5 +1,6 @@
 <template>
-    <div v-if="postVisible" class="w-full max-w-[90rem] md:bg-gray-900 bg-black p-2 pb-4 text-white" :class="{
+    <div v-if="postVisible" class="w-full max-w-[90rem] p-2 pb-4 text-white"
+        :style="{ backgroundColor: currentPalette.bgSecondary }" :class="{
         'border-b border-gray-700': border,
     }">
         <div class="flex items-center"
@@ -96,20 +97,21 @@
                     leave-active-class="transition duration-75 ease-in"
                     leave-from-class="transform scale-100 opacity-100" leave-to-class="transform scale-95 opacity-0">
                     <MenuItems
-                        class="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-black shadow-lg ring-1 ring-black/5 focus:outline-none">
+                        class="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black/5 focus:outline-none"
+                        :style="{ backgroundColor: currentPalette.bgSecondary }">
                         <div class="px-1 py-1">
                             <MenuItem>
                             <div class="group flex w-full items-center rounded-md px-1 py-1 text-sm">
                                 <div class="flex gap-2 w-full items-center">
-                                    <div class="w-1/2 md:bg-gray-900 bg-black p-2 cursor-pointer rounded-lg py-3"
-                                        @click="sharePost">
+                                    <div class="w-1/2 p-2 cursor-pointer rounded-lg py-3"
+                                        :style="{ backgroundColor: currentPalette.bgSecondary }" @click="sharePost">
                                         <div class="mr-2 flex w-full justify-center items-center text-gray-300">
                                             <i class="fa-solid fa-arrow-up-from-bracket"></i>
                                         </div>
                                     </div>
                                     <div v-if="!props.isCommunity"
-                                        class="w-1/2 md:bg-gray-900 bg-black p-2 cursor-pointer rounded-lg py-3"
-                                        @click="toggleSave">
+                                        :style="{ backgroundColor: currentPalette.bgSecondary }"
+                                        class="w-1/2 p-2 cursor-pointer rounded-lg py-3" @click="toggleSave">
                                         <div class="mr-2 flex w-full justify-center items-center text-gray-300">
                                             <i v-if="!savedPost" class="fa-regular fa-bookmark"></i>
                                             <i v-else class="fa-solid fa-bookmark"></i>
@@ -158,7 +160,8 @@
             <div class="overflow-x-scroll scroll-snap-x">
                 <div class="inline-flex gap-2 mt-2">
                     <div v-for="image in postContent.images" :key="image"
-                        class="md:bg-gray-900 bg-black p-2 rounded-xl inline-block scroll-snap-item">
+                        class="p-2 rounded-xl inline-block scroll-snap-item"
+                        :style="{ backgroundColor: currentPalette.bgSecondary }">
                         <img @click="openImage('https://s3.faser.app/postimages/' + author.id + '/' + postContent.postId + '/' + image + '.png')"
                             :src="'https://s3.faser.app/postimages/' + author.id + '/' + postContent.postId + '/' + image + '.png'"
                             class="max-w-80 max-h-80 rounded-lg cursor-pointer" />
@@ -166,7 +169,8 @@
                 </div>
             </div>
         </div>
-        <div v-else class="flex w-full justify-center items-center h-36 bg-gray-600 rounded-xl mb-2">
+        <div v-else class="flex w-full justify-center items-center h-36 rounded-xl mb-2"
+            :style="{ backgroundColor: currentPalette.buttonDanger, color: currentPalette.textPrimary }">
             <div class="w-full flex justify-center flex-wrap">
                 <div
                     class="border border-red-500 bg-red-900 p-4 rounded-full text-xl w-12 h-12 flex items-center justify-center">
@@ -230,10 +234,12 @@
                 <p>{{ impressions }}</p>
             </div>
         </div>
-        <div class="flex w-full gap-2 mt-2">
-            <input type="text" class="w-3/4 bg-gray-800 p-2 rounded-xl focus:outline-none"
+        <div class="flex w-full gap-2 mt-2" :style="{ color: currentPalette.textSecondary }">
+            <input type="text" class="w-3/4 p-2 rounded-xl focus:outline-none"
+                :style="{ backgroundColor: currentPalette.buttonPrimary }"
                 placeholder="Write a comment..." v-model="commentText" />
-            <button v-if="!runningCommentRequest" class="w-1/4 bg-gray-800 p-2 rounded-xl"
+            <button v-if="!runningCommentRequest" class="w-1/4 p-2 rounded-xl"
+                :style="{ backgroundColor: currentPalette.buttonDanger }"
                 @click="postComment">Comment</button>
             <button v-else class="w-1/4 bg-gray-600 p-2 rounded-xl">
                 <l-line-wobble size="80" stroke="5" bg-opacity="0.1" speed="1.75" color="black"></l-line-wobble>
@@ -272,9 +278,9 @@
                 @click.self="showEditModal = false" v-if="showEditModal">
                 <!-- <div v-if="ownProfileData.advancedUser"> -->
                 <div>
-                    <div class="bg-gray-900 p-5 text-center rounded-xl m-3 max-w-[80svw] md:w-auto w-full" :class="{
+                    <div class="p-5 text-center rounded-xl m-3 max-w-[80svw] md:w-auto w-full" :class="{
                         'animation': showEditModal,
-                    }">
+                    }" :style="{ backgroundColor: currentPalette.bg }">
                         <div class="w-full flex justify-center">
                             <div
                                 class="bg-red-950 border border-red-600 h-14 w-14 rounded-full flex justify-center items-center">
@@ -283,14 +289,16 @@
                         </div>
                         <h2 class="text-center font-bold mt-2">Edit post</h2>
                         <p class="text-gray-400">If you edit the post, an edited text will be added to the post</p>
-                        <textarea
-                            class="w-full p-2 rounded-xl h-40 bg-gray-800 text-white pt-0 mt-2 resize-none focus:outline-none"
+                        <textarea class="w-full p-2 rounded-xl h-40 text-white pt-0 mt-2 resize-none focus:outline-none"
+                            :style="{ backgroundColor: currentPalette.bgSecondary }"
                             v-model="postContent.content"></textarea>
                         <div class="flex flex-col md:flex-row justify-center gap-2 mt-4">
-                            <button @click="showEditModal = false" class="md:w-2/3 bg-gray-700 p-2 rounded-xl">
+                            <button @click="showEditModal = false" class="md:w-2/3 p-2 rounded-xl"
+                                :style="{ backgroundColor: currentPalette.buttonSecondary }">
                                 Cancel
                             </button>
-                            <button @click="editPost" class="md:w-1/3 bg-red-500 p-2 rounded-xl">
+                            <button @click="editPost" class="md:w-1/3 p-2 rounded-xl"
+                                :style="{ backgroundColor: currentPalette.buttonDanger }">
                                 Save
                             </button>
                         </div>
@@ -302,8 +310,9 @@
             </div>
         </transition>
         <transition name="fade" @leave="leave">
-            <div class="fixed md:bg-transparent bg-black top-0 z-[200] left-0 w-screen h-screen backdrop-blur flex justify-center items-center"
-                @click.self="showImageModal = false" v-if="showImageModal">
+            <div class="fixed md:bg-transparent top-0 z-[200] left-0 w-screen h-screen backdrop-blur flex justify-center items-center"
+                :style="{ backgroundColor: currentPalette.primary }" @click.self="showImageModal = false"
+                v-if="showImageModal">
                 <div class="overflow-auto text-center md:rounded-xl md:w-auto w-full" :class="{
                     'animation': showImageModal,
                     'transition-back duration-300': !isDragging
@@ -327,7 +336,8 @@
         <Transition name="fade" @leave="leave" @enter="enter">
             <div v-if="showReport"
                 class="fixed h-full z-[200] w-full backdrop-blur top-0 left-0 flex justify-center items-center">
-                <div class="bg-gray-800 w-[60rem] max-h-[80svh] overflow-y-scroll mx-4 p-2 rounded-xl">
+                <div class="w-[60rem] max-h-[80svh] overflow-y-scroll mx-4 p-2 rounded-xl"
+                    :style="{ backgroundColor: currentPalette.bg }">
                     <div class="w-full flex items-center justify-center text-xl font-bold">
                         <h1 class="w-full text-center">Report Post</h1>
                         <i class="fa-solid fa-xmark mr-2 cursor-pointer" @click="showReport = false"></i>
@@ -347,6 +357,7 @@ import Cookies from "js-cookie";
 import { DateTime } from "luxon";
 import { useRouter, useRoute } from "vue-router";
 import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
+import currentPalette from "~/vars/getColors";
 
 const router = useRouter();
 const route = useRoute();

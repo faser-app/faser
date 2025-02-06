@@ -1,8 +1,7 @@
 <template>
     <div>
         <div class="w-full">
-            <div class="w-full bg-gray-800 flex justify-between items-center p-2 gap-2 py-4 cursor-pointer"
-                @click="deleteAccountModal = true">
+            <div class="w-full bg-gray-800 flex justify-between items-center p-2 gap-2 py-4 cursor-pointer">
                 <div class="flex items-center gap-2">
                     <i class="fa-solid fa-eye"></i>
                     <p>Always show NSFW Content</p>
@@ -16,8 +15,7 @@
                     </label>
                 </div>
             </div>
-            <div class="w-full mt-0.5 bg-gray-800 flex justify-between items-center p-2 gap-2 py-4 cursor-pointer"
-                @click="deleteAccountModal = true">
+            <div class="w-full mt-0.5 bg-gray-800 flex justify-between items-center p-2 gap-2 py-4 cursor-pointer">
                 <div class="flex items-center gap-2">
                     <i class="fa-solid fa-eye-slash"></i>
                     <p>Hide NSFW</p>
@@ -30,6 +28,21 @@
                         </div>
                     </label>
                 </div>
+            </div>
+            <div class="w-full mt-0.5 bg-gray-800 p-2 gap-2 py-4 cursor-pointer">
+                <p>Themes</p>
+                <div class="flex flex-wrap items-center mt-2 justify-between">
+                    <div v-for="color in colors" @click="changeTheme(color.name)" :key="color"
+                        class="text-center gap-2 w-24">
+                        <div class="w-24 flex justify-center">
+                            <div :style="{ background: linearGradient('45deg', color) }" class="w-16 h-16 rounded-full">
+                            </div>
+                        </div>
+                        {{ color.displayName }}
+                    </div>
+                </div>
+                <p class="text-gray-400 text-sm mt-2">Themes are in beta, may change or be removed, and aren't fully
+                    applied yet.</p>
             </div>
             <div v-if="mobile && !notificationsActivated && loggedIn"
                 class="w-full mt-0.5 bg-gray-800 flex justify-between items-center p-2 gap-2 py-4 cursor-pointer"
@@ -60,6 +73,7 @@
 <script setup>
 import Cookies from "js-cookie";
 import axios from "axios";
+import colors from "~/vars/colors";
 
 const nsfw = ref(false)
 const hideNSFW = ref(false)
@@ -76,6 +90,11 @@ watch(() => nsfw.value, (value) => {
 watch(() => hideNSFW.value, (value) => {
     localStorage.setItem("hideNSFW", value)
 })
+
+function changeTheme(theme) {
+    Cookies.set("theme", theme)
+    window.location.reload()
+}
 
 onMounted(() => {
     if (localStorage.getItem("nsfw") === "true") {
@@ -154,5 +173,10 @@ function base64ToUint8Array(base64String) {
     }
     return outputArray;
 }
+
+const linearGradient = (angle, theme) => {
+    const { name, displayName, textPrimary, textSecondary, ...colorValues } = theme;
+    return `linear-gradient(${angle}, ${Object.values(colorValues).join(", ")})`;
+};
 
 </script>

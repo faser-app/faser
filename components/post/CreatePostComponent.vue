@@ -19,23 +19,25 @@
                 'fadeOut': !showModal
             }">
 
-                <div class="bg-gray-900 md:w-4/5 w-full md:mx-0 mx-2 p-3 rounded-xl">
+                <div class="md:w-4/5 w-full md:mx-0 mx-2 p-3 rounded-xl"
+                    :style="{ backgroundColor: currentPalette.bgSecondary }">
                     <div class="flex">
                         <h1 class="w-full">Make Post</h1>
                         <div @click="closeModal" class="flex cursor-pointer justify-end text-xl mr-1">
                             <i class="fa-solid fa-xmark"></i>
                         </div>
                     </div>
-                    <div class="bg-gray-800 mt-2 p-2 rounded-xl" :class="{
+                    <div :style="{ backgroundColor: currentPalette.buttonPrimary }" class="mt-2 p-2 rounded-xl" :class="{
                         'border border-red-500': error
                     }">
-                        <textarea class="w-full h-40 bg-gray-800 text-white pt-0 mt-2 resize-none focus:outline-none"
-                            v-model="postContent" @input="error = ''" @paste="checkPaste"
+                        <textarea class="w-full h-40 text-white pt-0 mt-2 resize-none focus:outline-none"
+                            :style="{ backgroundColor: currentPalette.buttonPrimary }" v-model="postContent"
+                            @input="error = ''" @paste="checkPaste"
                             placeholder="What are you thinking about?"></textarea>
 
                         <div v-if="selectedTrack">
-                            <div class="flex absolute bg-gray-700 w-8 h-8 justify-center items-center p-2 rounded-xl cursor-pointer"
-                                @click="selectedTrack = null">
+                            <div class="flex absolute w-8 h-8 justify-center items-center p-2 rounded-xl cursor-pointer"
+                                :style="{ backgroundColor: currentPalette.buttonDanger }" @click="selectedTrack = null">
                                 <i class="fa-solid fa-xmark"></i>
                             </div>
                             <iframe v-if="selectedTrack"
@@ -45,20 +47,23 @@
                         </div>
 
                         <div class="flex gap-2">
-                            <div class="flex cursor-pointer items-center w-12 h-12 justify-center bg-gray-700 rounded-xl"
-                                @click="selectFile">
+                            <div class="flex cursor-pointer items-center w-12 h-12 justify-center rounded-xl"
+                                :style="{ backgroundColor: currentPalette.buttonSecondary }" @click="selectFile">
                                 <i class="fa-solid fa-image text-2xl overflow-visible"></i>
                             </div>
                             <div @click="searchSong = !searchSong"
-                                class="flex cursor-pointer items-center w-12 h-12 justify-center bg-gray-700 rounded-xl">
+                                class="flex cursor-pointer items-center w-12 h-12 justify-center rounded-xl"
+                                :style="{ backgroundColor: currentPalette.buttonSecondary }">
                                 <i class="fa-solid fa-music text-2xl overflow-visible"></i>
                             </div>
                         </div>
                         <div class="flex gap-4 mt-2">
                             <template v-for="(image, index) in images">
-                                <div class="flex bg-gray-700 p-2 rounded-xl">
+                                <div class="flex p-2 rounded-xl"
+                                    :style="{ backgroundColor: currentPalette.buttonSecondary }">
                                     <div @click="images.splice(index, 1)"
-                                        class="absolute cursor-pointer ml-[4rem] -mt-4 bg-gray-700 w-8 h-8 flex justify-center items-center rounded-full p-2">
+                                        class="absolute cursor-pointer ml-[4rem] -mt-4 w-8 h-8 flex justify-center items-center rounded-full p-2"
+                                        :style="{ backgroundColor: currentPalette.buttonSecondary }">
                                         <i class="fa-solid fa-xmark"></i>
                                     </div>
                                     <img :src="getPreviewImage(image)" class="w-20 h-20 object-cover rounded-lg" />
@@ -70,8 +75,8 @@
                         <div class="mt-4">
                             <label class="inline-flex items-center cursor-pointer">
                                 <input type="checkbox" value="" class="sr-only peer" v-model="ai">
-                                <div
-                                    class="relative w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-500">
+                                <div class="relative w-11 h-6 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-500"
+                                    :style="{ backgroundColor: currentPalette.buttonSecondary }">
                                 </div>
                                 <p class="ms-3 select-none text-sm font-medium dark:text-gray-300">AI <i
                                         class="fa-solid fa-robot"></i></p>
@@ -90,9 +95,11 @@
                     </div>
                     <p v-if="error" class="text-red-500 mt-1">{{ error }}</p>
                     <div class="flex md:flex-nowrap flex-wrap justify-end mt-2 gap-2">
-                        <button @click="closeModal" class="bg-gray-700 p-2 md:w-2/3 w-full rounded-xl">Close</button>
+                        <button @click="closeModal" class="p-2 md:w-2/3 w-full rounded-xl"
+                            :style="{ backgroundColor: currentPalette.buttonPrimary }">Close</button>
                         <button @click="uploadPost" :disabled="postContent.length === 0 || loading"
-                            class="bg-gradient-to-tr from-[#24c7ce] to-[#1ed794] p-2 flex justify-center items-center md:w-1/3 w-full rounded-xl">
+                            class="p-2 flex justify-center items-center md:w-1/3 w-full rounded-xl"
+                            :style="{ backgroundColor: currentPalette.buttonDanger }">
 
                             <p v-if="!loading">Post</p>
                             <div v-else>
@@ -128,6 +135,7 @@ const nsfw = ref(false)
 const isAdult = ref(false)
 const ai = ref(false)
 const runtimeConfig = useRuntimeConfig()
+import currentPalette from '~/vars/getColors';
 
 
 const props = defineProps({

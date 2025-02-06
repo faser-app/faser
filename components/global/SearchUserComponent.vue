@@ -1,12 +1,14 @@
 <template>
   <div>
-    <input id="search" class="h-full border-0 shadow-none w-full outline-none bg-gray-700 p-3 rounded-xl text-white"
+    <input id="search" class="h-full border-0 shadow-none w-full outline-none p-3 rounded-xl text-white"
+    :style="{ backgroundColor: currentPalette.bgSecondary, color: currentPalette.textSecondary }"
       :class="{
         'md:w-auto': !props.page
       }" v-model="query" @input="searchUsers" placeholder="Search for user" @focus="focus = true" />
   </div>
   <div v-if="query.length > 0 && focus"
-    class="top-16 mt-2 rounded-xl border border-gray-500 shadow-lg shadow-gray-900 text-white right-96 bg-gray-700 p-2 overflow-hidden"
+    class="top-16 mt-2 rounded-xl border border-gray-500 shadow-lg shadow-gray-900 right-96 p-2 overflow-hidden"
+    :style="{ backgroundColor: currentPalette.bgSecondary }"
     :class="{
       'md:absolute md:w-64': !props.page
     }">
@@ -59,6 +61,7 @@
 import axios from "axios";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
+import currentPalette from "~/vars/getColors";
 
 const router = useRouter();
 const query = ref("");

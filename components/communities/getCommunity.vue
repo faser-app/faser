@@ -1,17 +1,19 @@
 <template>
-    <div class="min-h-screen">
-        <div class="w-full bg-gray-900 pb-12 pt-2 px-2" v-if="loaded">
+    <div class="min-h-screen" :style="{ backgroundColor: currentPalette.bg}">
+        <div class="w-full pb-12 pt-2 px-2" :style="{ backgroundColor: currentPalette.bgSecondary }" v-if="loaded">
             <div v-if="memberArray.includes(id)" class="w-fit">
                 <CreatePostComponent text="+" :own-profile="ownProfileData" :mobile="false" :community="true"
                     :community-id="props.communityId" :community-object="communityObject" />
             </div>
             <div v-else-if="!communityObject.private" class="w-full flex justify-center mt-2">
-                <div class="w-96 bg-gray-900 text-gray-400 italic mt-2 p-4 mx-2 rounded-xl text-center">
+                <div class="w-96 text-gray-400 italic mt-2 p-4 mx-2 rounded-xl text-center"
+                    :style="{ backgroundColor: currentPalette.bgSecondary }">
                     <p>Join this community to make post.</p>
                 </div>
             </div>
             <div v-else class="w-full flex justify-center mt-2">
-                <div class="w-96 bg-gray-900 text-gray-400 italic mt-2 p-4 mx-2 rounded-xl text-center">
+                <div class="w-96 text-gray-400 italic mt-2 p-4 mx-2 rounded-xl text-center"
+                    :style="{ backgroundColor: currentPalette.bgSecondary }">
                     <p>This community is private. You need to be invited to make posts.</p>
                 </div>
             </div>
@@ -31,7 +33,8 @@
                         leave-from-class="transform scale-100 opacity-100"
                         leave-to-class="transform scale-95 opacity-0">
                         <MenuItems
-                            class="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-black shadow-lg ring-1 ring-black/5 focus:outline-none">
+                            class="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black/5 focus:outline-none"
+                            :style="{ backgroundColor: currentPalette.bgSecondary }">
                             <div class="px-1 py-1">
                                 <MenuItem v-slot="{ active }">
                                 <button :class="[
@@ -106,9 +109,10 @@
 
         <div class="w-screen flex justify-center">
             <div class="md:w-4/5 max-w-[90rem] w-full mr-4">
-                <div
-                    class="flex flex-wrap mt-2 md:bg-gray-900 bg-black mb-2 md:w-full md:ml-1 rounded-xl pl-1 md:pr-2 items-center md:mr-2 h-fit">
-                    <div class="p-2 mt-2 md:bg-gray-900 bg-black w-full md:pr-3 md:ml-2 rounded-xl items-center h-fit">
+                <div class="flex flex-wrap mt-2 mb-2 md:w-full md:ml-1 rounded-xl pl-1 md:pr-2 items-center md:mr-2 h-fit"
+                    :style="{ backgroundColor: currentPalette.bgSecondary }">
+                    <div class="p-2 mt-2 w-full md:pr-3 md:ml-2 rounded-xl items-center h-fit"
+                        :style="{ backgroundColor: currentPalette.bgSecondary }">
                         <div v-if="posts === 0 && !communityObject.private"
                             class="h-36 flex justify-center items-center">
                             <p class="italic text-gray-400">No posts yet</p>
@@ -144,6 +148,7 @@ import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import ViewRulesModal from './ViewRulesModal.vue';
 import CreatePostComponent from '../post/CreatePostComponent.vue';
 import CreateInviteLinkModal from './CreateInviteLinkModal.vue';
+import currentPalette from '~/vars/getColors';
 
 const props = defineProps({
     communityId: {

@@ -1,5 +1,6 @@
 <template>
-  <div class="bg-black min-h-screen text-white">
+  <div class="min-h-screen text-white"
+    :style="{ backgroundColor: currentPalette.bg, color: currentPalette.textPrimary }">
     <div class="md:flex w-full justify-center">
       <div class="md:w-1/5 gap-2 md:block px-2 hidden">
         <div v-if="communities.length > 0" class="flex w-full justify-center">
@@ -7,7 +8,8 @@
         </div>
         <div v-for="(community, index) in communities" :key="community.name" class="ph-no-capture">
           <RouterLink :to="'/communities/' + community.id">
-            <div class="w-full mb-2 flex mr-8 h-fit truncate items-center pr-3 justify-between rounded-xl bg-gray-800">
+            <div class="w-full mb-2 flex mr-8 h-fit truncate items-center pr-3 justify-between rounded-xl"
+              :style="{ backgroundColor: currentPalette.buttonPrimary, color: currentPalette.textSecondary }">
               <div class="flex items-center ph-no-capture">
                 <i class="fa-solid fa-users p-2 text-lg"></i>
                 {{ community.displayName }}
@@ -24,7 +26,8 @@
         <p v-if="privateAccount">Private account</p>
       </div>
       <div class="md:w-4/5 max-w-[90rem] w-full mr-4">
-        <div class="flex flex-wrap bg-gray-900 md:w-full ml-2 md:ml-1 rounded-xl items-center mr-2 h-fit">
+        <div class="flex flex-wrap md:w-full ml-2 md:ml-1 rounded-xl items-center mr-2 h-fit"
+          :clas="{ backgroundColor: currentPalette.bgSecondary }">
           <div class="flex justify-between w-full">
             <div class="flex ph-no-capture items-center">
               <img v-if="hasProfilePicture && loaded"
@@ -77,18 +80,6 @@
                   </div>
                 </div>
               </div>
-              <div v-if="isAbleToFollow" @click="toggleFollow"
-                class="ml-5 cursor-pointer h-10 w-24 select-none rounded-xl flex items-center justify-center bg-gradient-to-tr from-[#24c7ce] to-[#1ed794] ">
-                <p class="absolute">Followed</p>
-                <div
-                  class="z-20 flex items-center select-none justify-center transition-all duration-500 ease-out px-5 bg-gray-800 shadow-2xl rounded-xl text-gray-100"
-                  :class="{
-                'h-10 w-24': !followed,
-                'h-0 w-0 overflow-hidden': followed
-              }">
-                  <p>Follow</p>
-                </div>
-              </div>
             </div>
             <div class="mr-2 mt-3">
               <Menu as="div" class="relative md:hidden inline-block text-left">
@@ -104,7 +95,8 @@
                   leave-active-class="transition duration-75 ease-in" leave-from-class="transform scale-100 opacity-100"
                   leave-to-class="transform scale-95 opacity-0">
                   <MenuItems
-                    class="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-black shadow-lg ring-1 ring-black/5 focus:outline-none">
+                    class="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black/5 focus:outline-none"
+                    :style="'background-color: ' + currentPalette.bgSecondary">
                     <div class="px-1 py-1 ph-no-capture">
                       <MenuItem v-for="community in communities" v-slot="{ active }">
                       <RouterLink :to="'/communities/' + community.id" :class="[
@@ -142,19 +134,21 @@
           </div>
           <div class="w-full p-5">
             <div class="md:flex gap-2 grid grid-cols-2">
-              <RouterLink to="/account/settings"
-                class="flex items-center gap-2 justify-center rounded-xl p-2 md:w-1/2 bg-gray-800">
-                <i class="fa-solid fa-gear"></i>
-                Account Settings
-              </RouterLink>
-              <div @click="shareProfile"
-                class="flex items-center gap-2 cursor-pointer justify-center rounded-xl p-2 md:w-1/2 bg-gray-800">
+              <UiButtonComponent type="primary" class="flex items-center gap-2 justify-center rounded-xl p-2
+              md:w-1/2">
+                <RouterLink to="/account/settings" class="w-full">
+                  <i class="fa-solid fa-gear"></i>
+                  Account Settings
+                </RouterLink>
+              </UiButtonComponent>
+              <UiButtonComponent type="primary" class="flex items-center gap-2 justify-center rounded-xl p-2
+                  md:w-1/2">
                 <i class="fa-solid fa-arrow-up-from-bracket"></i>
                 Share Profile
-              </div>
+              </UiButtonComponent>
             </div>
           </div>
-          <div class="w-full p-5 bg-gray-800 mb-2 bio ph-no-capture">
+          <div class="w-full p-5 mb-2 bio ph-no-capture" :style="'background-color: ' + currentPalette.bgSecondary">
             <p v-if="profileData.bio" v-html="markdownHTML"></p>
             <p v-else class="italic text-gray-300">
               No bio. Just imagine something cool here.
@@ -162,9 +156,10 @@
           </div>
           <p class="w-full pl-5 pb-3 ph-no-capture">Member since {{ sinceString }}</p>
         </div>
-        <div
-          class="flex flex-wrap mt-2 md:bg-gray-900 bg-black mb-2 md:w-full md:ml-1 rounded-xl pl-1 md:pr-2 items-center md:mr-2 h-fit">
-          <div class="p-2 mt-2 md:bg-gray-900 bg-black w-full md:pr-3 md:ml-2 rounded-xl items-center h-fit">
+        <div class="flex flex-wrap mt-2 mb-2 md:w-full md:ml-1 rounded-xl pl-1 md:pr-2 items-center md:mr-2 h-fit"
+          :style="{ backgroundColor: currentPalette.bgSecondary }">
+          <div class="p-2 mt-2 w-full md:pr-3 md:ml-2 rounded-xl items-center h-fit"
+            :style="'background-color: ' + currentPalette.bgSecondary">
             <div v-if="posts == 0" class="h-36 flex justify-center items-center">
               <p class="italic text-gray-400">No posts yet</p>
             </div>
@@ -181,8 +176,9 @@
     <Transition name="fade" @leave="leave" @enter="enter">
       <div v-if="openFollower"
         class="fixed z-[100] h-full w-full backdrop-blur top-0 left-0 flex justify-center items-center">
-        <div class="bg-gray-800 w-[60rem] max-h-[80rem] overflow-y-scroll mx-4 p-2 rounded-xl">
-          <div class="w-full flex items-center justify-center text-xl font-bold">
+        <div class="w-[60rem] max-h-[80rem] overflow-y-scroll mx-4 p-2 rounded-xl"
+          :style="{ backgroundColor: currentPalette.bg }">
+          <div class=" w-full flex items-center justify-center text-xl font-bold">
             <h1 class="w-full text-center">Followers ({{ followers }})</h1>
             <i class="fa-solid fa-xmark mr-2 cursor-pointer" @click="openFollower = false"></i>
           </div>
@@ -204,7 +200,8 @@
     <Transition name="fade" @leave="leave" @enter="enter">
       <div v-if="openFollowing"
         class="fixed z-[100] h-full w-full backdrop-blur top-0 left-0 flex justify-center items-center">
-        <div class="bg-gray-800 w-[60rem] max-h-[80svh] overflow-y-scroll mx-4 p-2 rounded-xl">
+        <div class="w-[60rem] max-h-[80svh] overflow-y-scroll mx-4 p-2 rounded-xl"
+          :style="{ backgroundColor: currentPalette.bg }">
           <div class="w-full flex items-center justify-center text-xl font-bold">
             <h1 class="w-full text-center">Following ({{ following }})</h1>
             <i class="fa-solid fa-xmark mr-2 cursor-pointer" @click="openFollowing = false"></i>
@@ -233,6 +230,7 @@ import Cookies from "js-cookie";
 import { useRouter } from "vue-router";
 import MarkdownIt from "markdown-it";
 import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
+import currentPalette from "~/vars/getColors";
 
 const md = new MarkdownIt({
   html: false,

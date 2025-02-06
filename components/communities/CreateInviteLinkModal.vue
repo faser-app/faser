@@ -2,7 +2,7 @@
     <Transition name="fade" @leave="leave">
         <div v-if="props.showModal" @click.self="$emit('close')"
             class="fixed top-0 left-0 backdrop-blur z-[100] w-screen h-screen flex items-center justify-center">
-            <div class="bg-gray-800 p-5 rounded-xl m-3 md:w-auto w-full min-w-[50svw]">
+            <div class="p-5 rounded-xl m-3 md:w-auto w-full min-w-[50svw]" :style="{ backgroundColor: currentPalette.bg }">
                 <h2 class="text-center font-bold">Create Invite Link</h2>
                 <div class="flex break-all justify-center text-center mt-2 text-gray-400">
                     <p>Invite people to join this community by sharing this link</p>
@@ -13,7 +13,7 @@
                     <p class="text-center">Uses</p>
                 </div>
                 <div class="w-full grid grid-cols-2 gap-2">
-                    <select ref="expirationDate" class="w-full text-center p-2 rounded-xl bg-gray-800 text-white mt-2">
+                    <select ref="expirationDate" class="w-full text-center p-2 rounded-xl text-white mt-2" :style="{ backgroundColor: currentPalette.bgSecondary }">
                         <option value="-1">No Expiration</option>
                         <option value="1">1 Day</option>
                         <option value="2">2 Days</option>
@@ -39,7 +39,7 @@
 
                 </div>
                 <div v-if="!inviteLink" class="flex w-full justify-center">
-                    <button @click="generateInviteLink" class="bg-blue-500 p-2 rounded-xl mt-2">Generate Invite
+                    <button @click="generateInviteLink" class="p-2 rounded-xl mt-2" :style="{ backgroundColor: currentPalette.buttonPrimary }">Generate Invite
                         Link</button>
                 </div>
                 <div v-else class="bg-neutral-900 font-mono p-2 mt-2 flex justify-between items-center rounded-sm"
@@ -56,6 +56,7 @@
 <script setup>
 import axios from "axios"
 import Cookies from "js-cookie"
+import currentPalette from "~/vars/getColors"
 
 const props = defineProps({
     showModal: Boolean,

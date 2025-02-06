@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!mobile" class="bg-[#0000006c] h-[4.5rem] flex top-0 fixed backdrop-blur text-white w-full z-100">
+  <div v-if="!mobile" class="h-[4.5rem] flex top-0 fixed backdrop-blur text-white w-full z-100" :style="{ backgroundColor: currentPalette.bg }">
     <RouterLink to="/">
       <div class="flex h-full w-full justify-center md:justify-start fixed pointer-events-none">
         <img src="/assets/img/icon/logo.png" alt="Logo"
@@ -21,7 +21,8 @@
         </div>
       </div>
       <div class="h-full flex items-center">
-        <div class="flex items-center justify-center bg-gray-800 w-12 h-12 rounded-full cursor-pointer"
+        <div class="flex items-center justify-center w-12 h-12 rounded-full cursor-pointer"
+          :style="{ backgroundColor: currentPalette.bgSecondary }"
           @click="openUserMessages">
           <i class="fa-solid fa-bell text-xl"></i>
           <div v-if="messages.length > 0"
@@ -61,7 +62,7 @@
             leave-active-class="transition duration-75 ease-in" leave-from-class="transform scale-100 opacity-100"
             leave-to-class="transform scale-95 opacity-0">
             <MenuItems
-              class="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-gray-900 shadow-lg ring-1 ring-black/5 focus:outline-none">
+              class="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black/5 focus:outline-none" :style="{ backgroundColor: currentPalette.bgSecondary }">
               <div class="px-1 py-1">
                 <MenuItem v-slot="{ active }">
                 <button @click="changePage('/profile')" :class="[
@@ -258,7 +259,7 @@
     <div class="fixed top-0 w-screen h-screen backdrop-blur-lg z-50 flex items-center justify-center"
       v-if="expandedSearch" @click.self="toggleSearch">
       <div
-        class="max-w-[90rem] md:w-[80svw] w-[95svw] text-white max-h-[70svh] overflow-auto bg-gray-800 p-2 rounded-xl">
+        class="max-w-[90rem] md:w-[80svw] w-[95svw] text-white max-h-[70svh] overflow-auto p-2 rounded-xl" :style="{ backgroundColor: currentPalette.bgSecondary }">
         <div class="w-full flex items-center justify-between text-2xl font-bold">
           <div class="w-full text-center">
             <h1>Search</h1>
@@ -278,7 +279,7 @@
     </div>
   </Transition>
 
-  <div v-if="!mobile" class="h-20 bg-black"></div>
+  <div v-if="!mobile" class="h-20" :style="{ backgroundColor: currentPalette.bg }"></div>
   <div v-if="showBanner"
     class="w-full flex justify-center mb-2 p-5 text-white items-center bg-gradient-to-tr from-[#24c7ce] to-[#1ed794]">
     <div class="text-center">
@@ -296,6 +297,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
 import { useRouter } from "vue-router";
+import currentPalette from "~/vars/getColors";
 
 const expanded = ref(false);
 const username = ref("");

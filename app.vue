@@ -3,6 +3,11 @@ import Cookies from "js-cookie";
 import { useRoute } from "vue-router";
 import axios from "axios";
 import posthog from 'posthog-js'
+import currentPalette from "./vars/getColors";
+
+onMounted(() => {
+  document.body.style.backgroundColor = currentPalette.bg;
+})
 
 const mobile = ref(false)
 const route = useRoute()

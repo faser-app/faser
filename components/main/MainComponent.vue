@@ -3,13 +3,13 @@
     class="w-full md:w-[80%] md:ml-[10svw] py-6 rounded-xl bg-red-900 border border-red-500 text-white text-center">
     {{ error }}
   </div>
-  <div class="min-h-screen md:flex px-2 bg-black text-white">
+  <div class="min-h-screen md:flex px-2 text-white" :style="{ backgroundColor: currentPalette.bg }">
     <div class="md:w-1/4 w-full justify-center pt-2 min-h-full">
       <div class="md:hidden w-full block" v-if="loggedIn">
         <PostCreatePostComponent text="Post" mobile="false" :ownProfile="ownAccountData" />
       </div>
     </div>
-    <div class="md:w-3/4 w-full max-w-[90rem] md:bg-gray-900 bg-black rounded-xl my-4 p-2 md:px-4">
+    <div class="md:w-3/4 w-full max-w-[90rem] rounded-xl my-4 p-2 md:px-4" :style="{ backgroundColor: currentPalette.bgSecondary }">
       <div v-if="loggedIn && posts.length > 0">
         <div v-for="(post, index) in posts" key="post">
           <PostGetPostComponent :postId="post" ownProfile="false" :profile="profileData" :ownProfile="ownProfile"
@@ -56,6 +56,7 @@ import { ref } from 'vue';
 import axios from 'axios';
 import Cookies from "js-cookie"
 import { useRoute } from 'vue-router';
+import currentPalette from '~/vars/getColors';
 
 const posts = ref([]);
 const loggedIn = ref(true)

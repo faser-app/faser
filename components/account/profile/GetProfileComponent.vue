@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-black min-h-screen text-white">
+  <div class="min-h-screen text-white" :style="{ backgroundColor: currentPalette.bg }">
     <div class="md:flex w-full justify-center" v-if="loaded && success">
       <div class="md:block px-2 hidden md:w-1/5 gap-2 justify-center">
         <div class="flex w-full justify-center" v-if="communities.length > 0">
@@ -7,7 +7,8 @@
         </div>
         <div v-for="community in communities" :key="community.name">
           <RouterLink :to="'/communities/' + community.id">
-            <div class="w-full mb-2 flex mr-8 h-fit truncate items-center pr-3 justify-between rounded-xl bg-gray-800">
+            <div class="w-full mb-2 flex mr-8 h-fit truncate items-center pr-3 justify-between rounded-xl"
+              :style="{ backgroundColor: currentPalette.buttonPrimary, color: currentPalette.textSecondary }">
               <div class="flex items-center">
                 <i class="fa-solid fa-users p-2 text-lg"></i>
                 {{ community.displayName }}
@@ -24,7 +25,8 @@
         <p v-if="privateAccount">Private account</p>
       </div>
       <div class="md:w-4/5 max-w-[90rem] w-full mr-4">
-        <div class="flex flex-wrap bg-gray-900 md:w-full ml-2 md:ml-1 rounded-xl items-center mr-2 h-fit">
+        <div class="flex flex-wrap md:w-full ml-2 md:ml-1 rounded-xl items-center mr-2 h-fit"
+          :style="{ backgroundColor: currentPalette.bg, color: currentPalette.textPrimary }">
           <div class="flex justify-between w-full">
             <div class="flex items-center">
               <img v-if="hasProfilePicture && loaded"
@@ -142,28 +144,32 @@
           <div class="w-full p-5">
             <div class="md:flex md:flex-nowrap gap-2 justify-center grid grid-cols-2">
               <div to="/account/settings" @click="openReport = true"
-                class="flex items-center gap-2 cursor-pointer justify-center rounded-xl p-2 md:w-1/2 bg-gray-800">
+                class="flex items-center gap-2 cursor-pointer justify-center rounded-xl p-2 md:w-1/2"
+                :style="{ backgroundColor: currentPalette.buttonPrimary, color: currentPalette.textSecondary }">
                 <i class="fa-solid fa-shield"></i>
                 Report Profile
               </div>
               <div to="/account/settings" @click="alertNotImplemented"
-                class="flex items-center gap-2 cursor-pointer justify-center rounded-xl p-2 md:w-1/2 bg-gray-800">
+                class="flex items-center gap-2 cursor-pointer justify-center rounded-xl p-2 md:w-1/2"
+                :style="{ backgroundColor: currentPalette.buttonPrimary, color: currentPalette.textSecondary }">
                 <i class="fa-solid fa-ban"></i>
                 Block User
               </div>
               <div @click="shareProfile"
-                class="flex items-center gap-2 cursor-pointer justify-center rounded-xl p-2 md:w-1/2 bg-gray-800">
+                class="flex items-center gap-2 cursor-pointer justify-center rounded-xl p-2 md:w-1/2"
+                :style="{ backgroundColor: currentPalette.buttonPrimary, color: currentPalette.textSecondary }">
                 <i class="fa-solid fa-arrow-up-from-bracket"></i>
                 Share Profile
               </div>
               <RouterLink :to="'/messages/' + profileData.id"
-                class="flex items-center gap-2 cursor-pointer justify-center rounded-xl p-2 md:w-1/2 bg-gray-800">
+                class="flex items-center gap-2 cursor-pointer justify-center rounded-xl p-2 md:w-1/2"
+                :style="{ backgroundColor: currentPalette.buttonPrimary, color: currentPalette.textSecondary }">
                 <i class="fa-solid fa-message"></i>
                 Message
               </RouterLink>
             </div>
           </div>
-          <div class="w-full p-5 bg-gray-800 mb-2">
+          <div class="w-full p-5 mb-2" :style="{ backgroundColor: currentPalette.bgSecondary }">
             <p v-if="profileData.bio" v-html="markdownHTML"></p>
             <p v-else class="italic text-gray-300">
               No bio. Just imagine something cool here.
@@ -171,15 +177,17 @@
           </div>
           <p class="w-full pl-5 pb-3">Member since {{ sinceString }}</p>
         </div>
-        <div
-          class="flex flex-wrap mt-2 md:bg-gray-900 bg-black mb-2 md:w-full md:ml-1 rounded-xl pl-1 md:pr-2 items-center md:mr-2 h-fit">
-          <div class="p-2 mt-2 md:bg-gray-900 bg-black w-full md:pr-3 md:ml-2 rounded-xl items-center h-fit">
+        <div class="flex flex-wrap mt-2 mb-2 md:w-full md:ml-1 rounded-xl pl-1 md:pr-2 items-center md:mr-2 h-fit"
+          :style="{ backgroundColor: currentPalette.bgSecondary }">
+          <div class="p-2 mt-2 w-full md:pr-3 md:ml-2 rounded-xl items-center h-fit"
+            :style="'background-color: ' + currentPalette.bgSecondary">
             <div v-if="posts == 0" class="h-36 flex justify-center items-center">
               <p class="italic text-gray-400">No posts yet</p>
             </div>
-            <div v-else v-for="(post, index) in loadedPosts" :key="post" class="w-full block">
-              <PostGetPostComponent :postId="post" ownProfile="false" :profile="profileData" :ownProfile="ownProfile"
-                :account="accountData" :own-profile-data="ownProfileData" :border="index !== loadedPosts.length - 1" />
+            <div v-else v-for="(post, index) in loadedPosts" :key="post.id" class="w-full block">
+              <PostGetPostComponent class="ph-no-capture" :postId="post" ownProfile="true" :profile="profileData"
+                :ownProfile="ownProfile" :account="accountData" :ownProfileData="ownProfileData"
+                :border="index !== loadedPosts.length - 1" />
             </div>
           </div>
         </div>
@@ -194,7 +202,8 @@
     <Transition name="fade" @leave="leave" @enter="enter">
       <div v-if="openFollower"
         class="fixed h-full z-50 z-100 w-full backdrop-blur top-0 left-0 flex justify-center items-center">
-        <div class="bg-gray-800 w-[60rem] max-h-[80rem] overflow-y-scroll mx-4 p-2 rounded-xl">
+        <div class="w-[60rem] max-h-[80rem] overflow-y-scroll mx-4 p-2 rounded-xl"
+          :style="{ backgroundColor: currentPalette.bg }">
           <div class="w-full flex items-center justify-center text-xl font-bold">
             <h1 class="w-full text-center">Followers ({{ followers }})</h1>
             <i class="fa-solid fa-xmark mr-2 cursor-pointer" @click="openFollower = false"></i>
@@ -217,7 +226,8 @@
     <Transition name="fade" @leave="leave" @enter="enter">
       <div v-if="openFollowing"
         class="fixed h-full z-100 z-50 w-full backdrop-blur top-0 left-0 flex justify-center items-center">
-        <div class="bg-gray-800 w-[60rem] max-h-[80svh] overflow-y-scroll mx-4 p-2 rounded-xl">
+        <div class="w-[60rem] max-h-[80svh] overflow-y-scroll mx-4 p-2 rounded-xl"
+          :style="{ backgroundColor: currentPalette.bg }">
           <div class="w-full flex items-center justify-center text-xl font-bold">
             <h1 class="w-full text-center">Following ({{ following }})</h1>
             <i class="fa-solid fa-xmark mr-2 cursor-pointer" @click="openFollowing = false"></i>
@@ -240,7 +250,8 @@
     <Transition name="fade" @leave="leave" @enter="enter">
       <div v-if="openReport"
         class="fixed h-full z-100 z-50 w-full backdrop-blur top-0 left-0 flex justify-center items-center">
-        <div class="bg-gray-800 w-[60rem] max-h-[80svh] overflow-y-scroll mx-4 p-2 rounded-xl">
+        <div class="w-[60rem] max-h-[80svh] overflow-y-scroll mx-4 p-2 rounded-xl"
+          :style="{ backgroundColor: currentPalette.bg }">
           <div class="w-full flex items-center justify-center text-xl font-bold">
             <h1 class="w-full text-center">Report Profile</h1>
             <i class="fa-solid fa-xmark mr-2 cursor-pointer" @click="openReport = false"></i>
@@ -262,6 +273,7 @@ import MarkdownIt from "markdown-it";
 import Cookies from "js-cookie";
 import { useHead } from "#app";
 import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
+import currentPalette from "~/vars/getColors";
 
 useHead({
   meta: [

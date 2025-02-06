@@ -1,5 +1,5 @@
 <template>
-    <div class="h-screen md:flex gap-2">
+    <div class="h-screen md:flex gap-2" :style="{ backgroundColor: currentPalette.bg}">
         <div class="flex  flex-col w-full md:w-1/3 overflow-scroll max-h-screen">
             <div class="p-2 mb-0.5 flex gap-2 items-center cursor-pointer" @click="active = 'account'"
                 :class="{ 'bg-gray-800': active === 'account', 'bg-gray-900': active !== 'account' }">
@@ -37,6 +37,7 @@
 
 <script setup>
 import Cookies from "js-cookie";
+import currentPalette from "~/vars/getColors";
 
 const active = ref("account")
 
