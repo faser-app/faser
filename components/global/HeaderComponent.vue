@@ -12,8 +12,8 @@
           maskSize: 'contain',
           WebkitMaskPosition: 'center',
           maskPosition: 'center',
-          backgroundColor: currentPalette.bgSecondary,
-          filter: 'brightness(3)'
+          background: 'linear-gradient(45deg, ' + currentPalette.bg + ', ' + currentPalette.bgSecondary + ')',
+          filter: 'brightness(4)'
         }" class="h-14 w-14 ml-2 my-2 rounded-full cursor-pointer absolute pointer-events-auto" />
         <img v-else src="/assets/img/icon/logo.png" alt="Logo"
           class="h-14 ml-2 my-2 rounded-full cursor-pointer border border-[#96969627] bg-[#1118276c] absolute pointer-events-auto" />
