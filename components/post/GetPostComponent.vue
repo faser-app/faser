@@ -310,8 +310,7 @@
             </div>
         </transition>
         <transition name="fade" @leave="leave">
-            <div class="fixed md:bg-transparent top-0 z-[200] left-0 w-screen h-screen backdrop-blur flex justify-center items-center"
-                :style="{ backgroundColor: currentPalette.primary }" @click.self="showImageModal = false"
+            <div class="fixed md:bg-transparent top-0 z-[200] left-0 w-screen h-screen backdrop-blur flex justify-center items-center bg-black" @click.self="showImageModal = false"
                 v-if="showImageModal">
                 <div class="overflow-auto text-center md:rounded-xl md:w-auto w-full" :class="{
                     'animation': showImageModal,

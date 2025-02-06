@@ -1,6 +1,6 @@
 <template>
-    <div class="bg-black min-h-screen text-white" v-if="loaded">
-        <div class="w-full flex justify-between z-50 pl-2 bg-gray-900 items-center fixed p-2" :class="{
+    <div class="min-h-screen text-white" v-if="loaded">
+        <div class="w-full flex justify-between z-50 pl-2 items-center fixed p-2" :style="{ backgroundColor: currentPalette.bgSecondary }" :class="{
             'top-[4.5rem]': !mobile,
             'top-0': mobile
         }">
@@ -85,6 +85,7 @@ import { DateTime } from "luxon";
 import { useRoute, useRouter } from "vue-router";
 import axios from "axios";
 import Cookies from "js-cookie";
+import currentPalette from "~/vars/getColors";
 
 const inputContent = ref("")
 const route = useRoute()

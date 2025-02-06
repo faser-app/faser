@@ -1,8 +1,8 @@
 <template>
-  <div class="bg-black" :class="{
+  <div :class="{
     'mb-20': mobile
   }">
-    <div class="bg-gray-900 text-white text-center p-4 rounded-t-xl">
+    <div class="text-white text-center p-4 rounded-t-xl" :style="{ border: '1px solid ' + currentPalette.bgSecondary }">
       <div class="flex justify-center gap-4">
         <div v-for="link in links" :key="link.name">
           <RouterLink v-if="link.url.startsWith('/')" :to="link.url" class="underline">{{ link.name }}</RouterLink>
@@ -31,6 +31,8 @@
 
 <script setup>
 import Cookie from "js-cookie";
+import currentPalette from "~/vars/getColors";
+
 const mobile = ref(false);
 
 const links = ref([

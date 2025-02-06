@@ -4,7 +4,7 @@
         <div v-if="props.showModal" :class="{ animation: props.showModal, fadeOut: !props.showModal }"
             @click.self="$emit('close')"
             class="fixed flex justify-center items-center top-0 left-0 w-full h-full z-50 backdrop-blur">
-            <div class="p-5 rounded-xl m-3 md:w-auto w-full min-w-[50svw]" :style="{ backgroundColor: currentPalette.bg }" :class="{
+            <div class="p-5 rounded-xl m-3 md:w-auto w-full min-w-[50svw]" :style="{ backgroundColor: currentPalette.bg, color: currentPalette.textPrimary }" :class="{
                 'border border-red-500': error,
             }">
                 <h2 class="text-center font-bold">Rules</h2>

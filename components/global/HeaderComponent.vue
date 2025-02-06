@@ -1,8 +1,21 @@
 <template>
-  <div v-if="!mobile" class="h-[4.5rem] flex top-0 fixed backdrop-blur text-white w-full z-100" :style="{ backgroundColor: currentPalette.bg }">
+  <div v-if="!mobile" class="h-[4.5rem] flex top-0 fixed backdrop-blur text-white w-full z-100"
+    :style="{ backgroundColor: currentPalette.bg }">
     <RouterLink to="/">
       <div class="flex h-full w-full justify-center md:justify-start fixed pointer-events-none">
-        <img src="/assets/img/icon/logo.png" alt="Logo"
+        <div v-if="currentPalette.name !== 'normal'" :style="{
+          WebkitMaskImage: `url('${imageUrl}')`,
+          maskImage: `url('${imageUrl}')`,
+          WebkitMaskRepeat: 'no-repeat',
+          maskRepeat: 'no-repeat',
+          WebkitMaskSize: 'contain',
+          maskSize: 'contain',
+          WebkitMaskPosition: 'center',
+          maskPosition: 'center',
+          backgroundColor: currentPalette.bgSecondary,
+          filter: 'brightness(3)'
+        }" class="h-14 w-14 ml-2 my-2 rounded-full cursor-pointer absolute pointer-events-auto" />
+        <img v-else src="/assets/img/icon/logo.png" alt="Logo"
           class="h-14 ml-2 my-2 rounded-full cursor-pointer border border-[#96969627] bg-[#1118276c] absolute pointer-events-auto" />
       </div>
     </RouterLink>
@@ -22,8 +35,7 @@
       </div>
       <div class="h-full flex items-center">
         <div class="flex items-center justify-center w-12 h-12 rounded-full cursor-pointer"
-          :style="{ backgroundColor: currentPalette.bgSecondary }"
-          @click="openUserMessages">
+          :style="{ backgroundColor: currentPalette.bgSecondary }" @click="openUserMessages">
           <i class="fa-solid fa-bell text-xl"></i>
           <div v-if="messages.length > 0"
             class="absolute mt-8 ml-8 h-6 w-6 text-sm flex items-center justify-center bg-red-700 rounded-full">
@@ -62,7 +74,8 @@
             leave-active-class="transition duration-75 ease-in" leave-from-class="transform scale-100 opacity-100"
             leave-to-class="transform scale-95 opacity-0">
             <MenuItems
-              class="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black/5 focus:outline-none" :style="{ backgroundColor: currentPalette.bgSecondary }">
+              class="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black/5 focus:outline-none"
+              :style="{ backgroundColor: currentPalette.bgSecondary }">
               <div class="px-1 py-1">
                 <MenuItem v-slot="{ active }">
                 <button @click="changePage('/profile')" :class="[
@@ -258,8 +271,8 @@
   <Transition name="fade" @leave="leave" @enter="open">
     <div class="fixed top-0 w-screen h-screen backdrop-blur-lg z-50 flex items-center justify-center"
       v-if="expandedSearch" @click.self="toggleSearch">
-      <div
-        class="max-w-[90rem] md:w-[80svw] w-[95svw] text-white max-h-[70svh] overflow-auto p-2 rounded-xl" :style="{ backgroundColor: currentPalette.bgSecondary }">
+      <div class="max-w-[90rem] md:w-[80svw] w-[95svw] text-white max-h-[70svh] overflow-auto p-2 rounded-xl"
+        :style="{ backgroundColor: currentPalette.bgSecondary }">
         <div class="w-full flex items-center justify-between text-2xl font-bold">
           <div class="w-full text-center">
             <h1>Search</h1>
@@ -311,6 +324,7 @@ const openMessages = ref(false)
 const id = ref(0)
 const accepted = ref(true)
 const runtimeConfig = useRuntimeConfig()
+const imageUrl = "/icon/logo.png"
 
 
 const router = useRouter()

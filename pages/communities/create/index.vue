@@ -1,5 +1,8 @@
+<script setup lang="ts">
+</script>
+
 <template>
     <div>
-        <CommunitiesCreateCommunity />
+        <CommunitiesCreateCommunityComponent />
     </div>
 </template>

@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-black min-h-screen text-white">
+    <div class="min-h-screen text-white" :style="{ backgroundColor: currentPalette.bg }">
         <div class="mx-5 py-2">
             <h1 class="text-2xl font-bold">faser FAQ</h1>
 
@@ -31,6 +31,8 @@
 </template>
 
 <script setup>
+import currentPalette from '~/vars/getColors';
+
 const faqItems = ref([
     {
         title: "What is faser?",

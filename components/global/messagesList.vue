@@ -1,5 +1,5 @@
 <template>
-    <div class="min-h-screen">
+    <div class="min-h-screen" :style="{ color: currentPalette.textPrimary }">
         <h1 class="ml-2 text-2xl font-bold">Direct Messages</h1>
         <div v-for="participant in participants" :key="participant.id"
             class="flex gap-2 items-center p-2 cursor-pointer">
@@ -20,6 +20,7 @@
 <script setup>
 import axios from "axios"
 import Cookies from "js-cookie"
+import currentPalette from "~/vars/getColors"
 
 const participants = ref([])
 const haveProfilePicture = ref(true)

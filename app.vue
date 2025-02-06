@@ -5,21 +5,14 @@ import axios from "axios";
 import posthog from 'posthog-js'
 import currentPalette from "./vars/getColors";
 
-onMounted(() => {
-  document.body.style.backgroundColor = currentPalette.bg;
+useHead({
+  bodyAttrs: {
+    style: `background-color: ${currentPalette.value.bg}; color: ${currentPalette.value.textPrimary}`
+  }
 })
 
 const mobile = ref(false)
 const route = useRoute()
-
-useHead({
-  meta: [
-    {
-      name: "theme-color",
-      content: "#030712"
-    }
-  ]
-})
 
 const pagesWithoutFooter = ref([
   "messages"
