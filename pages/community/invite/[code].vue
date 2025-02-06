@@ -5,7 +5,7 @@
 </template>
 
 <script setup>
-import CommunityInvite from '~/components/communities/CommunityInvite.vue';
+import CommunityInvite from '~/components/communities/CommunityInviteComponent.vue';
 
 import { useRoute } from 'vue-router';
 

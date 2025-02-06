@@ -145,9 +145,9 @@
 import axios from 'axios';
 import Cookie from "js-cookie"
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
-import ViewRulesModal from './ViewRulesModal.vue';
+import ViewRulesModal from './ViewRulesModalComponent.vue';
 import CreatePostComponent from '../post/CreatePostComponent.vue';
-import CreateInviteLinkModal from './CreateInviteLinkModal.vue';
+import CreateInviteLinkModal from './CreateInviteLinkModalComponent.vue';
 import currentPalette from '~/vars/getColors';
 
 const props = defineProps({
