@@ -1,5 +1,9 @@
+<script setup>
+import currentPalette from '~/vars/getColors';
+</script>
+
 <template>
-    <div class="w-full max-w-[90rem] md:bg-gray-900 bg-black p-2 pb-4 text-white">
+    <div class="w-full max-w-[90rem] p-2 pb-4 text-white" :style="{ backgroundColor: currentPalette.bgSecondary }">
         <div class="flex items-center">
             <div class="flex items-center w-full">
                 <div class="flex items-center">
