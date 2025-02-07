@@ -92,7 +92,7 @@ watch(() => hideNSFW.value, (value) => {
 })
 
 function changeTheme(theme) {
-    Cookies.set("theme", theme)
+    Cookies.set("theme", theme, { expires: 365 })
     window.location.reload()
 }
 

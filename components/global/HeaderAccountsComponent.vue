@@ -116,7 +116,7 @@ function addAccount() {
 }
 
 function switchAccount(account) {
-    Cookies.set('token', account)
+    Cookies.set('token', account, { expires: 365 });
     router.go()
 }
 
