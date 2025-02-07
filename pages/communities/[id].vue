@@ -12,4 +12,8 @@ const route = useRoute();
 
 const communityId = route.params.id;
 
+definePageMeta({
+    middleware: "community-meta"
+})
+
 </script>

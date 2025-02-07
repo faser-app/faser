@@ -44,7 +44,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     });
   } else {
     useHead({
-      title: "Loading...",
+      title: "faser.app",
       meta: [],
     });
   }

@@ -209,6 +209,10 @@ onMounted(() => {
         rules.value = response.data.community.rules
         communityObject.value = response.data.community
 
+        useHead({
+            title: response.data.community.displayName + ' - faser.app',
+        })
+
         loaded.value = true
     })
 

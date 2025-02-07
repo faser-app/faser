@@ -7,13 +7,12 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     ? useRequestHeaders()["user-agent"]
     : navigator.userAgent;
 
-  // Prüfen, ob der User-Agent auf einen Bot hinweist
-  const isBot = /discordbot|facebookexternalhit|Twitterbot|Slackbot/i.test(
+  const isBot = /discordbot|facebookexternalhit|Twitterbot|Slackbot|/i.test(
     userAgent
   );
 
   if (!isBot) {
-    return; // Keine Requests oder Head-Meta-Tags für normale User
+    return;
   }
 
   const url =
@@ -89,7 +88,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     });
   } else {
     useHead({
-      title: "Loading...",
+      title: "faser.app",
       meta: [],
     });
   }

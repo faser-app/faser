@@ -12,4 +12,8 @@ import { useRoute } from 'vue-router';
 const route = useRoute();
 
 const inviteCode = route.params.code;
+
+definePageMeta({
+    middleware: "invite-meta"
+})
 </script>
