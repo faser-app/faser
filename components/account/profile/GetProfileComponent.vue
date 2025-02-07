@@ -413,7 +413,7 @@ async function getProfile() {
 
   privateAccount.value = response.data[0].privateAccount;
 
-  loadPosts(3)
+  loadPosts(5)
 
   const accountCreated = new Date(response.data[1].memberSince);
   const accountCreatedString = accountCreated.toLocaleDateString();
@@ -426,7 +426,7 @@ document.addEventListener("scroll", (event) => {
     if (lastRequest.value + 1000 < Date.now()) {
       lastRequest.value = Date.now()
 
-      loadPosts(3)
+      loadPosts(5)
     }
   }
 })

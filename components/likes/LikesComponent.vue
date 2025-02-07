@@ -60,7 +60,7 @@ const communityLoaded = ref([])
 const communityLastRequest = ref(0)
 
 watch(category, () => {
-    loadPosts(3)
+    loadPosts(5)
 })
 
 const url = "https://" + runtimeConfig.public.apiUrlServer + "/api/profile/likedPosts"
@@ -90,7 +90,7 @@ axios.get("https://" + runtimeConfig.public.apiUrlServer + "/api/account/getOwnP
 
         profileData.value = response.data[0]
 
-        loadPosts(3)
+        loadPosts(5)
     })
 
 document.addEventListener("scroll", (event) => {
@@ -98,13 +98,13 @@ document.addEventListener("scroll", (event) => {
         if (lastRequest.value + 1000 < Date.now() && category.value === "post") {
             lastRequest.value = Date.now()
 
-            loadPosts(3)
+            loadPosts(5)
         }
 
         if (communityLastRequest.value + 1000 < Date.now() && category.value === "community") {
             communityLastRequest.value = Date.now()
 
-            loadPosts(3)
+            loadPosts(5)
         }
     }
 })

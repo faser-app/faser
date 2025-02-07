@@ -45,7 +45,7 @@ onMounted(() => {
 
         profileData.value = response.data[0]
 
-        loadPosts(3)
+        loadPosts(5)
     })
 
 })
@@ -55,7 +55,7 @@ document.addEventListener("scroll", (event) => {
         if (lastRequest.value + 1000 < Date.now()) {
             lastRequest.value = Date.now()
 
-            loadPosts(3)
+            loadPosts(5)
         }
     }
 })
