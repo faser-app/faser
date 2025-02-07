@@ -83,7 +83,7 @@ onMounted(() => {
 })
 
 document.addEventListener("scroll", (event) => {
-  if (document.body.offsetHeight - 2000 < window.scrollY && !loading.value) {
+  if (document.body.offsetHeight - 8000 < window.scrollY && !loading.value) {
     if (lastRequest.value + 1000 < Date.now()) {
       lastRequest.value = Date.now()
 
