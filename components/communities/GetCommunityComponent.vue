@@ -104,6 +104,10 @@
                     <span class="text-gray-400">Moderators</span>
                     <span class="text-white">{{ moderators.length }}</span>
                 </div>
+                <div class="flex flex-col items-center">
+                    <span class="text-gray-400">Posts</span>
+                    <span class="text-white">{{ posts }}</span>
+                </div>
             </div>
         </div>
 
@@ -137,7 +141,7 @@
     </div>
 
     <ViewRulesModal :showModal="showRulesModal" :rules="rules" @close="showRulesModal = false" class="z-[100]" />
-    <CreateInviteLinkModal :showModal="showInviteLinkModal" :community-id="communityObject.id"
+    <CreateInviteLinkModalComponent :showModal="showInviteLinkModal" :community-id="communityObject.id"
         @close="showInviteLinkModal = false" class="z-[100]" />
 </template>
 
@@ -149,6 +153,7 @@ import ViewRulesModal from './ViewRulesModalComponent.vue';
 import CreatePostComponent from '../post/CreatePostComponent.vue';
 import CreateInviteLinkModal from './CreateInviteLinkModalComponent.vue';
 import currentPalette from '~/vars/getColors';
+import CreateInviteLinkModalComponent from './CreateInviteLinkModalComponent.vue';
 
 const props = defineProps({
     communityId: {
