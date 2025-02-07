@@ -225,7 +225,7 @@ onMounted(() => {
             posts.value = response.data.posts.length
             postsValue.value = response.data.posts
 
-            loadPosts(5)
+            loadPosts(25)
         })
 
     getMembers()
@@ -284,7 +284,7 @@ document.addEventListener("scroll", (event) => {
         if (lastRequest.value + 1000 < Date.now()) {
             lastRequest.value = Date.now()
 
-            loadPosts(5)
+            loadPosts(25)
         }
     }
 })
