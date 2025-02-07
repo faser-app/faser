@@ -62,11 +62,11 @@
                                 <div class="flex p-2 rounded-xl"
                                     :style="{ backgroundColor: currentPalette.buttonSecondary }">
                                     <div @click="images.splice(index, 1)"
-                                        class="absolute cursor-pointer ml-[4rem] -mt-4 w-8 h-8 flex justify-center items-center rounded-full p-2"
+                                        class="absolute cursor-pointer -mt-4 -ml-4 w-8 h-8 flex justify-center items-center rounded-full p-2"
                                         :style="{ backgroundColor: currentPalette.buttonSecondary }">
                                         <i class="fa-solid fa-xmark"></i>
                                     </div>
-                                    <img :src="getPreviewImage(image)" class="w-20 h-20 object-cover rounded-lg" />
+                                    <img :src="getPreviewImage(image)" class="h-20 rounded-lg" />
                                 </div>
                             </template>
                         </div>
