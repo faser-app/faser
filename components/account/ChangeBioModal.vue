@@ -3,19 +3,19 @@
         <div v-if="props.showModal" :class="{ animation: props.showModal, fadeOut: !props.showModal }"
             @click.self="$emit('close')"
             class="fixed flex justify-center items-center top-0 left-0 w-full h-full z-50 backdrop-blur">
-            <div class="bg-gray-900 max-h-[80svh] overflow-scroll p-5 rounded-xl m-3 md:w-auto w-full" :class="{
+            <div class="bg-gray-900 max-h-[80svh] overflow-scroll p-5 rounded-md m-3 md:w-auto w-full" :class="{
                 'border border-red-500': error,
             }">
                 <div class="flex flex-wrap gap-2 w-full justify-center">
-                    <div class="bg-gray-900 w-full flex justify-center items-center p-3 rounded-xl">
+                    <div class="bg-gray-900 w-full flex justify-center items-center p-3 rounded-md">
                         <div class="flex flex-wrap justify-center">
                             <h1 class="text-xl font-bold mb-2">Edit Bio</h1>
                             <div class="w-full"></div>
-                            <textarea v-model="bio" class="w-full p-2 rounded-xl bg-gray-800 text-white" :class="{
+                            <textarea v-model="bio" class="w-full p-2 rounded-md bg-gray-800 text-white" :class="{
                                 'border border-red-500': bioError,
                             }" rows="5" cols="50" @input="bioError = ''"></textarea>
                             <div class="text-center">
-                                <button class="p-2 bg-gray-700 mt-1 rounded-xl" @click="saveBio">
+                                <button class="p-2 bg-gray-700 mt-1 rounded-md" @click="saveBio">
                                     Save
                                 </button>
                                 <p v-if="bioError" class="text-red-500 mt-2">{{ bioError }}</p>

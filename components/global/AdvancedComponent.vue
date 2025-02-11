@@ -1,6 +1,6 @@
 <template>
     <Transition name="fade">
-        <div class="advanced-gradient md:mb-0 mb-[10svh] backdrop-blur-xl p-5 overflow-scroll text-center rounded-xl md:m-3 md:w-auto min-w-full max-h-[80svh] max-w-[80svw]"
+        <div class="advanced-gradient md:mb-0 mb-[10svh] backdrop-blur-xl p-5 overflow-scroll text-center rounded-md md:m-3 md:w-auto min-w-full max-h-[80svh] max-w-[80svw]"
             v-if="showModal">
             <h1 class="text-2xl font-bold mb-2 text-[#ffffffbb]">
                 faser Advanced</h1>
@@ -14,10 +14,10 @@
             </div>
             <div class="flex justify-center gap-2">
                 <button v-if="!props.faqPage" @click="$emit('closeModal')"
-                    class="w-1/3 bg-gray-700 mt-2 p-2 rounded-xl">
+                    class="w-1/3 bg-gray-700 mt-2 p-2 rounded-md">
                     Cancel
                 </button>
-                <button @click="$emit('closeModal')" class="w-2/3 bg-[#ffffff3f] text-white border mt-2 p-2 rounded-xl">
+                <button @click="$emit('closeModal')" class="w-2/3 bg-[#ffffff3f] text-white border mt-2 p-2 rounded-md">
                     Subscribe (Not implemented)
                 </button>
             </div>

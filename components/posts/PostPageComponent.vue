@@ -6,7 +6,7 @@
                     <PostFakePostComponent />
                 </div>
                 <div class="mt-5 rounded-xö flex justify-center">
-                    <div class="flex flex-col max-w-[90rem] w-full overflow-hidden rounded-xl">
+                    <div class="flex flex-col max-w-[90rem] w-full overflow-hidden rounded-md">
                         <div v-for="i in 10">
                             <PostFakePostComponent />
                         </div>
@@ -18,10 +18,10 @@
             <div class="w-full justify-center">
                 <div class="flex justify-center">
                     <PostGetPostComponent :postId="postId" :ownProfile="false" :ownProfileData="ownProfileData"
-                        :account="accountData" class="rounded-xl" />
+                        :account="accountData" class="rounded-md" />
                 </div>
                 <div class="mt-5 rounded-xö flex justify-center">
-                    <div class="flex flex-col max-w-[90rem] w-full overflow-hidden rounded-xl">
+                    <div class="flex flex-col max-w-[90rem] w-full overflow-hidden rounded-md">
                         <div v-for="(comment, index) in comments" :key="comment">
                             <PostGetPostComponent :postId="comment" :ownProfile="ownProfileArray[index]"
                                 :ownProfileData="ownProfileData" :account="accountData" />

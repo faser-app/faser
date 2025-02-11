@@ -6,13 +6,13 @@
                     :community-id="props.communityId" :community-object="communityObject" />
             </div>
             <div v-else-if="!communityObject.private" class="w-full flex justify-center mt-2">
-                <div class="w-96 text-gray-400 italic mt-2 p-4 mx-2 rounded-xl text-center"
+                <div class="w-96 text-gray-400 italic mt-2 p-4 mx-2 rounded-md text-center"
                     :style="{ backgroundColor: currentPalette.bgSecondary }">
                     <p>Join this community to make post.</p>
                 </div>
             </div>
             <div v-else class="w-full flex justify-center mt-2">
-                <div class="w-96 text-gray-400 italic mt-2 p-4 mx-2 rounded-xl text-center"
+                <div class="w-96 text-gray-400 italic mt-2 p-4 mx-2 rounded-md text-center"
                     :style="{ backgroundColor: currentPalette.bgSecondary }">
                     <p>This community is private. You need to be invited to make posts.</p>
                 </div>
@@ -113,9 +113,9 @@
 
         <div class="w-screen flex justify-center">
             <div class="md:w-4/5 max-w-[90rem] w-full mr-4">
-                <div class="flex flex-wrap mt-2 mb-2 md:w-full md:ml-1 rounded-xl pl-1 md:pr-2 items-center md:mr-2 h-fit"
+                <div class="flex flex-wrap mt-2 mb-2 md:w-full md:ml-1 rounded-md pl-1 md:pr-2 items-center md:mr-2 h-fit"
                     :style="{ backgroundColor: currentPalette.bgSecondary }">
-                    <div class="p-2 mt-2 w-full md:pr-3 md:ml-2 rounded-xl items-center h-fit"
+                    <div class="p-2 mt-2 w-full md:pr-3 md:ml-2 rounded-md items-center h-fit"
                         :style="{ backgroundColor: currentPalette.bgSecondary }">
                         <div v-if="posts === 0 && !communityObject.private"
                             class="h-36 flex justify-center items-center">

@@ -5,7 +5,7 @@
 
             <p class="mt-2">Welcome to faser FAQ, here you can read more about faser and what we are doing.</p>
 
-            <div class="mt-6 p-4 bg-gray-800 rounded-xl">
+            <div class="mt-6 p-4 bg-gray-800 rounded-md">
                 <h2 class="text-xl font-bold">About faser</h2>
                 <p class="mt-2">
                     faser is a next-generation social media platform designed to bring people together in a vibrant,
@@ -15,7 +15,7 @@
             </div>
 
 
-            <div class="p-2 mt-2 bg-gray-800 rounded-xl">
+            <div class="p-2 mt-2 bg-gray-800 rounded-md">
                 <AccordionBuilder :items="faqItems" type="normal" accordion-id="faser" />
             </div>
 

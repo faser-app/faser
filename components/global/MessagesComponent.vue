@@ -1,5 +1,5 @@
 <template>
-    <div class="max-w-[90rem] md:w-[80svw] w-[95svw] text-white max-h-[70svh] overflow-auto bg-gray-800 p-2 rounded-xl">
+    <div class="max-w-[90rem] md:w-[80svw] w-[95svw] text-white max-h-[70svh] overflow-auto bg-gray-800 p-2 rounded-md">
         <div class="w-full flex items-center justify-between text-2xl font-bold">
             <div class="w-full text-center">
                 <h1>Messages</h1>
@@ -107,7 +107,7 @@
             </div>
         </div>
         <div class="w-full flex justify-center" v-if="messages.length > 0">
-            <button class="bg-red-500 p-2 rounded-xl" @click="clearMessages">
+            <button class="bg-red-500 p-2 rounded-md" @click="clearMessages">
                 Clear messages
             </button>
         </div>

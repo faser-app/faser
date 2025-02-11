@@ -1,6 +1,6 @@
 <template>
   <div v-if="error"
-    class="w-full md:w-[80%] md:ml-[10svw] py-6 rounded-xl bg-red-900 border border-red-500 text-white text-center">
+    class="w-full md:w-[80%] md:ml-[10svw] py-6 rounded-md bg-red-900 border border-red-500 text-white text-center">
     {{ error }}
   </div>
   <div class="min-h-screen md:flex px-2 text-white" :style="{ backgroundColor: currentPalette.bg }">
@@ -9,7 +9,8 @@
         <PostCreatePostComponent text="Post" mobile="false" :ownProfile="ownAccountData" />
       </div>
     </div>
-    <div class="md:w-3/4 w-full max-w-[90rem] rounded-xl my-4 p-2 md:px-4" :style="{ backgroundColor: currentPalette.bgSecondary }">
+    <div class="md:w-3/4 w-full max-w-[90rem] rounded-md my-4 p-2 md:px-4"
+      :style="{ backgroundColor: currentPalette.bgSecondary }">
       <div v-if="loggedIn && posts.length > 0">
         <div v-for="(post, index) in posts" key="post">
           <PostGetPostComponent :postId="post" ownProfile="false" :profile="profileData" :ownProfile="ownProfile"
@@ -37,7 +38,7 @@
               Not logged
               in</h1>
             <p class="mb-4">You have to be logged in to view and make posts.</p>
-            <RouterLink to="/login" class="py-3 px-5 rounded-xl bg-gray-800">Login</RouterLink>
+            <RouterLink to="/login" class="py-3 px-5 rounded-md bg-gray-800">Login</RouterLink>
           </div>
         </div>
       </div>

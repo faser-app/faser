@@ -23,7 +23,7 @@
                             class="h-14 w-14 m-2 flex border justify-center items-center border-[#96969627] bg-[#1118276c]"
                             :class="{
                                 'rounded-full': !author.businessAccount,
-                                'rounded-xl': author.businessAccount
+                                'rounded-md': author.businessAccount
                             }">
                             <i class="fa-solid fa-user rounded-full text-2xl"></i>
                         </div>
@@ -49,7 +49,7 @@
                         class="h-14 w-14 m-2 flex border justify-center items-center border-[#96969627] bg-[#1118276c]"
                         :class="{
                             'rounded-full': !author.businessAccount,
-                            'rounded-xl': author.businessAccount
+                            'rounded-md': author.businessAccount
                         }">
                         <i class="fa-solid fa-user rounded-full text-2xl"></i>
                     </div>
@@ -160,7 +160,7 @@
             <div class="overflow-x-scroll scroll-snap-x">
                 <div class="inline-flex gap-2 mt-2">
                     <div v-for="image in postContent.images" :key="image"
-                        class="p-2 rounded-xl inline-block scroll-snap-item"
+                        class="p-2 rounded-md inline-block scroll-snap-item"
                         :style="{ backgroundColor: currentPalette.bgSecondary }">
                         <img @click="openImage('https://s3.faser.app/postimages/' + author.id + '/' + postContent.postId + '/' + image + '.png')"
                             :src="'https://s3.faser.app/postimages/' + author.id + '/' + postContent.postId + '/' + image + '.png'"
@@ -169,7 +169,7 @@
                 </div>
             </div>
         </div>
-        <div v-else class="flex w-full justify-center items-center h-36 rounded-xl mb-2"
+        <div v-else class="flex w-full justify-center items-center h-36 rounded-md mb-2"
             :style="{ backgroundColor: currentPalette.buttonDanger, color: currentPalette.textPrimary }">
             <div class="w-full flex justify-center flex-wrap">
                 <div
@@ -235,13 +235,12 @@
             </div>
         </div>
         <div class="flex w-full gap-2 mt-2" :style="{ color: currentPalette.textSecondary }">
-            <input type="text" class="w-3/4 p-2 rounded-xl focus:outline-none"
-                :style="{ backgroundColor: currentPalette.buttonPrimary }"
-                placeholder="Write a comment..." v-model="commentText" />
-            <button v-if="!runningCommentRequest" class="w-1/4 p-2 rounded-xl"
-                :style="{ backgroundColor: currentPalette.buttonDanger }"
-                @click="postComment">Comment</button>
-            <button v-else class="w-1/4 bg-gray-600 p-2 rounded-xl">
+            <input type="text" class="w-3/4 p-2 rounded-md focus:outline-none"
+                :style="{ backgroundColor: currentPalette.buttonPrimary }" placeholder="Write a comment..."
+                v-model="commentText" />
+            <button v-if="!runningCommentRequest" class="w-1/4 p-2 rounded-md"
+                :style="{ backgroundColor: currentPalette.buttonDanger }" @click="postComment">Comment</button>
+            <button v-else class="w-1/4 bg-gray-600 p-2 rounded-md">
                 <l-line-wobble size="80" stroke="5" bg-opacity="0.1" speed="1.75" color="black"></l-line-wobble>
             </button>
         </div>
@@ -251,7 +250,7 @@
         <transition name="fade" @leave="leave">
             <div class="fixed top-0 left-0 w-screen h-screen backdrop-blur z-[200] flex justify-center items-center"
                 @click.self="showModal = false" v-if="showModal">
-                <div class="bg-gray-900 p-5 text-center max-w-[80svw] rounded-xl m-3 md:w-auto w-full" :class="{
+                <div class="bg-gray-900 p-5 text-center max-w-[80svw] rounded-md m-3 md:w-auto w-full" :class="{
                     'animation': showModal,
                 }">
                     <div class="w-full flex justify-center">
@@ -263,10 +262,10 @@
                     <h2 class="text-center font-bold mt-2">Delete Post?</h2>
                     <p>Do you really want to delete this post?</p>
                     <div class="flex flex-col md:flex-row justify-center gap-2 mt-4">
-                        <button @click="showModal = false" class="md:w-2/3 bg-gray-700 p-2 rounded-xl">
+                        <button @click="showModal = false" class="md:w-2/3 bg-gray-700 p-2 rounded-md">
                             Cancel
                         </button>
-                        <button @click="deletePost" class="md:w-1/3 bg-red-500 p-2 rounded-xl">
+                        <button @click="deletePost" class="md:w-1/3 bg-red-500 p-2 rounded-md">
                             Delete
                         </button>
                     </div>
@@ -278,7 +277,7 @@
                 @click.self="showEditModal = false" v-if="showEditModal">
                 <!-- <div v-if="ownProfileData.advancedUser"> -->
                 <div>
-                    <div class="p-5 text-center rounded-xl m-3 max-w-[80svw] md:w-auto w-full" :class="{
+                    <div class="p-5 text-center rounded-md m-3 max-w-[80svw] md:w-auto w-full" :class="{
                         'animation': showEditModal,
                     }" :style="{ backgroundColor: currentPalette.bg }">
                         <div class="w-full flex justify-center">
@@ -289,15 +288,15 @@
                         </div>
                         <h2 class="text-center font-bold mt-2">Edit post</h2>
                         <p class="text-gray-400">If you edit the post, an edited text will be added to the post</p>
-                        <textarea class="w-full p-2 rounded-xl h-40 text-white pt-0 mt-2 resize-none focus:outline-none"
+                        <textarea class="w-full p-2 rounded-md h-40 text-white pt-0 mt-2 resize-none focus:outline-none"
                             :style="{ backgroundColor: currentPalette.bgSecondary }"
                             v-model="postContent.content"></textarea>
                         <div class="flex flex-col md:flex-row justify-center gap-2 mt-4">
-                            <button @click="showEditModal = false" class="md:w-2/3 p-2 rounded-xl"
+                            <button @click="showEditModal = false" class="md:w-2/3 p-2 rounded-md"
                                 :style="{ backgroundColor: currentPalette.buttonSecondary }">
                                 Cancel
                             </button>
-                            <button @click="editPost" class="md:w-1/3 p-2 rounded-xl"
+                            <button @click="editPost" class="md:w-1/3 p-2 rounded-md"
                                 :style="{ backgroundColor: currentPalette.buttonDanger }">
                                 Save
                             </button>
@@ -310,9 +309,9 @@
             </div>
         </transition>
         <transition name="fade" @leave="leave">
-            <div class="fixed md:bg-transparent top-0 z-[200] left-0 w-screen h-screen backdrop-blur flex justify-center items-center bg-black" @click.self="showImageModal = false"
-                v-if="showImageModal">
-                <div class="overflow-auto text-center md:rounded-xl md:w-auto w-full" :class="{
+            <div class="fixed md:bg-transparent top-0 z-[200] left-0 w-screen h-screen backdrop-blur flex justify-center items-center bg-black"
+                @click.self="showImageModal = false" v-if="showImageModal">
+                <div class="overflow-auto text-center md:rounded-md md:w-auto w-full" :class="{
                     'animation': showImageModal,
                     'transition-back duration-300': !isDragging
                 }" @touchstart="handleTouchStart" @touchmove="handleTouchMove" @touchend="handleTouchEnd"
@@ -321,7 +320,7 @@
                     <div class="overflow-x-scroll scroll-snap-x">
                         <div class="inline-flex md:gap-2 md:mt-2">
                             <div v-for="image in postContent.images" :key="image"
-                                class="md:bg-transparent w-screen md:w-auto justify-center bg-black md:p-2 rounded-xl flex items-center scroll-snap-item"
+                                class="md:bg-transparent w-screen md:w-auto justify-center bg-black md:p-2 rounded-md flex items-center scroll-snap-item"
                                 @click.self="showImageModal = false">
                                 <img :src="'https://s3.faser.app/postimages/' + author.id + '/' + postContent.postId + '/' + image + '.png'"
                                     class="max-w-[100vw] max-h-screen md:rounded-lg md:max-w-[80svw] md:w-auto md:max-h-[80svh]" />
@@ -335,7 +334,7 @@
         <Transition name="fade" @leave="leave" @enter="enter">
             <div v-if="showReport"
                 class="fixed h-full z-[200] w-full backdrop-blur top-0 left-0 flex justify-center items-center">
-                <div class="w-[60rem] max-h-[80svh] overflow-y-scroll mx-4 p-2 rounded-xl"
+                <div class="w-[60rem] max-h-[80svh] overflow-y-scroll mx-4 p-2 rounded-md"
                     :style="{ backgroundColor: currentPalette.bg }">
                     <div class="w-full flex items-center justify-center text-xl font-bold">
                         <h1 class="w-full text-center">Report Post</h1>

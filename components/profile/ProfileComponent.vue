@@ -8,7 +8,7 @@
         </div>
         <div v-for="(community, index) in communities" :key="community.name" class="ph-no-capture">
           <RouterLink :to="'/communities/' + community.id">
-            <div class="w-full mb-2 flex mr-8 h-fit truncate items-center pr-3 justify-between rounded-xl"
+            <div class="w-full mb-2 flex mr-8 h-fit truncate items-center pr-3 justify-between rounded-md"
               :style="{ backgroundColor: currentPalette.buttonPrimary, color: currentPalette.textSecondary }">
               <div class="flex items-center ph-no-capture">
                 <i class="fa-solid fa-users p-2 text-lg"></i>
@@ -26,7 +26,7 @@
         <p v-if="privateAccount">Private account</p>
       </div>
       <div class="md:w-4/5 max-w-[90rem] w-full mr-4">
-        <div class="flex flex-wrap md:w-full ml-2 md:ml-1 rounded-xl items-center mr-2 h-fit"
+        <div class="flex flex-wrap md:w-full ml-2 md:ml-1 rounded-md items-center mr-2 h-fit"
           :clas="{ backgroundColor: currentPalette.bgSecondary }">
           <div class="flex justify-between w-full">
             <div class="flex ph-no-capture items-center">
@@ -34,12 +34,12 @@
                 :src="'https://s3.faser.app/profilepictures/' + profileData.id + '/image.png?t=' + new Date().getTime()"
                 @error="hasProfilePicture = false" alt="profile picture" class="h-24 w-24 m-5 object-cover" :class="{
               'rounded-full': !profileData.businessAccount,
-              'rounded-xl': profileData.businessAccount
+              'rounded-md': profileData.businessAccount
             }" />
               <div v-else
                 class="h-24 w-24 m-5 flex border justify-center items-center border-[#96969627] bg-[#1118276c]" :class="{
               'rounded-full': !profileData.businessAccount,
-              'rounded-xl': profileData.businessAccount
+              'rounded-md': profileData.businessAccount
             }">
                 <i class="fa-solid fa-user rounded-full text-4xl"></i>
               </div>
@@ -114,15 +114,15 @@
             </div>
           </div>
           <div class="min-w-full mb-3 sm:mb-0 sm:min-w-fit sm:ml-5 justify-center flex flex-wrap gap-4">
-            <div class="text-center text-gray-400 rounded-xl cursor-pointer select-none" @click="openFollower = true">
+            <div class="text-center text-gray-400 rounded-md cursor-pointer select-none" @click="openFollower = true">
               <p>Follower</p>
               <p class="ph-no-capture">{{ followers }}</p>
             </div>
-            <div class="text-center text-gray-400 rounded-xl cursor-pointer select-none" @click="openFollowing = true">
+            <div class="text-center text-gray-400 rounded-md cursor-pointer select-none" @click="openFollowing = true">
               <p>Following</p>
               <p class="ph-no-capture">{{ following }}</p>
             </div>
-            <div class="text-center text-gray-400 rounded-xl select-none">
+            <div class="text-center text-gray-400 rounded-md select-none">
               <p>Posts</p>
               <p class="ph-no-capture">{{ posts }}</p>
             </div>
@@ -134,14 +134,14 @@
           </div>
           <div class="w-full p-5">
             <div class="md:flex gap-2 grid grid-cols-2">
-              <UiButtonComponent type="primary" class="flex items-center gap-2 justify-center rounded-xl p-2
+              <UiButtonComponent type="primary" class="flex items-center gap-2 justify-center rounded-md p-2
               md:w-1/2">
                 <RouterLink to="/account/settings" class="w-full">
                   <i class="fa-solid fa-gear"></i>
                   Account Settings
                 </RouterLink>
               </UiButtonComponent>
-              <UiButtonComponent type="primary" class="flex items-center gap-2 justify-center rounded-xl p-2
+              <UiButtonComponent type="primary" class="flex items-center gap-2 justify-center rounded-md p-2
                   md:w-1/2">
                 <i class="fa-solid fa-arrow-up-from-bracket"></i>
                 Share Profile
@@ -156,9 +156,9 @@
           </div>
           <p class="w-full pl-5 pb-3 ph-no-capture">Member since {{ sinceString }}</p>
         </div>
-        <div class="flex flex-wrap mt-2 mb-2 md:w-full md:ml-1 rounded-xl pl-1 md:pr-2 items-center md:mr-2 h-fit"
+        <div class="flex flex-wrap mt-2 mb-2 md:w-full md:ml-1 rounded-md pl-1 md:pr-2 items-center md:mr-2 h-fit"
           :style="{ backgroundColor: currentPalette.bgSecondary }">
-          <div class="p-2 mt-2 w-full md:pr-3 md:ml-2 rounded-xl items-center h-fit"
+          <div class="p-2 mt-2 w-full md:pr-3 md:ml-2 rounded-md items-center h-fit"
             :style="'background-color: ' + currentPalette.bgSecondary">
             <div v-if="posts == 0" class="h-36 flex justify-center items-center">
               <p class="italic text-gray-400">No posts yet</p>
@@ -176,7 +176,7 @@
     <Transition name="fade" @leave="leave" @enter="enter">
       <div v-if="openFollower"
         class="fixed z-[100] h-full w-full backdrop-blur top-0 left-0 flex justify-center items-center">
-        <div class="w-[60rem] max-h-[80rem] overflow-y-scroll mx-4 p-2 rounded-xl"
+        <div class="w-[60rem] max-h-[80rem] overflow-y-scroll mx-4 p-2 rounded-md"
           :style="{ backgroundColor: currentPalette.bg }">
           <div class=" w-full flex items-center justify-center text-xl font-bold">
             <h1 class="w-full text-center">Followers ({{ followers }})</h1>
@@ -200,7 +200,7 @@
     <Transition name="fade" @leave="leave" @enter="enter">
       <div v-if="openFollowing"
         class="fixed z-[100] h-full w-full backdrop-blur top-0 left-0 flex justify-center items-center">
-        <div class="w-[60rem] max-h-[80svh] overflow-y-scroll mx-4 p-2 rounded-xl"
+        <div class="w-[60rem] max-h-[80svh] overflow-y-scroll mx-4 p-2 rounded-md"
           :style="{ backgroundColor: currentPalette.bg }">
           <div class="w-full flex items-center justify-center text-xl font-bold">
             <h1 class="w-full text-center">Following ({{ following }})</h1>

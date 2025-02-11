@@ -1,11 +1,11 @@
 <template>
     <div class="min-h-screen">
         <div class="flex w-full justify-center gap-4 mt-2" v-if="loaded">
-            <RouterLink to="/admin/posts" class="py-3 px-5 rounded-xl bg-gray-800 text-white">Posts</RouterLink>
-            <RouterLink to="/admin/accounts" class="py-3 px-5 rounded-xl bg-gray-800 text-white">Accounts</RouterLink>
+            <RouterLink to="/admin/posts" class="py-3 px-5 rounded-md bg-gray-800 text-white">Posts</RouterLink>
+            <RouterLink to="/admin/accounts" class="py-3 px-5 rounded-md bg-gray-800 text-white">Accounts</RouterLink>
         </div>
         <div class="flex w-full justify-center mt-2">
-            <button @click="restart" class="py-3 px-5 rounded-xl bg-gray-800 text-white">
+            <button @click="restart" class="py-3 px-5 rounded-md bg-gray-800 text-white">
                 Restart API
             </button>
         </div>

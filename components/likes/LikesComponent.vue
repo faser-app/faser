@@ -12,7 +12,7 @@
         </div>
     </div>
 
-    <div v-show="category === 'post'" class="rounded-xl p-2 mx-2 mb-2"
+    <div v-show="category === 'post'" class="rounded-md p-2 mx-2 mb-2"
         :style="{ backgroundColor: currentPalette.bgSecondary }">
         <p class="mb-2 text-gray-300">{{ postsValue.length }} results</p>
         <div v-if="postsValue == 0" class="h-36 flex justify-center items-center">
@@ -24,7 +24,7 @@
         </div>
     </div>
 
-    <div v-show="category === 'community'" class="rounded-xl p-2 mx-2 mb-2"
+    <div v-show="category === 'community'" class="rounded-md p-2 mx-2 mb-2"
         :style="{ backgroundColor: currentPalette.bgSecondary }">
         <p class="mb-2 text-gray-300">{{ communityValue.length }} results</p>
         <div v-if="communityValue == 0" class="h-36 flex justify-center items-center">

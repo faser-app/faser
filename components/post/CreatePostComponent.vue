@@ -19,7 +19,7 @@
                 'fadeOut': !showModal
             }">
 
-                <div class="md:w-4/5 w-full md:mx-0 mx-2 p-3 rounded-xl"
+                <div class="md:w-4/5 w-full md:mx-0 mx-2 p-3 rounded-md"
                     :style="{ backgroundColor: currentPalette.bgSecondary }">
                     <div class="flex">
                         <h1 class="w-full">Make Post</h1>
@@ -27,7 +27,7 @@
                             <i class="fa-solid fa-xmark"></i>
                         </div>
                     </div>
-                    <div :style="{ backgroundColor: currentPalette.buttonPrimary }" class="mt-2 p-2 rounded-xl" :class="{
+                    <div :style="{ backgroundColor: currentPalette.buttonPrimary }" class="mt-2 p-2 rounded-md" :class="{
                         'border border-red-500': error
                     }">
                         <textarea class="w-full h-40 text-white pt-0 mt-2 resize-none focus:outline-none"
@@ -36,7 +36,7 @@
                             placeholder="What are you thinking about?"></textarea>
 
                         <div v-if="selectedTrack">
-                            <div class="flex absolute w-8 h-8 justify-center items-center p-2 rounded-xl cursor-pointer"
+                            <div class="flex absolute w-8 h-8 justify-center items-center p-2 rounded-md cursor-pointer"
                                 :style="{ backgroundColor: currentPalette.buttonDanger }" @click="selectedTrack = null">
                                 <i class="fa-solid fa-xmark"></i>
                             </div>
@@ -47,19 +47,19 @@
                         </div>
 
                         <div class="flex gap-2">
-                            <div class="flex cursor-pointer items-center w-12 h-12 justify-center rounded-xl"
+                            <div class="flex cursor-pointer items-center w-12 h-12 justify-center rounded-md"
                                 :style="{ backgroundColor: currentPalette.buttonSecondary }" @click="selectFile">
                                 <i class="fa-solid fa-image text-2xl overflow-visible"></i>
                             </div>
                             <div @click="searchSong = !searchSong"
-                                class="flex cursor-pointer items-center w-12 h-12 justify-center rounded-xl"
+                                class="flex cursor-pointer items-center w-12 h-12 justify-center rounded-md"
                                 :style="{ backgroundColor: currentPalette.buttonSecondary }">
                                 <i class="fa-solid fa-music text-2xl overflow-visible"></i>
                             </div>
                         </div>
                         <div class="flex gap-4 mt-2">
                             <template v-for="(image, index) in images">
-                                <div class="flex p-2 rounded-xl"
+                                <div class="flex p-2 rounded-md"
                                     :style="{ backgroundColor: currentPalette.buttonSecondary }">
                                     <div @click="images.splice(index, 1)"
                                         class="absolute cursor-pointer -mt-4 -ml-4 w-8 h-8 flex justify-center items-center rounded-full p-2"
@@ -95,10 +95,10 @@
                     </div>
                     <p v-if="error" class="text-red-500 mt-1">{{ error }}</p>
                     <div class="flex md:flex-nowrap flex-wrap justify-end mt-2 gap-2">
-                        <button @click="closeModal" class="p-2 md:w-2/3 w-full rounded-xl"
+                        <button @click="closeModal" class="p-2 md:w-2/3 w-full rounded-md"
                             :style="{ backgroundColor: currentPalette.buttonPrimary }">Close</button>
                         <button @click="uploadPost" :disabled="postContent.length === 0 || loading"
-                            class="p-2 flex justify-center items-center md:w-1/3 w-full rounded-xl"
+                            class="p-2 flex justify-center items-center md:w-1/3 w-full rounded-md"
                             :style="{ backgroundColor: currentPalette.buttonDanger }">
 
                             <p v-if="!loading">Post</p>

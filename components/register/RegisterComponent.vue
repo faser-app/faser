@@ -26,7 +26,7 @@
         </RouterLink>
 
         <div class="mt-12">
-          <div v-show="error" class="bg-[#220000] border border-red-700 rounded-xl w-56 text-center py-8">
+          <div v-show="error" class="bg-[#220000] border border-red-700 rounded-md w-56 text-center py-8">
             <p>{{ error }}</p>
           </div>
         </div>

@@ -1,10 +1,10 @@
 <template>
-    <div class="absolute -mt-5 mx-2 bg-gray-800 p-3 w-10 h-10 flex items-center justify-center rounded-xl text-red-500 cursor-pointer"
+    <div class="absolute -mt-5 mx-2 bg-gray-800 p-3 w-10 h-10 flex items-center justify-center rounded-md text-red-500 cursor-pointer"
         v-if="hover && message.sender === ownProfile[0].id" @mouseenter="hover = true" @mouseleave="hover = false"
         @click="deleteMessage">
         <i class="fa-solid fa-trash"></i>
     </div>
-    <div class="p-2 rounded-xl m-2 max-w-[80svw]" @mouseenter="hover = true" :class="{
+    <div class="p-2 rounded-md m-2 max-w-[80svw]" @mouseenter="hover = true" :class="{
         'bg-gradient-to-tl from-gray-700 to-gray-800': message.sender === ownProfile[0].id,
         'bg-gradient-to-tr from-gray-700 to-gray-800': message.sender === profile[0].id,
     }" @mouseleave="hover = false">

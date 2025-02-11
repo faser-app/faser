@@ -2,7 +2,7 @@
   <transition name="fade" @leave="leave">
     <div v-if="showModal" :class="{ animation: showModal, fadeOut: !showModal }" @click.self="changeModal(false)"
       class="fixed flex justify-center items-center top-0 left-0 w-full h-full z-50 backdrop-blur">
-      <div class="bg-gray-900 p-5 rounded-xl m-3 md:w-auto w-full">
+      <div class="bg-gray-900 p-5 rounded-md m-3 md:w-auto w-full">
         <div class="w-full flex justify-center">
           <div class="bg-red-950 border border-red-600 h-14 w-14 rounded-full flex justify-center items-center">
             <i class="fa-solid fa-trash text-xl"></i>
@@ -18,10 +18,10 @@
           </div>
         </div>
         <div class="flex flex-col md:flex-row justify-center gap-2 mt-4">
-          <button @click="changeModal(false)" class="md:w-2/3 bg-gray-700 p-2 rounded-xl">
+          <button @click="changeModal(false)" class="md:w-2/3 bg-gray-700 p-2 rounded-md">
             Cancel
           </button>
-          <button @click="deleteImage" class="md:w-1/3 bg-red-500 p-2 rounded-xl">
+          <button @click="deleteImage" class="md:w-1/3 bg-red-500 p-2 rounded-md">
             Submit
           </button>
         </div>

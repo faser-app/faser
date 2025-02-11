@@ -1,20 +1,20 @@
 <template>
-    <div class="w-full p-2 bg-gray-800 rounded-xl">
+    <div class="w-full p-2 bg-gray-800 rounded-md">
         <div class="w-full flex justify-center mb-2">
             <h2 class="text-xl font-bold">{{ title }}</h2>
         </div>
-        <input type="email" class="w-full p-2 bg-gray-800 border border-gray-700 rounded-xl" placeholder="Email"
+        <input type="email" class="w-full p-2 bg-gray-800 border border-gray-700 rounded-md" placeholder="Email"
             v-model="email" @input="errors.email = ''" :class="{ 'border border-red-500': errors.email }" />
         <p v-if="errors.email" class="text-red-500">{{ errors.email }}</p>
         <input type="text" @input="errors.subject = ''"
-            class="w-full p-2 bg-gray-800 border border-gray-700 rounded-xl mt-2" placeholder="Subject"
+            class="w-full p-2 bg-gray-800 border border-gray-700 rounded-md mt-2" placeholder="Subject"
             v-model="subject" :class="{ 'border border-red-500': errors.subject }" />
         <p v-if="errors.subject" class="text-red-500">{{ errors.subject }}</p>
-        <textarea class="w-full p-2 bg-gray-800 border h-[20rem] border-gray-700 rounded-xl mt-2" placeholder="Message"
+        <textarea class="w-full p-2 bg-gray-800 border h-[20rem] border-gray-700 rounded-md mt-2" placeholder="Message"
             v-model="message" @input="errors.message = ''"
             :class="{ 'border border-red-500': errors.message }"></textarea>
         <p v-if="errors.message" class="text-red-500">{{ errors.message }}</p>
-        <button class="w-full h-10 bg-gray-700 text-white p-2 rounded-xl mt-2" @click="sendMessage">
+        <button class="w-full h-10 bg-gray-700 text-white p-2 rounded-md mt-2" @click="sendMessage">
             <div v-if="loading">
                 <l-zoomies size="80" stroke="5" bg-opacity="0.1" speed="1.4" color="white"></l-zoomies>
             </div>

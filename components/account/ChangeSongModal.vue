@@ -3,7 +3,7 @@
         <div v-if="props.showModal" :class="{ animation: props.showModal, fadeOut: !props.showModal }"
             @click.self="$emit('close')"
             class="fixed flex justify-center items-center top-0 left-0 w-full h-full z-50 backdrop-blur">
-            <div class="bg-gray-900 max-h-[80svh] overflow-scroll p-5 rounded-xl m-3 md:w-auto w-full" :class="{
+            <div class="bg-gray-900 max-h-[80svh] overflow-scroll p-5 rounded-md m-3 md:w-auto w-full" :class="{
                 'border border-red-500': error,
             }">
                 <div class="w-full flex justify-center">
@@ -16,9 +16,9 @@
                 <div class="flex justify-center text-center mt-2 text-gray-400">
                     <div class="md:w-96 w-full flex gap-2">
                         <input type="text" placeholder="Search for a song"
-                            class="w-full p-2 rounded-xl bg-gray-800 text-white mt-2" v-model="songSearch"
+                            class="w-full p-2 rounded-md bg-gray-800 text-white mt-2" v-model="songSearch"
                             @input="error = ''" />
-                        <div class="w-1/3 p-2 rounded-xl bg-gray-800 text-white mt-2 cursor-pointer "
+                        <div class="w-1/3 p-2 rounded-md bg-gray-800 text-white mt-2 cursor-pointer "
                             @click="searchSong">
                             Search
                         </div>
@@ -26,7 +26,7 @@
 
                 </div>
                 <div v-for="songData in songDataRaw.data" :key="songData.songName">
-                    <div class="flex items-center cursor-pointer p-3 m-2 ml-6 rounded-xl gap-3"
+                    <div class="flex items-center cursor-pointer p-3 m-2 ml-6 rounded-md gap-3"
                         @click="selectedTrack = songData" :style="'background-color: ' + color">
                         <div class="flex items-center mr-6">
                             <i class="fa-regular fa-circle" v-if="selectedTrack !== songData"></i>
@@ -50,16 +50,16 @@
                     <p>Music and Search from Spotify <i class="fa-brands fa-spotify"></i></p>
                 </div>
                 <div class="flex flex-col md:flex-row justify-center gap-2 mt-4">
-                    <button @click="$emit('close')" class="md:w-2/3 bg-gray-700 p-2 rounded-xl">
+                    <button @click="$emit('close')" class="md:w-2/3 bg-gray-700 p-2 rounded-md">
                         Cancel
                     </button>
                     <button @click="changeSong"
-                        class="md:w-1/3 bg-green-500 disabled:bg-green-800 disabled:text-gray-300 text-white p-2 rounded-xl"
+                        class="md:w-1/3 bg-green-500 disabled:bg-green-800 disabled:text-gray-300 text-white p-2 rounded-md"
                         v-if="!loading" :disabled="!selectedTrack">
                         Submit
                     </button>
                     <button @click="changeSong"
-                        class="md:w-1/3 bg-green-500 p-2 rounded-xl flex items-center justify-center" v-else>
+                        class="md:w-1/3 bg-green-500 p-2 rounded-md flex items-center justify-center" v-else>
                         <l-zoomies size="80" stroke="5" bg-opacity="0.1" speed="1.4" color="white"></l-zoomies>
                     </button>
                 </div>

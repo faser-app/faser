@@ -248,7 +248,7 @@
 
   <div v-if="!accepted"
     class="w-screen h-screen bg-black bg-opacity-80 flex items-center justify-center fixed top-0 left-0 z-[100]">
-    <div class="max-w-[90rem] bg-gray-800 p-4 rounded-xl w-fit flex flex-col items-center justify-center">
+    <div class="max-w-[90rem] bg-gray-800 p-4 rounded-md w-fit flex flex-col items-center justify-center">
       <div class="">
         <h1 class="font-bold text-2xl">
           Oh, good to see you.
@@ -271,7 +271,7 @@
   <Transition name="fade" @leave="leave" @enter="open">
     <div class="fixed top-0 w-screen h-screen backdrop-blur-lg z-50 flex items-center justify-center"
       v-if="expandedSearch" @click.self="toggleSearch">
-      <div class="max-w-[90rem] md:w-[80svw] w-[95svw] text-white max-h-[70svh] overflow-auto p-2 rounded-xl"
+      <div class="max-w-[90rem] md:w-[80svw] w-[95svw] text-white max-h-[70svh] overflow-auto p-2 rounded-md"
         :style="{ backgroundColor: currentPalette.bgSecondary }">
         <div class="w-full flex items-center justify-between text-2xl font-bold">
           <div class="w-full text-center">

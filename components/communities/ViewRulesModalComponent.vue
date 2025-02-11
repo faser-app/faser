@@ -4,7 +4,8 @@
         <div v-if="props.showModal" :class="{ animation: props.showModal, fadeOut: !props.showModal }"
             @click.self="$emit('close')"
             class="fixed flex justify-center items-center top-0 left-0 w-full h-full z-50 backdrop-blur">
-            <div class="p-5 rounded-xl m-3 md:w-auto w-full min-w-[50svw]" :style="{ backgroundColor: currentPalette.bg, color: currentPalette.textPrimary }" :class="{
+            <div class="p-5 rounded-md m-3 md:w-auto w-full min-w-[50svw]"
+                :style="{ backgroundColor: currentPalette.bg, color: currentPalette.textPrimary }" :class="{
                 'border border-red-500': error,
             }">
                 <h2 class="text-center font-bold">Rules</h2>
@@ -12,7 +13,8 @@
                     {{ props.rules }}
                 </div>
                 <div class="flex flex-col md:flex-row justify-center gap-2 mt-4">
-                    <button @click="$emit('close')" class="md:w-2/3 p-2 rounded-xl" :style="{ backgroundColor: currentPalette.bgSecondary }">
+                    <button @click="$emit('close')" class="md:w-2/3 p-2 rounded-md"
+                        :style="{ backgroundColor: currentPalette.bgSecondary }">
                         Close
                     </button>
                 </div>
@@ -84,4 +86,3 @@ watch(() => props.showModal, (value) => {
     }
 }
 </style>
- 

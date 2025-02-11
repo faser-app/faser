@@ -3,7 +3,7 @@
         <div v-if="props.showModal" :class="{ animation: props.showModal, fadeOut: !props.showModal }"
             @click.self="$emit('close')"
             class="fixed flex justify-center items-center top-0 left-0 w-full h-full z-50 backdrop-blur">
-            <div class="bg-gray-900 p-5 rounded-xl m-3 md:w-auto w-full" :class="{
+            <div class="bg-gray-900 p-5 rounded-md m-3 md:w-auto w-full" :class="{
                 'border border-red-500': error,
             }">
                 <div class="w-full flex justify-center">
@@ -15,20 +15,20 @@
                 <h2 class="text-center font-bold mt-2">Delete Account</h2>
                 <div class="flex justify-center text-center mt-2 text-gray-400">
                     <div class="md:w-96 w-full">
-                        <input type="email" class="w-full p-2 rounded-xl bg-gray-800 text-white" v-model="email"
+                        <input type="email" class="w-full p-2 rounded-md bg-gray-800 text-white" v-model="email"
                             placeholder="Email" @input="error = ''" />
-                        <input type="password" class="w-full p-2 rounded-xl bg-gray-800 text-white mt-2"
+                        <input type="password" class="w-full p-2 rounded-md bg-gray-800 text-white mt-2"
                             v-model="password" placeholder="Password" @input="error = ''" />
-                        <input type="password" class="w-full mt-2 p-2 rounded-xl bg-gray-800 text-white"
+                        <input type="password" class="w-full mt-2 p-2 rounded-md bg-gray-800 text-white"
                             v-model="retypedPassword" placeholder="Retype Password" @input="error = ''" />
                         <p class="mt-2 text-red-500" v-if="error">{{ error }}</p>
                     </div>
                 </div>
                 <div class="flex flex-col md:flex-row justify-center gap-2 mt-4">
-                    <button @click="$emit('close')" class="md:w-2/3 bg-gray-700 p-2 rounded-xl">
+                    <button @click="$emit('close')" class="md:w-2/3 bg-gray-700 p-2 rounded-md">
                         Cancel
                     </button>
-                    <button @click="deleteAccount" class="md:w-1/3 bg-red-500 p-2 rounded-xl">
+                    <button @click="deleteAccount" class="md:w-1/3 bg-red-500 p-2 rounded-md">
                         Submit
                     </button>
                 </div>

@@ -1,6 +1,7 @@
 <template>
     <div class="min-h-screen text-white" v-if="loaded">
-        <div class="w-full flex justify-between z-50 pl-2 items-center fixed p-2" :style="{ backgroundColor: currentPalette.bgSecondary }" :class="{
+        <div class="w-full flex justify-between z-50 pl-2 items-center fixed p-2"
+            :style="{ backgroundColor: currentPalette.bgSecondary }" :class="{
             'top-[4.5rem]': !mobile,
             'top-0': mobile
         }">
@@ -9,12 +10,12 @@
                     :src="'https://s3.faser.app/profilepictures/' + profile[0].id + '/image.png' + '?t=' + new Date().getTime()"
                     :class="{
                         'rounded-full': !profile[0].businessAccount,
-                        'rounded-xl': profile[0].businessAccount
+                        'rounded-md': profile[0].businessAccount
                     }" class="h-12 w-12 rounded-full" @error="haveProfile = false">
                 <div v-else class="h-12 w-12 flex border justify-center items-center border-[#96969627] bg-[#1118276c]"
                     :class="{
                         'rounded-full': !profile[0].businessAccount,
-                        'rounded-xl': profile[0].businessAccount
+                        'rounded-md': profile[0].businessAccount
                     }">
                     <i class="fa-solid fa-user rounded-full text-xl"></i>
                 </div>
@@ -70,7 +71,7 @@
         <div class="flex h-16 items-center bg-gray-900 p-2 fixed bottom-0 w-screen" :class="{
             'bottom-20': mobile
         }">
-            <input type="text" class="w-full p-2 rounded-xl bg-gray-800 text-white" maxlength="1000"
+            <input type="text" class="w-full p-2 rounded-md bg-gray-800 text-white" maxlength="1000"
                 placeholder="Message" v-model="inputContent" v-on:keyup.enter="sendMessage" />
             <div class="bg-gray-800 w-10 h-10 rounded-full flex justify-center items-center ml-2 cursor-pointer"
                 @click="sendMessage">
