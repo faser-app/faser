@@ -82,11 +82,12 @@
                                         class="fa-solid fa-robot"></i></p>
                             </label>
                         </div>
+                        {{ isAdult }}
                         <div class="mt-4 w-full text-end" v-if="isAdult">
                             <label class="inline-flex items-center cursor-pointer">
                                 <input type="checkbox" value="" class="sr-only peer" v-model="nsfw">
-                                <div
-                                    class="relative w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-500">
+                                <div class="relative w-11 h-6 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-500"
+                                    :style="{ backgroundColor: currentPalette.buttonSecondary }">
                                 </div>
                                 <p class="ms-3 select-none text-sm font-medium dark:text-gray-300">NSFW <i
                                         class="fa-solid fa-triangle-exclamation"></i></p>
@@ -204,8 +205,22 @@ function closeModal() {
 }
 
 onMounted(() => {
+    if (props.communityObject?.nsfw) {
+        isAdult.value = true
+    }
+
+    tryBirthDate()
+})
+
+function tryBirthDate() {
     const today = new Date()
     const birthDate = new Date(props.ownProfile.birthday)
+
+    if (isNaN(birthDate.getTime())) {
+        setTimeout(() => {
+            tryBirthDate()
+        }, 1000)
+    }
 
     const age = today.getFullYear() - birthDate.getFullYear()
     const month = today.getMonth() - birthDate.getMonth()
@@ -215,11 +230,7 @@ onMounted(() => {
     } else {
         isAdult.value = age >= 18
     }
-
-    if (props.communityObject?.nsfw) {
-        isAdult.value = true
-    }
-})
+}
 
 function selectSong(song) {
     selectedTrack.value = song
