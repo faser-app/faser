@@ -82,7 +82,6 @@
                                         class="fa-solid fa-robot"></i></p>
                             </label>
                         </div>
-                        {{ isAdult }}
                         <div class="mt-4 w-full text-end" v-if="isAdult">
                             <label class="inline-flex items-center cursor-pointer">
                                 <input type="checkbox" value="" class="sr-only peer" v-model="nsfw">
