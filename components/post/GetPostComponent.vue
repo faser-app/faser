@@ -14,7 +14,7 @@
                 <RouterLink v-if="props.ownProfile === 'false'" :to="'/' + author.username" class="flex items-center">
                     <div v-if="props.ownProfile === 'false'">
                         <img v-if="author.hasProfilePicture" @error="author.hasProfilePicture = false"
-                            :src="'https://s3.faser.app/profilepictures/' + author.id + '/image.png' + '?t=' + new Date().getTime()"
+                            :src="'https://s3.faser.app/profilepictures/' + author.id + '/image.png'"
                             alt="profile picture" class="h-14 w-14 m-2 object-cover" :class="{
                                 'rounded-full': !author.businessAccount,
                                 'rounded-lg': author.businessAccount
@@ -40,7 +40,7 @@
                 </RouterLink>
                 <RouterLink v-else :to="'/' + author.username" class="flex items-center">
                     <img v-if="author.hasProfilePicture" @error="author.hasProfilePicture = false"
-                        :src="'https://s3.faser.app/profilepictures/' + author.id + '/image.png' + '?t=' + new Date().getTime()"
+                        :src="'https://s3.faser.app/profilepictures/' + author.id + '/image.png'"
                         alt="profile picture" class="h-14 w-14 m-2 object-cover" :class="{
                             'rounded-full': !author.businessAccount,
                             'rounded-lg': author.businessAccount
