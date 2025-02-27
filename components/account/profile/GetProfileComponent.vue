@@ -292,7 +292,7 @@ const md = new MarkdownIt({
 
 const runtimeConfig = useRuntimeConfig()
 
-const url = "https://" + runtimeConfig.public.apiUrlServer + "/api/account/getProfile";
+const url = baseURL + "/api/account/getProfile";
 const profileData = ref({});
 const sinceString = ref("");
 const badges = ref([]);
@@ -336,7 +336,7 @@ function alertNotImplemented() {
 }
 
 async function main() {
-  axios.get("https://" + runtimeConfig.public.apiUrlServer + "/api/account/getOwnProfile", {
+  axios.get(baseURL + "/api/account/getOwnProfile", {
     headers: {
       token: Cookies.get("token"),
     },
@@ -399,7 +399,7 @@ async function getProfile() {
   following.value = response.data[0].following.length;
 
   for (let i = 0; i < response.data[0].communities.length; i++) {
-    axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/community/getCommunity", {
+    axios.post(baseURL + "/api/community/getCommunity", {
       communityId: response.data[0].communities[i].id
     })
       .then((response) => {
@@ -446,10 +446,10 @@ function toggleFollow() {
   let url = ""
 
   if (followed.value) {
-    url = "https://" + runtimeConfig.public.apiUrlServer + "/api/social/unfollowUser"
+    url = baseURL + "/api/social/unfollowUser"
     followers.value--
   } else {
-    url = "https://" + runtimeConfig.public.apiUrlServer + "/api/social/followUser"
+    url = baseURL + "/api/social/followUser"
     followers.value++
   }
 
@@ -463,10 +463,10 @@ function toggleFollow() {
         alert(error.response.data.message)
 
         if (followed.value) {
-          url = "https://" + runtimeConfig.public.apiUrlServer + "/api/social/unfollowUser"
+          url = baseURL + "/api/social/unfollowUser"
           followers.value--
         } else {
-          url = "https://" + runtimeConfig.public.apiUrlServer + "/api/social/followUser"
+          url = baseURL + "/api/social/followUser"
           followers.value++
         }
 
@@ -475,10 +475,10 @@ function toggleFollow() {
         alert(error.response.data)
 
         if (followed.value) {
-          url = "https://" + runtimeConfig.public.apiUrlServer + "/api/social/unfollowUser"
+          url = baseURL + "/api/social/unfollowUser"
           followers.value--
         } else {
-          url = "https://" + runtimeConfig.public.apiUrlServer + "/api/social/followUser"
+          url = baseURL + "/api/social/followUser"
           followers.value++
         }
 

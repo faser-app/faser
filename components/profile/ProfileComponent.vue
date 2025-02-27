@@ -239,7 +239,7 @@ const md = new MarkdownIt({
 const router = useRouter()
 const runtimeConfig = useRuntimeConfig()
 
-const url = "https://" + runtimeConfig.public.apiUrlServer + "/api/account/getOwnProfile";
+const url = baseURL + "/api/account/getOwnProfile";
 const accountData = ref({});
 const profileData = ref({});
 const ownProfileData = ref({});
@@ -284,7 +284,7 @@ axios
     ownProfileData.value = response.data[0];
 
     for (let i = 0; i < response.data[0].communities.length; i++) {
-      axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/community/getCommunity", {
+      axios.post(baseURL + "/api/community/getCommunity", {
         communityId: response.data[0].communities[i].id
       })
         .then((response) => {
@@ -304,7 +304,7 @@ axios
 
     // axios
     //   .get(
-    //     "https://" + runtimeConfig.public.apiUrlServer + "/api/profile/getProfilePhoto?username=" +
+    //     baseURL + "/api/profile/getProfilePhoto?username=" +
     //     accountData.value.username
     //   )
     //   .then((response) => {

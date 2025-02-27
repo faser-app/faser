@@ -65,7 +65,7 @@ const error = ref("");
 
 onMounted(() => {
     axios
-        .get("https://" + runtimeConfig.public.apiUrlServer + "/api/account/getOwnProfile", {
+        .get(baseURL + "/api/account/getOwnProfile", {
             headers: {
                 token: Cookies.get("token"),
             },
@@ -82,7 +82,7 @@ onMounted(() => {
 
 function saveBio() {
     axios
-        .post("https://" + runtimeConfig.public.apiUrlServer + "/api/profile/changeBio", {
+        .post(baseURL + "/api/profile/changeBio", {
             token: Cookies.get("token"),
             bio: bio.value,
             lang: navigator.language || navigator.userLanguage,

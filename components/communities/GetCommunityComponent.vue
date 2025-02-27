@@ -187,7 +187,7 @@ const runtimeConfig = useRuntimeConfig()
 
 
 onMounted(() => {
-    axios.get("https://" + runtimeConfig.public.apiUrlServer + "/api/account/getOwnProfile", {
+    axios.get(baseURL + "/api/account/getOwnProfile", {
         headers: {
             token: Cookie.get("token")
         }
@@ -198,7 +198,7 @@ onMounted(() => {
             accountData.value = response.data[1];
         })
 
-    axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/community/getCommunity", {
+    axios.post(baseURL + "/api/community/getCommunity", {
         token: Cookie.get("token"),
         communityId: props.communityId
     }).then(response => {
@@ -217,7 +217,7 @@ onMounted(() => {
     })
 
 
-    axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/community/getPosts", {
+    axios.post(baseURL + "/api/community/getPosts", {
         token: Cookie.get("token"),
         communityId: props.communityId
     })
@@ -232,7 +232,7 @@ onMounted(() => {
 })
 
 function getMembers() {
-    axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/community/getMembers", {
+    axios.post(baseURL + "/api/community/getMembers", {
         communityId: props.communityId
     })
         .then((response) => {
@@ -241,7 +241,7 @@ function getMembers() {
 }
 
 function leaveCommunity() {
-    axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/community/leaveCommunity", {
+    axios.post(baseURL + "/api/community/leaveCommunity", {
         token: Cookie.get("token"),
         communityId: props.communityId
     })
@@ -254,7 +254,7 @@ function leaveCommunity() {
 }
 
 function joinCommunity() {
-    axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/community/joinCommunity", {
+    axios.post(baseURL + "/api/community/joinCommunity", {
         token: Cookie.get("token"),
         communityId: props.communityId
     })
@@ -267,7 +267,7 @@ function joinCommunity() {
 }
 
 function deleteCommunity() {
-    axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/community/deleteCommunity", {
+    axios.post(baseURL + "/api/community/deleteCommunity", {
         token: Cookie.get("token"),
         communityId: props.communityId
     })

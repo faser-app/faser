@@ -118,7 +118,7 @@ function upload() {
     buttonDisabled.value = true;
 
     axios
-        .post("https://" + runtimeConfig.public.apiUrlServer + "/api/profile/changeProfilePhoto", formData, {
+        .post(baseURL + "/api/profile/changeProfilePhoto", formData, {
             headers: {
                 token: Cookies.get("token"),
                 "Content-Type": "multipart/form-data",
@@ -130,7 +130,7 @@ function upload() {
 }
 
 function removeImage() {
-    axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/profile/removeProfilePhoto", {
+    axios.post(baseURL + "/api/profile/removeProfilePhoto", {
         token: Cookies.get("token")
     })
         .then((response) => {

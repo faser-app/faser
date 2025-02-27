@@ -58,7 +58,7 @@ onMounted(() => {
 })
 
 function loadList() {
-    axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/admin/getAccounts", {
+    axios.post(baseURL + "/api/admin/getAccounts", {
         token: token
     })
         .then((response) => {
@@ -68,7 +68,7 @@ function loadList() {
 }
 
 function terminateAccount(id) {
-    axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/admin/terminateAccount", {
+    axios.post(baseURL + "/api/admin/terminateAccount", {
         token: token,
         accountId: id
     })
@@ -77,7 +77,7 @@ function terminateAccount(id) {
         })
 }
 
-axios.get("https://" + runtimeConfig.public.apiUrlServer + "/api/account/getOwnProfile", {
+axios.get(baseURL + "/api/account/getOwnProfile", {
     headers: {
         token: token
     }

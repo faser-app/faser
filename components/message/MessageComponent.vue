@@ -111,7 +111,7 @@ async function sendMessage() {
         })
     } catch (error) { }
 
-    await axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/messages/sendDM", {
+    await axios.post(baseURL + "/api/messages/sendDM", {
         token: Cookies.get("token"),
         otherAccount: profile.value[0].id,
         message: inputContent.value
@@ -127,7 +127,7 @@ async function sendMessage() {
 const interval = setInterval(async () => {
 
     if (route.path.split("/")[2] === String(profile.value[0].id)) {
-        const dmsResponse = await axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/messages/getDMs", {
+        const dmsResponse = await axios.post(baseURL + "/api/messages/getDMs", {
             token: Cookies.get("token"),
             otherAccount: profile.value[0].id,
         })
@@ -140,7 +140,7 @@ const interval = setInterval(async () => {
 
 onMounted(async () => {
 
-    const profileResponse = await axios.get("https://" + runtimeConfig.public.apiUrlServer + "/api/account/getProfile", {
+    const profileResponse = await axios.get(baseURL + "/api/account/getProfile", {
         headers: {
             userId: route.path.split("/")[2]
         }
@@ -148,7 +148,7 @@ onMounted(async () => {
 
     profile.value = profileResponse.data
 
-    const ownProfileResponse = await axios.get("https://" + runtimeConfig.public.apiUrlServer + "/api/account/getOwnProfile", {
+    const ownProfileResponse = await axios.get(baseURL + "/api/account/getOwnProfile", {
         headers: {
             token: Cookies.get("token")
         }
@@ -158,7 +158,7 @@ onMounted(async () => {
 
     ownProfile.value = ownProfileResponse.data
 
-    const dmsResponse = await axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/messages/getDMs", {
+    const dmsResponse = await axios.post(baseURL + "/api/messages/getDMs", {
         token: Cookies.get("token"),
         otherAccount: profileResponse.data[0].id,
     })

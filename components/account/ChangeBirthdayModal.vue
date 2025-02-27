@@ -69,7 +69,7 @@ watch(() => props.showModal, (value) => {
 })
 
 axios
-    .get("https://" + runtimeConfig.public.apiUrlServer + "/api/account/getOwnProfile", {
+    .get(baseURL + "/api/account/getOwnProfile", {
         headers: {
             token: Cookies.get("token"),
         },
@@ -84,7 +84,7 @@ axios
     });
 
 function addBirthday() {
-    axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/account/changeBirthday", {
+    axios.post(baseURL + "/api/account/changeBirthday", {
         birthday: birthday.value,
         token: Cookies.get("token")
     })

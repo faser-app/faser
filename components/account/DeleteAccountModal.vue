@@ -75,7 +75,7 @@ const error = ref("");
 
 
 function deleteAccount() {
-    axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/account/deleteAccount", {
+    axios.post(baseURL + "/api/account/deleteAccount", {
         "token": Cookies.get("token"),
         "password": password.value,
         "email": email.value

@@ -99,7 +99,7 @@ function loadPosts() {
   if (Cookies.get("token")) {
     if (!noMorePosts.value) {
       loading.value = true
-      axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/posts/loadPosts", {
+      axios.post(baseURL + "/api/posts/loadPosts", {
         token: Cookies.get("token"),
         loadPosts: 25,
         lastTimestamp: lastTimestamp.value,
@@ -136,7 +136,7 @@ function loadPosts() {
 const ownProfileData = ref({})
 const ownAccountData = ref({})
 
-axios.get("https://" + runtimeConfig.public.apiUrlServer + "/api/account/getOwnProfile", {
+axios.get(baseURL + "/api/account/getOwnProfile", {
   headers: {
     token: Cookies.get("token"),
   },

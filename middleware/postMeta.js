@@ -15,8 +15,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     return;
   }
 
-  const url =
-    "https://" + runtimeConfig.public.apiUrlServer + "/api/social/fetchPost";
+  const url = baseURL + "/api/social/fetchPost";
   const postId = to.params.post;
 
   const headers = {
@@ -27,23 +26,15 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     headers: headers,
   });
 
-  const postAuthor = await useFetch(
-    "https://" +
-      runtimeConfig.public.apiUrlServer +
-      "/api/profile/getPostProfile",
-    {
-      headers: headers,
-    }
-  );
+  const postAuthor = await useFetch(baseURL + "/api/profile/getPostProfile", {
+    headers: headers,
+  });
 
-  const authorUser = await useFetch(
-    "https://" + runtimeConfig.public.apiUrlServer + "/api/account/getProfile",
-    {
-      headers: {
-        userid: postAuthor.data.value[0].id,
-      },
-    }
-  );
+  const authorUser = await useFetch(baseURL + "/api/account/getProfile", {
+    headers: {
+      userid: postAuthor.data.value[0].id,
+    },
+  });
 
   if (data.value && data.value.length > 0) {
     useHead({

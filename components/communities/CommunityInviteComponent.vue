@@ -81,7 +81,7 @@ const runtimeConfig = useRuntimeConfig()
 
 
 onMounted(() => {
-    axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/community/getCommunityByInvite", {
+    axios.post(baseURL + "/api/community/getCommunityByInvite", {
         inviteCode: props.inviteCode
     })
         .then((response) => {
@@ -98,7 +98,7 @@ onMounted(() => {
 })
 
 function joinCommunity() {
-    axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/community/joinCommunityByInvite", {
+    axios.post(baseURL + "/api/community/joinCommunityByInvite", {
         inviteCode: props.inviteCode,
         token: Cookies.get("token")
     })

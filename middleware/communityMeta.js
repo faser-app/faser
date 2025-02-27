@@ -17,10 +17,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     return;
   }
 
-  const url =
-    "https://" +
-    runtimeConfig.public.apiUrlServer +
-    "/api/community/getCommunity";
+  const url = baseURL + "/api/community/getCommunity";
   const communityId = route.params.id;
 
   const { data, error } = await useFetch(url, {

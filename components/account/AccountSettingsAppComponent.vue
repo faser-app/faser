@@ -142,7 +142,7 @@ async function subscribeToPushNotifications() {
         applicationServerKey,
     });
 
-    axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/community/saveSubscription", {
+    axios.post(baseURL + "/api/community/saveSubscription", {
         subscription: subscription,
         tokens: JSON.parse(Cookies.get("tokenList"))
     })

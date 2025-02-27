@@ -89,7 +89,7 @@ function sendMessage() {
 
     loading.value = true;
 
-    axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/support/createSupportRequest", {
+    axios.post(baseURL + "/api/support/createSupportRequest", {
         email: email.value,
         subject: subject.value,
         message: message.value,

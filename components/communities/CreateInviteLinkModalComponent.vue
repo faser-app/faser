@@ -90,7 +90,7 @@ function generateInviteLink() {
     if (uses.value === 0) {
         uses.value = -1
     }
-    axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/community/createInvite", {
+    axios.post(baseURL + "/api/community/createInvite", {
         token: Cookies.get("token"),
         communityId: props.communityId,
         expDate: expirationDate.value.value,

@@ -73,7 +73,7 @@ onMounted(() => {
 
 function deleteImage() {
   axios
-    .post("https://" + runtimeConfig.public.apiUrlServer + "/api/profile/changeDisplayName", {
+    .post(baseURL + "/api/profile/changeDisplayName", {
       token: Cookies.get("token"),
       newDisplayName: newUsername.value,
       lang: navigator.language || navigator.userLanguage,

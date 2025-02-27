@@ -13,14 +13,11 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     userAgent
   );
 
-//   if (!isBot) {
-//     return;
-//   }
+  //   if (!isBot) {
+  //     return;
+  //   }
 
-  const url =
-    "https://" +
-    runtimeConfig.public.apiUrlServer +
-    "/api/community/getCommunityByInvite";
+  const url = baseURL + "/api/community/getCommunityByInvite";
   const inviteCode = route.params.code;
 
   const { data, error } = await useFetch(url, {
@@ -37,7 +34,10 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
         {
           hid: "og-title",
           property: "og:title",
-          content: "You have been invited to join the " + data.value.community.name +  " community on faser.app",
+          content:
+            "You have been invited to join the " +
+            data.value.community.name +
+            " community on faser.app",
         },
         {
           hid: "og-description",

@@ -28,7 +28,7 @@ const runtimeConfig = useRuntimeConfig()
 
 
 function deleteMessage() {
-    axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/messages/deleteDM", {
+    axios.post(baseURL + "/api/messages/deleteDM", {
         token: Cookies.get("token"),
         messageId: props.message.id,
         otherAccount: props.profile[0].id,

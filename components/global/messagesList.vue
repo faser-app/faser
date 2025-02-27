@@ -27,13 +27,13 @@ const haveProfilePicture = ref(true)
 const runtimeConfig = useRuntimeConfig()
 
 
-axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/social/getDirectMessages", {
+axios.post(baseURL + "/api/social/getDirectMessages", {
     token: Cookies.get("token")
 }).then((response) => {
     console.log(response.data.participants)
 
     for (let i = 0; i < response.data.participants.length; i++) {
-        axios.get("https://" + runtimeConfig.public.apiUrlServer + "/api/account/getProfile", {
+        axios.get(baseURL + "/api/account/getProfile", {
             headers: {
                 userid: response.data.participants[i],
             }

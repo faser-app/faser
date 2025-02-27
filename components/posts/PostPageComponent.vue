@@ -54,7 +54,7 @@ const isLoading = ref(true);
 
 onMounted(async () => {
     try {
-        const postValue = await axios.get("https://" + runtimeConfig.public.apiUrlServer + "/api/social/fetchPost", {
+        const postValue = await axios.get(baseURL + "/api/social/fetchPost", {
             headers: {
                 token: Cookies.get("token"),
                 postId: postId.value
@@ -63,7 +63,7 @@ onMounted(async () => {
 
         comments.value = postValue.data[0].comments;
 
-        const url = "https://" + runtimeConfig.public.apiUrlServer + "/api/account/getOwnProfile";
+        const url = baseURL + "/api/account/getOwnProfile";
 
         const ownProfileValue = await axios.get(url, {
             headers: {
@@ -76,7 +76,7 @@ onMounted(async () => {
         accountData.value = ownProfileValue.data[1];
 
         for (let i = 0; i < postValue.data[0].comments.length; i++) {
-            const commentValue = await axios.get("https://" + runtimeConfig.public.apiUrlServer + "/api/social/fetchPost", {
+            const commentValue = await axios.get(baseURL + "/api/social/fetchPost", {
                 headers: {
                     token: Cookies.get("token"),
                     postId: postValue.data[0].comments[i]

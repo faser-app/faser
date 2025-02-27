@@ -40,8 +40,8 @@
                 </RouterLink>
                 <RouterLink v-else :to="'/' + author.username" class="flex items-center">
                     <img v-if="author.hasProfilePicture" @error="author.hasProfilePicture = false"
-                        :src="'https://s3.faser.app/profilepictures/' + author.id + '/image.png'"
-                        alt="profile picture" class="h-14 w-14 m-2 object-cover" :class="{
+                        :src="'https://s3.faser.app/profilepictures/' + author.id + '/image.png'" alt="profile picture"
+                        class="h-14 w-14 m-2 object-cover" :class="{
                             'rounded-full': !author.businessAccount,
                             'rounded-lg': author.businessAccount
                         }" />
@@ -512,7 +512,7 @@ watch(() => showModal.value, (value) => {
 function postComment() {
     runningCommentRequest.value = true
 
-    axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/social/createPost", {
+    axios.post(baseURL + "/api/social/createPost", {
         token: Cookies.get("token"),
         message: commentText.value,
         lang: "en",
@@ -554,7 +554,7 @@ function toggleSave() {
 }
 
 function savePost() {
-    axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/social/savePost", {
+    axios.post(baseURL + "/api/social/savePost", {
         postId: postId.value,
         token: Cookies.get("token"),
     })
@@ -564,7 +564,7 @@ function savePost() {
 }
 
 function unsavePost() {
-    axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/social/unsavePost", {
+    axios.post(baseURL + "/api/social/unsavePost", {
         postId: postId.value,
         token: Cookies.get("token"),
     })
@@ -619,7 +619,7 @@ function closeMenu() {
     threeDotsMenu.value = false
 }
 
-axios.get("https://" + runtimeConfig.public.apiUrlServer + "/api/profile/getPostProfile", {
+axios.get(baseURL + "/api/profile/getPostProfile", {
     headers: {
         postId: props.postId,
         community: props.isCommunity,
@@ -644,7 +644,7 @@ function toggleLike() {
         postLikes.value--
     }
 
-    axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/social/toggleLike", {
+    axios.post(baseURL + "/api/social/toggleLike", {
         postId: postId.value,
         token: Cookies.get("token"),
         community: props.isCommunity
@@ -676,7 +676,7 @@ const imageSrc = ref('')
 
 function deletePost() {
     if (!props.admin) {
-        axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/social/deletePost", {
+        axios.post(baseURL + "/api/social/deletePost", {
             postid: postId.value,
             token: Cookies.get("token"),
             community: props.isCommunity,
@@ -687,7 +687,7 @@ function deletePost() {
                 showModal.value = false
             })
     } else {
-        axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/admin/deletePost", {
+        axios.post(baseURL + "/api/admin/deletePost", {
             postId: postId.value,
             token: Cookies.get("token"),
             community: props.isCommunity
@@ -700,7 +700,7 @@ function deletePost() {
 }
 
 function editPost() {
-    axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/social/editPost", {
+    axios.post(baseURL + "/api/social/editPost", {
         postId: postId.value,
         token: Cookies.get("token"),
         message: postContent.value.content,
@@ -765,7 +765,7 @@ function formatTimeDifference(timestamp) {
 }
 
 function loadEmbed(url) {
-    axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/social/embed", {
+    axios.post(baseURL + "/api/social/embed", {
         url: url
     })
         .then((response) => {
@@ -790,7 +790,7 @@ function sharePost() {
 }
 
 function reloadStats() {
-    axios.get("https://" + runtimeConfig.public.apiUrlServer + "/api/social/fetchPost", {
+    axios.get(baseURL + "/api/social/fetchPost", {
         headers: {
             postId: postId.value,
             community: props.isCommunity,

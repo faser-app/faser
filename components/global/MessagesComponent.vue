@@ -132,7 +132,7 @@ const props = defineProps([
 ])
 
 function clearMessages() {
-    axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/profile/clearUserMessages", {
+    axios.post(baseURL + "/api/profile/clearUserMessages", {
         token: Cookies.get("token")
     })
         .then((response) => {

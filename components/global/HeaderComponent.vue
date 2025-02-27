@@ -19,6 +19,7 @@
           class="h-14 ml-2 my-2 rounded-full cursor-pointer border border-[#96969627] bg-[#1118276c] absolute pointer-events-auto" />
       </div>
     </RouterLink>
+    {{ baseURLString }}
     <div @click="expanded = !expanded">
       <div class="flex h-full w-14 justify-center items-center cursor-pointer md:hidden">
         <i class="fa-solid fa-bars text-2xl"></i>
@@ -325,6 +326,7 @@ const id = ref(0)
 const accepted = ref(true)
 const runtimeConfig = useRuntimeConfig()
 const imageUrl = "/icon/logo.png"
+const baseURLString = ref(baseURL)
 
 
 const router = useRouter()
@@ -357,7 +359,7 @@ function changePage(page) {
 }
 
 function acceptPrivacy() {
-  axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/account/accept", {
+  axios.post(baseURL + "/api/account/accept", {
     token: Cookies.get("token")
   })
     .then(() => {
@@ -366,7 +368,7 @@ function acceptPrivacy() {
 }
 
 onMounted(() => {
-  const url = "https://" + runtimeConfig.public.apiUrlServer + "/api/account/getOwnProfile";
+  const url = baseURL + "/api/account/getOwnProfile";
 
   axios
     .get(url, {
@@ -391,7 +393,7 @@ onMounted(() => {
 });
 
 function getUserMessages() {
-  axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/profile/getUserMessages", {
+  axios.post(baseURL + "/api/profile/getUserMessages", {
     token: Cookies.get("token")
   })
     .then((response) => {

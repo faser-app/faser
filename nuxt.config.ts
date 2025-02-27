@@ -71,9 +71,9 @@ export default defineNuxtConfig({
     port: 3100,
   },
 
-  runtimeConfig: {
-    public: {
-      apiUrlServer: process.env.API_URL_SERVER || "api.faser.app",
+  vite: {
+    define: {
+      baseURL: JSON.stringify(process.env.API_URL_SERVER),
     },
   },
 

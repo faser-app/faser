@@ -147,7 +147,7 @@ onMounted(() => {
 })
 
 function getProfile(token, index) {
-    axios.get("https://" + runtimeConfig.public.apiUrlServer + "/api/account/getOwnProfile", {
+    axios.get(baseURL + "/api/account/getOwnProfile", {
         headers: {
             token: token
         }

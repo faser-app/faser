@@ -49,7 +49,7 @@ onMounted(() => {
 
 function deleteImage() {
   axios
-    .post("https://" + runtimeConfig.public.apiUrlServer + "/api/profile/removeProfilePhoto", {
+    .post(baseURL + "/api/profile/removeProfilePhoto", {
       token: Cookies.get("token"),
       lang: navigator.language || navigator.userLanguage,
     })

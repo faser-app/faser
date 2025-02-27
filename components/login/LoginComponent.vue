@@ -41,7 +41,7 @@ const runtimeConfig = useRuntimeConfig()
 
 
 function login() {
-  const url = "https://" + runtimeConfig.public.apiUrlServer + "/api/account/login";
+  const url = baseURL + "/api/account/login";
 
   axios
     .post(url, {

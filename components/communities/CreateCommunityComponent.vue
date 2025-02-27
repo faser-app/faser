@@ -138,7 +138,7 @@ function saveTag() {
 }
 
 function createCommunity() {
-    axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/community/createCommunity", {
+    axios.post(baseURL + "/api/community/createCommunity", {
         token: Cookies.get("token"),
         communityName: community.value.communityName,
         description: community.value.description,

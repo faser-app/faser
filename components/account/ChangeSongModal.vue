@@ -111,7 +111,7 @@ const songDataRaw = ref({});
 const selectedTrack = ref(null)
 
 function searchSong() {
-    axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/spotify/searchTrack", {
+    axios.post(baseURL + "/api/spotify/searchTrack", {
         query: songSearch.value,
     }).then((response) => {
         console.log(response.data);
@@ -122,7 +122,7 @@ function searchSong() {
 }
 
 function changeSong() {
-    axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/spotify/saveTrack", {
+    axios.post(baseURL + "/api/spotify/saveTrack", {
         token: Cookies.get("token"),
         songId: selectedTrack.value.songId,
         albumId: selectedTrack.value.albumId,
@@ -136,7 +136,7 @@ function changeSong() {
 }
 
 function removeSong() {
-    axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/spotify/removeTrack", {
+    axios.post(baseURL + "/api/spotify/removeTrack", {
         token: Cookies.get("token"),
     })
         .then((response) => {

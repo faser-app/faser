@@ -105,7 +105,7 @@ const songDataRaw = ref({});
 const selectedTrack = ref(null)
 
 function searchSong() {
-    axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/spotify/searchTrack", {
+    axios.post(baseURL + "/api/spotify/searchTrack", {
         query: songSearch.value,
     }).then((response) => {
         console.log(response.data);

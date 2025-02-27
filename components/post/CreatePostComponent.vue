@@ -261,7 +261,7 @@ function uploadPost() {
 
     console.log(props.community)
 
-    axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/social/createPost", {
+    axios.post(baseURL + "/api/social/createPost", {
         token: Cookies.get("token"),
         message: postContent.value,
         lang: "en",
@@ -291,7 +291,7 @@ function uploadPost() {
                     const formData = new FormData();
                     formData.append('file', images.value[i]);
 
-                    axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/social/uploadImage", formData, {
+                    axios.post(baseURL + "/api/social/uploadImage", formData, {
                         headers: {
                             'Content-Type': 'multipart/form-data',
                             'token': Cookies.get('token'),

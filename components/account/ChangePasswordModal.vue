@@ -88,7 +88,7 @@ function deleteImage() {
   }
 
   axios
-    .post("https://" + runtimeConfig.public.apiUrlServer + "/api/account/changePassword", {
+    .post(baseURL + "/api/account/changePassword", {
       oldToken: Cookies.get("token"),
       email: email.value,
       password: password.value,

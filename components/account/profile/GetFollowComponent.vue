@@ -51,7 +51,7 @@ const runtimeConfig = useRuntimeConfig()
 
 
 onMounted(async () => {
-    const response = await axios.get("https://" + runtimeConfig.public.apiUrlServer + "/api/account/getProfile", {
+    const response = await axios.get(baseURL + "/api/account/getProfile", {
         headers: {
             userId: props.id
         }

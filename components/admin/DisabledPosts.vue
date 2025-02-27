@@ -27,7 +27,7 @@ const ownProfileData = ref({})
 const runtimeConfig = useRuntimeConfig()
 
 
-axios.get("https://" + runtimeConfig.public.apiUrlServer + "/api/account/getOwnProfile", {
+axios.get(baseURL + "/api/account/getOwnProfile", {
     headers: {
         token: token
     }
@@ -42,7 +42,7 @@ axios.get("https://" + runtimeConfig.public.apiUrlServer + "/api/account/getOwnP
         ownProfileData.value = response.data[0]
         ownProfile.value = true
 
-        axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/admin/getDisabledPosts", {
+        axios.post(baseURL + "/api/admin/getDisabledPosts", {
             token: token
         })
             .then((response) => {

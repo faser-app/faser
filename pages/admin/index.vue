@@ -24,12 +24,12 @@ const router = useRouter()
 const loaded = ref(false)
 
 function restart() {
-    axios.post("https://" + runtimeConfig.public.apiUrlServer + "/api/admin/restart", {
+    axios.post(baseURL + "/api/admin/restart", {
         token: token
     })
 }
 
-axios.get("https://" + runtimeConfig.public.apiUrlServer + "/api/account/getOwnProfile", {
+axios.get(baseURL + "/api/account/getOwnProfile", {
     headers: {
         token: token
     }

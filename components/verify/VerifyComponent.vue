@@ -35,7 +35,7 @@ const runtimeConfig = useRuntimeConfig()
 
 
 function verify() {
-  const url = "https://" + runtimeConfig.public.apiUrlServer + "/api/account/verifyEmail";
+  const url = baseURL + "/api/account/verifyEmail";
 
   axios
     .post(url, {
@@ -52,7 +52,7 @@ function verify() {
 }
 
 function resend() {
-  const url = "https://" + runtimeConfig.public.apiUrlServer + "/api/account/resendEmail";
+  const url = baseURL + "/api/account/resendEmail";
 
   axios
     .post(url, {
@@ -70,7 +70,7 @@ function resend() {
 
 onMounted(() => {
   if (Cookies.get("token")) {
-    const url = "https://" + runtimeConfig.public.apiUrlServer + "/api/account/getOwnProfile";
+    const url = baseURL + "/api/account/getOwnProfile";
 
     axios
       .get(url, {

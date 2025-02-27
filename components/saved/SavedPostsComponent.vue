@@ -26,7 +26,7 @@ const profileData = ref([])
 const runtimeConfig = useRuntimeConfig()
 
 
-const url = "https://" + runtimeConfig.public.apiUrlServer + "/api/account/getOwnProfile"
+const url = baseURL + "/api/account/getOwnProfile"
 
 onMounted(() => {
     axios.get(url, {

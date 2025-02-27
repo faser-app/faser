@@ -63,7 +63,7 @@ watch(category, () => {
     loadPosts(25)
 })
 
-const url = "https://" + runtimeConfig.public.apiUrlServer + "/api/profile/likedPosts"
+const url = baseURL + "/api/profile/likedPosts"
 
 axios.post(url, {
     token: Cookies.get("token")
@@ -73,7 +73,7 @@ axios.post(url, {
         communityValue.value = response.data.community.reverse()
     })
 
-axios.get("https://" + runtimeConfig.public.apiUrlServer + "/api/account/getOwnProfile", {
+axios.get(baseURL + "/api/account/getOwnProfile", {
     headers: {
         token: Cookies.get("token")
     }
