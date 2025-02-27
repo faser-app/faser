@@ -19,7 +19,6 @@
           class="h-14 ml-2 my-2 rounded-full cursor-pointer border border-[#96969627] bg-[#1118276c] absolute pointer-events-auto" />
       </div>
     </RouterLink>
-    {{ baseURLString }}
     <div @click="expanded = !expanded">
       <div class="flex h-full w-14 justify-center items-center cursor-pointer md:hidden">
         <i class="fa-solid fa-bars text-2xl"></i>
