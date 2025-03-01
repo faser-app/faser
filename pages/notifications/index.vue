@@ -1,5 +1,5 @@
 <template>
-    <div class="min-h-screen flex justify-center mt-4">
+    <div class="min-h-[calc(100vh-4.5rem)] flex justify-center mt-4">
         <MessagesComponent :messages="messages" :standalone="mobile" @clear-messages="messages = []" />
     </div>
 </template>

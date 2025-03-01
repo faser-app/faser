@@ -1,5 +1,5 @@
 <template>
-    <div class="min-h-screen">
+    <div class="min-h-[calc(100vh-4.5rem)]">
         <div class="flex w-full justify-center gap-4 mt-2" v-if="loaded">
             <RouterLink to="/admin/posts" class="py-3 px-5 rounded-md bg-gray-800 text-white">Posts</RouterLink>
             <RouterLink to="/admin/accounts" class="py-3 px-5 rounded-md bg-gray-800 text-white">Accounts</RouterLink>

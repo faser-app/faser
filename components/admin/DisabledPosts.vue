@@ -1,5 +1,5 @@
 <template>
-    <div class="min-h-screen text-white">
+    <div class="min-h-[calc(100vh-4.5rem)] text-white">
         <div v-for="post in posts" :key="post.id">
             <PostGetPostComponent :postId="post.postId" ownProfile="true" :profile="profileData"
                 :ownProfile="ownProfile" :account="accountData" :ownProfileData="ownProfileData" :admin="true" />

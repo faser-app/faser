@@ -1,6 +1,6 @@
 <template>
-    <div class="min-h-screen">
-        <div v-if="community" class="mb-2 min-h-screen w-screen flex items-center justify-center">
+    <div class="min-h-[calc(100vh-4.5rem)]">
+        <div v-if="community" class="mb-2 min-h-[calc(100vh-4.5rem)] w-screen flex items-center justify-center">
             <div class="bg-gray-800 md:flex p-5 rounded-md w-[80svw] max-w-[90rem]">
                 <div class="md:w-1/2 text-center items-center h-full flex flex-col justify-center">
                     <h1 class="text-2xl font-bold">{{ community.displayName }}</h1>

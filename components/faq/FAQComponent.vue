@@ -1,5 +1,5 @@
 <template>
-    <div class="min-h-screen text-white" :style="{ backgroundColor: currentPalette.bg }">
+    <div class="min-h-[calc(100vh-4.5rem)] text-white" :style="{ backgroundColor: currentPalette.bg }">
         <div class="mx-5 py-2">
             <h1 class="text-2xl font-bold">faser FAQ</h1>
 

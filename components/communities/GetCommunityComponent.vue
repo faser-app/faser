@@ -1,5 +1,6 @@
 <template>
-    <div class="min-h-screen" :style="{ backgroundColor: currentPalette.bg, color: currentPalette.textPrimary }">
+    <div class="min-h-[calc(100vh-4.5rem)]"
+        :style="{ backgroundColor: currentPalette.bg, color: currentPalette.textPrimary }">
         <div class="w-full pb-12 pt-2 px-2" :style="{ backgroundColor: currentPalette.bgSecondary }" v-if="loaded">
             <div v-if="memberArray.includes(id)" class="w-fit">
                 <CreatePostComponent text="+" :own-profile="ownProfileData" :mobile="false" :community="true"
@@ -106,7 +107,8 @@
 
             <div class="w-screen text-center mt-3">
                 <p class="text-gray-400">Tags</p>
-                <div v-for="(tag, index) in communityObject.tags" :key="tag" class="bg-gray-700 rounded-md p-2 inline-block"
+                <div v-for="(tag, index) in communityObject.tags" :key="tag"
+                    class="bg-gray-700 rounded-md p-2 inline-block"
                     :class="{ 'mr-2': index !== communityObject.tags.length - 1 }">
                     {{ tag }}
                 </div>

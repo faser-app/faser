@@ -3,7 +3,7 @@
     class="w-full md:w-[80%] md:ml-[10svw] py-6 rounded-md bg-red-900 border border-red-500 text-white text-center">
     {{ error }}
   </div>
-  <div class="min-h-screen md:flex px-2 text-white" :style="{ backgroundColor: currentPalette.bg }">
+  <div class="min-h-[calc(100vh-4.5rem)] md:flex px-2 text-white" :style="{ backgroundColor: currentPalette.bg }">
     <div class="md:w-1/4 w-full justify-center pt-2 min-h-full">
       <div class="md:hidden w-full block" v-if="loggedIn">
         <PostCreatePostComponent text="Post" mobile="false" :ownProfile="ownAccountData" />
@@ -23,7 +23,7 @@
         </div>
       </div>
       <div v-else-if="loggedIn && noPosts && loaded">
-        <div class="w-full min-h-screen flex items-center justify-center">
+        <div class="w-full min-h-[calc(100vh-4.5rem)] flex items-center justify-center">
           <div class="text-center">
             <h1 class="text-3xl font-bold text-transparent bg-gradient-to-tr from-[#24c7ce] to-[#1ed794] bg-clip-text">
               No posts available</h1>
@@ -32,7 +32,7 @@
         </div>
       </div>
       <div v-else>
-        <div class="w-full min-h-screen flex items-center justify-center">
+        <div class="w-full min-h-[calc(100vh-4.5rem)] flex items-center justify-center">
           <div class="text-center">
             <h1 class="text-3xl font-bold text-transparent bg-gradient-to-tr from-[#24c7ce] to-[#1ed794] bg-clip-text">
               Not logged

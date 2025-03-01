@@ -1,5 +1,5 @@
 <template>
-    <div class="min-h-screen text-white px-2">
+    <div class="min-h-[calc(100vh-4.5rem)] text-white px-2">
         <div class="flex w-full gap-2" v-if="loaded">
             <div class="w-1/2">
                 <h1>Active Accounts</h1>
@@ -23,7 +23,7 @@
                     </div>
                 </div>
             </div>
-            <div class="border-r border-gray-700 min-h-screen"></div>
+            <div class="border-r border-gray-700 min-h-[calc(100vh-4.5rem)]"></div>
             <div class="w-1/2">
                 <h1>Terminated Accounts</h1>
 

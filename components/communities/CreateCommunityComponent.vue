@@ -1,5 +1,5 @@
 <template>
-    <div class="min-h-screen text-white">
+    <div class="min-h-[calc(100vh-4.5rem)] text-white">
         <div class="w-full flex justify-center">
             <span class="text-gray-400">This feature is only available with Beta access</span>
         </div>
