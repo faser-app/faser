@@ -52,6 +52,15 @@
                                     Create Invite link
                                 </button>
                                 </MenuItem>
+                                <MenuItem v-if="communityObject.moderators.includes(ownProfileData.id)"
+                                    v-slot="{ active }">
+                                <button :class="[
+                                        active ? 'bg-gray-600 text-white' : 'text-gray-200',
+                                        'group flex w-full items-center rounded-md px-2 py-2 text-sm',
+                                    ]" @click="showEditModal = true">
+                                    Edit Community
+                                </button>
+                                </MenuItem>
                                 <MenuItem v-if="!memberArray.includes(id)" v-slot="{ active }">
                                 <button :class="[
                                         active ? 'bg-gray-600 text-green-500' : 'text-green-500',
@@ -93,6 +102,14 @@
             </div>
             <div class="flex justify-center w-full mt-2">
                 <h1>{{ description }}</h1>
+            </div>
+
+            <div class="w-screen text-center mt-3">
+                <p class="text-gray-400">Tags</p>
+                <div v-for="(tag, index) in communityObject.tags" :key="tag" class="bg-gray-700 rounded-md p-2 inline-block"
+                    :class="{ 'mr-2': index !== communityObject.tags.length - 1 }">
+                    {{ tag }}
+                </div>
             </div>
 
             <div class="flex w-full justify-center gap-4 mt-4">
@@ -143,6 +160,8 @@
     <ViewRulesModal :showModal="showRulesModal" :rules="rules" @close="showRulesModal = false" class="z-[100]" />
     <CreateInviteLinkModalComponent :showModal="showInviteLinkModal" :community-id="communityObject.id"
         @close="showInviteLinkModal = false" class="z-[100]" />
+    <CommunitiesUpdateCommunityComponent :show-modal="showEditModal" :community="communityObject"
+        @update="updateCommunity" @close="showEditModal = false" />
 </template>
 
 <script setup>
@@ -151,7 +170,6 @@ import Cookie from "js-cookie"
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import ViewRulesModal from './ViewRulesModalComponent.vue';
 import CreatePostComponent from '../post/CreatePostComponent.vue';
-import CreateInviteLinkModal from './CreateInviteLinkModalComponent.vue';
 import currentPalette from '~/vars/getColors';
 import CreateInviteLinkModalComponent from './CreateInviteLinkModalComponent.vue';
 
@@ -183,21 +201,14 @@ const postIndex = ref(0)
 const lastRequest = ref(0)
 const loadedPosts = ref([])
 const runtimeConfig = useRuntimeConfig()
+const showEditModal = ref(false)
 
+function updateCommunity() {
+    showEditModal.value = false
+    getCommunity()
+}
 
-
-onMounted(() => {
-    axios.get(baseURL + "/api/account/getOwnProfile", {
-        headers: {
-            token: Cookie.get("token")
-        }
-    })
-        .then((response) => {
-            id.value = response.data[0].id
-            ownProfileData.value = response.data[0]
-            accountData.value = response.data[1];
-        })
-
+function getCommunity() {
     axios.post(baseURL + "/api/community/getCommunity", {
         token: Cookie.get("token"),
         communityId: props.communityId
@@ -215,6 +226,19 @@ onMounted(() => {
 
         loaded.value = true
     })
+}
+
+onMounted(() => {
+    axios.get(baseURL + "/api/account/getOwnProfile", {
+        headers: {
+            token: Cookie.get("token")
+        }
+    })
+        .then((response) => {
+            id.value = response.data[0].id
+            ownProfileData.value = response.data[0]
+            accountData.value = response.data[1];
+        })
 
 
     axios.post(baseURL + "/api/community/getPosts", {
@@ -229,6 +253,7 @@ onMounted(() => {
         })
 
     getMembers()
+    getCommunity()
 })
 
 function getMembers() {
