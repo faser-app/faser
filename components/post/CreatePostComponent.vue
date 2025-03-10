@@ -204,10 +204,6 @@ function closeModal() {
 }
 
 onMounted(() => {
-    if (props.communityObject?.nsfw) {
-        isAdult.value = true
-    }
-
     tryBirthDate()
 })
 
@@ -229,6 +225,10 @@ function tryBirthDate() {
     } else {
         isAdult.value = age >= 18
     }
+
+    if (props.communityObject?.nsfw) {
+        isAdult.value = true
+    }
 }
 
 function selectSong(song) {
@@ -239,7 +239,7 @@ function selectSong(song) {
 function checkPaste(event) {
     const items = (event.clipboardData || event.originalEvent.clipboardData).items;
 
-    for (let index in items) { // 'let' hinzugefügt
+    for (let index in items) {
         const item = items[index];
 
         if (item.kind === 'file') {

@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-black"></div>
+  <div class="min-h-[calc(100vh-4.5rem)] bg-black"></div>
 </template>
 
 <script setup>

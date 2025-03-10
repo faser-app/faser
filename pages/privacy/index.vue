@@ -1,5 +1,5 @@
 <template>
-    <div class="p-4 max-w-screen-sm min-h-screen bg-black text-white">
+    <div class="p-4 max-w-screen-sm min-h-[calc(100vh-4.5rem)] bg-black text-white">
         <h1 class="text-4xl font-bold mb-4">Privacy Policy</h1>
         <h2 id="m716" class="text-2xl font-semibold mt-8 mb-4">Preamble</h2>
         <p class="mb-4">

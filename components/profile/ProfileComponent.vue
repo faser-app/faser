@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen text-white"
+  <div class="min-h-[calc(100vh-4.5rem)] text-white"
     :style="{ backgroundColor: currentPalette.bg, color: currentPalette.textPrimary }">
     <div class="md:flex w-full justify-center">
       <div class="md:w-1/5 gap-2 md:block px-2 hidden">

@@ -1,5 +1,5 @@
 <template>
-    <div class="min-h-screen bg-black text-white px-5 py-6">
+    <div class="min-h-[calc(100vh-4.5rem)] bg-black text-white px-5 py-6">
         <div class='imprint'>
             <h1 class="text-xl font-bold">Imprint</h1>
             <p>Information according to § 5 TMG</p>

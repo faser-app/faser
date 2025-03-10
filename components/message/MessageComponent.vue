@@ -1,5 +1,5 @@
 <template>
-    <div class="min-h-screen text-white" v-if="loaded">
+    <div class="min-h-[calc(100vh-4.5rem)] text-white" v-if="loaded">
         <div class="w-full flex justify-between z-50 pl-2 items-center fixed p-2"
             :style="{ backgroundColor: currentPalette.bgSecondary }" :class="{
             'top-[4.5rem]': !mobile,

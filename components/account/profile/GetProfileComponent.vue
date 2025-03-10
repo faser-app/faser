@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen text-white" :style="{ backgroundColor: currentPalette.bg }">
+  <div class="min-h-[calc(100vh-4.5rem)] text-white" :style="{ backgroundColor: currentPalette.bg }">
     <div class="md:flex w-full justify-center" v-if="loaded && success">
       <div class="md:block px-2 hidden md:w-1/5 gap-2 justify-center">
         <div class="flex w-full justify-center" v-if="communities.length > 0">

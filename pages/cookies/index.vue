@@ -1,5 +1,5 @@
 <template>
-    <div class="p-4 min-h-screen bg-black text-white">
+    <div class="p-4 min-h-[calc(100vh-4.5rem)] bg-black text-white">
         <h1 class="text-2xl font-bold mb-4"> Cookie Policy</h1>
         <p><strong>Effective Date:</strong>October 03, 2024</p>
         <p>This Cookie Policy explains how faser.app uses cookies and similar technologies to recognize you when you

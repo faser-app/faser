@@ -1,5 +1,5 @@
 <template>
-    <div class="min-h-screen bg-black text-white px-5 py-6">
+    <div class="min-h-[calc(100vh-4.5rem)] bg-black text-white px-5 py-6">
         <h1 class="text-2xl font-bold mb-4">Terms of Service</h1>
         <p><strong>Effective Date:</strong> December 17, 2024</p>
         <p>Welcome to faser.app! These Terms of Service ("ToS") govern your use of the faser.app platform ("the App")

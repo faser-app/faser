@@ -1,5 +1,5 @@
 <template>
-    <div class="min-h-screen" :style="{ color: currentPalette.textPrimary }">
+    <div class="min-h-[calc(100vh-4.5rem)]" :style="{ color: currentPalette.textPrimary }">
         <h1 class="ml-2 text-2xl font-bold">Direct Messages</h1>
         <div v-for="participant in participants" :key="participant.id"
             class="flex gap-2 items-center p-2 cursor-pointer">
