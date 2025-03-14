@@ -48,6 +48,10 @@
                         Update Community
                     </button>
                 </div>
+
+                <div class="text-center text-red-500">
+                    {{ errors }}
+                </div>
             </div>
         </div>
     </Transition>
@@ -64,6 +68,7 @@ const props = defineProps({
     community: Object
 });
 const emit = defineEmits(["close"]);
+const errors = ref("");
 const editedTags = ref(props.community?.tags ? [...props.community.tags] : []);
 
 watch(() => props.community?.tags, (newTags) => {
@@ -83,6 +88,9 @@ async function updateCommunity() {
         emit("update");
     } catch (error) {
         console.error("Update failed:", error);
+
+        errors.value = error.response.data.message;
+        console.log(errors.response.data.errors)
     }
 }
 </script>
