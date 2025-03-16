@@ -202,7 +202,7 @@
     <Transition name="fade" @leave="leave" @enter="enter">
       <div v-if="openFollower"
         class="fixed h-full z-50 z-100 w-full backdrop-blur top-0 left-0 flex justify-center items-center">
-        <div class="w-[60rem] max-h-[80rem] overflow-y-scroll mx-4 p-2 rounded-md"
+        <div class="w-[60rem] max-h-[80svh] overflow-y-scroll mx-4 p-2 rounded-md"
           :style="{ backgroundColor: currentPalette.bg }">
           <div class="w-full flex items-center justify-center text-xl font-bold">
             <h1 class="w-full text-center">Followers ({{ followers }})</h1>
