@@ -26,6 +26,7 @@
     "vue": "latest"
   },
   "devDependencies": {
+    "@tailwindcss/postcss": "^4.0.14",
     "autoprefixer": "^10.4.20",
     "postcss": "^8.4.41",
     "tailwindcss": "^4.0.14"
