@@ -1,7 +1,7 @@
 <template>
     <Transition name="fade" @leave="leave">
         <div v-if="props.showModal" @click.self="$emit('close')"
-            class="fixed top-0 left-0 backdrop-blur z-[100] w-screen h-screen flex items-center justify-center">
+            class="fixed top-0 left-0 backdrop-blur-sm z-100 w-screen h-screen flex items-center justify-center">
             <div class="p-5 rounded-md m-3 md:w-auto w-full min-w-[50svw]"
                 :style="{ backgroundColor: currentPalette.bg }">
                 <h2 class="text-center font-bold">Create Invite Link</h2>
@@ -45,7 +45,7 @@
                         :style="{ backgroundColor: currentPalette.buttonPrimary }">Generate Invite
                         Link</button>
                 </div>
-                <div v-else class="bg-neutral-900 font-mono p-2 mt-2 flex justify-between items-center rounded-sm"
+                <div v-else class="bg-neutral-900 font-mono p-2 mt-2 flex justify-between items-center rounded-xs"
                     @click="copyToClipboard">
                     <p class="w-full text-center truncate">{{ inviteLink }}</p>
                     <i v-if="!copiedToClipboard" class="fa-solid fa-copy"></i>

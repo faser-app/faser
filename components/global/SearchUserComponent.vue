@@ -1,6 +1,6 @@
 <template>
   <div>
-    <input id="search" class="h-full border-0 shadow-none w-full outline-none p-3 rounded-md text-white"
+    <input id="search" class="h-full border-0 shadow-none w-full outline-hidden p-3 rounded-md text-white"
       :style="{ backgroundColor: currentPalette.bgSecondary, color: currentPalette.textSecondary }" :class="{
         'md:w-auto': !props.page
       }" v-model="query" @input="searchUsers" placeholder="Search for user" @focus="focus = true" />

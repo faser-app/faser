@@ -15,7 +15,7 @@
                                 </div>
                             </div>
                             <div>
-                                <button class="bg-red-500 px-2 py-1 rounded" @click="terminateAccount(account.id)">
+                                <button class="bg-red-500 px-2 py-1 rounded-sm" @click="terminateAccount(account.id)">
                                     Terminate
                                 </button>
                             </div>

@@ -79,10 +79,10 @@
                 </div>
               </div>
               <div v-if="isAbleToFollow" @click="toggleFollow"
-                class="ml-5 cursor-pointer h-10 w-24 select-none rounded-md flex items-center justify-center bg-gradient-to-tr from-[#24c7ce] to-[#1ed794] ">
+                class="ml-5 cursor-pointer h-10 w-24 select-none rounded-md flex items-center justify-center bg-linear-to-tr from-[#24c7ce] to-[#1ed794] ">
                 <p class="absolute">Followed</p>
                 <div
-                  class="z-2 z-[2] flex items-center select-none justify-center transition-all duration-500 ease-out px-5 bg-gray-800 shadow-2xl rounded-md text-gray-100"
+                  class="z-2 z-2 flex items-center select-none justify-center transition-all duration-500 ease-out px-5 bg-gray-800 shadow-2xl rounded-md text-gray-100"
                   :class="{
                 'h-10 w-24': !followed,
                 'h-0 w-0 overflow-hidden': followed
@@ -92,7 +92,7 @@
               </div>
             </div>
             <div class="mr-2 mt-3">
-              <Menu as="div" class="relative z-[3] md:hidden inline-block text-left">
+              <Menu as="div" class="relative z-3 md:hidden inline-block text-left">
                 <div>
                   <MenuButton
                     class="inline-flex w-full justify-center rounded-md px-4 py-2 text-sm font-medium text-white">
@@ -105,7 +105,7 @@
                   leave-active-class="transition duration-75 ease-in" leave-from-class="transform scale-100 opacity-100"
                   leave-to-class="transform scale-95 opacity-0">
                   <MenuItems
-                    class="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-black shadow-lg ring-1 ring-black/5 focus:outline-none">
+                    class="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-black shadow-lg ring-1 ring-black/5 focus:outline-hidden">
                     <div class="px-1 py-1">
                       <MenuItem v-for="community in communities" v-slot="{ active }">
                       <RouterLink :to="'/communities/' + community.id" :class="[
@@ -201,7 +201,7 @@
 
     <Transition name="fade" @leave="leave" @enter="enter">
       <div v-if="openFollower"
-        class="fixed h-full z-50 z-100 w-full backdrop-blur top-0 left-0 flex justify-center items-center">
+        class="fixed h-full z-50 z-100 w-full backdrop-blur-sm top-0 left-0 flex justify-center items-center">
         <div class="w-[60rem] max-h-[80svh] overflow-y-scroll mx-4 p-2 rounded-md"
           :style="{ backgroundColor: currentPalette.bg }">
           <div class="w-full flex items-center justify-center text-xl font-bold">
@@ -225,7 +225,7 @@
 
     <Transition name="fade" @leave="leave" @enter="enter">
       <div v-if="openFollowing"
-        class="fixed h-full z-100 z-50 w-full backdrop-blur top-0 left-0 flex justify-center items-center">
+        class="fixed h-full z-100 z-50 w-full backdrop-blur-sm top-0 left-0 flex justify-center items-center">
         <div class="w-[60rem] max-h-[80svh] overflow-y-scroll mx-4 p-2 rounded-md"
           :style="{ backgroundColor: currentPalette.bg }">
           <div class="w-full flex items-center justify-center text-xl font-bold">
@@ -249,7 +249,7 @@
 
     <Transition name="fade" @leave="leave" @enter="enter">
       <div v-if="openReport"
-        class="fixed h-full z-100 z-50 w-full backdrop-blur top-0 left-0 flex justify-center items-center">
+        class="fixed h-full z-100 z-50 w-full backdrop-blur-sm top-0 left-0 flex justify-center items-center">
         <div class="w-[60rem] max-h-[80svh] overflow-y-scroll mx-4 p-2 rounded-md"
           :style="{ backgroundColor: currentPalette.bg }">
           <div class="w-full flex items-center justify-center text-xl font-bold">

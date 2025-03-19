@@ -57,7 +57,7 @@
                 <label class="inline-flex items-center cursor-pointer">
                     <input @input="clearErrors" type="checkbox" value="" class="sr-only peer" v-model="community.nsfw">
                     <div
-                        class="relative w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-500">
+                        class="relative w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:rtl:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-500">
                     </div>
                     <p class="ms-3 select-none text-sm font-medium dark:text-gray-300">NSFW <i
                             class="fa-solid fa-triangle-exclamation"></i></p>
@@ -68,7 +68,7 @@
                     <input @input="clearErrors" type="checkbox" value="" class="sr-only peer"
                         v-model="community.private">
                     <div
-                        class="relative w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-500">
+                        class="relative w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:rtl:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-500">
                     </div>
                     <p class="ms-3 select-none text-sm font-medium dark:text-gray-300">Private <i
                             class="fa-solid fa-lock"></i></p>
@@ -78,7 +78,7 @@
 
 
         <div class="w-full flex justify-center mt-4">
-            <button @click="createCommunity" class="bg-gradient-to-tr from-[#24c7ce] to-[#1ed794] p-2 rounded-lg">Create
+            <button @click="createCommunity" class="bg-linear-to-tr from-[#24c7ce] to-[#1ed794] p-2 rounded-lg">Create
                 Community</button>
         </div>
 

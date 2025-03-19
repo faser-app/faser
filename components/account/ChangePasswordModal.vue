@@ -2,7 +2,7 @@
   <transition name="fade" @leave="leave">
     <div v-if="showModal" :class="{ animation: showModal, fadeOut: !showModal }"
       @click.self="changePasswordModal(false)"
-      class="fixed flex justify-center items-center top-0 left-0 w-full h-full z-50 backdrop-blur">
+      class="fixed flex justify-center items-center top-0 left-0 w-full h-full z-50 backdrop-blur-sm">
       <div class="bg-gray-900 p-5 rounded-md m-3 md:w-auto w-full" :class="{
         'border border-red-500': error,
       }">

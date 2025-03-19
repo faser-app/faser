@@ -34,7 +34,7 @@
                         leave-from-class="transform scale-100 opacity-100"
                         leave-to-class="transform scale-95 opacity-0">
                         <MenuItems
-                            class="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black/5 focus:outline-none"
+                            class="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black/5 focus:outline-hidden"
                             :style="{ backgroundColor: currentPalette.bgSecondary }">
                             <div class="px-1 py-1">
                                 <MenuItem v-slot="{ active }">
@@ -159,9 +159,9 @@
         </div>
     </div>
 
-    <ViewRulesModal :showModal="showRulesModal" :rules="rules" @close="showRulesModal = false" class="z-[100]" />
+    <ViewRulesModal :showModal="showRulesModal" :rules="rules" @close="showRulesModal = false" class="z-100" />
     <CreateInviteLinkModalComponent :showModal="showInviteLinkModal" :community-id="communityObject.id"
-        @close="showInviteLinkModal = false" class="z-[100]" />
+        @close="showInviteLinkModal = false" class="z-100" />
     <CommunitiesUpdateCommunityComponent :show-modal="showEditModal" :community="communityObject"
         @update="updateCommunity" @close="showEditModal = false" />
 </template>

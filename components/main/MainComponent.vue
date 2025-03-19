@@ -25,7 +25,7 @@
       <div v-else-if="loggedIn && noPosts && loaded">
         <div class="w-full min-h-[calc(100vh-4.5rem)] flex items-center justify-center">
           <div class="text-center">
-            <h1 class="text-3xl font-bold text-transparent bg-gradient-to-tr from-[#24c7ce] to-[#1ed794] bg-clip-text">
+            <h1 class="text-3xl font-bold text-transparent bg-linear-to-tr from-[#24c7ce] to-[#1ed794] bg-clip-text">
               No posts available</h1>
             <p class="mb-4">You have to follow some people to see posts on your home page</p>
           </div>
@@ -34,7 +34,7 @@
       <div v-else>
         <div class="w-full min-h-[calc(100vh-4.5rem)] flex items-center justify-center">
           <div class="text-center">
-            <h1 class="text-3xl font-bold text-transparent bg-gradient-to-tr from-[#24c7ce] to-[#1ed794] bg-clip-text">
+            <h1 class="text-3xl font-bold text-transparent bg-linear-to-tr from-[#24c7ce] to-[#1ed794] bg-clip-text">
               Not logged
               in</h1>
             <p class="mb-4">You have to be logged in to view and make posts.</p>
@@ -49,7 +49,7 @@
       </div>
     </div>
   </div>
-  <div class="blob bg-gradient-to-tr z-1 pointer-events-none from-[#24c7ce] to-[#1ed794]"></div>
+  <div class="blob bg-linear-to-tr z-1 pointer-events-none from-[#24c7ce] to-[#1ed794]"></div>
 </template>
 
 <script setup>

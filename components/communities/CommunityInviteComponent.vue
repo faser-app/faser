@@ -52,7 +52,7 @@
                 <div class="md:w-1/2 text-center flex flex-col items-end justify-center">
                     <img src="https://faser.app/icon/logo.png" alt="Faser Logo" class="w-fzull">
                     <button
-                        class="bg-blue-500 hover:bg-blue-700 disabled:bg-gray-700 disabled:text-gray-400 text-white font-bold py-2 px-4 rounded"
+                        class="bg-blue-500 hover:bg-blue-700 disabled:bg-gray-700 disabled:text-gray-400 text-white font-bold py-2 px-4 rounded-sm"
                         @click="joinCommunity" :disabled="disableJoinButton">{{ joinButtonText }}</button>
                 </div>
             </div>

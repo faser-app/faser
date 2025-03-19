@@ -1,7 +1,7 @@
 <template>
     <Transition name="fade" @leave="leave">
         <div v-if="showModal" @click.self="$emit('close')"
-            class="fixed animation top-0 left-0 backdrop-blur z-[100] w-screen h-screen flex items-center justify-center">
+            class="fixed animation top-0 left-0 backdrop-blur-sm z-100 w-screen h-screen flex items-center justify-center">
             <div class="p-5 rounded-md max-h-[80vh] overflow-auto m-3 md:w-auto w-full min-w-[50svw]"
                 :style="{ backgroundColor: currentPalette.bg }">
 

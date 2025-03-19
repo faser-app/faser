@@ -95,7 +95,7 @@
                   leave-active-class="transition duration-75 ease-in" leave-from-class="transform scale-100 opacity-100"
                   leave-to-class="transform scale-95 opacity-0">
                   <MenuItems
-                    class="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black/5 focus:outline-none"
+                    class="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black/5 focus:outline-hidden"
                     :style="'background-color: ' + currentPalette.bgSecondary">
                     <div class="px-1 py-1 ph-no-capture">
                       <MenuItem v-for="community in communities" v-slot="{ active }">
@@ -175,7 +175,7 @@
 
     <Transition name="fade" @leave="leave" @enter="enter">
       <div v-if="openFollower"
-        class="fixed z-[100] h-full w-full backdrop-blur top-0 left-0 flex justify-center items-center">
+        class="fixed z-100 h-full w-full backdrop-blur-sm top-0 left-0 flex justify-center items-center">
         <div class="w-[60rem] max-h-[80svh] overflow-y-scroll mx-4 p-2 rounded-md"
           :style="{ backgroundColor: currentPalette.bg }">
           <div class=" w-full flex items-center justify-center text-xl font-bold">
@@ -199,7 +199,7 @@
 
     <Transition name="fade" @leave="leave" @enter="enter">
       <div v-if="openFollowing"
-        class="fixed z-[100] h-full w-full backdrop-blur top-0 left-0 flex justify-center items-center">
+        class="fixed z-100 h-full w-full backdrop-blur-sm top-0 left-0 flex justify-center items-center">
         <div class="w-[60rem] max-h-[80svh] overflow-y-scroll mx-4 p-2 rounded-md"
           :style="{ backgroundColor: currentPalette.bg }">
           <div class="w-full flex items-center justify-center text-xl font-bold">
