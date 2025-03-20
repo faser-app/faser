@@ -194,14 +194,17 @@
       </div>
     </div>
     <div v-if="!success && loaded">
-      <div class="flex flex-wrap min-h-svh w-full justify-center items-center">
-        <p class="text-3xl text-gray-400">404 Not found</p>
+      <div class="flex min-h-svh w-full justify-center items-center">
+        <div class="text-center">
+          <p class="text-3xl text-gray-400">404 Not found</p>
+          <p class="text-gray-400">This user is not available</p>
+        </div>
       </div>
     </div>
 
     <Transition name="fade" @leave="leave" @enter="enter">
       <div v-if="openFollower"
-        class="fixed h-full z-50 z-100 w-full backdrop-blur-sm top-0 left-0 flex justify-center items-center">
+        class="fixed h-full z-100 w-full backdrop-blur-sm top-0 left-0 flex justify-center items-center">
         <div class="w-[60rem] max-h-[80svh] overflow-y-scroll mx-4 p-2 rounded-md"
           :style="{ backgroundColor: currentPalette.bg }">
           <div class="w-full flex items-center justify-center text-xl font-bold">
@@ -225,7 +228,7 @@
 
     <Transition name="fade" @leave="leave" @enter="enter">
       <div v-if="openFollowing"
-        class="fixed h-full z-100 z-50 w-full backdrop-blur-sm top-0 left-0 flex justify-center items-center">
+        class="fixed h-full z-100 w-full backdrop-blur-sm top-0 left-0 flex justify-center items-center">
         <div class="w-[60rem] max-h-[80svh] overflow-y-scroll mx-4 p-2 rounded-md"
           :style="{ backgroundColor: currentPalette.bg }">
           <div class="w-full flex items-center justify-center text-xl font-bold">
