@@ -82,7 +82,7 @@
                 class="ml-5 cursor-pointer h-10 w-24 select-none rounded-md flex items-center justify-center bg-linear-to-tr from-[#24c7ce] to-[#1ed794] ">
                 <p class="absolute">Followed</p>
                 <div
-                  class="z-2 z-2 flex items-center select-none justify-center transition-all duration-500 ease-out px-5 bg-gray-800 shadow-2xl rounded-md text-gray-100"
+                  class="z-2 flex items-center select-none justify-center transition-all duration-500 ease-out px-5 bg-gray-800 shadow-2xl rounded-md text-gray-100"
                   :class="{
                 'h-10 w-24': !followed,
                 'h-0 w-0 overflow-hidden': followed
@@ -252,7 +252,7 @@
 
     <Transition name="fade" @leave="leave" @enter="enter">
       <div v-if="openReport"
-        class="fixed h-full z-100 z-50 w-full backdrop-blur-sm top-0 left-0 flex justify-center items-center">
+        class="fixed h-full z-100 w-full backdrop-blur-sm top-0 left-0 flex justify-center items-center">
         <div class="w-[60rem] max-h-[80svh] overflow-y-scroll mx-4 p-2 rounded-md"
           :style="{ backgroundColor: currentPalette.bg }">
           <div class="w-full flex items-center justify-center text-xl font-bold">
@@ -265,6 +265,19 @@
         </div>
       </div>
     </Transition>
+
+    <transition name="fade" @leave="leave" @enter="enter">
+      <div v-if="showLoginModal" @click.self="showLoginModal = false"
+        class="fixed w-screen h-screen top-0 left-0 z-[100] backdrop-blur-md flex items-center justify-center">
+        <div
+          class="bg-gray-900 p-5 text-center min-w-[80svw] max-w-[80svw] max-h-[80svh] min-h-[80svh] flex justify-center rounded-md m-3 md:w-auto flex-wrap items-stretch">
+          <div class="w-full h-fit flex justify-end">
+            <i class="fa-solid fa-xmark cursor-pointer p-3" @click="showLoginModal = false"></i>
+          </div>
+          <LoginComponent />
+        </div>
+      </div>
+    </transition>
 
   </div>
 </template>
@@ -306,6 +319,8 @@ const posts = ref(0)
 const followers = ref(0)
 const following = ref(0)
 const openFollower = ref(false)
+const showLoginModal = ref(false)
+const loggedIn = ref(Cookies.get("token") ? true : false)
 const openFollowing = ref(false)
 const privateAccount = ref(false);
 const isAbleToFollow = ref(true)
@@ -446,6 +461,11 @@ function loadPosts(postsToLoad) {
 }
 
 function toggleFollow() {
+  if (!loggedIn.value) {
+    showLoginModal.value = true
+    return
+  }
+  
   let url = ""
 
   if (followed.value) {

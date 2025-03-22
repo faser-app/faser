@@ -247,7 +247,7 @@
   </div>
 
   <div v-if="!accepted"
-    class="w-screen h-screen bg-black bg-opacity-80 flex items-center justify-center fixed top-0 left-0 z-100">
+    class="w-screen h-screen bg-opacity-80 flex items-center justify-center fixed top-0 left-0 z-100">
     <div class="max-w-[90rem] bg-gray-800 p-4 rounded-md w-fit flex flex-col items-center justify-center">
       <div class="">
         <h1 class="font-bold text-2xl">

@@ -248,6 +248,19 @@
 
 
         <transition name="fade" @leave="leave">
+            <div v-if="showLoginModal" @click.self="showLoginModal = false"
+                class="fixed w-screen h-screen top-0 left-0 z-[100] backdrop-blur-md flex items-center justify-center">
+                <div
+                    class="bg-gray-900 p-5 text-center min-w-[80svw] max-w-[80svw] h-[80svh] flex justify-center rounded-md m-3 md:w-auto flex-wrap items-stretch">
+                    <div class="w-full h-fit flex justify-end">
+                        <i class="fa-solid fa-xmark cursor-pointer p-3" @click="showLoginModal = false"></i>
+                    </div>
+                    <LoginComponent />
+                </div>
+            </div>
+        </transition>
+
+        <transition name="fade" @leave="leave">
             <div class="fixed top-0 left-0 w-screen h-screen backdrop-blur-sm z-200 flex justify-center items-center"
                 @click.self="showModal = false" v-if="showModal">
                 <div class="bg-gray-900 p-5 text-center max-w-[80svw] rounded-md m-3 md:w-auto w-full" :class="{
@@ -288,7 +301,8 @@
                         </div>
                         <h2 class="text-center font-bold mt-2">Edit post</h2>
                         <p class="text-gray-400">If you edit the post, an edited text will be added to the post</p>
-                        <textarea class="w-full p-2 rounded-md h-40 text-white pt-0 mt-2 resize-none focus:outline-hidden"
+                        <textarea
+                            class="w-full p-2 rounded-md h-40 text-white pt-0 mt-2 resize-none focus:outline-hidden"
                             :style="{ backgroundColor: currentPalette.bgSecondary }"
                             v-model="postContent.content"></textarea>
                         <div class="flex flex-col md:flex-row justify-center gap-2 mt-4">
@@ -371,6 +385,7 @@ const postValue = ref('')
 const commentText = ref('')
 const postCreatedAt = ref('')
 const postVisible = ref(true);
+const showLoginModal = ref(false)
 const copied = ref(false);
 const postType = ref('')
 const parentPost = ref('')
@@ -632,6 +647,11 @@ axios.get(baseURL + "/api/profile/getPostProfile", {
     })
 
 function toggleLike() {
+    if (!loggedIn.value) {
+        showLoginModal.value = true
+        return
+    }
+
     if (!isAdult.value && postContent.value.nsfw) {
         return
     }

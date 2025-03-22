@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-[calc(100vh-4.5rem)] pl-2 bg-black text-white">
+  <div class="min-h-[calc(100vh-4.5rem)] pl-2 text-white">
     <div class="flex flex-col h-svh justify-center items-center">
       <h1 class="text-3xl text-transparent bg-linear-to-tr from-[#24c7ce] to-[#1ed794] bg-clip-text font-extrabold">
         faser register
