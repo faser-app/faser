@@ -11,6 +11,15 @@
                     <label class="text-center">Display Name</label>
                     <input type="text" class="input-field" v-model.trim="community.displayName">
 
+                    <label class="text-center">Community Image</label>
+                    <div class="flex">
+                        <input type="file" accept="image/*" @change="addImagePreview" class="input-field">
+                        <div v-if="imagePreview" class="mt-2">
+                            <img :src="imagePreview" alt="Community Icon Preview"
+                                class="min-w-24 max-w-24 h-24 rounded-full object-cover">
+                        </div>
+                    </div>
+
                     <label class="text-center">Description</label>
                     <textarea class="input-field" v-model.trim="community.description"></textarea>
 
@@ -70,6 +79,8 @@ const props = defineProps({
 const emit = defineEmits(["close"]);
 const errors = ref("");
 const editedTags = ref(props.community?.tags ? [...props.community.tags] : []);
+const file = ref(null);
+const imagePreview = ref(null);
 
 watch(() => props.community?.tags, (newTags) => {
     editedTags.value = newTags ? [...newTags] : [];
@@ -77,6 +88,25 @@ watch(() => props.community?.tags, (newTags) => {
 
 const addTag = () => editedTags.value.push("");
 const removeTag = (index) => editedTags.value.splice(index, 1);
+
+function addImagePreview(event) {
+    console.log(event)
+
+    const previewFile = event.target.files[0]
+    if (!previewFile) {
+        imagePreview.value = null
+        return
+    }
+
+    const reader = new FileReader()
+    reader.onload = (e) => {
+        imagePreview.value = e.target.result
+    }
+    reader.readAsDataURL(previewFile)
+    file.value = previewFile
+
+    file.value = event.target.files[0]
+}
 
 async function updateCommunity() {
     try {
@@ -86,6 +116,29 @@ async function updateCommunity() {
             communityId: props.community.id
         });
         emit("update");
+
+        const formData = new FormData();
+        formData.append("file", file.value);
+
+        if (file.value) {
+            axios.post(baseURL + "/api/community/changeCommunityPhoto", formData, {
+                headers: {
+                    token: Cookies.get("token"),
+                    communityid: props.community.id,
+                    "Content-Type": "multipart/form-data",
+                },
+            }).then((response) => {
+                console.log("Image uploaded successfully:", response.data);
+                emit("update");
+                imagePreview.value = null;
+            })
+                .catch((error) => {
+                    errors.value.push({
+                        message: error.response.data.message,
+                        part: "image"
+                    })
+                })
+        }
     } catch (error) {
         console.error("Update failed:", error);
 

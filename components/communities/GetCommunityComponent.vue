@@ -95,7 +95,10 @@
             </div>
             <div class="flex justify-center w-full h-24">
                 <div class="border border-gray-700 h-24 w-24 rounded-full flex justify-center items-center">
-                    <i class="fa-solid fa-users text-4xl"></i>
+                    <img v-if="haveImage"
+                        :src="'https://s3.faser.app/communityimages/' + communityObject.id + '/image.png'"
+                        class="rounded-full h-24 w-24 object-cover" alt="Community Image" @error="haveImage = false" />
+                    <i v-else class="fa-solid fa-users text-4xl"></i>
                 </div>
             </div>
             <div class="flex justify-center w-full mt-2 text-3xl font-bold">
@@ -199,6 +202,7 @@ const ownProfileData = ref([])
 const profileData = ref([])
 const communityObject = ref([])
 const postsValue = ref([])
+const haveImage = ref(true)
 const postIndex = ref(0)
 const lastRequest = ref(0)
 const loadedPosts = ref([])

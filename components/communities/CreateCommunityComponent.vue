@@ -7,12 +7,25 @@
             <h1 class="text-2xl font-bold">Create a Community</h1>
         </div>
 
+
         <div class="w-full flex flex-col justify-center mt-4 items-center px-2">
-            <div class="md:w-1/2 w-full text-left">
+            <div class="md:w-3/4 w-full text-left">
                 <span class="text-sm text-gray-300">Community Name</span>
             </div>
             <input @input="clearErrors" v-model="community.communityName" type="text"
-                class="md:w-1/2 w-full p-2 bg-gray-800 rounded-lg">
+                class="md:w-3/4 mb-2 w-full p-2 bg-gray-800 rounded-lg">
+        </div>
+
+        <div class="w-full flex flex-col justify-center mt-4 items-center px-2">
+            <div class="md:w-3/4 w-full text-left">
+                <span class="text-sm text-gray-300">Community Icon (optional)</span>
+            </div>
+            <input @input="addImagePreview" type="file" accept="image/*"
+                class="md:w-3/4 mb-2 w-full p-2 bg-gray-800 rounded-lg">
+            <div v-if="community.imagePreview" class=" mt-2">
+                <img :src="community.imagePreview" alt="Community Icon Preview"
+                    class="min-w-24 max-w-24 h-24 rounded-full object-cover">
+            </div>
         </div>
 
         <div class="w-full flex flex-col justify-center mt-4 items-center px-2">
@@ -104,9 +117,29 @@ const tag = ref('')
 
 const errors = ref([])
 const runtimeConfig = useRuntimeConfig()
+const file = ref(null)
 
 function clearErrors() {
     errors.value = []
+}
+
+function addImagePreview(event) {
+    console.log(event)
+
+    const previewFile = event.target.files[0]
+    if (!previewFile) {
+        community.value.imagePreview = null
+        return
+    }
+
+    const reader = new FileReader()
+    reader.onload = (e) => {
+        community.value.imagePreview = e.target.result
+    }
+    reader.readAsDataURL(previewFile)
+    file.value = previewFile
+
+    file.value = event.target.files[0]
 }
 
 function saveTag() {
@@ -133,7 +166,7 @@ function saveTag() {
         })
         return
     }
-    if (community.value.tags.length > 6) {
+    if (community.value.tags.length > 5) {
         errors.value.push({
             message: "You can only have 6 tags",
             part: "tag"
@@ -154,20 +187,35 @@ function createCommunity() {
         nsfw: community.value.nsfw,
         private: community.value.private
     }).then((response) => {
-        if (response.data.error) {
-            errors.value.push({
-                message: response.data.error,
-                part: "community"
+        const communityId = response.data.community.id
+        if (file.value !== null) {
+            const formData = new FormData();
+            formData.append("file", file.value);
+
+            axios.post(baseURL + "/api/community/changeCommunityPhoto", formData, {
+                headers: {
+                    token: Cookies.get("token"),
+                    communityid: communityId,
+                    "Content-Type": "multipart/form-data",
+                },
+            }).then((response) => {
+                window.location.href = "/communities/" + communityId
             })
+                .catch((error) => {
+                    errors.value.push({
+                        message: error.response.data.message,
+                        part: "image"
+                    })
+                })
         } else {
             window.location.href = "/communities/" + response.data.community.id
         }
     })
-    .catch((error) => {
-        errors.value.push({
-            message: error.response.data.message,
-            part: "community"
+        .catch((error) => {
+            errors.value.push({
+                message: error.response.data.message,
+                part: "community"
+            })
         })
-    })
 }
 </script>
