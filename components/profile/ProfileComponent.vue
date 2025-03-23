@@ -8,14 +8,8 @@
         </div>
         <div v-for="(community, index) in communities" :key="community.name" class="ph-no-capture">
           <RouterLink :to="'/communities/' + community.id">
-            <div class="w-full mb-2 flex mr-8 h-fit truncate items-center pr-3 justify-between rounded-md"
-              :style="{ backgroundColor: currentPalette.buttonPrimary, color: currentPalette.textSecondary }">
-              <div class="flex items-center ph-no-capture">
-                <i class="fa-solid fa-users p-2 text-lg"></i>
-                {{ community.displayName }}
-              </div>
-              <i v-if="community.private" class="fa-solid fa-lock"></i>
-            </div>
+            <CommunityLinkComponent :community="community"
+              :profile-community-settings="ownProfileData.communities.find(item => item.id === community.id)" />
           </RouterLink>
         </div>
         <div class="flex w-full justify-center">
@@ -231,6 +225,7 @@ import { useRouter } from "vue-router";
 import MarkdownIt from "markdown-it";
 import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
 import currentPalette from "~/vars/getColors";
+import CommunityLinkComponent from "../account/profile/CommunityLinkComponent.vue";
 
 const md = new MarkdownIt({
   html: false,
