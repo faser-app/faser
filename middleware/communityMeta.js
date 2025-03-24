@@ -46,6 +46,11 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
           property: "og:url",
           content: "https://faser.app/communities/" + data.value.community.id,
         },
+        {
+          hid: "og-image",
+          property: "og:image",
+          content: "https://s3.faser.app/communityimages/" + data.value.community.id + "/image.png"
+        }
       ],
     });
   }
