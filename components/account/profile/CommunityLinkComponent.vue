@@ -8,7 +8,7 @@
             {{ community.displayName }}
         </div>
         <i v-if="community.private" class="fa-solid fa-lock"></i>
-        <i v-if="profileCommunitySettings.hidden" class="fa-solid fa-eye-slash"></i>
+        <i v-if="profileCommunitySettings?.hidden" class="fa-solid fa-eye-slash"></i>
     </div>
 </template>
 

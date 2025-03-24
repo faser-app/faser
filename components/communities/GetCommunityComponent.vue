@@ -97,8 +97,16 @@
                 <div class="border border-gray-700 h-24 w-24 rounded-full flex justify-center items-center">
                     <img v-if="haveImage"
                         :src="'https://s3.faser.app/communityimages/' + communityObject.id + '/image.png'"
-                        class="rounded-full h-24 w-24 object-cover" alt="Community Image" @error="haveImage = false" />
+                        class="rounded-full h-24 w-24 object-cover" @click="openCommunityImage = true"
+                        alt="Community Image" @error="haveImage = false" />
                     <i v-else class="fa-solid fa-users text-4xl"></i>
+                </div>
+                <div v-if="openCommunityImage" @click.self="openCommunityImage = false"
+                    class="fixed top-0 left-0 w-screen h-screen flex items-center justify-center z-[100] backdrop-blur-lg">
+                    <img v-if="haveImage"
+                        :src="'https://s3.faser.app/communityimages/' + communityObject.id + '/image.png'"
+                        class="rounded-full max-w-[80svw] max-h-[80svw] object-cover" @click="openCommunityImage = false"
+                        alt="Community Image" @error="haveImage = false" />
                 </div>
             </div>
             <div class="flex justify-center w-full mt-2 text-3xl font-bold">
@@ -190,6 +198,7 @@ const description = ref("")
 const members = ref("")
 const moderators = ref([])
 const rules = ref("")
+const openCommunityImage = ref(false)
 const showRulesModal = ref(false)
 const showInviteLinkModal = ref(false)
 const id = ref("")
@@ -330,3 +339,19 @@ function loadPosts(postsToLoad) {
 }
 
 </script>
+
+<style scoped>
+.picture-animation {
+    position: fixed;
+    animation: openImage 0.5s ease-in-out;
+}
+
+@keyframes openImage {
+    0% {
+        width: 96px;
+    }
+    100% {
+        width: 65vw;
+    }
+}
+</style>
