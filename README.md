@@ -21,7 +21,7 @@ Faser is a social media app that allows users to create and share posts in real-
 
 1. Clone the repository:
    ```git clone https://github.com/faser-app/faser.git```
-   ```cd faser-app```
+   ```cd faser```
 
 2. Install the dependencies:
    ```npm install```

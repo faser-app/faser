@@ -7,14 +7,7 @@
         </div>
         <div v-for="community in communities" :key="community.name">
           <RouterLink :to="'/communities/' + community.id">
-            <div class="w-full mb-2 flex mr-8 h-fit truncate items-center pr-3 justify-between rounded-md"
-              :style="{ backgroundColor: currentPalette.buttonPrimary, color: currentPalette.textSecondary }">
-              <div class="flex items-center">
-                <i class="fa-solid fa-users p-2 text-lg"></i>
-                {{ community.displayName }}
-              </div>
-              <i v-if="community.private" class="fa-solid fa-lock"></i>
-            </div>
+            <CommunityLinkComponent :community="community" />
           </RouterLink>
         </div>
         <div class="flex w-full justify-center">
@@ -79,10 +72,10 @@
                 </div>
               </div>
               <div v-if="isAbleToFollow" @click="toggleFollow"
-                class="ml-5 cursor-pointer h-10 w-24 select-none rounded-md flex items-center justify-center bg-gradient-to-tr from-[#24c7ce] to-[#1ed794] ">
+                class="ml-5 cursor-pointer h-10 w-24 select-none rounded-md flex items-center justify-center bg-linear-to-tr from-[#24c7ce] to-[#1ed794] ">
                 <p class="absolute">Followed</p>
                 <div
-                  class="z-2 z-[2] flex items-center select-none justify-center transition-all duration-500 ease-out px-5 bg-gray-800 shadow-2xl rounded-md text-gray-100"
+                  class="z-2 flex items-center select-none justify-center transition-all duration-500 ease-out px-5 bg-gray-800 shadow-2xl rounded-md text-gray-100"
                   :class="{
                 'h-10 w-24': !followed,
                 'h-0 w-0 overflow-hidden': followed
@@ -92,7 +85,7 @@
               </div>
             </div>
             <div class="mr-2 mt-3">
-              <Menu as="div" class="relative z-[3] md:hidden inline-block text-left">
+              <Menu as="div" class="relative z-3 md:hidden inline-block text-left">
                 <div>
                   <MenuButton
                     class="inline-flex w-full justify-center rounded-md px-4 py-2 text-sm font-medium text-white">
@@ -105,7 +98,7 @@
                   leave-active-class="transition duration-75 ease-in" leave-from-class="transform scale-100 opacity-100"
                   leave-to-class="transform scale-95 opacity-0">
                   <MenuItems
-                    class="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-black shadow-lg ring-1 ring-black/5 focus:outline-none">
+                    class="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-black shadow-lg ring-1 ring-black/5 focus:outline-hidden">
                     <div class="px-1 py-1">
                       <MenuItem v-for="community in communities" v-slot="{ active }">
                       <RouterLink :to="'/communities/' + community.id" :class="[
@@ -194,15 +187,18 @@
       </div>
     </div>
     <div v-if="!success && loaded">
-      <div class="flex flex-wrap min-h-svh w-full justify-center items-center">
-        <p class="text-3xl text-gray-400">404 Not found</p>
+      <div class="flex min-h-svh w-full justify-center items-center">
+        <div class="text-center">
+          <p class="text-3xl text-gray-400">404 Not found</p>
+          <p class="text-gray-400">This user is not available</p>
+        </div>
       </div>
     </div>
 
     <Transition name="fade" @leave="leave" @enter="enter">
       <div v-if="openFollower"
-        class="fixed h-full z-50 z-100 w-full backdrop-blur top-0 left-0 flex justify-center items-center">
-        <div class="w-[60rem] max-h-[80rem] overflow-y-scroll mx-4 p-2 rounded-md"
+        class="fixed h-full z-100 w-full backdrop-blur-sm top-0 left-0 flex justify-center items-center">
+        <div class="w-[60rem] max-h-[80svh] overflow-y-scroll mx-4 p-2 rounded-md"
           :style="{ backgroundColor: currentPalette.bg }">
           <div class="w-full flex items-center justify-center text-xl font-bold">
             <h1 class="w-full text-center">Followers ({{ followers }})</h1>
@@ -225,7 +221,7 @@
 
     <Transition name="fade" @leave="leave" @enter="enter">
       <div v-if="openFollowing"
-        class="fixed h-full z-100 z-50 w-full backdrop-blur top-0 left-0 flex justify-center items-center">
+        class="fixed h-full z-100 w-full backdrop-blur-sm top-0 left-0 flex justify-center items-center">
         <div class="w-[60rem] max-h-[80svh] overflow-y-scroll mx-4 p-2 rounded-md"
           :style="{ backgroundColor: currentPalette.bg }">
           <div class="w-full flex items-center justify-center text-xl font-bold">
@@ -249,7 +245,7 @@
 
     <Transition name="fade" @leave="leave" @enter="enter">
       <div v-if="openReport"
-        class="fixed h-full z-100 z-50 w-full backdrop-blur top-0 left-0 flex justify-center items-center">
+        class="fixed h-full z-100 w-full backdrop-blur-sm top-0 left-0 flex justify-center items-center">
         <div class="w-[60rem] max-h-[80svh] overflow-y-scroll mx-4 p-2 rounded-md"
           :style="{ backgroundColor: currentPalette.bg }">
           <div class="w-full flex items-center justify-center text-xl font-bold">
@@ -263,6 +259,19 @@
       </div>
     </Transition>
 
+    <transition name="fade" @leave="leave" @enter="enter">
+      <div v-if="showLoginModal" @click.self="showLoginModal = false"
+        class="fixed w-screen h-screen top-0 left-0 z-[100] backdrop-blur-md flex items-center justify-center">
+        <div
+          class="bg-gray-900 p-5 text-center min-w-[80svw] max-w-[80svw] max-h-[80svh] min-h-[80svh] flex justify-center rounded-md m-3 md:w-auto flex-wrap items-stretch">
+          <div class="w-full h-fit flex justify-end">
+            <i class="fa-solid fa-xmark cursor-pointer p-3" @click="showLoginModal = false"></i>
+          </div>
+          <LoginComponent />
+        </div>
+      </div>
+    </transition>
+
   </div>
 </template>
 
@@ -274,6 +283,7 @@ import Cookies from "js-cookie";
 import { useHead } from "#app";
 import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
 import currentPalette from "~/vars/getColors";
+import CommunityLinkComponent from "./CommunityLinkComponent.vue";
 
 useHead({
   meta: [
@@ -303,6 +313,8 @@ const posts = ref(0)
 const followers = ref(0)
 const following = ref(0)
 const openFollower = ref(false)
+const showLoginModal = ref(false)
+const loggedIn = ref(Cookies.get("token") ? true : false)
 const openFollowing = ref(false)
 const privateAccount = ref(false);
 const isAbleToFollow = ref(true)
@@ -443,6 +455,11 @@ function loadPosts(postsToLoad) {
 }
 
 function toggleFollow() {
+  if (!loggedIn.value) {
+    showLoginModal.value = true
+    return
+  }
+  
   let url = ""
 
   if (followed.value) {

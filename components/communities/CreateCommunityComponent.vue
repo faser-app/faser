@@ -7,27 +7,41 @@
             <h1 class="text-2xl font-bold">Create a Community</h1>
         </div>
 
+
         <div class="w-full flex flex-col justify-center mt-4 items-center px-2">
-            <div class="md:w-1/2 w-full text-left">
+            <div class="md:w-3/4 w-full text-left">
                 <span class="text-sm text-gray-300">Community Name</span>
             </div>
-            <input v-model="community.communityName" type="text" class="md:w-1/2 w-full p-2 bg-gray-800 rounded-lg">
+            <input @input="clearErrors" v-model="community.communityName" type="text"
+                class="md:w-3/4 mb-2 w-full p-2 bg-gray-800 rounded-lg">
+        </div>
+
+        <div class="w-full flex flex-col justify-center mt-4 items-center px-2">
+            <div class="md:w-3/4 w-full text-left">
+                <span class="text-sm text-gray-300">Community Icon (optional)</span>
+            </div>
+            <input @input="addImagePreview" type="file" accept="image/*"
+                class="md:w-3/4 mb-2 w-full p-2 bg-gray-800 rounded-lg">
+            <div v-if="community.imagePreview" class=" mt-2">
+                <img :src="community.imagePreview" alt="Community Icon Preview"
+                    class="min-w-24 max-w-24 h-24 rounded-full object-cover">
+            </div>
         </div>
 
         <div class="w-full flex flex-col justify-center mt-4 items-center px-2">
             <div class="md:w-3/4 w-full text-left">
                 <span class="text-sm text-gray-300">Community Description</span>
             </div>
-            <textarea v-model="community.description" class="md:w-3/4 h-44 w-full p-2 bg-gray-800 rounded-lg"
-                maxlength="2000"></textarea>
+            <textarea @input="clearErrors" v-model="community.description"
+                class="md:w-3/4 h-44 w-full p-2 bg-gray-800 rounded-lg" maxlength="2000"></textarea>
         </div>
 
         <div class="w-full flex flex-col justify-center mt-4 items-center px-2">
             <div class="md:w-3/4 w-full text-left">
                 <span class="text-sm text-gray-300">Community Rules (Markdown enabled)</span>
             </div>
-            <textarea v-model="community.rules" class="md:w-3/4 h-44 w-full p-2 bg-gray-800 rounded-lg"
-                maxlength="2000"></textarea>
+            <textarea @input="clearErrors" v-model="community.rules"
+                class="md:w-3/4 h-44 w-full p-2 bg-gray-800 rounded-lg" maxlength="2000"></textarea>
         </div>
 
         <div class="w-full flex flex-col justify-center mt-4 items-center px-2">
@@ -36,10 +50,6 @@
             </div>
             <input @keyup.enter="saveTag" maxlength="28" @input="errors = []" v-model="tag" type="text"
                 class="md:w-3/4 mb-2 w-full p-2 bg-gray-800 rounded-lg">
-
-            <div v-if="errors.length > 0" class="w-full flex justify-center mt-2">
-                <p class="text-red-500">{{ errors[0].message }}</p>
-            </div>
 
 
             <div class="flex gap-2 flex-wrap mt-2 justify-center">
@@ -58,9 +68,9 @@
         <div class="flex items-center">
             <div class="w-full flex justify-center items-center mt-4">
                 <label class="inline-flex items-center cursor-pointer">
-                    <input type="checkbox" value="" class="sr-only peer" v-model="community.nsfw">
+                    <input @input="clearErrors" type="checkbox" value="" class="sr-only peer" v-model="community.nsfw">
                     <div
-                        class="relative w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-500">
+                        class="relative w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:rtl:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-500">
                     </div>
                     <p class="ms-3 select-none text-sm font-medium dark:text-gray-300">NSFW <i
                             class="fa-solid fa-triangle-exclamation"></i></p>
@@ -68,9 +78,10 @@
             </div>
             <div class="w-full flex justify-center items-center mt-4">
                 <label class="inline-flex items-center cursor-pointer">
-                    <input type="checkbox" value="" class="sr-only peer" v-model="community.private">
+                    <input @input="clearErrors" type="checkbox" value="" class="sr-only peer"
+                        v-model="community.private">
                     <div
-                        class="relative w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-500">
+                        class="relative w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:rtl:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-500">
                     </div>
                     <p class="ms-3 select-none text-sm font-medium dark:text-gray-300">Private <i
                             class="fa-solid fa-lock"></i></p>
@@ -80,8 +91,12 @@
 
 
         <div class="w-full flex justify-center mt-4">
-            <button @click="createCommunity" class="bg-gradient-to-tr from-[#24c7ce] to-[#1ed794] p-2 rounded-lg">Create
+            <button @click="createCommunity" class="bg-linear-to-tr from-[#24c7ce] to-[#1ed794] p-2 rounded-lg">Create
                 Community</button>
+        </div>
+
+        <div v-if="errors.length > 0" class="w-full flex justify-center mt-2">
+            <p class="text-red-500">{{ errors[0].message }}</p>
         </div>
     </div>
 </template>
@@ -102,9 +117,34 @@ const tag = ref('')
 
 const errors = ref([])
 const runtimeConfig = useRuntimeConfig()
+const file = ref(null)
 
+function clearErrors() {
+    errors.value = []
+}
+
+function addImagePreview(event) {
+    console.log(event)
+
+    const previewFile = event.target.files[0]
+    if (!previewFile) {
+        community.value.imagePreview = null
+        return
+    }
+
+    const reader = new FileReader()
+    reader.onload = (e) => {
+        community.value.imagePreview = e.target.result
+    }
+    reader.readAsDataURL(previewFile)
+    file.value = previewFile
+
+    file.value = event.target.files[0]
+}
 
 function saveTag() {
+    clearErrors()
+
     if (community.value.tags.includes(tag.value)) {
         errors.value.push({
             message: "Tag already exists",
@@ -126,7 +166,7 @@ function saveTag() {
         })
         return
     }
-    if (community.value.tags.length > 6) {
+    if (community.value.tags.length > 5) {
         errors.value.push({
             message: "You can only have 6 tags",
             part: "tag"
@@ -147,14 +187,35 @@ function createCommunity() {
         nsfw: community.value.nsfw,
         private: community.value.private
     }).then((response) => {
-        if (response.data.error) {
-            errors.value.push({
-                message: response.data.error,
-                part: "community"
+        const communityId = response.data.community.id
+        if (file.value !== null) {
+            const formData = new FormData();
+            formData.append("file", file.value);
+
+            axios.post(baseURL + "/api/community/changeCommunityPhoto", formData, {
+                headers: {
+                    token: Cookies.get("token"),
+                    communityid: communityId,
+                    "Content-Type": "multipart/form-data",
+                },
+            }).then((response) => {
+                window.location.href = "/communities/" + communityId
             })
+                .catch((error) => {
+                    errors.value.push({
+                        message: error.response.data.message,
+                        part: "image"
+                    })
+                })
         } else {
             window.location.href = "/communities/" + response.data.community.id
         }
     })
+        .catch((error) => {
+            errors.value.push({
+                message: error.response.data.message,
+                part: "community"
+            })
+        })
 }
 </script>

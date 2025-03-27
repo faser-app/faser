@@ -84,7 +84,7 @@
                 </div>
             </div>
 
-            <Menu as="div" class="relative inline-block text-left z-[2]">
+            <Menu as="div" class="relative inline-block text-left z-2">
                 <div>
                     <MenuButton
                         class="inline-flex w-full justify-center rounded-md px-4 py-2 text-sm font-medium text-white">
@@ -97,7 +97,7 @@
                     leave-active-class="transition duration-75 ease-in"
                     leave-from-class="transform scale-100 opacity-100" leave-to-class="transform scale-95 opacity-0">
                     <MenuItems
-                        class="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black/5 focus:outline-none"
+                        class="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black/5 focus:outline-hidden"
                         :style="{ backgroundColor: currentPalette.bgSecondary }">
                         <div class="px-1 py-1">
                             <MenuItem>
@@ -235,7 +235,7 @@
             </div>
         </div>
         <div class="flex w-full gap-2 mt-2" :style="{ color: currentPalette.textSecondary }">
-            <input type="text" class="w-3/4 p-2 rounded-md focus:outline-none"
+            <input type="text" class="w-3/4 p-2 rounded-md focus:outline-hidden"
                 :style="{ backgroundColor: currentPalette.buttonPrimary }" placeholder="Write a comment..."
                 v-model="commentText" />
             <button v-if="!runningCommentRequest" class="w-1/4 p-2 rounded-md"
@@ -248,7 +248,20 @@
 
 
         <transition name="fade" @leave="leave">
-            <div class="fixed top-0 left-0 w-screen h-screen backdrop-blur z-[200] flex justify-center items-center"
+            <div v-if="showLoginModal" @click.self="showLoginModal = false"
+                class="fixed w-screen h-screen top-0 left-0 z-[100] backdrop-blur-md flex items-center justify-center">
+                <div
+                    class="bg-gray-900 p-5 text-center min-w-[80svw] max-w-[80svw] h-[80svh] flex justify-center rounded-md m-3 md:w-auto flex-wrap items-stretch">
+                    <div class="w-full h-fit flex justify-end">
+                        <i class="fa-solid fa-xmark cursor-pointer p-3" @click="showLoginModal = false"></i>
+                    </div>
+                    <LoginComponent />
+                </div>
+            </div>
+        </transition>
+
+        <transition name="fade" @leave="leave">
+            <div class="fixed top-0 left-0 w-screen h-screen backdrop-blur-sm z-200 flex justify-center items-center"
                 @click.self="showModal = false" v-if="showModal">
                 <div class="bg-gray-900 p-5 text-center max-w-[80svw] rounded-md m-3 md:w-auto w-full" :class="{
                     'animation': showModal,
@@ -273,7 +286,7 @@
             </div>
         </transition>
         <transition name="fade" @leave="leave">
-            <div class="fixed top-0 left-0 w-screen h-screen backdrop-blur z-[200] flex justify-center items-center"
+            <div class="fixed top-0 left-0 w-screen h-screen backdrop-blur-sm z-200 flex justify-center items-center"
                 @click.self="showEditModal = false" v-if="showEditModal">
                 <!-- <div v-if="ownProfileData.advancedUser"> -->
                 <div>
@@ -288,7 +301,8 @@
                         </div>
                         <h2 class="text-center font-bold mt-2">Edit post</h2>
                         <p class="text-gray-400">If you edit the post, an edited text will be added to the post</p>
-                        <textarea class="w-full p-2 rounded-md h-40 text-white pt-0 mt-2 resize-none focus:outline-none"
+                        <textarea
+                            class="w-full p-2 rounded-md h-40 text-white pt-0 mt-2 resize-none focus:outline-hidden"
                             :style="{ backgroundColor: currentPalette.bgSecondary }"
                             v-model="postContent.content"></textarea>
                         <div class="flex flex-col md:flex-row justify-center gap-2 mt-4">
@@ -309,7 +323,7 @@
             </div>
         </transition>
         <transition name="fade" @leave="leave">
-            <div class="fixed md:bg-transparent top-0 z-[200] left-0 w-screen h-screen backdrop-blur flex justify-center items-center bg-black"
+            <div class="fixed md:bg-transparent top-0 z-200 left-0 w-screen h-screen backdrop-blur-sm flex justify-center items-center bg-black"
                 @click.self="showImageModal = false" v-if="showImageModal">
                 <div class="overflow-auto text-center md:rounded-md md:w-auto w-full" :class="{
                     'animation': showImageModal,
@@ -333,7 +347,7 @@
 
         <Transition name="fade" @leave="leave" @enter="enter">
             <div v-if="showReport"
-                class="fixed h-full z-[200] w-full backdrop-blur top-0 left-0 flex justify-center items-center">
+                class="fixed h-full z-200 w-full backdrop-blur-sm top-0 left-0 flex justify-center items-center">
                 <div class="w-[60rem] max-h-[80svh] overflow-y-scroll mx-4 p-2 rounded-md"
                     :style="{ backgroundColor: currentPalette.bg }">
                     <div class="w-full flex items-center justify-center text-xl font-bold">
@@ -371,6 +385,7 @@ const postValue = ref('')
 const commentText = ref('')
 const postCreatedAt = ref('')
 const postVisible = ref(true);
+const showLoginModal = ref(false)
 const copied = ref(false);
 const postType = ref('')
 const parentPost = ref('')
@@ -632,6 +647,11 @@ axios.get(baseURL + "/api/profile/getPostProfile", {
     })
 
 function toggleLike() {
+    if (!loggedIn.value) {
+        showLoginModal.value = true
+        return
+    }
+
     if (!isAdult.value && postContent.value.nsfw) {
         return
     }

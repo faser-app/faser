@@ -8,14 +8,8 @@
         </div>
         <div v-for="(community, index) in communities" :key="community.name" class="ph-no-capture">
           <RouterLink :to="'/communities/' + community.id">
-            <div class="w-full mb-2 flex mr-8 h-fit truncate items-center pr-3 justify-between rounded-md"
-              :style="{ backgroundColor: currentPalette.buttonPrimary, color: currentPalette.textSecondary }">
-              <div class="flex items-center ph-no-capture">
-                <i class="fa-solid fa-users p-2 text-lg"></i>
-                {{ community.displayName }}
-              </div>
-              <i v-if="community.private" class="fa-solid fa-lock"></i>
-            </div>
+            <CommunityLinkComponent :community="community"
+              :profile-community-settings="ownProfileData.communities.find(item => item.id === community.id)" />
           </RouterLink>
         </div>
         <div class="flex w-full justify-center">
@@ -95,7 +89,7 @@
                   leave-active-class="transition duration-75 ease-in" leave-from-class="transform scale-100 opacity-100"
                   leave-to-class="transform scale-95 opacity-0">
                   <MenuItems
-                    class="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black/5 focus:outline-none"
+                    class="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black/5 focus:outline-hidden"
                     :style="'background-color: ' + currentPalette.bgSecondary">
                     <div class="px-1 py-1 ph-no-capture">
                       <MenuItem v-for="community in communities" v-slot="{ active }">
@@ -175,8 +169,8 @@
 
     <Transition name="fade" @leave="leave" @enter="enter">
       <div v-if="openFollower"
-        class="fixed z-[100] h-full w-full backdrop-blur top-0 left-0 flex justify-center items-center">
-        <div class="w-[60rem] max-h-[80rem] overflow-y-scroll mx-4 p-2 rounded-md"
+        class="fixed z-100 h-full w-full backdrop-blur-sm top-0 left-0 flex justify-center items-center">
+        <div class="w-[60rem] max-h-[80svh] overflow-y-scroll mx-4 p-2 rounded-md"
           :style="{ backgroundColor: currentPalette.bg }">
           <div class=" w-full flex items-center justify-center text-xl font-bold">
             <h1 class="w-full text-center">Followers ({{ followers }})</h1>
@@ -199,7 +193,7 @@
 
     <Transition name="fade" @leave="leave" @enter="enter">
       <div v-if="openFollowing"
-        class="fixed z-[100] h-full w-full backdrop-blur top-0 left-0 flex justify-center items-center">
+        class="fixed z-100 h-full w-full backdrop-blur-sm top-0 left-0 flex justify-center items-center">
         <div class="w-[60rem] max-h-[80svh] overflow-y-scroll mx-4 p-2 rounded-md"
           :style="{ backgroundColor: currentPalette.bg }">
           <div class="w-full flex items-center justify-center text-xl font-bold">
@@ -231,6 +225,7 @@ import { useRouter } from "vue-router";
 import MarkdownIt from "markdown-it";
 import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
 import currentPalette from "~/vars/getColors";
+import CommunityLinkComponent from "../account/profile/CommunityLinkComponent.vue";
 
 const md = new MarkdownIt({
   html: false,

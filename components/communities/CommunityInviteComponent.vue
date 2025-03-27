@@ -50,9 +50,11 @@
                     </div>
                 </div>
                 <div class="md:w-1/2 text-center flex flex-col items-end justify-center">
-                    <img src="https://faser.app/icon/logo.png" alt="Faser Logo" class="w-fzull">
+                    <img :src="'https://s3.faser.app/communityimages/' + community.id + '/image.png'"
+                        @error="haveImage = false" v-if="haveImage && community?.name" class="w-full rounded-full" />
+                    <img src="https://faser.app/icon/logo.png" alt="Faser Logo" class="w-full" v-else>
                     <button
-                        class="bg-blue-500 hover:bg-blue-700 disabled:bg-gray-700 disabled:text-gray-400 text-white font-bold py-2 px-4 rounded"
+                        class="bg-blue-500 mt-2 hover:bg-blue-700 disabled:bg-gray-700 disabled:text-gray-400 text-white font-bold py-2 px-4 rounded-sm"
                         @click="joinCommunity" :disabled="disableJoinButton">{{ joinButtonText }}</button>
                 </div>
             </div>
@@ -76,6 +78,7 @@ const moderators = ref(0)
 const disableJoinButton = ref(false)
 const joinButtonText = ref("Join Community")
 const router = useRouter()
+const haveImage = ref(true)
 
 const runtimeConfig = useRuntimeConfig()
 

@@ -1,7 +1,7 @@
 <template>
     <div :class="{
         'h-12 w-12': props.mobile === 'true',
-    }" class="p-2 px-4 z-100 select-none cursor-pointer text-xl bottom-5 right-5 bg-gradient-to-tr hover:backdrop-brightness-0 from-[#24c7ce] to-[#1ed794] flex justify-center items-center rounded-full"
+    }" class="p-2 px-4 z-100 select-none cursor-pointer text-xl bottom-5 right-5 bg-linear-to-tr hover:backdrop-brightness-0 from-[#24c7ce] to-[#1ed794] flex justify-center items-center rounded-full"
         @click="openModal">
         {{ props.text }}
     </div>
@@ -30,7 +30,7 @@
                     <div :style="{ backgroundColor: currentPalette.buttonPrimary }" class="mt-2 p-2 rounded-md" :class="{
                         'border border-red-500': error
                     }">
-                        <textarea class="w-full h-40 text-white pt-0 mt-2 resize-none focus:outline-none"
+                        <textarea class="w-full h-40 text-white pt-0 mt-2 resize-none focus:outline-hidden"
                             :style="{ backgroundColor: currentPalette.buttonPrimary }" v-model="postContent"
                             @input="error = ''" @paste="checkPaste"
                             placeholder="What are you thinking about?"></textarea>
@@ -75,7 +75,7 @@
                         <div class="mt-4">
                             <label class="inline-flex items-center cursor-pointer">
                                 <input type="checkbox" value="" class="sr-only peer" v-model="ai">
-                                <div class="relative w-11 h-6 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-500"
+                                <div class="relative w-11 h-6 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:rtl:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-500"
                                     :style="{ backgroundColor: currentPalette.buttonSecondary }">
                                 </div>
                                 <p class="ms-3 select-none text-sm font-medium dark:text-gray-300">AI <i
@@ -85,7 +85,7 @@
                         <div class="mt-4 w-full text-end" v-if="isAdult">
                             <label class="inline-flex items-center cursor-pointer">
                                 <input type="checkbox" value="" class="sr-only peer" v-model="nsfw">
-                                <div class="relative w-11 h-6 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-500"
+                                <div class="relative w-11 h-6 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:rtl:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-500"
                                     :style="{ backgroundColor: currentPalette.buttonSecondary }">
                                 </div>
                                 <p class="ms-3 select-none text-sm font-medium dark:text-gray-300">NSFW <i
@@ -113,7 +113,7 @@
         </div>
     </transition>
 
-    <PostSelectSongComponent :show-modal="searchSong" @close="searchSong = false" class="z-[100]"
+    <PostSelectSongComponent :show-modal="searchSong" @close="searchSong = false" class="z-100"
         @selectSong="selectSong" />
 </template>
 

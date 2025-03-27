@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!mobile" class="h-[4.5rem] flex top-0 fixed backdrop-blur text-white w-full z-100"
+  <div v-if="!mobile" class="h-[4.5rem] flex top-0 fixed backdrop-blur-sm text-white w-full z-100"
     :style="{ backgroundColor: currentPalette.bg }">
     <RouterLink to="/">
       <div class="flex h-full w-full justify-center md:justify-start fixed pointer-events-none">
@@ -56,7 +56,7 @@
             <i v-else-if="!haveProfilePicture" class="fa-solid fa-user rounded-full text-3xl"></i>
           </div>
         </RouterLink> -->
-        <Menu as="div" class="relative inline-block text-left z-[2]">
+        <Menu as="div" class="relative inline-block text-left z-2">
           <div>
             <MenuButton class="inline-flex w-full justify-center rounded-md pl-4 py-2 text-sm font-medium text-white">
               <div
@@ -74,7 +74,7 @@
             leave-active-class="transition duration-75 ease-in" leave-from-class="transform scale-100 opacity-100"
             leave-to-class="transform scale-95 opacity-0">
             <MenuItems
-              class="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black/5 focus:outline-none"
+              class="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black/5 focus:outline-hidden"
               :style="{ backgroundColor: currentPalette.bgSecondary }">
               <div class="px-1 py-1">
                 <MenuItem v-slot="{ active }">
@@ -165,7 +165,7 @@
         </RouterLink>
       </div>
       <div class="flex justify-center">
-        <Menu as="div" class="relative inline-block text-left z-[2]">
+        <Menu as="div" class="relative inline-block text-left z-2">
           <div>
             <MenuButton class="inline-flex w-full justify-center rounded-md px-4 py-2 text-sm font-medium text-white">
               <div class="flex justify-center flex-wrap">
@@ -185,7 +185,7 @@
             leave-active-class="transition duration-75 ease-in" leave-from-class="transform scale-100 opacity-100"
             leave-to-class="transform scale-95 opacity-0">
             <MenuItems
-              class="absolute right-0 bottom-full mb-2 w-56 origin-bottom-right divide-y divide-gray-100 rounded-md bg-gray-900 shadow-lg ring-1 ring-black/5 focus:outline-none">
+              class="absolute right-0 bottom-full mb-2 w-56 origin-bottom-right divide-y divide-gray-100 rounded-md bg-gray-900 shadow-lg ring-1 ring-black/5 focus:outline-hidden">
               <div class="px-1 py-1">
                 <MenuItem v-slot="{ active }">
                 <button @click="changePage('/profile')" :class="[
@@ -233,12 +233,12 @@
       </div>
     </div>
   </div>
-  <div class="fixed z-20 backdrop-blur top-[4.5rem] bg-[#0206176c] w-full md:hidden z-100">
-    <div class="backdrop-blur w-full">
+  <div class="fixed z-20 backdrop-blur-sm top-[4.5rem] bg-[#0206176c] w-full md:hidden z-100">
+    <div class="backdrop-blur-sm w-full">
       <div :class="{ 'expandable-content': true, expanded: expanded }">
         <SearchUserComponent />
-        <div v-for="link in links" :key="link.name" class="w-full py-3 backdrop-blur">
-          <RouterLink @click="expanded = false" :to="link.href" class="text-white w-full my-2 ml-3 backdrop-blur">
+        <div v-for="link in links" :key="link.name" class="w-full py-3 backdrop-blur-sm">
+          <RouterLink @click="expanded = false" :to="link.href" class="text-white w-full my-2 ml-3 backdrop-blur-sm">
             {{ link.name }}
           </RouterLink>
         </div>
@@ -247,7 +247,7 @@
   </div>
 
   <div v-if="!accepted"
-    class="w-screen h-screen bg-black bg-opacity-80 flex items-center justify-center fixed top-0 left-0 z-[100]">
+    class="w-screen h-screen bg-opacity-80 flex items-center justify-center fixed top-0 left-0 z-100">
     <div class="max-w-[90rem] bg-gray-800 p-4 rounded-md w-fit flex flex-col items-center justify-center">
       <div class="">
         <h1 class="font-bold text-2xl">
@@ -260,7 +260,7 @@
           <RouterLink to="/privacy#m263" class="underline">Privacy Policy</RouterLink>
         </p>
         <div class="w-full justify-center">
-          <button class="bg-gray-700 text-white py-1 px-4 rounded mt-2" @click="acceptPrivacy">
+          <button class="bg-gray-700 text-white py-1 px-4 rounded-sm mt-2" @click="acceptPrivacy">
             Accept
           </button>
         </div>
@@ -294,7 +294,7 @@
 
   <div v-if="!mobile" class="h-20" :style="{ backgroundColor: currentPalette.bg }"></div>
   <div v-if="showBanner"
-    class="w-full flex justify-center mb-2 p-5 text-white items-center bg-gradient-to-tr from-[#24c7ce] to-[#1ed794]">
+    class="w-full flex justify-center mb-2 p-5 text-white items-center bg-linear-to-tr from-[#24c7ce] to-[#1ed794]">
     <div class="text-center">
       <p>You'll get a better experience using the web app of faser.</p>
       <h2 class="font-bold text-2xl mt-2">How to get the web app</h2>

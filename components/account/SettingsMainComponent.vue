@@ -3,26 +3,30 @@
         <div class="flex  flex-col w-full md:w-1/3 overflow-scroll max-h-screen">
             <div class="p-2 mb-0.5 flex gap-2 items-center cursor-pointer" @click="active = 'account'"
                 :class="{ 'bg-gray-800': active === 'account', 'bg-gray-900': active !== 'account' }">
-                <i
-                    class="fa-solid fa-gears text-xl bg-gray-700 p-1 rounded-lg w-10 h-10 flex items-center justify-center"></i>
+                <div class="text-xl bg-gray-700 p-1 rounded-lg w-10 h-10 flex items-center justify-center">
+                    <i class="fa-solid fa-gears"></i>
+                </div>
                 <p>Account Settings</p>
             </div>
             <div class="p-2 mb-0.5 flex gap-2 items-center cursor-pointer" @click="active = 'profile'"
                 :class="{ 'bg-gray-800': active === 'profile', 'bg-gray-900': active !== 'profile' }">
-                <i
-                    class="fa-solid fa-user-gear text-xl bg-gray-700 p-1 rounded-lg w-10 h-10 flex items-center justify-center"></i>
+                <div class="text-xl bg-gray-700 p-1 rounded-lg w-10 h-10 flex items-center justify-center">
+                    <i class="fa-solid fa-user-gear"></i>
+                </div>
                 <p>Profile Settings</p>
             </div>
             <div class="p-2 mb-0.5 flex gap-2 items-center cursor-pointer" @click="active = 'app'"
                 :class="{ 'bg-gray-800': active === 'app', 'bg-gray-900': active !== 'app' }">
-                <i
-                    class="fa-solid fa-sliders text-xl bg-gray-700 p-1 rounded-lg w-10 h-10 flex items-center justify-center"></i>
+                <div class="text-xl bg-gray-700 p-1 rounded-lg w-10 h-10 flex items-center justify-center">
+                    <i class="fa-solid fa-sliders"></i>
+                </div>
                 <p>App Settings</p>
             </div>
             <div class="text-red-500 p-2 mb-0.5 flex gap-2 items-center cursor-pointer" @click="active = 'dangerous'"
                 :class="{ 'bg-gray-800': active === 'dangerous', 'bg-gray-900': active !== 'dangerous' }">
-                <i
-                    class="fa-solid fa-circle-exclamation text-xl bg-gray-700 p-1 rounded-lg w-10 h-10 flex items-center justify-center"></i>
+                <div class="text-xl bg-gray-700 p-1 rounded-lg w-10 h-10 flex items-center justify-center">
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                </div>
                 <p>Dangerous Zone</p>
             </div>
         </div>
@@ -42,7 +46,7 @@ import currentPalette from "~/vars/getColors";
 const active = ref("account")
 
 onMounted(() => {
-    if(Cookies.get("token") === undefined) {
+    if (Cookies.get("token") === undefined) {
         window.location.href = "/login";
     }
 })

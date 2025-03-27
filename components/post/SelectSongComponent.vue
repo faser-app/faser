@@ -1,7 +1,7 @@
 <template>
     <transition name="fade" @leave="leave">
         <div v-if="props.showModal" :class="{ animation: props.showModal, fadeOut: !props.showModal }"
-            class="fixed flex justify-center items-center top-0 left-0 w-full h-full z-50 backdrop-blur">
+            class="fixed flex justify-center items-center top-0 left-0 w-full h-full z-50 backdrop-blur-sm">
             <div class="bg-gray-900 max-h-[80svh] overflow-scroll p-5 rounded-md m-3 md:w-auto w-full" :class="{
                 'border border-red-500': error,
             }">

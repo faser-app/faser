@@ -34,7 +34,7 @@
                         leave-from-class="transform scale-100 opacity-100"
                         leave-to-class="transform scale-95 opacity-0">
                         <MenuItems
-                            class="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black/5 focus:outline-none"
+                            class="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black/5 focus:outline-hidden"
                             :style="{ backgroundColor: currentPalette.bgSecondary }">
                             <div class="px-1 py-1">
                                 <MenuItem v-slot="{ active }">
@@ -95,7 +95,18 @@
             </div>
             <div class="flex justify-center w-full h-24">
                 <div class="border border-gray-700 h-24 w-24 rounded-full flex justify-center items-center">
-                    <i class="fa-solid fa-users text-4xl"></i>
+                    <img v-if="haveImage"
+                        :src="'https://s3.faser.app/communityimages/' + communityObject.id + '/image.png'"
+                        class="rounded-full h-24 w-24 object-cover" @click="openCommunityImage = true"
+                        alt="Community Image" @error="haveImage = false" />
+                    <i v-else class="fa-solid fa-users text-4xl"></i>
+                </div>
+                <div v-if="openCommunityImage" @click.self="openCommunityImage = false"
+                    class="fixed top-0 left-0 w-screen h-screen flex items-center justify-center z-[100] backdrop-blur-lg">
+                    <img v-if="haveImage"
+                        :src="'https://s3.faser.app/communityimages/' + communityObject.id + '/image.png'"
+                        class="rounded-full max-w-[80svw] max-h-[80svw] object-cover" @click="openCommunityImage = false"
+                        alt="Community Image" @error="haveImage = false" />
                 </div>
             </div>
             <div class="flex justify-center w-full mt-2 text-3xl font-bold">
@@ -159,9 +170,9 @@
         </div>
     </div>
 
-    <ViewRulesModal :showModal="showRulesModal" :rules="rules" @close="showRulesModal = false" class="z-[100]" />
+    <ViewRulesModal :showModal="showRulesModal" :rules="rules" @close="showRulesModal = false" class="z-100" />
     <CreateInviteLinkModalComponent :showModal="showInviteLinkModal" :community-id="communityObject.id"
-        @close="showInviteLinkModal = false" class="z-[100]" />
+        @close="showInviteLinkModal = false" class="z-100" />
     <CommunitiesUpdateCommunityComponent :show-modal="showEditModal" :community="communityObject"
         @update="updateCommunity" @close="showEditModal = false" />
 </template>
@@ -187,6 +198,7 @@ const description = ref("")
 const members = ref("")
 const moderators = ref([])
 const rules = ref("")
+const openCommunityImage = ref(false)
 const showRulesModal = ref(false)
 const showInviteLinkModal = ref(false)
 const id = ref("")
@@ -199,6 +211,7 @@ const ownProfileData = ref([])
 const profileData = ref([])
 const communityObject = ref([])
 const postsValue = ref([])
+const haveImage = ref(true)
 const postIndex = ref(0)
 const lastRequest = ref(0)
 const loadedPosts = ref([])
@@ -326,3 +339,19 @@ function loadPosts(postsToLoad) {
 }
 
 </script>
+
+<style scoped>
+.picture-animation {
+    position: fixed;
+    animation: openImage 0.5s ease-in-out;
+}
+
+@keyframes openImage {
+    0% {
+        width: 96px;
+    }
+    100% {
+        width: 65vw;
+    }
+}
+</style>
