@@ -1,367 +1,309 @@
 <template>
-    <div v-if="postVisible" class="w-full max-w-[90rem] p-2 pb-4 text-white"
-        :style="{ backgroundColor: currentPalette.bgSecondary }" :class="{
-        'border-b border-gray-700': border,
-    }">
-        <div class="flex items-center"
+    <div v-if="postVisible" class="post-container" :style="{ backgroundColor: currentPalette.bgSecondary }"
+        :class="{ 'border-b border-gray-700': border }">
+
+        <!-- Parent post reference -->
+        <div class="parent-post-link"
             v-if="postType === 'comment' && !route.fullPath.split('/')[2].includes(parentPost)">
-            <div class="rounded-tl-lg border-t-2 border-l-2 border-gray-500 h-4 w-4 ml-8"></div>
-            <RouterLink :to="'/post/' + parentPost" class="ml-2 mb-4 text-gray-400 underline cursor-pointer">Go to
-                parent post</RouterLink>
+            <div class="reply-connector"></div>
+            <RouterLink :to="'/post/' + parentPost" class="parent-link">Go to parent post</RouterLink>
         </div>
-        <div class="flex items-center">
-            <div class="flex items-center w-full">
-                <RouterLink v-if="props.ownProfile === 'false'" :to="'/' + author.username" class="flex items-center">
-                    <div v-if="props.ownProfile === 'false'">
-                        <img v-if="author.hasProfilePicture" @error="author.hasProfilePicture = false"
-                            :src="'https://s3.faser.app/profilepictures/' + author.id + '/image.png'"
-                            alt="profile picture" class="h-14 w-14 m-2 object-cover" :class="{
-                                'rounded-full': !author.businessAccount,
-                                'rounded-lg': author.businessAccount
-                            }" />
-                        <div v-else
-                            class="h-14 w-14 m-2 flex border justify-center items-center border-[#96969627] bg-[#1118276c]"
-                            :class="{
-                                'rounded-full': !author.businessAccount,
-                                'rounded-md': author.businessAccount
-                            }">
-                            <i class="fa-solid fa-user rounded-full text-2xl"></i>
-                        </div>
-                    </div>
-                    <p>{{ author.displayName }}</p>
-                    <div v-if="author.businessAccount"
-                        class="flex ml-2 justify-center text-xs items-center bg-yellow-600 border w-6 h-6 border-yellow-300 rounded-full">
-                        <i class="fa-solid verifiedBadge fa-check"></i>
-                    </div>
-                    <div v-else-if="author.verifiedAccount"
-                        class="flex ml-2 justify-center text-xs items-center bg-sky-600 border w-6 h-6 border-sky-300 rounded-full">
-                        <i class="fa-solid verifiedBadge fa-check"></i>
-                    </div>
-                </RouterLink>
-                <RouterLink v-else :to="'/' + author.username" class="flex items-center">
+
+        <!-- Post header with author info -->
+        <div class="post-header">
+            <div class="author-info">
+                <!-- Profile picture -->
+                <RouterLink :to="'/' + author.username" class="author-avatar">
                     <img v-if="author.hasProfilePicture" @error="author.hasProfilePicture = false"
                         :src="'https://s3.faser.app/profilepictures/' + author.id + '/image.png'" alt="profile picture"
-                        class="h-14 w-14 m-2 object-cover" :class="{
-                            'rounded-full': !author.businessAccount,
-                            'rounded-lg': author.businessAccount
-                        }" />
-                    <div v-else
-                        class="h-14 w-14 m-2 flex border justify-center items-center border-[#96969627] bg-[#1118276c]"
-                        :class="{
-                            'rounded-full': !author.businessAccount,
-                            'rounded-md': author.businessAccount
-                        }">
-                        <i class="fa-solid fa-user rounded-full text-2xl"></i>
-                    </div>
-
-                    <p>{{ author.displayName }}</p>
-                    <div v-if="author.businessAccount"
-                        class="flex ml-2 justify-center text-xs items-center bg-yellow-600 border w-6 h-6 border-yellow-300 rounded-full">
-                        <i class="fa-solid verifiedBadge fa-check"></i>
-                    </div>
-                    <div v-else-if="author.verifiedAccount"
-                        class="flex ml-2 justify-center text-xs items-center bg-sky-600 border min-w-6 h-6 border-sky-300 rounded-full">
-                        <i class="fa-solid verifiedBadge fa-check"></i>
+                        :class="{'rounded-full': !author.businessAccount, 'rounded-lg': author.businessAccount}" />
+                    <div v-else class="avatar-placeholder"
+                        :class="{'rounded-full': !author.businessAccount, 'rounded-md': author.businessAccount}">
+                        <i class="fa-solid fa-user text-xl"></i>
                     </div>
                 </RouterLink>
-                <div class="flex flex-wrap">
-                    <p class="ml-3 text-gray-400 cursor-default" @mouseover="showTooltip = true"
-                        @mouseleave="showTooltip = false">
-                        {{ postCreatedAt }}
-                    <div class="absolute -mt-12" v-if="showTooltip">
-                        {{ localDateTime }}
-                    </div>
-                    </p>
-                    <p class="ml-3 text-gray-400" v-if="postContent.edited">edited</p>
-                    <p class="ml-3 text-gray-400" v-if="postContent.ai">AI <i class="fa-solid fa-robot"></i></p>
-                    <div class="flex px-2 ml-3 items-center bg-red-500 rounded-full text-sm cursor-pointer select-none gap-2"
-                        v-if="postContent.nsfw" @click="toggleNSFW">
-                        <p>NSFW</p>
 
-                        <i class="fa-solid fa-eye" v-if="showPost"></i>
-                        <i class="fa-solid fa-eye-slash" v-else></i>
+                <!-- Author name, verification badge and timestamp -->
+                <div class="author-details">
+                    <div class="author-name-container">
+                        <RouterLink :to="'/' + author.username" class="author-name">{{ author.displayName }}
+                        </RouterLink>
+                        <div v-if="author.businessAccount" class="verification-badge business">
+                            <i class="fa-solid fa-check text-[10px]"></i>
+                        </div>
+                        <div v-else-if="author.verifiedAccount" class="verification-badge">
+                            <i class="fa-solid fa-check text-[10px]"></i>
+                        </div>
+                    </div>
+
+                    <div class="post-meta">
+                        <span class="username">@{{ author.username }}</span>
+                        <span class="separator">·</span>
+                        <span class="timestamp" @mouseover="showTooltip = true" @mouseleave="showTooltip = false">
+                            {{ postCreatedAt }}
+                            <div class="timestamp-tooltip" v-if="showTooltip">
+                                {{ localDateTime }}
+                            </div>
+                        </span>
+                        <span class="edited-flag" v-if="postContent.edited">· edited</span>
+                        <span class="ai-flag" v-if="postContent.ai">· AI <i class="fa-solid fa-robot"></i></span>
                     </div>
                 </div>
             </div>
 
-            <Menu as="div" class="relative inline-block text-left z-2">
-                <div>
-                    <MenuButton
-                        class="inline-flex w-full justify-center rounded-md px-4 py-2 text-sm font-medium text-white">
-                        <i class="fa-solid fa-ellipsis-vertical"></i>
-                    </MenuButton>
-                </div>
+            <!-- Post options menu -->
+            <Menu as="div" class="post-menu">
+                <MenuButton class="menu-button">
+                    <i class="fa-solid fa-ellipsis"></i>
+                </MenuButton>
 
                 <transition enter-active-class="transition duration-100 ease-out"
                     enter-from-class="transform scale-95 opacity-0" enter-to-class="transform scale-100 opacity-100"
                     leave-active-class="transition duration-75 ease-in"
                     leave-from-class="transform scale-100 opacity-100" leave-to-class="transform scale-95 opacity-0">
-                    <MenuItems
-                        class="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black/5 focus:outline-hidden"
-                        :style="{ backgroundColor: currentPalette.bgSecondary }">
-                        <div class="px-1 py-1">
+                    <MenuItems class="menu-items" :style="{ backgroundColor: currentPalette.bgSecondary }">
+                        <div class="menu-group">
                             <MenuItem>
-                            <div class="group flex w-full items-center rounded-md px-1 py-1 text-sm">
-                                <div class="flex gap-2 w-full items-center">
-                                    <div class="w-1/2 p-2 cursor-pointer rounded-lg py-3"
-                                        :style="{ backgroundColor: currentPalette.bgSecondary }" @click="sharePost">
-                                        <div class="mr-2 flex w-full justify-center items-center text-gray-300">
-                                            <i class="fa-solid fa-arrow-up-from-bracket"></i>
-                                        </div>
-                                    </div>
-                                    <div v-if="!props.isCommunity"
-                                        :style="{ backgroundColor: currentPalette.bgSecondary }"
-                                        class="w-1/2 p-2 cursor-pointer rounded-lg py-3" @click="toggleSave">
-                                        <div class="mr-2 flex w-full justify-center items-center text-gray-300">
-                                            <i v-if="!savedPost" class="fa-regular fa-bookmark"></i>
-                                            <i v-else class="fa-solid fa-bookmark"></i>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="menu-action-row">
+                                <button class="action-button" @click="sharePost">
+                                    <i class="fa-solid fa-arrow-up-from-bracket"></i>
+                                    <span>Share</span>
+                                </button>
+
+                                <button v-if="!props.isCommunity" class="action-button" @click="toggleSave">
+                                    <i v-if="!savedPost" class="fa-regular fa-bookmark"></i>
+                                    <i v-else class="fa-solid fa-bookmark"></i>
+                                    <span>{{ savedPost ? 'Saved' : 'Save' }}</span>
+                                </button>
                             </div>
                             </MenuItem>
+
                             <MenuItem v-slot="{ active }" v-if="isAuthor">
-                            <button :class="[
-                                active ? 'bg-gray-600 text-white' : 'text-gray-200',
-                                'group flex w-full items-center rounded-md px-2 py-2 text-sm',
-                            ]" @click="openDeleteModal">
-                                <i class="fa-solid fa-trash mr-2"></i>
-                                Delete
+                            <button :class="[active ? 'bg-gray-700' : '', 'menu-item']" @click="openDeleteModal">
+                                <i class="fa-solid fa-trash"></i>
+                                <span>Delete</span>
                             </button>
                             </MenuItem>
+
                             <MenuItem v-slot="{ active }" v-if="isAuthor">
-                            <button :class="[
-                                active ? 'bg-gray-600 text-white' : 'text-gray-200',
-                                'group flex w-full items-center rounded-md px-2 py-2 text-sm',
-                            ]" @click="openEditModal">
-                                <i class="fa-solid fa-edit mr-2"></i>
-                                Edit
+                            <button :class="[active ? 'bg-gray-700' : '', 'menu-item']" @click="openEditModal">
+                                <i class="fa-solid fa-edit"></i>
+                                <span>Edit</span>
                             </button>
                             </MenuItem>
+
                             <MenuItem v-slot="{ active }">
-                            <button :class="[
-                                active ? 'bg-gray-600 text-white' : 'text-gray-200',
-                                'group flex w-full items-center rounded-md px-2 py-2 text-sm',
-                            ]" @click="showReport = true">
-                                <i class="fa-solid fa-triangle-exclamation mr-2"></i>
-                                Report
+                            <button :class="[active ? 'bg-gray-700' : '', 'menu-item']" @click="showReport = true">
+                                <i class="fa-solid fa-triangle-exclamation"></i>
+                                <span>Report</span>
                             </button>
                             </MenuItem>
                         </div>
                     </MenuItems>
                 </transition>
             </Menu>
-
         </div>
-        <div v-if="isAdult || !postContent.nsfw" :class="{
-            'blur-lg': !showPost && postContent.nsfw
-        }">
-            <p class="ml-2" v-html="postValue"></p>
-            <div class="overflow-x-scroll scroll-snap-x">
-                <div class="inline-flex gap-2 mt-2">
-                    <div v-for="image in postContent.images" :key="image"
-                        class="p-2 rounded-md inline-block scroll-snap-item"
-                        :style="{ backgroundColor: currentPalette.bgSecondary }">
-                        <img @click="openImage('https://s3.faser.app/postimages/' + author.id + '/' + postContent.postId + '/' + image + '.png')"
-                            :src="'https://s3.faser.app/postimages/' + author.id + '/' + postContent.postId + '/' + image + '.png'"
-                            class="max-w-80 max-h-80 rounded-lg cursor-pointer" />
+
+        <!-- NSFW warning -->
+        <div v-if="postContent.nsfw" class="nsfw-tag" @click="toggleNSFW">
+            <span>NSFW</span>
+            <i class="fa-solid" :class="showPost ? 'fa-eye' : 'fa-eye-slash'"></i>
+        </div>
+
+        <!-- Post content -->
+        <div v-if="isAdult || !postContent.nsfw" :class="{ 'blur-content': !showPost && postContent.nsfw }">
+            <!-- Text content -->
+            <div class="post-content" v-html="postValue"></div>
+
+            <!-- Images gallery -->
+            <div v-if="postContent.images && postContent.images > 0" class="image-gallery">
+                <div class="image-grid" :class="[
+                    postContent.images === 1 ? 'single-image' : '',
+                    postContent.images === 2 ? 'two-images' : '',
+                    postContent.images === 3 ? 'three-images' : '',
+                    postContent.images >= 4 ? 'four-plus-images' : ''
+                ]">
+                    <!-- Show first 4 images directly in the grid -->
+                    <div v-for="imageIndex in Math.min(postContent.images, 4)" :key="imageIndex" class="image-container"
+                        @click="openImage('https://s3.faser.app/postimages/' + author.id + '/' + postContent.postId + '/' + imageIndex + '.png')">
+                        <img :src="'https://s3.faser.app/postimages/' + author.id + '/' + postContent.postId + '/' + imageIndex + '.png'"
+                            class="post-image" />
+
+                        <!-- If there are more images, show a counter overlay on the 4th image -->
+                        <div v-if="imageIndex === 4 && postContent.images > 4" class="more-images-overlay">
+                            <span>+{{ postContent.images - 4 }}</span>
+                        </div>
                     </div>
                 </div>
             </div>
+
+            <!-- Spotify embed -->
+            <iframe v-if="postContent.music" :src="'https://open.spotify.com/embed/track/' + postContent.music"
+                class="spotify-embed" frameBorder="0" allowfullscreen=""
+                allow="clipboard-write; encrypted-media;"></iframe>
+
+            <!-- URL embeds -->
+            <a v-if="embed.url || embed.image || embed.title || embed.description" :href="embed.url" target="_blank"
+                class="url-embed">
+                <div class="embed-container">
+                    <img v-if="embed.image" :src="embed.image" class="embed-image" :class="{
+                        'rounded-t-lg': embed.title || embed.description,
+                        'rounded-lg': !(embed.title || embed.description)
+                    }" />
+                    <div v-if="embed.title || embed.description" class="embed-content" :class="{
+                        'rounded-lg': !embed.image,
+                        'rounded-b-lg': embed.image
+                    }">
+                        <p v-if="embed.title" class="embed-title">{{ embed.title }}</p>
+                        <p v-if="embed.description" class="embed-description">{{ embed.description }}</p>
+                    </div>
+                </div>
+            </a>
         </div>
-        <div v-else class="flex w-full justify-center items-center h-36 rounded-md mb-2"
+
+        <!-- NSFW content warning -->
+        <div v-else-if="postContent.nsfw" class="nsfw-warning"
             :style="{ backgroundColor: currentPalette.buttonDanger, color: currentPalette.textPrimary }">
-            <div class="w-full flex justify-center flex-wrap">
-                <div
-                    class="border border-red-500 bg-red-900 p-4 rounded-full text-xl w-12 h-12 flex items-center justify-center">
-                    <i class="fa-solid fa-triangle-exclamation"></i>
-                </div>
-                <div class="w-full text-center" v-if="loggedIn">
-                    <p>This post is marked as NSFW. You have to be 18 years or older to view this post.</p>
-                </div>
-                <div class="w-full text-center" v-else>
-                    <p>This post is marked as NSFW. You have to be logged in and 18 years or older to view this
-                        post.
-                    </p>
-                </div>
+            <div class="warning-icon">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <div v-if="loggedIn" class="warning-text">
+                This post is marked as NSFW. You have to be 18 years or older to view this post.
+            </div>
+            <div v-else class="warning-text">
+                This post is marked as NSFW. You have to be logged in and 18 years or older to view this post.
             </div>
         </div>
-        <iframe v-if="postContent.music" :src="'https://open.spotify.com/embed/track/' + postContent.music"
-            class="md:w-96 w-full mb-2" width="100%" height="80rem" frameBorder="0" allowfullscreen=""
-            allow="clipboard-write; encrypted-media;"></iframe>
 
-
-        <a v-if="embed.url || embed.image || embed.title || embed.description" :href="embed.url" target="_blank"
-            class="w-fit no-underline flex mb-2 items-center gap-2">
-            <div class="md:w-48 w-full">
-                <img v-if="embed.image" :src="embed.image" class="h-48 object-cover" :class="{
-                    'rounded-lg' : !embed.title,
-                    'rounded-t-lg' : embed.title
-                }" />
-                <div v-if="embed.title || embed.description" class="flex flex-col w-full p-2 bg-gray-800" :class="{
-                    'rounded-lg' : !embed.image,
-                    'rounded-b-lg' : embed.image
-                }">
-                    <p v-if="embed.title" class="font-bold">{{ embed.title }}</p>
-                    <p v-if="embed.description">{{ embed.description }}</p>
+        <!-- Post actions (like, comment, view stats) -->
+        <div class="post-actions">
+            <!-- Like button -->
+            <div class="action-button" @click="toggleLike">
+                <div class="action-icon">
+                    <transition name="like">
+                        <i v-if="isLiked" class="fa-solid fa-heart liked"></i>
+                    </transition>
+                    <i v-if="!isLiked" class="fa-regular fa-heart"></i>
                 </div>
+                <span class="action-count">{{ postLikes }}</span>
             </div>
-        </a>
 
+            <!-- Comment button -->
+            <RouterLink :to="'/post/' + postContent.postId" class="action-button">
+                <div class="action-icon">
+                    <i class="fa-regular fa-comment"></i>
+                </div>
+                <span class="action-count">{{ postComments }}</span>
+            </RouterLink>
 
-        <div class="flex w-full items-center justify-center">
-            <div class="flex justify-center gap-2 w-1/3 cursor-pointer items-center text-gray-300" @click="toggleLike">
-
-                <Transition name="like" @leave="leave" @enter="open">
-                    <i v-if="isLiked" class="fa-solid text-xl absolute fa-heart text-red-500"></i>
-                </Transition>
-                <i v-if="!isLiked" class="fa-regular absolute text-xl fa-heart transition-colors duration-150"></i>
-                <p class="ml-10">
-                    {{ postLikes }}
-                </p>
-            </div>
-            <div class="flex gap-2 w-1/3 justify-center cursor-pointer items-center text-gray-300">
-                <RouterLink :to="'/post/' + postContent.postId"
-                    class="flex no-underline gap-2 items-center justify-center">
-                    <i class="fa-regular fa-comment text-xl"></i>
-                    <p>
-                        {{ postComments }}
-                    </p>
-                </RouterLink>
-            </div>
-            <div class="w-1/3 flex gap-2 justify-center items-center text-gray-300">
-                <i class="fa-solid fa-chart-line"></i>
-                <p>{{ impressions }}</p>
+            <!-- Stats button -->
+            <div class="action-button">
+                <div class="action-icon">
+                    <i class="fa-solid fa-chart-line"></i>
+                </div>
+                <span class="action-count">{{ impressions }}</span>
             </div>
         </div>
-        <div class="flex w-full gap-2 mt-2" :style="{ color: currentPalette.textSecondary }">
-            <input type="text" class="w-3/4 p-2 rounded-md focus:outline-hidden"
-                :style="{ backgroundColor: currentPalette.buttonPrimary }" placeholder="Write a comment..."
-                v-model="commentText" />
-            <button v-if="!runningCommentRequest" class="w-1/4 p-2 rounded-md"
-                :style="{ backgroundColor: currentPalette.buttonDanger }" @click="postComment">Comment</button>
-            <button v-else class="w-1/4 bg-gray-600 p-2 rounded-md">
-                <l-line-wobble size="80" stroke="5" bg-opacity="0.1" speed="1.75" color="black"></l-line-wobble>
+
+        <!-- Comment input -->
+        <div v-if="loggedIn" class="comment-input">
+            <input type="text" class="comment-field" :style="{ backgroundColor: currentPalette.buttonPrimary }"
+                placeholder="Write a comment..." v-model="commentText" />
+
+            <button v-if="!runningCommentRequest" class="comment-button"
+                :style="{ backgroundColor: currentPalette.buttonDanger }" @click="postComment">
+                Comment
+            </button>
+
+            <button v-else class="comment-button loading" :style="{ backgroundColor: currentPalette.buttonDanger }">
+                <l-line-wobble size="80" stroke="5" bg-opacity="0.1" speed="1.75" color="white"></l-line-wobble>
             </button>
         </div>
 
-
-
-        <transition name="fade" @leave="leave">
-            <div v-if="showLoginModal" @click.self="showLoginModal = false"
-                class="fixed w-screen h-screen top-0 left-0 z-[100] backdrop-blur-md flex items-center justify-center">
-                <div
-                    class="bg-gray-900 p-5 text-center min-w-[80svw] max-w-[80svw] h-[80svh] flex justify-center rounded-md m-3 md:w-auto flex-wrap items-stretch">
-                    <div class="w-full h-fit flex justify-end">
-                        <i class="fa-solid fa-xmark cursor-pointer p-3" @click="showLoginModal = false"></i>
+        <!-- Modals -->
+        <!-- Login Modal -->
+        <transition name="fade">
+            <div v-if="showLoginModal" @click.self="showLoginModal = false" class="modal-overlay">
+                <div class="login-modal">
+                    <div class="modal-close">
+                        <i class="fa-solid fa-xmark" @click="showLoginModal = false"></i>
                     </div>
                     <LoginComponent />
                 </div>
             </div>
         </transition>
 
-        <transition name="fade" @leave="leave">
-            <div class="fixed top-0 left-0 w-screen h-screen backdrop-blur-sm z-200 flex justify-center items-center"
-                @click.self="showModal = false" v-if="showModal">
-                <div class="bg-gray-900 p-5 text-center max-w-[80svw] rounded-md m-3 md:w-auto w-full" :class="{
-                    'animation': showModal,
-                }">
-                    <div class="w-full flex justify-center">
-                        <div
-                            class="bg-red-950 border border-red-600 h-14 w-14 rounded-full flex justify-center items-center">
-                            <i class="fa-solid fa-trash text-xl"></i>
-                        </div>
+        <!-- Delete Confirmation Modal -->
+        <transition name="fade">
+            <div v-if="showModal" @click.self="showModal = false" class="modal-overlay">
+                <div class="delete-modal">
+                    <div class="modal-icon">
+                        <i class="fa-solid fa-trash"></i>
                     </div>
-                    <h2 class="text-center font-bold mt-2">Delete Post?</h2>
-                    <p>Do you really want to delete this post?</p>
-                    <div class="flex flex-col md:flex-row justify-center gap-2 mt-4">
-                        <button @click="showModal = false" class="md:w-2/3 bg-gray-700 p-2 rounded-md">
-                            Cancel
-                        </button>
-                        <button @click="deletePost" class="md:w-1/3 bg-red-500 p-2 rounded-md">
-                            Delete
-                        </button>
+                    <h2 class="modal-title">Delete Post?</h2>
+                    <p class="modal-text">Do you really want to delete this post?</p>
+                    <div class="modal-actions">
+                        <button @click="showModal = false" class="cancel-button">Cancel</button>
+                        <button @click="deletePost" class="confirm-button">Delete</button>
                     </div>
                 </div>
             </div>
         </transition>
-        <transition name="fade" @leave="leave">
-            <div class="fixed top-0 left-0 w-screen h-screen backdrop-blur-sm z-200 flex justify-center items-center"
-                @click.self="showEditModal = false" v-if="showEditModal">
-                <!-- <div v-if="ownProfileData.advancedUser"> -->
-                <div>
-                    <div class="p-5 text-center rounded-md m-3 max-w-[80svw] md:w-auto w-full" :class="{
-                        'animation': showEditModal,
-                    }" :style="{ backgroundColor: currentPalette.bg }">
-                        <div class="w-full flex justify-center">
-                            <div
-                                class="bg-red-950 border border-red-600 h-14 w-14 rounded-full flex justify-center items-center">
-                                <i class="fa-solid fa-pen text-xl"></i>
-                            </div>
-                        </div>
-                        <h2 class="text-center font-bold mt-2">Edit post</h2>
-                        <p class="text-gray-400">If you edit the post, an edited text will be added to the post</p>
-                        <textarea
-                            class="w-full p-2 rounded-md h-40 text-white pt-0 mt-2 resize-none focus:outline-hidden"
-                            :style="{ backgroundColor: currentPalette.bgSecondary }"
-                            v-model="postContent.content"></textarea>
-                        <div class="flex flex-col md:flex-row justify-center gap-2 mt-4">
-                            <button @click="showEditModal = false" class="md:w-2/3 p-2 rounded-md"
-                                :style="{ backgroundColor: currentPalette.buttonSecondary }">
-                                Cancel
-                            </button>
-                            <button @click="editPost" class="md:w-1/3 p-2 rounded-md"
-                                :style="{ backgroundColor: currentPalette.buttonDanger }">
-                                Save
-                            </button>
-                        </div>
+
+        <!-- Edit Modal -->
+        <transition name="fade">
+            <div v-if="showEditModal" @click.self="showEditModal = false" class="modal-overlay">
+                <div class="edit-modal" :style="{ backgroundColor: currentPalette.bg }">
+                    <div class="modal-icon">
+                        <i class="fa-solid fa-pen"></i>
+                    </div>
+                    <h2 class="modal-title">Edit post</h2>
+                    <p class="modal-subtitle">If you edit the post, an edited text will be added to the post</p>
+                    <textarea class="edit-textarea" :style="{ backgroundColor: currentPalette.bgSecondary }"
+                        v-model="postContent.content"></textarea>
+                    <div class="modal-actions">
+                        <button @click="showEditModal = false" class="cancel-button"
+                            :style="{ backgroundColor: currentPalette.buttonSecondary }">Cancel</button>
+                        <button @click="editPost" class="confirm-button"
+                            :style="{ backgroundColor: currentPalette.buttonDanger }">Save</button>
                     </div>
                 </div>
-                <!-- <div v-else>
-                    <AdvancedComponent :showModal="showEditModal" @closeModal="showEditModal = false" />
-                </div> -->
             </div>
         </transition>
-        <transition name="fade" @leave="leave">
-            <div class="fixed md:bg-transparent top-0 z-200 left-0 w-screen h-screen backdrop-blur-sm flex justify-center items-center bg-black"
-                @click.self="showImageModal = false" v-if="showImageModal">
-                <div class="overflow-auto text-center md:rounded-md md:w-auto w-full" :class="{
-                    'animation': showImageModal,
-                    'transition-back duration-300': !isDragging
-                }" @touchstart="handleTouchStart" @touchmove="handleTouchMove" @touchend="handleTouchEnd"
+
+        <!-- Image Modal -->
+        <transition name="fade">
+            <div v-if="showImageModal" @click.self="showImageModal = false" class="modal-overlay image-modal-overlay">
+                <div class="image-modal" :class="{'transition-back': !isDragging}" @touchstart="handleTouchStart"
+                    @touchmove="handleTouchMove" @touchend="handleTouchEnd"
                     :style="{ transform: `translateY(${translateY}px)` }">
-
-                    <div class="overflow-x-scroll scroll-snap-x">
-                        <div class="inline-flex md:gap-2 md:mt-2">
-                            <div v-for="image in postContent.images" :key="image"
-                                class="md:bg-transparent w-screen md:w-auto justify-center bg-black md:p-2 rounded-md flex items-center scroll-snap-item"
-                                @click.self="showImageModal = false">
-                                <img :src="'https://s3.faser.app/postimages/' + author.id + '/' + postContent.postId + '/' + image + '.png'"
-                                    class="max-w-[100vw] max-h-screen md:rounded-lg md:max-w-[80svw] md:w-auto md:max-h-[80svh]" />
-                            </div>
+                    <div class="image-carousel">
+                        <div v-for="imageIndex in Number(postContent.images)" :key="imageIndex" class="carousel-item">
+                            <img :src="'https://s3.faser.app/postimages/' + author.id + '/' + postContent.postId + '/' + imageIndex + '.png'"
+                                class="full-image" @click.self="showImageModal = false" />
                         </div>
                     </div>
                 </div>
             </div>
         </transition>
 
-        <Transition name="fade" @leave="leave" @enter="enter">
-            <div v-if="showReport"
-                class="fixed h-full z-200 w-full backdrop-blur-sm top-0 left-0 flex justify-center items-center">
-                <div class="w-[60rem] max-h-[80svh] overflow-y-scroll mx-4 p-2 rounded-md"
-                    :style="{ backgroundColor: currentPalette.bg }">
-                    <div class="w-full flex items-center justify-center text-xl font-bold">
-                        <h1 class="w-full text-center">Report Post</h1>
-                        <i class="fa-solid fa-xmark mr-2 cursor-pointer" @click="showReport = false"></i>
+        <!-- Report Modal -->
+        <transition name="fade">
+            <div v-if="showReport" class="modal-overlay">
+                <div class="report-modal" :style="{ backgroundColor: currentPalette.bg }">
+                    <div class="modal-header">
+                        <h1>Report Post</h1>
+                        <i class="fa-solid fa-xmark" @click="showReport = false"></i>
                     </div>
                     <SupportFieldsComponent :predefinedSubject="'Post Report for ' + author.displayName"
                         :predefinedMessage="'I want to report this post because...\n\nPost ID: ' + postId" />
-                    <p class="ml-2">Please provide the Post ID for the Person you want to report.</p>
+                    <p class="report-note">Please provide the Post ID for the Person you want to report.</p>
                 </div>
             </div>
-        </Transition>
+        </transition>
     </div>
 </template>
+
 <script setup>
 import axios from "axios";
 import MarkdownIt from "markdown-it";
@@ -850,51 +792,733 @@ onMounted(() => {
 })
 </script>
 <style scoped>
-@import url("~/assets/css/markdown.css");
-
-.verifiedBadge {
-    transform: translateY(1px);
+/* Post container */
+.post-container {
+    width: 100%;
+    max-width: 90rem;
+    padding: 16px;
+    padding-bottom: 12px;
+    border-radius: 0;
+    transition: background-color 0.2s;
+    margin-bottom: 1px;
 }
 
-.animation {
-    animation: fadeIn 0.25s;
+.post-container:hover {
+    background-color: rgba(255, 255, 255, 0.03);
 }
 
-.overflow-x-scroll {
+/* Parent post reference */
+.parent-post-link {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.reply-connector {
+    height: 16px;
+    width: 16px;
+    border-top: 2px solid #4b5563;
+    border-left: 2px solid #4b5563;
+    border-top-left-radius: 8px;
+    margin-left: 32px;
+}
+
+.parent-link {
+    margin-left: 8px;
+    color: #9ca3af;
+    text-decoration: underline;
+    font-size: 14px;
+}
+
+/* Post header with author info */
+.post-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.author-info {
+    display: flex;
+    width: 100%;
+}
+
+.author-avatar {
+    margin-right: 12px;
+    flex-shrink: 0;
+}
+
+.author-avatar img {
+    height: 48px;
+    width: 48px;
+    object-fit: cover;
+}
+
+.avatar-placeholder {
+    height: 48px;
+    width: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgba(150, 150, 150, 0.15);
+    background-color: rgba(17, 24, 39, 0.42);
+}
+
+.author-details {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.author-name-container {
+    display: flex;
+    align-items: center;
+}
+
+.author-name {
+    font-weight: 700;
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.author-name:hover {
+    text-decoration: underline;
+}
+
+.verification-badge {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #1d9bf0;
+    border: 1px solid #1a91da;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    margin-left: 4px;
+}
+
+.verification-badge.business {
+    background-color: #f59e0b;
+    border: 1px solid #d97706;
+}
+
+.post-meta {
+    display: flex;
+    align-items: center;
+    color: #9ca3af;
+    font-size: 14px;
+    line-height: 1;
+    margin-top: 2px;
+}
+
+.username {
+    color: #9ca3af;
+    margin-right: 4px;
+}
+
+.separator {
+    margin: 0 4px;
+}
+
+.timestamp {
+    position: relative;
+    cursor: default;
+    color: #9ca3af;
+}
+
+.timestamp-tooltip {
+    position: absolute;
+    top: -30px;
+    left: 0;
+    background-color: #1f2937;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    z-index: 10;
+}
+
+.edited-flag,
+.ai-flag {
+    color: #9ca3af;
+}
+
+/* Post menu */
+.post-menu {
+    position: relative;
+    z-index: 5;
+}
+
+.menu-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px;
+    border-radius: 50%;
+    color: #9ca3af;
+    transition: background-color 0.15s;
+}
+
+.menu-button:hover {
+    background-color: rgba(107, 114, 128, 0.1);
+    color: white;
+}
+
+.menu-items {
+    position: absolute;
+    right: 0;
+    margin-top: 8px;
+    width: 240px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(75, 85, 99, 0.4);
+}
+
+.menu-group {
+    padding: 4px;
+}
+
+.menu-action-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+    padding: 4px;
+}
+
+.action-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 12px;
+    border-radius: 8px;
+    color: #d1d5db;
+    font-size: 14px;
+    transition: background-color 0.15s;
+}
+
+.action-button:hover {
+    background-color: rgba(107, 114, 128, 0.1);
+}
+
+.action-button i {
+    font-size: 18px;
+    margin-bottom: 6px;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 12px 16px;
+    border-radius: 8px;
+    color: #d1d5db;
+    font-size: 14px;
+    transition: background-color 0.15s;
+}
+
+.menu-item:hover {
+    background-color: rgba(107, 114, 128, 0.1);
+}
+
+.menu-item i {
+    margin-right: 12px;
+    width: 16px;
+    text-align: center;
+}
+
+/* NSFW tag */
+.nsfw-tag {
+    display: inline-flex;
+    align-items: center;
+    background-color: #ef4444;
+    border-radius: 9999px;
+    padding: 4px 8px;
+    margin-bottom: 8px;
+    font-size: 12px;
+    cursor: pointer;
+    gap: 4px;
+}
+
+.nsfw-tag:hover {
+    background-color: #dc2626;
+}
+
+/* Post content */
+.blur-content {
+    filter: blur(8px);
+    user-select: none;
+    pointer-events: none;
+}
+
+.post-content {
+    margin-bottom: 12px;
+    word-break: break-word;
+    white-space: pre-wrap;
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+/* Image gallery */
+.image-gallery {
+    margin-bottom: 12px;
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.image-grid {
+    display: grid;
+    grid-gap: 2px;
+    width: 100%;
+}
+
+.image-grid.single-image {
+    grid-template-columns: 1fr;
+    max-height: 500px;
+}
+
+.image-grid.two-images {
+    grid-template-columns: 1fr 1fr;
+    max-height: 280px;
+}
+
+.image-grid.three-images {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    max-height: 350px;
+}
+
+.image-grid.three-images .image-container:first-child {
+    grid-row: span 2;
+}
+
+.image-grid.four-plus-images {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    max-height: 280px;
+}
+
+.image-container {
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+    cursor: pointer;
+}
+
+.post-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.more-images-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(1px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.more-images-overlay:hover {
+    background-color: rgba(0, 0, 0, 0.65);
+}
+
+/* Spotify embed */
+.spotify-embed {
+    width: 100%;
+    max-width: 384px;
+    height: 80px;
+    border-radius: 12px;
+    margin-bottom: 12px;
+}
+
+/* URL embeds */
+.url-embed {
+    display: block;
+    margin-bottom: 12px;
+    text-decoration: none;
+    color: inherit;
+}
+
+.embed-container {
+    max-width: 384px;
+    border: 1px solid rgba(75, 85, 99, 0.4);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.embed-image {
+    width: 100%;
+    height: 192px;
+    object-fit: cover;
+}
+
+.embed-content {
+    padding: 12px;
+    background-color: #2d3748;
+}
+
+.embed-title {
+    font-weight: 700;
+    font-size: 15px;
+    margin-bottom: 4px;
+}
+
+.embed-description {
+    font-size: 14px;
+    color: #9ca3af;
+    line-height: 1.4;
+}
+
+/* NSFW warning */
+.nsfw-warning {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 144px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    padding: 16px;
+    text-align: center;
+}
+
+.warning-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: rgba(239, 68, 68, 0.2);
+    border: 1px solid #ef4444;
+    margin-bottom: 12px;
+    font-size: 20px;
+}
+
+.warning-text {
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+/* Post actions */
+.post-actions {
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 0;
+    border-top: 1px solid rgba(75, 85, 99, 0.2);
+    border-bottom: 1px solid rgba(75, 85, 99, 0.2);
+    margin: 8px 0;
+}
+
+.post-actions .action-button {
+    display: flex;
+    align-items: center;
+    padding: 8px 0;
+    color: #9ca3af;
+    flex-direction: row;
+    font-size: inherit;
+}
+
+.post-actions .action-button:hover {
+    color: #d1d5db;
+    background-color: transparent;
+}
+
+.post-actions .action-button:hover .fa-heart {
+    color: #ef4444;
+}
+
+.post-actions .action-button:hover .fa-comment {
+    color: #10b981;
+}
+
+.post-actions .action-button:hover .fa-chart-line {
+    color: #3b82f6;
+}
+
+.action-icon {
+    position: relative;
+    margin-right: 4px;
+    width: 18px;
+    text-align: center;
+}
+
+.action-count {
+    font-size: 14px;
+}
+
+.fa-heart.liked {
+    color: #ef4444;
+}
+
+/* Comment input */
+.comment-input {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.comment-field {
+    flex-grow: 1;
+    padding: 8px 12px;
+    border-radius: 20px;
+    border: none;
+    color: white;
+    font-size: 14px;
+}
+
+.comment-field:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(107, 114, 128, 0.5);
+}
+
+.comment-button {
+    border: none;
+    border-radius: 20px;
+    padding: 8px 16px;
+    font-weight: 600;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    min-width: 100px;
+    transition: filter 0.15s;
+}
+
+.comment-button:hover {
+    filter: brightness(1.1);
+}
+
+.comment-button.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Modal styles */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 50;
+}
+
+.login-modal {
+    background-color: #1f2937;
+    padding: 20px;
+    border-radius: 12px;
+    width: 80%;
+    max-width: 480px;
+    max-height: 80vh;
+    overflow-y: auto;
+    position: relative;
+}
+
+.modal-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    cursor: pointer;
+    color: #9ca3af;
+}
+
+.delete-modal,
+.edit-modal {
+    background-color: #1f2937;
+    padding: 24px;
+    border-radius: 12px;
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+}
+
+.modal-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background-color: rgba(239, 68, 68, 0.2);
+    border: 1px solid #ef4444;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+    font-size: 20px;
+}
+
+.modal-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.modal-subtitle {
+    color: #9ca3af;
+    margin-bottom: 16px;
+    font-size: 14px;
+}
+
+.modal-text {
+    margin-bottom: 24px;
+    color: #d1d5db;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.cancel-button,
+.confirm-button {
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    flex-grow: 1;
+    cursor: pointer;
+    font-weight: 600;
+    transition: filter 0.15s;
+}
+
+.cancel-button {
+    background-color: #4b5563;
+    color: white;
+}
+
+.confirm-button {
+    background-color: #ef4444;
+    color: white;
+}
+
+.cancel-button:hover,
+.confirm-button:hover {
+    filter: brightness(1.1);
+}
+
+.edit-textarea {
+    width: 100%;
+    height: 160px;
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    margin-bottom: 16px;
+    color: white;
+    resize: none;
+}
+
+.edit-textarea:focus {
+    outline: none;
+}
+
+.image-modal-overlay {
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+.image-modal {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-carousel {
+    display: flex;
+    overflow-x: scroll;
     scroll-snap-type: x mandatory;
+    width: 100%;
+    height: 100%;
 }
 
-.overflow-x-scroll::-webkit-scrollbar {
+.image-carousel::-webkit-scrollbar {
     display: none;
 }
 
-.scroll-snap-item {
+.carousel-item {
+    flex: 0 0 100%;
     scroll-snap-align: start;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
 }
 
+.full-image {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+}
+
+.report-modal {
+    width: 90%;
+    max-width: 600px;
+    max-height: 80vh;
+    overflow-y: auto;
+    padding: 24px;
+    border-radius: 12px;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.modal-header h1 {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.modal-header i {
+    cursor: pointer;
+    font-size: 20px;
+    color: #9ca3af;
+}
+
+.report-note {
+    margin-top: 16px;
+    color: #9ca3af;
+    font-size: 14px;
+}
+
+/* Transitions */
 .fade-enter-active {
-    animation: fadeIn 0.25s;
+    animation: fadeIn 0.2s ease-out;
+}
+
+.fade-leave-active {
+    animation: fadeOut 0.2s ease-in;
 }
 
 @keyframes fadeIn {
     from {
         opacity: 0;
-        z-index: 10;
-        transform: translateY(-5px);
+        transform: translateY(-8px);
     }
 
     to {
         opacity: 1;
-        z-index: 10;
         transform: translateY(0);
     }
 }
 
-.fade-leave-active {
-    animation: faceOut 0.25s;
-}
-
-@keyframes faceOut {
+@keyframes fadeOut {
     from {
         opacity: 1;
         transform: translateY(0);
@@ -902,47 +1526,70 @@ onMounted(() => {
 
     to {
         opacity: 0;
-        transform: translateY(5px);
+        transform: translateY(8px);
     }
 }
 
 .like-enter-active {
-    animation: likeIn 0.25s ease;
+    animation: likeIn 0.3s ease;
+}
+
+.like-leave-active {
+    animation: likeOut 0.2s ease;
 }
 
 @keyframes likeIn {
     0% {
+        opacity: 0;
         transform: scale(0.5);
     }
 
-    85% {
-        transform: scale(1.1);
+    70% {
+        transform: scale(1.2);
     }
 
     100% {
+        opacity: 1;
         transform: scale(1);
     }
 }
 
-.like-leave-active {
-    animation: likeOut 0.25s;
-}
-
 @keyframes likeOut {
-    0% {
+    from {
         opacity: 1;
     }
 
-    100% {
+    to {
         opacity: 0;
     }
 }
 
-i {
-    z-index: 0;
+.transition-back {
+    transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
-.transition-back {
-    transition: all 500ms cubic-bezier(.46, 0, 0, 1.31);
+@media (max-width: 640px) {
+    .post-actions {
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+
+    .author-avatar img,
+    .avatar-placeholder {
+        height: 40px;
+        width: 40px;
+    }
+
+    .post-content {
+        font-size: 14px;
+    }
+
+    .full-image {
+        max-width: 100%;
+        max-height: 100%;
+        width: 100%;
+    }
 }
+
+@import url("~/assets/css/markdown.css");
 </style>
