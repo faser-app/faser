@@ -53,7 +53,7 @@ const windowWidth = ref(0)
 
 onMounted(() => {
   windowWidth.value = window.innerWidth
-  
+
   window.addEventListener('resize', () => {
     windowWidth.value = window.innerWidth
   })
@@ -75,28 +75,33 @@ const isMobileView = computed(() => {
     <NuxtLayout>
       <!-- Twitter-style layout -->
       <div class="app-container">
-        <!-- Show header only on mobile as it's replaced by sidebar on desktop -->
-        <HeaderComponent v-if="isMobileView" class="md:hidden" />
-
-        <!-- Left sidebar menu (desktop only) - Twitter style -->
-        <SidebarComponent v-if="!isFullWidthPage" class="hidden md:block left-sidebar" />
+        <!-- Left sidebar menu (desktop only) -->
+        <SidebarComponent v-if="!isFullWidthPage && !isMobileView" class="hidden md:block left-sidebar" />
 
         <!-- Main content area -->
         <main :class="[
           'main-content-area',
           isFullWidthPage ? 'full-width' : 'with-sidebars',
-          {'with-right-sidebar': isHomePage}
+          {'with-right-sidebar': isHomePage},
+          {'mobile-view': isMobileView}
         ]">
           <NuxtPage />
         </main>
 
-        <!-- Right sidebar with Who to follow - Only on home page (desktop only) -->
-        <TrendsComponent v-if="isHomePage" class="hidden lg:block right-sidebar" />
+        <!-- Right sidebar with Trends - Only on home page (desktop only) -->
+        <TrendsComponent v-if="isHomePage && !isMobileView" class="hidden lg:block right-sidebar" />
       </div>
+
+      <!-- Mobile bottom navigation bar -->
+      <BottomBarComponent v-if="isMobileView && !isFullWidthPage" />
+
+      <!-- Mobile content padding for bottom bar -->
+      <div v-if="isMobileView && !isFullWidthPage" class="mobile-bottom-spacing"></div>
 
       <!-- Cookie banner and other full-width elements -->
       <CookieBannerComponent v-if="!accepted" />
-      <FooterComponent v-if="!isFullWidthPage && !route.fullPath.includes(pagesWithoutFooter)" class="mobile-footer" />
+      <FooterComponent v-if="!isFullWidthPage && !route.fullPath.includes(pagesWithoutFooter) && !isMobileView"
+        class="mobile-footer" />
     </NuxtLayout>
   </TooltipProvider>
 </template>
@@ -134,13 +139,25 @@ const isMobileView = computed(() => {
   display: block;
 }
 
+/* Mobile specific styles */
+.main-content-area.mobile-view {
+  margin-left: 0;
+  padding-bottom: 70px;
+  /* Add space for the bottom bar */
+}
+
+.mobile-bottom-spacing {
+  height: 64px;
+  /* Same height as the bottom bar */
+}
+
 /* Responsive adjustments */
 @media (min-width: 768px) {
   .main-content-area.with-sidebars {
     margin-left: 280px;
     margin-right: 0;
   }
-  
+
   .mobile-footer {
     display: none;
   }
