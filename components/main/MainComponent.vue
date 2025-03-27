@@ -5,12 +5,15 @@
   </div>
   <div class="min-h-[calc(100vh-4.5rem)] md:flex px-2 text-white" :style="{ backgroundColor: currentPalette.bg }">
     <div class="md:w-1/4 w-full justify-center pt-2 min-h-full">
-      <div class="md:hidden w-full block" v-if="loggedIn">
-        <PostCreatePostComponent text="Post" mobile="false" :ownProfile="ownAccountData" />
-      </div>
+      <!-- Left column content if needed -->
     </div>
     <div class="md:w-3/4 w-full max-w-[90rem] rounded-md my-4 p-2 md:px-4"
       :style="{ backgroundColor: currentPalette.bgSecondary }">
+      <div v-if="loggedIn" class="mb-4">
+        <!-- Twitter-style compact create post component that expands when focused -->
+        <PostCompactCreatePostComponent :ownProfile="ownAccountData" @post-created="refreshPosts" />
+      </div>
+
       <div v-if="loggedIn && posts.length > 0">
         <div v-for="(post, index) in posts" key="post">
           <PostGetPostComponent :postId="post" ownProfile="false" :profile="profileData" :ownProfile="ownProfile"
@@ -44,9 +47,7 @@
       </div>
     </div>
     <div class="md:w-1/4 w-full flex justify-center pr-2 mt-2 min-h-full">
-      <div class="w-32 md:block hidden" v-if="loggedIn">
-        <PostCreatePostComponent text="Post" mobile="false" :ownProfile="ownAccountData" />
-      </div>
+      <!-- Right column content if needed -->
     </div>
   </div>
   <div class="blob bg-linear-to-tr z-1 pointer-events-none from-[#24c7ce] to-[#1ed794]"></div>
@@ -87,13 +88,20 @@ document.addEventListener("scroll", (event) => {
   if (document.body.offsetHeight - 8000 < window.scrollY && !loading.value) {
     if (lastRequest.value + 1000 < Date.now()) {
       lastRequest.value = Date.now()
-
       loading.value = true
-
       loadPosts()
     }
   }
 })
+
+function refreshPosts() {
+  // Reset state and reload posts
+  posts.value = [];
+  lastTimestamp.value = Date.now();
+  noMorePosts.value = false;
+  noPosts.value = true;
+  loadPosts();
+}
 
 function loadPosts() {
   if (Cookies.get("token")) {
