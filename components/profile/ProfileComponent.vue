@@ -8,7 +8,8 @@
         <div class="profile-card rounded-xl overflow-hidden shadow-lg mb-6"
           :style="{ backgroundColor: currentPalette.bgSecondary }">
           <!-- Profile Cover Image (placeholder) -->
-          <div class="profile-cover h-32 md:h-48 w-full bg-gradient-to-r from-gray-800 to-gray-700"></div>
+          <div class="profile-cover h-32 md:h-48 w-full"
+            :style="'background: linear-gradient(45deg, ' + gradient1 + ', ' + gradient2 + ')'"></div>
           <!-- Profile Header Content -->
           <div class="px-6 pt-0 pb-6 relative">
             <!-- Profile Picture -->
@@ -245,6 +246,7 @@ import MarkdownIt from "markdown-it";
 import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
 import currentPalette from "~/vars/getColors";
 import CommunityLinkComponent from "../account/profile/CommunityLinkComponent.vue";
+import ColorThief from 'colorthief';
 
 const md = new MarkdownIt({
   html: false,
@@ -273,7 +275,14 @@ const music = ref([])
 const loadedPosts = ref([])
 const postIndex = ref(0)
 const loading = ref(false)
+const gradient1 = ref('#000000')
+const gradient2 = ref('#000000')
 const lastRequest = ref(0)
+
+function componentToHex(c) {
+  var hex = c.toString(16);
+  return hex.length == 1 ? "0" + hex : hex;
+}
 
 axios
   .get(url, {
@@ -296,6 +305,16 @@ axios
     badges.value = response.data[0].badges;
 
     ownProfileData.value = response.data[0];
+
+    const colorThief = new ColorThief();
+    const img = new Image();
+    img.crossOrigin = "Anonymous";
+    img.src = "https://s3.faser.app/profilepictures/" + profileData.value.id + "/image.png?t=" + new Date().getTime();
+    img.onload = function () {
+      const palette = colorThief.getPalette(img, 2);
+      gradient1.value = `#${componentToHex(palette[0][0])}${componentToHex(palette[0][1])}${componentToHex(palette[0][2])}`;
+      gradient2.value = `#${componentToHex(palette[1][0])}${componentToHex(palette[1][1])}${componentToHex(palette[1][2])}`;
+    };
 
     for (let i = 0; i < response.data[0].communities.length; i++) {
       axios.post(baseURL + "/api/community/getCommunity", {

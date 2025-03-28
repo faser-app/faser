@@ -7,7 +7,7 @@
         <div class="profile-card rounded-xl overflow-hidden shadow-lg mb-6"
           :style="{ backgroundColor: currentPalette.bgSecondary }">
           <!-- Profile Cover Image (placeholder) -->
-          <div class="profile-cover h-32 md:h-48 w-full bg-gradient-to-r from-gray-800 to-gray-700"></div>
+          <div class="profile-cover h-32 md:h-48 w-full" :style="'background: linear-gradient(45deg, ' + gradient1 + ', ' + gradient2 + ')'"></div>
           <!-- Profile Header Content -->
           <div class="px-6 pt-0 pb-6 relative">
             <!-- Profile Picture -->
@@ -15,7 +15,7 @@
               <img v-if="hasProfilePicture && loaded"
                 :src="'https://s3.faser.app/profilepictures/' + profileData.id + '/image.png?t=' + new Date().getTime()"
                 @error="hasProfilePicture = false" alt="profile picture"
-                class="profile-picture object-cover border-4 ph-no-capture" :class="{
+                class="profile-picture bg-gray-900 object-cover border-4 ph-no-capture" :class="{
                   'rounded-full': !profileData.businessAccount,
                   'rounded-md': profileData.businessAccount,
                   'border-gray-800': currentPalette.name === 'normal',
@@ -325,6 +325,7 @@ import { useHead } from "#app";
 import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
 import currentPalette from "~/vars/getColors";
 import CommunityLinkComponent from "./CommunityLinkComponent.vue";
+import ColorThief from 'colorthief';
 
 useHead({
   meta: [
@@ -375,6 +376,8 @@ const accountData = ref({})
 const loadedPosts = ref([])
 const postIndex = ref(0)
 const loading = ref(false)
+const gradient1 = ref('#000000')
+const gradient2 = ref('#000000')
 const lastRequest = ref(0)
 
 function shareProfile() {
@@ -412,6 +415,12 @@ async function main() {
 
 }
 
+function componentToHex(c) {
+  var hex = c.toString(16);
+  return hex.length == 1 ? "0" + hex : hex;
+}
+
+
 async function getProfile() {
   const response = await axios
     .get(url, {
@@ -432,6 +441,17 @@ async function getProfile() {
     loaded.value = true;
     success.value = true;
   }
+
+  const colorThief = new ColorThief();
+
+  const img = new Image();
+  img.crossOrigin = 'Anonymous';
+  img.src = "https://s3.faser.app/profilepictures/" + response.data[0].id + "/image.png?t=" + new Date().getTime();
+  img.onload = () => {
+    const palette = colorThief.getPalette(img, 2);
+    gradient1.value = `#${componentToHex(palette[0][0])}${componentToHex(palette[0][1])}${componentToHex(palette[0][2])}`;
+    gradient2.value = `#${componentToHex(palette[1][0])}${componentToHex(palette[1][1])}${componentToHex(palette[1][2])}`;
+  };
 
   if (response.data[0].id === ownProfileData.value.id) {
     isAbleToFollow.value = false;
