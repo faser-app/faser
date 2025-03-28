@@ -1,54 +1,36 @@
 <template>
     <div class="trends-container h-screen overflow-y-auto px-4 py-4 text-white"
         :style="{ backgroundColor: currentPalette.bgSecondary }">
-        
+
         <!-- Enhanced Search bar -->
         <div class="search-wrapper mb-6">
             <div class="search-container relative">
                 <div class="search-input-wrapper relative">
-                    <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500"></i>
-                    <input 
-                        type="text" 
-                        placeholder="Search for users"
-                        v-model="searchQuery"
-                        @input="searchUsers"
-                        @focus="searchFocused = true"
-                        @blur="handleBlur"
+                    <i
+                        class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500"></i>
+                    <input type="text" placeholder="Search for users" v-model="searchQuery" @input="searchUsers"
+                        @focus="searchFocused = true" @blur="handleBlur"
                         class="w-full py-3 pl-12 pr-4 rounded-full text-white focus:outline-none transition-all duration-200 border border-transparent focus:border-gray-700"
-                        :style="{ backgroundColor: currentPalette.bg }" 
-                    />
-                    <i 
-                        v-if="searchQuery.length > 0" 
-                        @click="clearSearch"
-                        class="fa-solid fa-times-circle absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-300 cursor-pointer"
-                    ></i>
+                        :style="{ backgroundColor: currentPalette.bg }" />
+                    <i v-if="searchQuery.length > 0" @click="clearSearch"
+                        class="fa-solid fa-times-circle absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-300 cursor-pointer"></i>
                 </div>
-                
+
                 <!-- Search results dropdown -->
-                <div 
-                    v-if="searchQuery.length > 0 && searchFocused && searchResults.length > 0" 
+                <div v-if="searchQuery.length > 0 && searchFocused && searchResults.length > 0"
                     class="search-results absolute w-full mt-2 rounded-lg border border-gray-700 shadow-lg overflow-hidden z-50"
-                    :style="{ backgroundColor: currentPalette.bg }"
-                >
-                    <div 
-                        v-for="user in searchResults" 
-                        :key="user.username" 
+                    :style="{ backgroundColor: currentPalette.bg }">
+                    <div v-for="user in searchResults" :key="user.username"
                         class="search-result-item p-3 hover:bg-gray-800 cursor-pointer"
                         :class="{'border-b border-gray-700': searchResults.indexOf(user) !== searchResults.length - 1}"
-                        @click="navigateToUser(user.username)"
-                    >
+                        @click="navigateToUser(user.username)">
                         <div class="flex items-center">
                             <div class="profile-image-container h-10 w-10 rounded-full overflow-hidden mr-3">
-                                <img 
-                                    v-if="user.hasProfilePicture" 
-                                    :src="'https://s3.faser.app/profilepictures/' + user.id + '/image.png'" 
-                                    class="h-full w-full object-cover"
-                                    @error="user.hasProfilePicture = false"
-                                />
-                                <div 
-                                    v-else 
-                                    class="h-full w-full flex items-center justify-center border border-[#96969627] bg-[#1118276c]"
-                                >
+                                <img v-if="user.hasProfilePicture"
+                                    :src="'https://s3.faser.app/profilepictures/' + user.id + '/image.png'"
+                                    class="h-full w-full object-cover" @error="user.hasProfilePicture = false" />
+                                <div v-else
+                                    class="h-full w-full flex items-center justify-center border border-[#96969627] bg-[#1118276c]">
                                     <i class="fa-solid fa-user text-white"></i>
                                 </div>
                             </div>
@@ -74,12 +56,10 @@
                         </div>
                     </div>
                 </div>
-                
-                <div 
-                    v-else-if="searchQuery.length > 0 && searchFocused && searchResults.length === 0 && searchLoaded" 
+
+                <div v-else-if="searchQuery.length > 0 && searchFocused && searchResults.length === 0 && searchLoaded"
                     class="search-results absolute w-full mt-2 rounded-lg border border-gray-700 shadow-lg overflow-hidden z-50 p-4 text-center"
-                    :style="{ backgroundColor: currentPalette.bg }"
-                >
+                    :style="{ backgroundColor: currentPalette.bg }">
                     <p class="text-gray-400">No users found</p>
                 </div>
             </div>
@@ -121,18 +101,16 @@
                 <p class="text-primary-500">Show more</p>
             </div>
         </div>
-        
+
         <!-- Footer links -->
         <div class="footer-links my-4 text-sm text-gray-500">
             <div class="flex flex-wrap gap-2">
-                <a href="#" class="hover:underline">Terms of Service</a>
-                <a href="#" class="hover:underline">Privacy Policy</a>
-                <a href="#" class="hover:underline">Cookie Policy</a>
-                <a href="#" class="hover:underline">Accessibility</a>
-                <a href="#" class="hover:underline">More</a>
+                <a href="/tos" class="hover:underline">Terms of Service</a>
+                <a href="/privacy" class="hover:underline">Privacy Policy</a>
+                <a href="/cookies" class="hover:underline">Cookie Policy</a>
             </div>
             <div class="mt-2">
-                © 2025 faser, Inc.
+                © 2025 faser
             </div>
         </div>
     </div>
@@ -155,42 +133,42 @@ const clickOutsideHandler = ref(null);
 // Search functionality
 function searchUsers() {
     searchLoaded.value = false;
-    
+
     // Clear any existing timeout
     if (searchTimeoutId.value) {
         clearTimeout(searchTimeoutId.value);
     }
-    
+
     // If query is empty, clear results
     if (!searchQuery.value) {
         searchResults.value = [];
         return;
     }
-    
+
     // Add debounce to prevent excessive API calls
     searchTimeoutId.value = setTimeout(() => {
         const url = baseURL + "/api/profile/searchProfiles";
-        
+
         axios.post(url, {
             query: searchQuery.value,
             lang: navigator.language || navigator.userLanguage,
         })
-        .then((response) => {
-            let userData = response.data;
-            
-            // Process profile picture data
-            for (let i = 0; i < userData.length; i++) {
-                userData[i].hasProfilePicture = userData[i].hasProfilePicture === 1;
-            }
-            
-            // Sort results based on match priority
-            searchResults.value = sortByLetterPriority(userData, searchQuery.value.toLowerCase());
-            searchLoaded.value = true;
-        })
-        .catch((error) => {
-            console.error("Error searching users:", error);
-            searchLoaded.value = true;
-        });
+            .then((response) => {
+                let userData = response.data;
+
+                // Process profile picture data
+                for (let i = 0; i < userData.length; i++) {
+                    userData[i].hasProfilePicture = userData[i].hasProfilePicture === 1;
+                }
+
+                // Sort results based on match priority
+                searchResults.value = sortByLetterPriority(userData, searchQuery.value.toLowerCase());
+                searchLoaded.value = true;
+            })
+            .catch((error) => {
+                console.error("Error searching users:", error);
+                searchLoaded.value = true;
+            });
     }, 300); // 300ms delay
 }
 
@@ -199,17 +177,17 @@ function sortByLetterPriority(arr, query) {
         // Higher priority for username matches
         const aStartsWithUsername = a.username.toLowerCase().startsWith(query);
         const bStartsWithUsername = b.username.toLowerCase().startsWith(query);
-        
+
         // Also consider display name matches
         const aStartsWithDisplay = a.displayName.toLowerCase().startsWith(query);
         const bStartsWithDisplay = b.displayName.toLowerCase().startsWith(query);
-        
+
         if (aStartsWithUsername && !bStartsWithUsername) return -1;
         if (!aStartsWithUsername && bStartsWithUsername) return 1;
-        
+
         if (aStartsWithDisplay && !bStartsWithDisplay) return -1;
         if (!aStartsWithDisplay && bStartsWithDisplay) return 1;
-        
+
         return a.username.localeCompare(b.username);
     });
 }
@@ -243,23 +221,23 @@ function handleClickOutside(event) {
 // Mock data for follow suggestions
 const followSuggestions = ref([
     {
-        id: '123456',
-        username: 'techguru',
-        displayName: 'Tech Guru',
+        id: '0',
+        username: '---',
+        displayName: '---',
         hasProfilePicture: false,
         verifiedAccount: true
     },
     {
-        id: '789012',
-        username: 'newsupdate',
-        displayName: 'News Update',
+        id: '0',
+        username: '---',
+        displayName: '---',
         hasProfilePicture: false,
         verifiedAccount: true
     },
     {
-        id: '345678',
-        username: 'creativeminds',
-        displayName: 'Creative Minds',
+        id: '0',
+        username: '---',
+        displayName: '---',
         hasProfilePicture: false,
         verifiedAccount: false
     }
@@ -273,7 +251,7 @@ onMounted(() => {
 onUnmounted(() => {
     // Clean up event listener
     document.removeEventListener('click', handleClickOutside);
-    
+
     // Clear any pending timeouts
     if (searchTimeoutId.value) {
         clearTimeout(searchTimeoutId.value);

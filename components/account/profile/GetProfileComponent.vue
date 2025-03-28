@@ -1,110 +1,58 @@
 <template>
-  <div class="min-h-[calc(100vh-4.5rem)] text-white" :style="{ backgroundColor: currentPalette.bg }">
+  <div class="min-h-[calc(100vh-4.5rem)] text-white profile-container" :style="{ backgroundColor: currentPalette.bg }">
     <div class="md:flex w-full justify-center" v-if="loaded && success">
-      <div class="md:block px-2 hidden md:w-1/5 gap-2 justify-center">
-        <div class="flex w-full justify-center" v-if="communities.length > 0">
-          <h2>Communities</h2>
-        </div>
-        <div v-for="community in communities" :key="community.name">
-          <RouterLink :to="'/communities/' + community.id">
-            <CommunityLinkComponent :community="community" />
-          </RouterLink>
-        </div>
-        <div class="flex w-full justify-center">
-          <p v-if="communities.length === 0 && !privateAccount">
-            No Communites yet
-          </p>
-        </div>
-        <p v-if="privateAccount">Private account</p>
-      </div>
-      <div class="md:w-4/5 max-w-[90rem] w-full mr-4">
-        <div class="flex flex-wrap md:w-full ml-2 md:ml-1 rounded-md items-center mr-2 h-fit"
-          :style="{ backgroundColor: currentPalette.bg, color: currentPalette.textPrimary }">
-          <div class="flex justify-between w-full">
-            <div class="flex items-center">
+      <!-- Main Profile Content -->
+      <div class="md:w-4/5 max-w-[90rem] w-full px-4">
+        <!-- Profile Header Section -->
+        <div class="profile-card rounded-xl overflow-hidden shadow-lg mb-6"
+          :style="{ backgroundColor: currentPalette.bgSecondary }">
+          <!-- Profile Cover Image (placeholder) -->
+          <div class="profile-cover h-32 md:h-48 w-full bg-gradient-to-r from-gray-800 to-gray-700"></div>
+          <!-- Profile Header Content -->
+          <div class="px-6 pt-0 pb-6 relative">
+            <!-- Profile Picture -->
+            <div class="profile-picture-container">
               <img v-if="hasProfilePicture && loaded"
                 :src="'https://s3.faser.app/profilepictures/' + profileData.id + '/image.png?t=' + new Date().getTime()"
-                @error="hasProfilePicture = false" alt="profile picture" class="h-24 w-24 m-5 object-cover" :class="{
-              'rounded-full': !profileData.businessAccount,
-              'rounded-md': profileData.businessAccount
-            }" />
+                @error="hasProfilePicture = false" alt="profile picture"
+                class="profile-picture object-cover border-4 ph-no-capture" :class="{
+                  'rounded-full': !profileData.businessAccount,
+                  'rounded-md': profileData.businessAccount,
+                  'border-gray-800': currentPalette.name === 'normal',
+                  'border-gray-900': currentPalette.name !== 'normal'
+                }" />
               <div v-else
-                class="h-24 w-24 m-5 flex border justify-center items-center border-[#96969627] bg-[#1118276c]" :class="{
-              'rounded-full': !profileData.businessAccount,
-              'rounded-md': profileData.businessAccount
-            }">
-                <i class="fa-solid fa-user rounded-full text-4xl"></i>
-              </div>
-              <div class="grid">
-                <div class="flex items-center">
-                  <div>
-                    <div class="flex max-w-[60vw] flex-wrap gap-2 text-sm mb-2" v-if="badges.length !== 0">
-                      <div v-for="badge in badges" :key="badge.name" class="bg-black rounded-full">
-                        <div class="flex items-center cursor-default border rounded-full px-2 p-1" :style="'background-color: ' +
-                      badge.color +
-                      '55; border: 1px solid ' +
-                      badge.color +
-                      ';'
-                      ">
-                          {{ badge.name }}
-                        </div>
-                      </div>
-                    </div>
-                    <div class="flex items-center gap-2">
-                      <div>
-                        <div class="flex">
-                          <p>{{ profileData.displayName }}</p>
-                          <div v-if="profileData.businessAccount"
-                            class="flex ml-2 justify-center text-xs items-center bg-yellow-600 border w-6 h-6 border-yellow-300 rounded-full">
-                            <i class="fa-solid verifiedBadge fa-check"></i>
-                          </div>
-                          <div v-else-if="profileData.verifiedAccount"
-                            class="flex ml-2 justify-center text-xs items-center bg-sky-600 border w-6 h-6 border-sky-300 rounded-full">
-                            <i class="fa-solid verifiedBadge fa-check"></i>
-                          </div>
-                        </div>
-                        <p class="text text-gray-400">
-                          <span>@</span>{{ route.params.user.replace("@", "") }}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div v-if="isAbleToFollow" @click="toggleFollow"
-                class="ml-5 cursor-pointer h-10 w-24 select-none rounded-md flex items-center justify-center bg-linear-to-tr from-[#24c7ce] to-[#1ed794] ">
-                <p class="absolute">Followed</p>
-                <div
-                  class="z-2 flex items-center select-none justify-center transition-all duration-500 ease-out px-5 bg-gray-800 shadow-2xl rounded-md text-gray-100"
-                  :class="{
-                'h-10 w-24': !followed,
-                'h-0 w-0 overflow-hidden': followed
-              }">
-                  <p>Follow</p>
-                </div>
+                class="profile-picture flex border justify-center items-center border-[#96969627] bg-[#1118276c]"
+                :class="{
+                  'rounded-full': !profileData.businessAccount,
+                  'rounded-md': profileData.businessAccount
+                }">
+                <i class="fa-solid fa-user text-4xl"></i>
               </div>
             </div>
-            <div class="mr-2 mt-3">
-              <Menu as="div" class="relative z-3 md:hidden inline-block text-left">
+            
+            <!-- Profile Actions (Mobile) -->
+            <div class="mr-2 absolute right-4 top-2 z-10">
+              <Menu as="div" class="relative md:hidden inline-block text-left">
                 <div>
                   <MenuButton
-                    class="inline-flex w-full justify-center rounded-md px-4 py-2 text-sm font-medium text-white">
+                    class="inline-flex justify-center rounded-full bg-gray-800 bg-opacity-50 p-2 text-sm text-white hover:bg-opacity-70 transition-all">
                     <i class="fa-solid fa-users"></i>
                   </MenuButton>
                 </div>
-
                 <transition enter-active-class="transition duration-100 ease-out"
                   enter-from-class="transform scale-95 opacity-0" enter-to-class="transform scale-100 opacity-100"
                   leave-active-class="transition duration-75 ease-in" leave-from-class="transform scale-100 opacity-100"
                   leave-to-class="transform scale-95 opacity-0">
                   <MenuItems
-                    class="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-black shadow-lg ring-1 ring-black/5 focus:outline-hidden">
-                    <div class="px-1 py-1">
+                    class="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-700 rounded-md shadow-lg ring-1 ring-black/5 focus:outline-hidden"
+                    :style="{ backgroundColor: currentPalette.bg }">
+                    <div class="px-1 py-1 ph-no-capture">
                       <MenuItem v-for="community in communities" v-slot="{ active }">
                       <RouterLink :to="'/communities/' + community.id" :class="[
-                                active ? 'bg-gray-600 text-white' : 'text-gray-200',
-                                'group flex w-full items-center rounded-md px-2 py-2 text-sm',
-                            ]">
+                          active ? 'bg-gray-700 text-white' : 'text-gray-200',
+                          'group flex w-full items-center rounded-md px-2 py-2 text-sm',
+                        ]">
                         <i class="fa-solid fa-users mr-2"></i>
                         {{ community.displayName }}
                       </RouterLink>
@@ -114,78 +62,155 @@
                 </transition>
               </Menu>
             </div>
-          </div>
-          <div class="min-w-full mb-3 sm:mb-0 sm:min-w-fit sm:ml-5 justify-center flex flex-wrap gap-4">
-            <div class="text-center text-gray-400 rounded-md cursor-pointer select-none" @click="openFollower = true">
-              <p>Follower</p>
-              <p>{{ followers }}</p>
+            
+            <!-- Profile Info Section -->
+            <div class="mt-12 pb-4">
+              <!-- Badges -->
+              <div class="flex flex-wrap gap-2 text-sm mb-3" v-if="badges.length !== 0">
+                <div v-for="badge in badges" :key="badge.name"
+                  class="badge flex items-center cursor-default rounded-full px-3 py-1 ph-no-capture" :style="{
+                    backgroundColor: badge.color + '22', 
+                    border: '1px solid ' + badge.color,
+                    color: badge.color
+                  }">
+                  {{ badge.name }}
+                </div>
+              </div>
+              
+              <!-- Name and Verification -->
+              <div class="flex items-center mb-1">
+                <h1 class="text-2xl font-bold mr-2">{{ profileData.displayName }}</h1>
+                <div v-if="profileData.businessAccount" class="verified-badge business ph-no-capture">
+                  <i class="fa-solid verifiedBadge fa-check"></i>
+                </div>
+                <div v-else-if="profileData.verifiedAccount" class="verified-badge personal ph-no-capture">
+                  <i class="fa-solid verifiedBadge fa-check"></i>
+                </div>
+              </div>
+              
+              <!-- Username -->
+              <p class="text-gray-400 mb-3 ph-no-capture">
+                @{{ route.params.user.replace("@", "") }}
+              </p>
+              
+              <!-- Follow Button -->
+              <div v-if="isAbleToFollow" @click="toggleFollow"
+                class="inline-block cursor-pointer select-none rounded-md overflow-hidden">
+                <div class="relative h-10 w-24">
+                  <div class="absolute inset-0 bg-gradient-to-tr from-[#24c7ce] to-[#1ed794] flex items-center justify-center" v-if="followed">
+                    <p>Followed</p>
+                  </div>
+                  <div class="absolute inset-0 bg-gray-800 flex items-center justify-center text-gray-100" v-else>
+                    <p>Follow</p>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="text-center text-gray-400 rounded-md cursor-pointer select-none" @click="openFollowing = true">
-              <p>Following</p>
-              <p>{{ following }}</p>
+            
+            <!-- Statistics Section -->
+            <div class="stats-section flex flex-wrap gap-6 md:gap-8 mt-4 pb-4 border-b border-gray-700/50">
+              <div class="text-center cursor-pointer stat-item" @click="openFollower = true">
+                <p class="font-bold text-xl ph-no-capture">{{ followers }}</p>
+                <p class="text-sm text-gray-400">Followers</p>
+              </div>
+              <div class="text-center cursor-pointer stat-item" @click="openFollowing = true">
+                <p class="font-bold text-xl ph-no-capture">{{ following }}</p>
+                <p class="text-sm text-gray-400">Following</p>
+              </div>
+              <div class="text-center stat-item">
+                <p class="font-bold text-xl ph-no-capture">{{ posts }}</p>
+                <p class="text-sm text-gray-400">Posts</p>
+              </div>
+              <div class="text-sm text-gray-400 ml-auto self-end ph-no-capture">
+                Member since {{ sinceString }}
+              </div>
             </div>
-            <div class="text-center text-gray-400 rounded-md select-none">
-              <p>Posts</p>
-              <p>{{ posts }}</p>
+            
+            <!-- Music section -->
+            <div v-if="music.songAuthor" class="music-section my-6 ph-no-capture">
+              <iframe :src="'https://open.spotify.com/embed/track/' + music.songId"
+                class="spotify-embed rounded-lg shadow-lg w-full mx-auto md:w-3/4" height="80" frameBorder="0"
+                allowfullscreen="" allow="clipboard-write; encrypted-media;"></iframe>
             </div>
-          </div>
-          <div v-if="music.songAuthor" class="w-full mt-2 flex gap-3 text-gray-300">
-            <iframe :src="'https://open.spotify.com/embed/track/' + music.songId" class="md:w-96 w-full mx-5"
-              width="100%" height="80rem" frameBorder="0" allowfullscreen=""
-              allow="clipboard-write; encrypted-media;"></iframe>
-          </div>
-          <div class="w-full p-5">
-            <div class="md:flex md:flex-nowrap gap-2 justify-center grid grid-cols-2">
+            
+            <!-- Bio Section -->
+            <div class="bio-section my-6 p-4 rounded-lg bio ph-no-capture"
+              :style="{ backgroundColor: currentPalette.bg }">
+              <p v-if="profileData.bio" class="markdown-content" v-html="markdownHTML"></p>
+              <p v-else class="italic text-gray-400">
+                No bio. Just imagine something cool here.
+              </p>
+            </div>
+            
+            <!-- Action Buttons -->
+            <div class="action-buttons-grid grid grid-cols-2 gap-3 my-6">
               <div to="/account/settings" @click="openReport = true"
-                class="flex items-center gap-2 cursor-pointer justify-center rounded-md p-2 md:w-1/2"
+                class="flex items-center gap-2 cursor-pointer justify-center rounded-md p-2"
                 :style="{ backgroundColor: currentPalette.buttonPrimary, color: currentPalette.textSecondary }">
-                <i class="fa-solid fa-shield"></i>
+                <i class="fa-solid fa-shield mr-2"></i>
                 Report Profile
               </div>
               <div to="/account/settings" @click="alertNotImplemented"
-                class="flex items-center gap-2 cursor-pointer justify-center rounded-md p-2 md:w-1/2"
+                class="flex items-center gap-2 cursor-pointer justify-center rounded-md p-2"
                 :style="{ backgroundColor: currentPalette.buttonPrimary, color: currentPalette.textSecondary }">
-                <i class="fa-solid fa-ban"></i>
+                <i class="fa-solid fa-ban mr-2"></i>
                 Block User
               </div>
               <div @click="shareProfile"
-                class="flex items-center gap-2 cursor-pointer justify-center rounded-md p-2 md:w-1/2"
+                class="flex items-center gap-2 cursor-pointer justify-center rounded-md p-2"
                 :style="{ backgroundColor: currentPalette.buttonPrimary, color: currentPalette.textSecondary }">
-                <i class="fa-solid fa-arrow-up-from-bracket"></i>
+                <i class="fa-solid fa-share mr-2"></i>
                 Share Profile
               </div>
               <RouterLink :to="'/messages/' + profileData.id"
-                class="flex items-center gap-2 cursor-pointer justify-center rounded-md p-2 md:w-1/2"
+                class="flex items-center gap-2 cursor-pointer justify-center rounded-md p-2"
                 :style="{ backgroundColor: currentPalette.buttonPrimary, color: currentPalette.textSecondary }">
-                <i class="fa-solid fa-message"></i>
+                <i class="fa-solid fa-message mr-2"></i>
                 Message
               </RouterLink>
             </div>
           </div>
-          <div class="w-full p-5 mb-2" :style="{ backgroundColor: currentPalette.bgSecondary }">
-            <p v-if="profileData.bio" v-html="markdownHTML"></p>
-            <p v-else class="italic text-gray-300">
-              No bio. Just imagine something cool here.
-            </p>
-          </div>
-          <p class="w-full pl-5 pb-3">Member since {{ sinceString }}</p>
         </div>
-        <div class="flex flex-wrap mt-2 mb-2 md:w-full md:ml-1 rounded-md pl-1 md:pr-2 items-center md:mr-2 h-fit"
+        
+        <!-- Posts Section -->
+        <div class="posts-section rounded-xl overflow-hidden shadow-lg"
           :style="{ backgroundColor: currentPalette.bgSecondary }">
-          <div class="p-2 mt-2 w-full md:pr-3 md:ml-2 rounded-md items-center h-fit"
-            :style="'background-color: ' + currentPalette.bgSecondary">
-            <div v-if="posts == 0" class="h-36 flex justify-center items-center">
-              <p class="italic text-gray-400">No posts yet</p>
-            </div>
-            <div v-else v-for="(post, index) in loadedPosts" :key="post.id" class="w-full block">
+          <h2 class="text-xl font-semibold p-4 border-b border-gray-700/50">Posts</h2>
+          <div v-if="posts == 0" class="empty-posts flex flex-col items-center justify-center py-16">
+            <i class="fa-regular fa-newspaper text-4xl text-gray-500 mb-4"></i>
+            <p class="italic text-gray-400">No posts yet</p>
+          </div>
+          <div v-else class="posts-list">
+            <div v-for="(post, index) in loadedPosts" :key="post.id"
+              :class="{ 'border-b border-gray-700/50': index !== loadedPosts.length - 1 }">
               <PostGetPostComponent class="ph-no-capture" :postId="post" ownProfile="true" :profile="profileData"
-                :ownProfile="ownProfile" :account="accountData" :ownProfileData="ownProfileData"
-                :border="index !== loadedPosts.length - 1" />
+                :ownProfile="ownProfile" :account="accountData" :ownProfileData="ownProfileData" :border="false" />
             </div>
           </div>
         </div>
       </div>
+      
+      <!-- Right Sidebar (Communities) - Desktop Only -->
+      <div class="communities-sidebar md:block hidden md:w-1/5 mr-3">
+        <div v-if="communities.length > 0" class="sidebar-section rounded-xl p-4 shadow-lg"
+          :style="{ backgroundColor: currentPalette.bgSecondary }">
+          <h2 class="text-xl font-semibold mb-4 text-center">Communities</h2>
+          <div class="space-y-3">
+            <div v-for="community in communities" :key="community.name" class="ph-no-capture">
+              <RouterLink :to="'/communities/' + community.id">
+                <CommunityLinkComponent :community="community" />
+              </RouterLink>
+            </div>
+          </div>
+        </div>
+        <div v-else class="sidebar-section text-center text-gray-400 rounded-xl p-4 shadow-lg"
+          :style="{ backgroundColor: currentPalette.bgSecondary }">
+          <p v-if="!privateAccount">No Communities yet</p>
+          <p v-else>Private account</p>
+        </div>
+      </div>
     </div>
+
     <div v-if="!success && loaded">
       <div class="flex min-h-svh w-full justify-center items-center">
         <div class="text-center">
@@ -195,83 +220,98 @@
       </div>
     </div>
 
-    <Transition name="fade" @leave="leave" @enter="enter">
-      <div v-if="openFollower"
-        class="fixed h-full z-100 w-full backdrop-blur-sm top-0 left-0 flex justify-center items-center">
-        <div class="w-[60rem] max-h-[80svh] overflow-y-scroll mx-4 p-2 rounded-md"
-          :style="{ backgroundColor: currentPalette.bg }">
-          <div class="w-full flex items-center justify-center text-xl font-bold">
-            <h1 class="w-full text-center">Followers ({{ followers }})</h1>
-            <i class="fa-solid fa-xmark mr-2 cursor-pointer" @click="openFollower = false"></i>
+    <!-- Modals -->
+    <!-- Followers Modal -->
+    <Transition name="fade">
+      <div v-if="openFollower" class="modal-overlay">
+        <div class="modal-container" :style="{ backgroundColor: currentPalette.bg }">
+          <div class="modal-header">
+            <h1 class="modal-title">Followers ({{ followers }})</h1>
+            <button @click="openFollower = false" class="modal-close-button">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
           </div>
-          <div v-for="(user, index) in profileData.follower" v-if="profileData.follower.length > 0" :key="user">
-            <div :class="{
-              'border-b border-b-gray-500 pb-2': index !== profileData.follower.length - 1,
-              'mt-2': index !== 0
-            }">
-              <AccountProfileGetFollowComponent :id="user" />
+          <div class="modal-body">
+            <div v-if="profileData.follower && profileData.follower.length > 0" class="followers-list">
+              <div v-for="(user, index) in profileData.follower" :key="user" :class="{ 
+                  'border-b border-gray-700/50 pb-2': index !== profileData.follower.length - 1,
+                  'mt-2': index !== 0 
+                }">
+                <AccountProfileGetFollowComponent :id="user" />
+              </div>
+            </div>
+            <div v-else class="empty-state">
+              <i class="fa-solid fa-users-slash text-4xl text-gray-500 mb-4"></i>
+              <h1>This user is not followed by anyone</h1>
             </div>
           </div>
-          <div v-else class="italic w-full p-8 flex justify-center items-center text-gray-400">
-            <h1>This user is not followed by anyone</h1>
-          </div>
         </div>
       </div>
     </Transition>
 
-    <Transition name="fade" @leave="leave" @enter="enter">
-      <div v-if="openFollowing"
-        class="fixed h-full z-100 w-full backdrop-blur-sm top-0 left-0 flex justify-center items-center">
-        <div class="w-[60rem] max-h-[80svh] overflow-y-scroll mx-4 p-2 rounded-md"
-          :style="{ backgroundColor: currentPalette.bg }">
-          <div class="w-full flex items-center justify-center text-xl font-bold">
-            <h1 class="w-full text-center">Following ({{ following }})</h1>
-            <i class="fa-solid fa-xmark mr-2 cursor-pointer" @click="openFollowing = false"></i>
+    <!-- Following Modal -->
+    <Transition name="fade">
+      <div v-if="openFollowing" class="modal-overlay">
+        <div class="modal-container" :style="{ backgroundColor: currentPalette.bg }">
+          <div class="modal-header">
+            <h1 class="modal-title">Following ({{ following }})</h1>
+            <button @click="openFollowing = false" class="modal-close-button">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
           </div>
-          <div v-for="(user, index) in profileData.following" v-if="profileData.following.length > 0" :key="user">
-            <div :class="{
-              'border-b border-b-gray-500 pb-2': index !== profileData.following.length - 1,
-              'mt-2': index !== 0
-            }">
-              <AccountProfileGetFollowComponent :id="user" />
+          <div class="modal-body">
+            <div v-if="profileData.following && profileData.following.length > 0" class="following-list">
+              <div v-for="(user, index) in profileData.following" :key="user" :class="{ 
+                  'border-b border-gray-700/50 pb-2': index !== profileData.following.length - 1,
+                  'mt-2': index !== 0 
+                }">
+                <AccountProfileGetFollowComponent :id="user" />
+              </div>
+            </div>
+            <div v-else class="empty-state">
+              <i class="fa-solid fa-users-slash text-4xl text-gray-500 mb-4"></i>
+              <h1>This user is not following anyone</h1>
             </div>
           </div>
-          <div v-else class="italic w-full p-8 flex justify-center items-center text-gray-400">
-            <h1>This user is not following anyone</h1>
+        </div>
+      </div>
+    </Transition>
+
+    <!-- Report Modal -->
+    <Transition name="fade">
+      <div v-if="openReport" class="modal-overlay">
+        <div class="modal-container" :style="{ backgroundColor: currentPalette.bg }">
+          <div class="modal-header">
+            <h1 class="modal-title">Report Profile</h1>
+            <button @click="openReport = false" class="modal-close-button">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
+          <div class="modal-body">
+            <SupportFieldsComponent :predefinedSubject="'User Report for ' + profileData.displayName"
+              :predefinedMessage="'I want to report this person because...\n\nUser ID: ' + profileData.id" />
+            <p class="ml-4 mb-4">Please provide the User ID for the Person you want to report.</p>
           </div>
         </div>
       </div>
     </Transition>
 
-    <Transition name="fade" @leave="leave" @enter="enter">
-      <div v-if="openReport"
-        class="fixed h-full z-100 w-full backdrop-blur-sm top-0 left-0 flex justify-center items-center">
-        <div class="w-[60rem] max-h-[80svh] overflow-y-scroll mx-4 p-2 rounded-md"
-          :style="{ backgroundColor: currentPalette.bg }">
-          <div class="w-full flex items-center justify-center text-xl font-bold">
-            <h1 class="w-full text-center">Report Profile</h1>
-            <i class="fa-solid fa-xmark mr-2 cursor-pointer" @click="openReport = false"></i>
+    <!-- Login Modal -->
+    <Transition name="fade">
+      <div v-if="showLoginModal" class="modal-overlay">
+        <div class="modal-container" :style="{ backgroundColor: currentPalette.bg }">
+          <div class="modal-header">
+            <h1 class="modal-title">Login Required</h1>
+            <button @click="showLoginModal = false" class="modal-close-button">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
           </div>
-          <SupportFieldsComponent :predefinedSubject="'User Report for ' + profileData.displayName"
-            :predefinedMessage="'I want to report this person because...\n\nUser ID: ' + profileData.id" />
-          <p class="ml-2">Please provide the User ID for the Person you want to report.</p>
+          <div class="modal-body">
+            <LoginComponent />
+          </div>
         </div>
       </div>
     </Transition>
-
-    <transition name="fade" @leave="leave" @enter="enter">
-      <div v-if="showLoginModal" @click.self="showLoginModal = false"
-        class="fixed w-screen h-screen top-0 left-0 z-[100] backdrop-blur-md flex items-center justify-center">
-        <div
-          class="bg-gray-900 p-5 text-center min-w-[80svw] max-w-[80svw] max-h-[80svh] min-h-[80svh] flex justify-center rounded-md m-3 md:w-auto flex-wrap items-stretch">
-          <div class="w-full h-fit flex justify-end">
-            <i class="fa-solid fa-xmark cursor-pointer p-3" @click="showLoginModal = false"></i>
-          </div>
-          <LoginComponent />
-        </div>
-      </div>
-    </transition>
-
   </div>
 </template>
 
@@ -518,47 +558,152 @@ function toggleFollow() {
 <style scoped>
 @import url("~/assets/css/markdown.css");
 
-.verifiedBadge {
-  transform: translateY(1px);
+/* Profile Styles */
+.profile-container {
+  position: relative;
+}
+.profile-picture-container {
+  position: relative;
+  margin-top: -48px;
+}
+.profile-picture {
+  width: 96px;
+  height: 96px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+@media (min-width: 768px) {
+  .profile-picture {
+    width: 128px;
+    height: 128px;
+  }
+}
+.verified-badge {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  margin-left: 8px;
+}
+.verified-badge.personal {
+  background-color: rgb(14, 165, 233);
+  border: 2px solid rgb(125, 211, 252);
+}
+.verified-badge.business {
+  background-color: rgb(202, 138, 4);
+  border: 2px solid rgb(253, 224, 71);
+}
+.action-button {
+  width: 100%;
+  transition: all 0.2s;
+}
+.action-button:hover {
+  transform: translateY(-1px);
+}
+.stat-item {
+  transition: transform 0.15s ease;
+}
+.stat-item:hover {
+  transform: translateY(-2px);
+}
+.spotify-embed {
+  max-width: 100%;
+}
+.badge {
+  font-weight: 500;
+  font-size: 0.75rem;
 }
 
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.modal-container {
+  width: 90%;
+  max-width: 60rem;
+  max-height: 80vh;
+  overflow-y: auto;
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+}
+.modal-header {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid rgba(75, 85, 99, 0.3);
+}
+.modal-title {
+  flex-grow: 1;
+  font-size: 1.25rem;
+  font-weight: 600;
+  text-align: center;
+}
+.modal-close-button {
+  font-size: 1.25rem;
+  color: #9ca3af;
+  cursor: pointer;
+  transition: color 0.15s;
+}
+.modal-close-button:hover {
+  color: #f1f5f9;
+}
+.modal-body {
+  padding: 1rem 0;
+}
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  font-style: italic;
+  color: #9ca3af;
+  text-align: center;
+}
+
+/* Animation */
 .fade-enter-active {
   animation: fadeIn 0.25s;
 }
-
 @keyframes fadeIn {
   from {
     opacity: 0;
     transform: translateY(10px);
-    filter: blur(10px)
+    filter: blur(5px);
   }
-
   to {
     opacity: 1;
     transform: translateY(0);
-    filter: blur(0px)
+    filter: blur(0);
   }
 }
-
 .fade-leave-active {
   animation: fadeOut 0.25s;
 }
-
 @keyframes fadeOut {
   from {
     opacity: 1;
     transform: translateY(0);
-    filter: blur(0px)
+    filter: blur(0);
   }
-
   to {
     opacity: 0;
     transform: translateY(10px);
-    filter: blur(10px)
+    filter: blur(5px);
   }
 }
-
-.z-100 {
-  z-index: 100;
+.verifiedBadge {
+  transform: translateY(1px);
 }
 </style>

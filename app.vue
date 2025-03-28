@@ -81,8 +81,8 @@ const isMobileView = computed(() => {
         <!-- Main content area -->
         <main :class="[
           'main-content-area',
-          isFullWidthPage ? 'full-width' : 'with-sidebars',
-          {'with-right-sidebar': isHomePage},
+          isFullWidthPage ? 'full-width' : 'with-sidebars',          {'with-right-sidebar': isHomePage && !isMobileView},
+          {'no-right-sidebar': !isHomePage || isMobileView},
           {'mobile-view': isMobileView}
         ]">
           <NuxtPage />
@@ -95,12 +95,15 @@ const isMobileView = computed(() => {
       <!-- Mobile bottom navigation bar -->
       <BottomBarComponent v-if="isMobileView && !isFullWidthPage" />
 
+      <!-- Policy links - Always visible regardless of page or screen size -->
+      <PolicyLinksComponent />
+
       <!-- Mobile content padding for bottom bar -->
       <div v-if="isMobileView && !isFullWidthPage" class="mobile-bottom-spacing"></div>
 
       <!-- Cookie banner and other full-width elements -->
       <CookieBannerComponent v-if="!accepted" />
-      <FooterComponent v-if="!isFullWidthPage && !route.fullPath.includes(pagesWithoutFooter) && !isMobileView"
+      <FooterComponent v-if="!isFullWidthPage && !route.fullPath.includes(pagesWithoutFooter)"
         class="mobile-footer" />
     </NuxtLayout>
   </TooltipProvider>
@@ -135,6 +138,11 @@ const isMobileView = computed(() => {
   margin-right: 0;
 }
 
+.main-content-area.no-right-sidebar {
+  width: 100%;
+  max-width: 100%;
+}
+
 .mobile-footer {
   display: block;
 }
@@ -164,12 +172,12 @@ const isMobileView = computed(() => {
 }
 
 @media (min-width: 1024px) {
-  .main-content-area.with-sidebars {
+  .main-content-area.with-sidebars.with-right-sidebar {
     margin-right: 350px;
   }
 
-  .main-content-area.with-right-sidebar {
-    margin-right: 350px;
+  .main-content-area.no-right-sidebar {
+    margin-right: 0;
   }
 }
 
