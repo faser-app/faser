@@ -30,7 +30,7 @@
                 <i class="fa-solid fa-user text-4xl"></i>
               </div>
             </div>
-            
+
             <!-- Profile Actions (Mobile) -->
             <div class="mr-2 absolute right-4 top-2 z-10">
               <Menu as="div" class="relative md:hidden inline-block text-left">
@@ -62,7 +62,7 @@
                 </transition>
               </Menu>
             </div>
-            
+
             <!-- Profile Info Section -->
             <div class="mt-12 pb-4">
               <!-- Badges -->
@@ -76,7 +76,7 @@
                   {{ badge.name }}
                 </div>
               </div>
-              
+
               <!-- Name and Verification -->
               <div class="flex items-center mb-1">
                 <h1 class="text-2xl font-bold mr-2">{{ profileData.displayName }}</h1>
@@ -87,17 +87,19 @@
                   <i class="fa-solid verifiedBadge fa-check"></i>
                 </div>
               </div>
-              
+
               <!-- Username -->
               <p class="text-gray-400 mb-3 ph-no-capture">
                 @{{ route.params.user.replace("@", "") }}
               </p>
-              
+
               <!-- Follow Button -->
               <div v-if="isAbleToFollow" @click="toggleFollow"
                 class="inline-block cursor-pointer select-none rounded-md overflow-hidden">
                 <div class="relative h-10 w-24">
-                  <div class="absolute inset-0 bg-gradient-to-tr from-[#24c7ce] to-[#1ed794] flex items-center justify-center" v-if="followed">
+                  <div
+                    class="absolute inset-0 bg-gradient-to-tr from-[#24c7ce] to-[#1ed794] flex items-center justify-center"
+                    v-if="followed">
                     <p>Followed</p>
                   </div>
                   <div class="absolute inset-0 bg-gray-800 flex items-center justify-center text-gray-100" v-else>
@@ -106,7 +108,7 @@
                 </div>
               </div>
             </div>
-            
+
             <!-- Statistics Section -->
             <div class="stats-section flex flex-wrap gap-6 md:gap-8 mt-4 pb-4 border-b border-gray-700/50">
               <div class="text-center cursor-pointer stat-item" @click="openFollower = true">
@@ -125,14 +127,14 @@
                 Member since {{ sinceString }}
               </div>
             </div>
-            
+
             <!-- Music section -->
             <div v-if="music.songAuthor" class="music-section my-6 ph-no-capture">
               <iframe :src="'https://open.spotify.com/embed/track/' + music.songId"
                 class="spotify-embed rounded-lg shadow-lg w-full mx-auto md:w-3/4" height="80" frameBorder="0"
                 allowfullscreen="" allow="clipboard-write; encrypted-media;"></iframe>
             </div>
-            
+
             <!-- Bio Section -->
             <div class="bio-section my-6 p-4 rounded-lg bio ph-no-capture"
               :style="{ backgroundColor: currentPalette.bg }">
@@ -141,7 +143,7 @@
                 No bio. Just imagine something cool here.
               </p>
             </div>
-            
+
             <!-- Action Buttons -->
             <div class="action-buttons-grid grid grid-cols-2 gap-3 my-6">
               <div to="/account/settings" @click="openReport = true"
@@ -156,8 +158,7 @@
                 <i class="fa-solid fa-ban mr-2"></i>
                 Block User
               </div>
-              <div @click="shareProfile"
-                class="flex items-center gap-2 cursor-pointer justify-center rounded-md p-2"
+              <div @click="shareProfile" class="flex items-center gap-2 cursor-pointer justify-center rounded-md p-2"
                 :style="{ backgroundColor: currentPalette.buttonPrimary, color: currentPalette.textSecondary }">
                 <i class="fa-solid fa-share mr-2"></i>
                 Share Profile
@@ -171,7 +172,7 @@
             </div>
           </div>
         </div>
-        
+
         <!-- Posts Section -->
         <div class="posts-section rounded-xl overflow-hidden shadow-lg"
           :style="{ backgroundColor: currentPalette.bgSecondary }">
@@ -189,7 +190,7 @@
           </div>
         </div>
       </div>
-      
+
       <!-- Right Sidebar (Communities) - Desktop Only -->
       <div class="communities-sidebar md:block hidden md:w-1/5 mr-3">
         <div v-if="communities.length > 0" class="sidebar-section rounded-xl p-4 shadow-lg"
@@ -499,7 +500,7 @@ function toggleFollow() {
     showLoginModal.value = true
     return
   }
-  
+
   let url = ""
 
   if (followed.value) {
@@ -562,21 +563,25 @@ function toggleFollow() {
 .profile-container {
   position: relative;
 }
+
 .profile-picture-container {
   position: relative;
   margin-top: -48px;
 }
+
 .profile-picture {
   width: 96px;
   height: 96px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
+
 @media (min-width: 768px) {
   .profile-picture {
     width: 128px;
     height: 128px;
   }
 }
+
 .verified-badge {
   display: flex;
   justify-content: center;
@@ -586,30 +591,38 @@ function toggleFollow() {
   border-radius: 50%;
   margin-left: 8px;
 }
+
 .verified-badge.personal {
   background-color: rgb(14, 165, 233);
   border: 2px solid rgb(125, 211, 252);
 }
+
 .verified-badge.business {
   background-color: rgb(202, 138, 4);
   border: 2px solid rgb(253, 224, 71);
 }
+
 .action-button {
   width: 100%;
   transition: all 0.2s;
 }
+
 .action-button:hover {
   transform: translateY(-1px);
 }
+
 .stat-item {
   transition: transform 0.15s ease;
 }
+
 .stat-item:hover {
   transform: translateY(-2px);
 }
+
 .spotify-embed {
   max-width: 100%;
 }
+
 .badge {
   font-weight: 500;
   font-size: 0.75rem;
@@ -629,6 +642,7 @@ function toggleFollow() {
   justify-content: center;
   align-items: center;
 }
+
 .modal-container {
   width: 90%;
   max-width: 60rem;
@@ -637,30 +651,36 @@ function toggleFollow() {
   border-radius: 0.5rem;
   box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
 }
+
 .modal-header {
   display: flex;
   align-items: center;
   padding: 1rem;
   border-bottom: 1px solid rgba(75, 85, 99, 0.3);
 }
+
 .modal-title {
   flex-grow: 1;
   font-size: 1.25rem;
   font-weight: 600;
   text-align: center;
 }
+
 .modal-close-button {
   font-size: 1.25rem;
   color: #9ca3af;
   cursor: pointer;
   transition: color 0.15s;
 }
+
 .modal-close-button:hover {
   color: #f1f5f9;
 }
+
 .modal-body {
   padding: 1rem 0;
 }
+
 .empty-state {
   display: flex;
   flex-direction: column;
@@ -676,33 +696,39 @@ function toggleFollow() {
 .fade-enter-active {
   animation: fadeIn 0.25s;
 }
+
 @keyframes fadeIn {
   from {
     opacity: 0;
     transform: translateY(10px);
     filter: blur(5px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
     filter: blur(0);
   }
 }
+
 .fade-leave-active {
   animation: fadeOut 0.25s;
 }
+
 @keyframes fadeOut {
   from {
     opacity: 1;
     transform: translateY(0);
     filter: blur(0);
   }
+
   to {
     opacity: 0;
     transform: translateY(10px);
     filter: blur(5px);
   }
 }
+
 .verifiedBadge {
   transform: translateY(1px);
 }
