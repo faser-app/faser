@@ -158,7 +158,7 @@ function searchUsers() {
 
                 // Process profile picture data
                 for (let i = 0; i < userData.length; i++) {
-                    userData[i].hasProfilePicture = userData[i].hasProfilePicture === 1;
+                    userData[i].hasProfilePicture = true;
                 }
 
                 // Sort results based on match priority

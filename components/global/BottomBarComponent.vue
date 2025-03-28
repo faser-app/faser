@@ -1,7 +1,7 @@
 <template>
     <div class="bottom-bar-container fixed bottom-0 w-full z-50"
         :style="{ backgroundColor: currentPalette.bgSecondary }">
-        <div class="grid grid-cols-5 h-16">
+        <div class="grid grid-cols-5 h-16 mb-4">
             <!-- Home -->
             <RouterLink to="/" class="nav-item" :class="{ 'active': isActive('/') }">
                 <div class="flex flex-col items-center justify-center h-full">
