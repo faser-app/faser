@@ -79,7 +79,7 @@
             </div>
 
             <!-- Notifications -->
-            <div v-if="mobile && !notificationsActivated && loggedIn" class="setting-item rounded-lg overflow-hidden"
+            <div v-if="!notificationsActivated && loggedIn" class="setting-item rounded-lg overflow-hidden"
                 :style="{ backgroundColor: currentPalette.bg }" @click="subscribeToPushNotifications">
                 <div
                     class="flex justify-between items-center p-4 cursor-pointer hover:bg-gray-700/20 transition-colors">
