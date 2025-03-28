@@ -99,7 +99,7 @@
                 </div>
             </div>
 
-            <div v-if="mobile && notificationsActivated" class="setting-item rounded-lg overflow-hidden"
+            <div v-if="notificationsActivated" class="setting-item rounded-lg overflow-hidden"
                 :style="{ backgroundColor: currentPalette.bg }">
                 <div class="flex justify-between items-center p-4">
                     <div class="flex items-center gap-3">
@@ -115,7 +115,7 @@
                 </div>
             </div>
 
-            <div v-if="mobile && notificationsActivated" class="setting-item rounded-lg overflow-hidden"
+            <div v-if="notificationsActivated" class="setting-item rounded-lg overflow-hidden"
                 :style="{ backgroundColor: currentPalette.bg }" @click="removeSubscription">
                 <div
                     class="flex justify-between items-center p-4 cursor-pointer hover:bg-gray-700/20 transition-colors">
