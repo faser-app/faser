@@ -89,12 +89,12 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- Message input area -->
         <div class="flex h-16 p-3 fixed justify-start w-full bottom-0 shadow-lg"
-            :style="{ backgroundColor: currentPalette.bgSecondary }" :class="{ 'mb-16': mobile }">
+            :style="{ backgroundColor: currentPalette.bgSecondary }" :class="{ 'mb-20': mobile }">
             <div class="w-full mx-auto flex gap-2">
-                <input type="text"
+                <input type="text" autocomplete="off"
                     class="flex-1 p-3 rounded-full bg-gray-800/70 text-white border border-gray-700/30 focus:outline-none focus:border-gray-600"
                     maxlength="1000" placeholder="Type a message..." v-model="inputContent"
                     v-on:keyup.enter="sendMessage" />
