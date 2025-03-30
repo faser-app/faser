@@ -69,36 +69,40 @@
         <div class="follow-section rounded-lg overflow-hidden" :style="{ backgroundColor: currentPalette.bg }">
             <h2 class="text-xl font-bold p-4">Who to follow</h2>
             <div v-for="(suggestion, index) in followSuggestions" :key="index"
-                class="suggestion-item p-4 hover:bg-gray-800 cursor-pointer flex items-center">
-                <div class="flex-shrink-0">
-                    <div class="h-12 w-12 rounded-full overflow-hidden" :style="{ 
+                class="suggestion-item p-4 hover:bg-gray-800 cursor-pointer flex items-center justify-between">
+                <div class="flex w-full" @click="navigateToUser(suggestion.username)">
+                    <div class="flex-shrink-0">
+                        <div class="h-12 w-12 rounded-full overflow-hidden" :style="{ 
             backgroundColor: suggestion.hasProfilePicture ? 'transparent' : '#1118276c',
             border: suggestion.hasProfilePicture ? 'none' : '1px solid rgba(150, 150, 150, 0.15)'
           }">
-                        <img v-if="suggestion.hasProfilePicture"
-                            :src="'https://s3.faser.app/profilepictures/' + suggestion.id + '/image.png'"
-                            class="h-full w-full object-cover" />
-                        <div v-else class="h-full w-full flex items-center justify-center">
-                            <i class="fa-solid fa-user text-white"></i>
+                            <img v-if="suggestion.hasProfilePicture"
+                                :src="'https://s3.faser.app/profilepictures/' + suggestion.id + '/image.png'"
+                                class="h-full w-full object-cover" @error="suggestion.hasProfilePicture = false" />
+                            <div v-else class="h-full w-full flex items-center justify-center">
+                                <i class="fa-solid fa-user text-white"></i>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="mx-3 flex-grow">
-                    <div class="flex items-center">
-                        <p class="font-bold">{{ suggestion.displayName }}</p>
-                        <div v-if="suggestion.verifiedAccount" class="verified-badge ml-1">
-                            <i class="fa-solid fa-check text-[10px]"></i>
+                    <div class="mx-3 flex-grow">
+                        <div class="flex items-center">
+                            <p class="font-bold">{{ suggestion.displayName }}</p>
+                            <div v-if="suggestion.verifiedAccount" class="verified-badge ml-1">
+                                <i class="fa-solid fa-check text-[10px]"></i>
+                            </div>
                         </div>
+                        <p class="text-gray-500">@{{ suggestion.username }}</p>
                     </div>
-                    <p class="text-gray-500">@{{ suggestion.username }}</p>
                 </div>
-                <button class="follow-button px-4 py-1.5 rounded-full font-bold"
+                <button v-if="!suggestion.isFollowing" class="follow-button px-4 py-1.5 rounded-full font-bold"
+                    @click="followUser(suggestion.username, index)"
                     :style="{ backgroundColor: currentPalette.buttonPrimary, color: currentPalette.textSecondary }">
                     Follow
                 </button>
-            </div>
-            <div class="p-4 hover:bg-gray-800 cursor-pointer">
-                <p class="text-primary-500">Show more</p>
+                <button v-else class="following-button px-4 py-1.5 rounded-full font-bold"
+                    :style="{ backgroundColor: currentPalette.bgSecondary, color: currentPalette.text }">
+                    Following
+                </button>
             </div>
         </div>
 
@@ -121,6 +125,7 @@ import axios from "axios";
 import { ref, onMounted, onUnmounted } from "vue";
 import { useRouter } from "vue-router";
 import currentPalette from "~/vars/getColors";
+import Cookies from "js-cookie";
 
 const router = useRouter();
 const searchQuery = ref("");
@@ -198,6 +203,18 @@ function clearSearch() {
     searchFocused.value = false;
 }
 
+function followUser(username, index) {
+    axios.post(baseURL + "/api/social/followUser", {
+        token: Cookies.get("token"),
+        username: username
+    })
+        .then((response) => {
+            followSuggestions.value[index].isFollowing = true
+        })
+        .catch((error) => {
+        });
+}
+
 function navigateToUser(username) {
     router.push(`/${username}`);
     clearSearch();
@@ -246,6 +263,18 @@ const followSuggestions = ref([
 onMounted(() => {
     // Add click outside listener
     document.addEventListener('click', handleClickOutside);
+
+    axios.post(baseURL + "/api/profile/whoToFollow", {
+        token: Cookies.get("token")
+    })
+        .then((response) => {
+            followSuggestions.value = response.data.suggestions
+
+            for (let i = 0; i < followSuggestions.value.length; i++) {
+                followSuggestions.value[i].hasProfilePicture = true;
+                followSuggestions.value[i].isFollowing = false;
+            }
+        })
 });
 
 onUnmounted(() => {

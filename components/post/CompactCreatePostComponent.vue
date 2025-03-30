@@ -5,7 +5,7 @@
       <!-- User Avatar -->
       <div class="user-avatar">
         <img v-if="haveProfilePicture && loaded" @error="haveProfilePicture = false"
-          :src="'https://s3.faser.app/profilepictures/' + id + '/image.png' + '?t=' + new Date().getTime()"
+          :src="'https://s3.faser.app/profilepictures/' + ownProfile.id + '/image.png' + '?t=' + new Date().getTime()"
           class="h-10 w-10 rounded-full object-cover" alt="Profile" />
         <div v-else
           class="h-10 w-10 rounded-full flex items-center justify-center border border-[#96969627] bg-[#1118276c]">

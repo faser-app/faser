@@ -145,6 +145,7 @@ axios.get(baseURL + "/api/account/getOwnProfile", {
 }).then((ownResponse) => {
   ownProfileData.value = ownResponse.data[0];
   ownAccountData.value = ownResponse.data[1];
+  ownAccountData.value.id = ownResponse.data[0].id
   loggedIn.value = true
 }).catch((error) => {
   loggedIn.value = false

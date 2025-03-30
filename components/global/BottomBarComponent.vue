@@ -160,6 +160,7 @@ import Cookies from "js-cookie";
 import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue';
 import { useRouter, useRoute } from "vue-router";
 import currentPalette from "~/vars/getColors";
+import CompactCreatePostComponent from "../post/CompactCreatePostComponent.vue";
 
 const router = useRouter();
 const route = useRoute();
