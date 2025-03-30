@@ -1,5 +1,5 @@
 <template>
-    <div class="bottom-bar-container fixed bottom-0 w-full z-50 pb-6"
+    <div class="bottom-bar-container fixed bottom-0 w-full z-50 pb-6 pt-2"
         :style="{ backgroundColor: currentPalette.bgSecondary }">
         <div class="grid grid-cols-5">
             <!-- Home -->
