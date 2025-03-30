@@ -127,7 +127,7 @@
                     <div v-for="imageIndex in Math.min(postContent.images, 4)" :key="imageIndex" class="image-container"
                         @click="openImage('https://s3.faser.app/postimages/' + author.id + '/' + postContent.postId + '/' + imageIndex + '.png')">
                         <img :src="'https://s3.faser.app/postimages/' + author.id + '/' + postContent.postId + '/' + imageIndex + '.png'"
-                            class="post-image" />
+                            :class="postContent.images === 1 ? 'post-image-single' : 'post-image'" />
 
                         <!-- If there are more images, show a counter overlay on the 4th image -->
                         <div v-if="imageIndex === 4 && postContent.images > 4" class="more-images-overlay">
