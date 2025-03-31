@@ -95,16 +95,17 @@ const isMobileView = computed(() => {
       <!-- Mobile bottom navigation bar -->
       <BottomBarComponent v-if="isMobileView && !isFullWidthPage" />
 
-      <!-- Policy links - Always visible regardless of page or screen size -->
-      <PolicyLinksComponent />
-
       <!-- Mobile content padding for bottom bar -->
       <div v-if="isMobileView && !isFullWidthPage" class="mobile-bottom-spacing"></div>
 
       <!-- Cookie banner and other full-width elements -->
       <CookieBannerComponent v-if="!accepted" />
-      <FooterComponent v-if="!isFullWidthPage && !route.fullPath.includes(pagesWithoutFooter)"
-        class="mobile-footer" />
+      <!-- Footer is now visible in both mobile and medium screens (where trends are gone but not in mobile view yet) -->
+      <FooterComponent :class="[
+        'footer-component', 
+        {'mobile-footer pb-18': isMobileView},
+        {'medium-footer': !isMobileView && windowWidth < 1024}
+      ]" />
     </NuxtLayout>
   </TooltipProvider>
 </template>
@@ -147,6 +148,10 @@ const isMobileView = computed(() => {
   display: block;
 }
 
+.medium-footer {
+  display: block;
+}
+
 /* Mobile specific styles */
 .main-content-area.mobile-view {
   margin-left: 0;
@@ -166,6 +171,7 @@ const isMobileView = computed(() => {
     margin-right: 0;
   }
 
+  /* We no longer hide the footer on medium screens */
   .mobile-footer {
     display: none;
   }
@@ -178,6 +184,11 @@ const isMobileView = computed(() => {
 
   .main-content-area.no-right-sidebar {
     margin-right: 0;
+  }
+  
+  /* Hide medium-footer on large screens */
+  .medium-footer {
+    display: none;
   }
 }
 

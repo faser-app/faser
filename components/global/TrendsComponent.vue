@@ -106,17 +106,27 @@
             </div>
         </div>
 
-        <!-- Footer links -->
+        <!-- Footer links
         <div class="footer-links my-4 text-sm text-gray-500">
             <div class="flex flex-wrap gap-2">
-                <a href="/tos" class="hover:underline">Terms of Service</a>
-                <a href="/privacy" class="hover:underline">Privacy Policy</a>
-                <a href="/cookies" class="hover:underline">Cookie Policy</a>
+                <div v-for="link in links" :key="link.name">
+                    <RouterLink v-if="link.url.startsWith('/')" :to="link.url" class="underline hover:text-gray-300">{{
+                        link.name }}</RouterLink>
+                    <a v-else :href="link.url" class="underline hover:text-gray-300">{{ link.name }}</a>
+                </div>
+            </div>
+            <div class="flex w-full justify-center gap-2">
+                <div class="flex justify-center underline mt-2 cursor-pointer" @click="resetCookies">
+                    Cookie Settings
+                </div>
+                <RouterLink to="/faq" class="flex justify-center underline mt-2 cursor-pointer">
+                    FAQ
+                </RouterLink>
             </div>
             <div class="mt-2">
                 © 2025 faser
             </div>
-        </div>
+        </div> -->
     </div>
 </template>
 
@@ -134,6 +144,37 @@ const searchLoaded = ref(false);
 const searchFocused = ref(false);
 const searchTimeoutId = ref(null);
 const clickOutsideHandler = ref(null);
+
+const links = ref([
+    {
+        name: "Imprint",
+        url: "/imprint",
+    },
+    {
+        name: "ToS",
+        url: "/tos",
+    },
+    {
+        name: "Cookie Policy",
+        url: "/cookies",
+    },
+    {
+        name: "Privacy",
+        url: "/privacy",
+    },
+    {
+        name: "Status Page",
+        url: "https://stats.uptimerobot.com/Ow7zN9GfBE",
+    },
+]);
+
+function resetCookies() {
+    Object.keys(Cookies.get()).forEach((cookie) => {
+        Cookies.remove(cookie);
+    });
+
+    window.location.reload();
+}
 
 // Search functionality
 function searchUsers() {
