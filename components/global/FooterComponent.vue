@@ -25,6 +25,7 @@
           <i class="fa-brands fa-github hover:text-[#4078c0]"></i>
         </a>
       </div>
+      <p class="text-gray-400">Version: {{ config.public.appVersion }}</p>
     </div>
   </div>
 </template>
@@ -33,6 +34,7 @@
 import Cookie from "js-cookie";
 import currentPalette from "~/vars/getColors";
 
+const config = useRuntimeConfig()
 const mobile = ref(false);
 
 const links = ref([
