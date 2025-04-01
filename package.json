@@ -33,5 +33,6 @@
     "postcss": "^8.4.41",
     "standard-version": "^9.5.0",
     "tailwindcss": "^4.0.14"
-  }
+  },
+  "version": "0.1.0"
 }
