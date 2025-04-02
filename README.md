@@ -43,4 +43,4 @@ Faser is a social media app that allows users to create and share posts in real-
 
 ## Contact
 
-For any questions or support, you can reach us at [support@faser.app](mailto:support@faser.app).
+For any questions or support, you can reach us at [faser.app/faq](https://faser.app/faq) or [support@faser.app](mailto:support@faser.app).
