@@ -1,34 +1,16 @@
 <template>
-  <transition name="fade" @leave="leave">
-    <div v-if="showModal" :class="{ animation: showModal, fadeOut: !showModal }"
-      @click.self="changeDisplayNameModal(false)"
-      class="fixed flex justify-center items-center top-0 left-0 w-full h-full z-50 backdrop-blur-sm">
-      <div class="bg-gray-900 p-5 rounded-md m-3 md:w-auto w-full">
-        <div class="w-full flex justify-center">
-          <div class="bg-blue-950 border border-blue-600 h-14 w-14 rounded-full flex justify-center items-center">
-            <i class="fa-solid fa-id-card text-xl"></i>
-          </div>
-        </div>
-        <h2 class="text-center font-bold mt-2">Change display name</h2>
-        <div class="flex justify-center text-center mt-2 text-gray-400">
-          <div class="md:w-96 w-full">
-            <p>Note: You can change your display name as often as you want.</p>
-            <input type="text" class="w-full p-2 rounded-md bg-gray-800 text-white mt-2" v-model="newUsername"
-              placeholder="New Display Name" @input="error = ''" />
-            <p class="mt-2 text-red-500" v-if="error">{{ error }}</p>
-          </div>
-        </div>
-        <div class="flex flex-col md:flex-row justify-center gap-2 mt-4">
-          <button @click="changeDisplayNameModal(false)" class="md:w-2/3 bg-gray-700 p-2 rounded-md">
-            Cancel
-          </button>
-          <button @click="deleteImage" class="md:w-1/3 bg-blue-500 p-2 rounded-md">
-            Submit
-          </button>
-        </div>
+  <BaseModalComponent :isOpen="showModal" @close="changeDisplayNameModal(false)" title="Change display name"
+    icon="id-card" iconBgColor="blue-950" iconBorderColor="blue-600" :error="error" submitText="Submit"
+    animationDirection="bottom" submitButtonClass="bg-blue-500" @submit="changeDisplayName">
+    <div class="flex justify-center text-center mt-2 text-gray-400">
+      <div class="md:w-96 w-full">
+        <p>Note: You can change your display name as often as you want.</p>
+        <input type="text" class="w-full p-2 rounded-md bg-gray-800 text-white mt-2" v-model="newUsername"
+          placeholder="New Display Name" @input="error = ''" />
+        <p class="mt-2 text-red-500" v-if="error">{{ error }}</p>
       </div>
     </div>
-  </transition>
+  </BaseModalComponent>
 </template>
 <script setup>
 import { watch } from "vue";
@@ -36,6 +18,7 @@ import {
   getModalState,
   changeDisplayNameModal,
 } from "~/scripts/account/changeDisplayName";
+import BaseModalComponent from "~/components/ui/BaseModalComponent.vue";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { useRouter } from "vue-router";
@@ -47,31 +30,13 @@ const error = ref("");
 
 const runtimeConfig = useRuntimeConfig()
 
-
-let scrollpos = window.scrollY;
-
 onMounted(() => {
   watch(getModalState(), (value) => {
     showModal.value = value;
-
-    if (value) {
-      scrollpos = window.scrollY;
-
-      document.body.style.position = 'fixed';
-      document.body.style.width = '100%';
-      document.body.style.top = "-" + scrollpos + "px";
-      document.body.classList.add("overflow-hidden")
-    }
-    else {
-      document.body.style.position = '';
-      document.body.style.top = '';
-      document.body.classList.remove("overflow-hidden")
-      window.scrollTo(0, scrollpos);
-    }
   });
 });
 
-function deleteImage() {
+function changeDisplayName() {
   axios
     .post(baseURL + "/api/profile/changeDisplayName", {
       token: Cookies.get("token"),
@@ -87,35 +52,3 @@ function deleteImage() {
     });
 }
 </script>
-
-<style scoped>
-.animation {
-  animation: fadeIn 0.25s;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.fade-leave-active {
-  animation: faceOut 0.25s;
-}
-
-@keyframes faceOut {
-  from {
-    opacity: 1;
-  }
-
-  to {
-    opacity: 0;
-  }
-}
-</style>

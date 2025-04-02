@@ -1,0 +1,180 @@
+<template>
+    <transition :name="transitionName" @leave="onLeave">
+        <div v-if="isOpen"
+            class="fixed flex justify-center items-center top-0 left-0 w-full h-full z-50 backdrop-blur-sm modal-overlay"
+            @click.self="$emit('close')">
+            <div class="p-5 rounded-md m-3 md:w-auto w-full modal-container" :class="[customClass, {
+          'border border-red-500': error,
+        }]" :style="{
+          backgroundColor: currentPalette?.bg,
+          color: currentPalette?.textPrimary,
+          ...containerStyle
+        }">
+                <div v-if="icon" class="w-full flex justify-center">
+                    <div :class="`border h-14 w-14 rounded-full flex justify-center items-center`" :style="{
+              backgroundColor: iconBgStyle,
+              borderColor: iconBorderStyle
+            }">
+                        <i :class="`fa-solid fa-${icon} text-xl`"></i>
+                    </div>
+                </div>
+                <h2 v-if="title" class="text-center font-bold mt-2">{{ title }}</h2>
+
+                <slot></slot>
+
+                <div v-if="$slots.footer" class="mt-4">
+                    <slot name="footer"></slot>
+                </div>
+                <div v-else-if="showDefaultFooter" class="flex flex-col md:flex-row justify-center gap-2 mt-4">
+                    <button @click="$emit('close')" class="md:w-2/3 p-2 rounded-md" :style="{
+              backgroundColor: currentPalette?.buttonSecondary,
+              color: currentPalette?.textPrimary
+            }">
+                        {{ cancelText || 'Cancel' }}
+                    </button>
+                    <button @click="$emit('submit')" class="md:w-1/3 p-2 rounded-md" :style="{
+              backgroundColor: currentPalette?.buttonPrimary,
+              color: currentPalette?.textPrimary
+            }">
+                        {{ submitText || 'Submit' }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </transition>
+</template>
+
+<script setup>
+import currentPalette from "~/vars/getColors";
+
+const props = defineProps({
+    isOpen: {
+        type: Boolean,
+        required: true
+    },
+    title: {
+        type: String,
+        default: ''
+    },
+    icon: {
+        type: String,
+        default: ''
+    },
+    iconBgColor: {
+        type: String,
+        default: ''
+    },
+    iconBorderColor: {
+        type: String,
+        default: ''
+    },
+    error: {
+        type: String,
+        default: ''
+    },
+    customClass: {
+        type: String,
+        default: ''
+    },
+    showDefaultFooter: {
+        type: Boolean,
+        default: true
+    },
+    cancelText: {
+        type: String,
+        default: 'Cancel'
+    },
+    submitText: {
+        type: String,
+        default: 'Submit'
+    },
+    cancelButtonClass: {
+        type: String,
+        default: ''
+    },
+    submitButtonClass: {
+        type: String,
+        default: ''
+    },
+    containerStyle: {
+        type: Object,
+        default: () => ({})
+    },
+    isDanger: {
+        type: Boolean,
+        default: false
+    },
+    animationDirection: {
+        // Wir ignorieren diese Prop jetzt, da wir nur eine einheitliche Animation haben
+        type: String,
+        default: 'bottom'
+    }
+});
+
+// Wir verwenden immer 'modal-standard' als Transitionsnamen
+const transitionName = computed(() => 'modal-standard');
+
+// Berechne Stile für die Icons
+const iconBgStyle = computed(() => {
+    if (props.iconBgColor) return props.iconBgColor;
+    return props.isDanger ? currentPalette.value?.buttonDanger : currentPalette.value?.buttonPrimary;
+});
+
+const iconBorderStyle = computed(() => {
+    if (props.iconBorderColor) return props.iconBorderColor;
+    return props.isDanger ? 'rgba(239, 68, 68, 0.6)' : currentPalette.value?.buttonSecondary;
+});
+
+const emit = defineEmits(['close', 'submit']);
+
+let scrollpos = 0;
+
+watch(() => props.isOpen, (value) => {
+    if (value) {
+        scrollpos = window.scrollY;
+        document.body.style.position = 'fixed';
+        document.body.style.width = '100%';
+        document.body.style.top = `-${scrollpos}px`;
+        document.body.classList.add("overflow-hidden");
+    } else {
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.classList.remove("overflow-hidden");
+        window.scrollTo(0, scrollpos);
+    }
+});
+
+function onLeave() {
+    // Diese Funktion kann bei Bedarf zusätzliche Logik enthalten
+}
+</script>
+
+<style scoped>
+/* Overlay fade effect */
+.modal-overlay {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Common modal container styles */
+.modal-container {
+    max-width: 95%;
+    max-height: 95vh;
+    overflow-y: auto;
+}
+
+/* Standardmäßige Animation für alle Modals */
+.modal-standard-enter-active,
+.modal-standard-leave-active {
+    transition: all 0.25s ease;
+}
+
+.modal-standard-enter-from {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.modal-standard-leave-to {
+    opacity: 0;
+    transform: translateY(20px);
+}
+</style>

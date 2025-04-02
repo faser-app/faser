@@ -234,42 +234,25 @@
         </transition>
 
         <!-- Delete Confirmation Modal -->
-        <transition name="fade">
-            <div v-if="showModal" @click.self="showModal = false" class="modal-overlay">
-                <div class="delete-modal">
-                    <div class="modal-icon">
-                        <i class="fa-solid fa-trash"></i>
-                    </div>
-                    <h2 class="modal-title">Delete Post?</h2>
-                    <p class="modal-text">Do you really want to delete this post?</p>
-                    <div class="modal-actions">
-                        <button @click="showModal = false" class="cancel-button">Cancel</button>
-                        <button @click="deletePost" class="confirm-button">Delete</button>
-                    </div>
+        <BaseModalComponent :isOpen="showModal" @close="showModal = false" title="Delete Post?" icon="trash"
+            :isDanger="true" submitText="Delete" @submit="deletePost">
+            <div class="flex justify-center text-center mt-2" :style="{ color: currentPalette?.textSecondary }">
+                <div class="md:w-96 w-full">
+                    <p>Do you really want to delete this post?</p>
                 </div>
             </div>
-        </transition>
+        </BaseModalComponent>
 
         <!-- Edit Modal -->
-        <transition name="fade">
-            <div v-if="showEditModal" @click.self="showEditModal = false" class="modal-overlay">
-                <div class="edit-modal" :style="{ backgroundColor: currentPalette.bg }">
-                    <div class="modal-icon">
-                        <i class="fa-solid fa-pen"></i>
-                    </div>
-                    <h2 class="modal-title">Edit post</h2>
-                    <p class="modal-subtitle">If you edit the post, an edited text will be added to the post</p>
-                    <textarea class="edit-textarea" :style="{ backgroundColor: currentPalette.bgSecondary }"
-                        v-model="postContent.content"></textarea>
-                    <div class="modal-actions">
-                        <button @click="showEditModal = false" class="cancel-button"
-                            :style="{ backgroundColor: currentPalette.buttonSecondary }">Cancel</button>
-                        <button @click="editPost" class="confirm-button"
-                            :style="{ backgroundColor: currentPalette.buttonDanger }">Save</button>
-                    </div>
-                </div>
+        <BaseModalComponent :isOpen="showEditModal" @close="showEditModal = false" title="Edit post" icon="pen"
+            submitText="Save" @submit="editPost">
+            <div class="flex flex-col justify-center text-center mt-2"
+                :style="{ color: currentPalette?.textSecondary }">
+                <p class="mb-2">If you edit the post, an edited text will be added to the post</p>
+                <textarea class="w-full p-2 rounded-md text-white"
+                    :style="{ backgroundColor: currentPalette?.bgSecondary }" v-model="postContent.content"></textarea>
             </div>
-        </transition>
+        </BaseModalComponent>
 
         <!-- Image Modal -->
         <transition name="fade">
@@ -312,6 +295,8 @@ import { DateTime } from "luxon";
 import { useRouter, useRoute } from "vue-router";
 import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
 import currentPalette from "~/vars/getColors";
+import BaseModalComponent from "~/components/ui/BaseModalComponent.vue";
+import LoginComponent from "~/components/login/LoginComponent.vue";
 
 const router = useRouter();
 const route = useRoute();
