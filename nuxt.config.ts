@@ -75,6 +75,14 @@ export default defineNuxtConfig({
     },
   },
 
+  nitro: {
+    routeRules: {
+      headers: {
+        'X-Frame-Options': 'SAMEORIGIN'
+      }
+    }
+  },
+
   server: {
     port: 3100,
   },
