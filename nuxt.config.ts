@@ -77,7 +77,7 @@ export default defineNuxtConfig({
 
   nitro: {
     routeRules: {
-      headers: {
+      Headers: {
         'X-Frame-Options': 'SAMEORIGIN'
       }
     }
