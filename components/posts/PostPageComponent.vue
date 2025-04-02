@@ -1,5 +1,5 @@
 <template>
-    <div class="min-h-[calc(100vh-4.5rem)] bg-black px-2 text-white">
+    <div class="min-h-[calc(100vh-4.5rem)] px-2 text-white">
         <div v-if="isLoading" class="text-center mt-5">
             <div class="w-full justify-center">
                 <div class="flex justify-center">
