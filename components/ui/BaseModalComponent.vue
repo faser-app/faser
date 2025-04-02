@@ -105,16 +105,13 @@ const props = defineProps({
         default: false
     },
     animationDirection: {
-        // Wir ignorieren diese Prop jetzt, da wir nur eine einheitliche Animation haben
         type: String,
         default: 'bottom'
     }
 });
 
-// Wir verwenden immer 'modal-standard' als Transitionsnamen
 const transitionName = computed(() => 'modal-standard');
 
-// Berechne Stile für die Icons
 const iconBgStyle = computed(() => {
     if (props.iconBgColor) return props.iconBgColor;
     return props.isDanger ? currentPalette.value?.buttonDanger : currentPalette.value?.buttonPrimary;
@@ -132,10 +129,13 @@ let scrollpos = 0;
 watch(() => props.isOpen, (value) => {
     if (value) {
         scrollpos = window.scrollY;
-        document.body.style.position = 'fixed';
-        document.body.style.width = '100%';
-        document.body.style.top = `-${scrollpos}px`;
-        document.body.classList.add("overflow-hidden");
+
+        setTimeout(() => {
+            document.body.style.top = `-${scrollpos}px`;
+            document.body.style.position = 'fixed';
+            document.body.style.width = '100%';
+            document.body.classList.add("overflow-hidden");
+        }, 5);
     } else {
         document.body.style.position = '';
         document.body.style.top = '';
@@ -145,24 +145,20 @@ watch(() => props.isOpen, (value) => {
 });
 
 function onLeave() {
-    // Diese Funktion kann bei Bedarf zusätzliche Logik enthalten
 }
 </script>
 
 <style scoped>
-/* Overlay fade effect */
 .modal-overlay {
     background-color: rgba(0, 0, 0, 0.5);
 }
 
-/* Common modal container styles */
 .modal-container {
     max-width: 95%;
     max-height: 95vh;
     overflow-y: auto;
 }
 
-/* Standardmäßige Animation für alle Modals */
 .modal-standard-enter-active,
 .modal-standard-leave-active {
     transition: all 0.25s ease;
