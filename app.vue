@@ -23,7 +23,6 @@ const fullWidthPages = ref([
   "login",
   "register",
   "verify",
-  "account/settings"
 ])
 
 const accepted = ref(false)
@@ -42,6 +41,10 @@ if (Cookies.get("accepted") && Cookies.get("token")) {
 
 const isFullWidthPage = computed(() => {
   return fullWidthPages.value.some(page => route.path.includes(page))
+})
+
+const isFooterVisible = computed(() => {
+  return !pagesWithoutFooter.value.some(page => route.path.includes(page))
 })
 
 const isHomePage = computed(() => {
@@ -101,7 +104,7 @@ const isMobileView = computed(() => {
       <!-- Cookie banner and other full-width elements -->
       <CookieBannerComponent v-if="!accepted" />
       <!-- Footer is now visible in both mobile and medium screens (where trends are gone but not in mobile view yet) -->
-      <FooterComponent :class="[
+      <FooterComponent v-if="isFooterVisible" :class="[
         'footer-component', 
         {'mobile-footer pb-18': isMobileView},
         {'medium-footer': !isMobileView && windowWidth < 1024}
