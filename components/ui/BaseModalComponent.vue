@@ -32,7 +32,7 @@
             }">
                         {{ cancelText || 'Cancel' }}
                     </button>
-                    <button @click="$emit('submit')" class="md:w-1/3 p-2 rounded-md" :style="{
+                    <button v-if="showSubmitButton" @click="$emit('submit')" class="md:w-1/3 p-2 rounded-md" :style="{
               backgroundColor: currentPalette?.buttonPrimary,
               color: currentPalette?.textPrimary
             }">
@@ -71,6 +71,10 @@ const props = defineProps({
     error: {
         type: String,
         default: ''
+    },
+    showSubmitButton: {
+        type: Boolean,
+        default: true
     },
     customClass: {
         type: String,

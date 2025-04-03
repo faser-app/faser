@@ -7,7 +7,8 @@
         <div class="profile-card rounded-xl overflow-hidden shadow-lg mb-6"
           :style="{ backgroundColor: currentPalette.bgSecondary }">
           <!-- Profile Cover Image (placeholder) -->
-          <div class="profile-cover h-32 md:h-48 w-full" :style="'background: linear-gradient(45deg, ' + gradient1 + ', ' + gradient2 + ')'"></div>
+          <div class="profile-cover h-32 md:h-48 w-full"
+            :style="'background: linear-gradient(45deg, ' + gradient1 + ', ' + gradient2 + ')'"></div>
           <!-- Profile Header Content -->
           <div class="px-6 pt-0 pb-6 relative">
             <!-- Profile Picture -->
@@ -223,60 +224,42 @@
 
     <!-- Modals -->
     <!-- Followers Modal -->
-    <Transition name="fade">
-      <div v-if="openFollower" class="modal-overlay">
-        <div class="modal-container" :style="{ backgroundColor: currentPalette.bg }">
-          <div class="modal-header">
-            <h1 class="modal-title">Followers ({{ followers }})</h1>
-            <button @click="openFollower = false" class="modal-close-button">
-              <i class="fa-solid fa-xmark"></i>
-            </button>
-          </div>
-          <div class="modal-body">
-            <div v-if="profileData.follower && profileData.follower.length > 0" class="followers-list">
-              <div v-for="(user, index) in profileData.follower" :key="user" :class="{ 
-                  'border-b border-gray-700/50 pb-2': index !== profileData.follower.length - 1,
-                  'mt-2': index !== 0 
-                }">
-                <AccountProfileGetFollowComponent :id="user" />
-              </div>
-            </div>
-            <div v-else class="empty-state">
-              <i class="fa-solid fa-users-slash text-4xl text-gray-500 mb-4"></i>
-              <h1>This user is not followed by anyone</h1>
-            </div>
+    <BaseModalComponent :show-submit-button="false" cancel-text="Close" class="modal-overlay" :isOpen="openFollower"
+      @close="openFollower = false" :title="'Followers (' + followers + ')'">
+      <div class="modal-body">
+        <div v-if="profileData.follower && profileData.follower.length > 0" class="followers-list">
+          <div v-for="(user, index) in profileData.follower" :key="user" :class="{ 
+              'border-b border-gray-700/50 pb-2': index !== profileData.follower.length - 1,
+              'mt-2': index !== 0 
+            }">
+            <AccountProfileGetFollowComponent :id="user" />
           </div>
         </div>
+        <div v-else class="empty-state">
+          <i class="fa-solid fa-users-slash text-4xl text-gray-500 mb-4"></i>
+          <h1>This user is not followed by anyone</h1>
+        </div>
       </div>
-    </Transition>
+    </BaseModalComponent>
 
     <!-- Following Modal -->
-    <Transition name="fade">
-      <div v-if="openFollowing" class="modal-overlay">
-        <div class="modal-container" :style="{ backgroundColor: currentPalette.bg }">
-          <div class="modal-header">
-            <h1 class="modal-title">Following ({{ following }})</h1>
-            <button @click="openFollowing = false" class="modal-close-button">
-              <i class="fa-solid fa-xmark"></i>
-            </button>
-          </div>
-          <div class="modal-body">
-            <div v-if="profileData.following && profileData.following.length > 0" class="following-list">
-              <div v-for="(user, index) in profileData.following" :key="user" :class="{ 
-                  'border-b border-gray-700/50 pb-2': index !== profileData.following.length - 1,
-                  'mt-2': index !== 0 
-                }">
-                <AccountProfileGetFollowComponent :id="user" />
-              </div>
-            </div>
-            <div v-else class="empty-state">
-              <i class="fa-solid fa-users-slash text-4xl text-gray-500 mb-4"></i>
-              <h1>This user is not following anyone</h1>
-            </div>
+    <BaseModalComponent :show-submit-button="false" cancel-text="Close" class="modal-overlay" :isOpen="openFollowing"
+      @close="openFollowing = false" :title="'Following (' + following + ')'">
+      <div class="modal-body">
+        <div v-if="profileData.following && profileData.following.length > 0" class="following-list">
+          <div v-for="(user, index) in profileData.following" :key="user" :class="{ 
+              'border-b border-gray-700/50 pb-2': index !== profileData.following.length - 1,
+              'mt-2': index !== 0 
+            }">
+            <AccountProfileGetFollowComponent :id="user" />
           </div>
         </div>
+        <div v-else class="empty-state">
+          <i class="fa-solid fa-users-slash text-4xl text-gray-500 mb-4"></i>
+          <h1>This user is not following anyone</h1>
+        </div>
       </div>
-    </Transition>
+    </BaseModalComponent>
 
     <!-- Report Modal -->
     <Transition name="fade">
@@ -326,6 +309,7 @@ import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
 import currentPalette from "~/vars/getColors";
 import CommunityLinkComponent from "./CommunityLinkComponent.vue";
 import ColorThief from 'colorthief';
+import BaseModalComponent from "~/components/ui/BaseModalComponent.vue";
 
 useHead({
   meta: [

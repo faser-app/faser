@@ -1,6 +1,6 @@
 <template>
     <RouterLink :to="'/' + user.username">
-        <div class="flex min-w-full items-center">
+        <div class="flex min-w-[80svw] items-center">
             <img v-if="user.hasProfilePicture" @error="user.hasProfilePicture = false"
                 :src="'https://s3.faser.app/profilepictures/' + user.id + '/image.png' + '?t=' + new Date().getTime()"
                 class="h-12 w-12 bg-cover object-cover" :class="{
