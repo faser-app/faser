@@ -23,6 +23,7 @@ const fullWidthPages = ref([
   "login",
   "register",
   "verify",
+  "community"
 ])
 
 const accepted = ref(false)
