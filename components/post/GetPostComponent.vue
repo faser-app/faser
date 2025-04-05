@@ -125,7 +125,7 @@
                 ]">
                     <!-- Show first 4 images directly in the grid -->
                     <div v-for="imageIndex in Math.min(postContent.images, 4)" :key="imageIndex" class="image-container"
-                        @click="openImage('https://s3.faser.app/postimages/' + author.id + '/' + postContent.postId + '/' + imageIndex + '.png')">
+                        @click="openImage('https://s3.faser.app/postimages/' + author.id + '/' + postContent.postId + '/' + imageIndex + '.png', imageIndex)">
                         <img :src="'https://s3.faser.app/postimages/' + author.id + '/' + postContent.postId + '/' + imageIndex + '.png'"
                             :class="postContent.images === 1 ? 'post-image-single' : 'post-image'" />
 
@@ -255,20 +255,8 @@
         </BaseModalComponent>
 
         <!-- Image Modal -->
-        <transition name="fade">
-            <div v-if="showImageModal" @click.self="showImageModal = false" class="modal-overlay image-modal-overlay">
-                <div class="image-modal" :class="{'transition-back': !isDragging}" @touchstart="handleTouchStart"
-                    @touchmove="handleTouchMove" @touchend="handleTouchEnd"
-                    :style="{ transform: `translateY(${translateY}px)` }">
-                    <div class="image-carousel">
-                        <div v-for="imageIndex in Number(postContent.images)" :key="imageIndex" class="carousel-item">
-                            <img :src="'https://s3.faser.app/postimages/' + author.id + '/' + postContent.postId + '/' + imageIndex + '.png'"
-                                class="full-image" @click.self="showImageModal = false" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </transition>
+        <ImageModalComponent :isOpen="showImageModal" @close="showImageModal = false" :imageSrc="imageSrc"
+            :imagesList="imagesList" :startIndex="currentImageIndex" />
 
         <!-- Report Modal -->
         <transition name="fade">
@@ -297,6 +285,7 @@ import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
 import currentPalette from "~/vars/getColors";
 import BaseModalComponent from "~/components/ui/BaseModalComponent.vue";
 import LoginComponent from "~/components/login/LoginComponent.vue";
+import ImageModalComponent from "./ImageModalComponent.vue";
 
 const router = useRouter();
 const route = useRoute();
@@ -382,16 +371,10 @@ watch(() => showImageModal.value, (value) => {
     if (value) {
         scrollpos = window.scrollY;
 
-        document.body.style.position = 'fixed';
-        document.body.style.width = '100%';
-        document.body.style.top = "-" + scrollpos + "px";
-        document.body.classList.add("overflow-hidden")
+        document.body.classList.add("overflow-hidden");
     }
     else {
-        document.body.style.position = '';
-        document.body.style.top = '';
-        document.body.classList.remove("overflow-hidden")
-        window.scrollTo(0, scrollpos);
+        document.body.classList.remove("overflow-hidden");
     }
 })
 
@@ -601,8 +584,24 @@ function toggleLike() {
 }
 
 const postId = ref(props.postId)
-
 const imageSrc = ref('')
+const imagesList = ref([])
+const currentImageIndex = ref(0)
+
+function openImage(imageSrcValue, index) {
+    imageSrc.value = imageSrcValue
+    currentImageIndex.value = index - 1 
+
+    if (postContent.value.images > 0) {
+        imagesList.value = []
+        for (let i = 1; i <= postContent.value.images; i++) {
+            imagesList.value.push(`https://s3.faser.app/postimages/${author.value.id}/${postContent.value.postId}/${i}.png`)
+        }
+    }
+
+    showImageModal.value = true
+    translateY.value = 0
+}
 
 function deletePost() {
     if (!props.admin) {
@@ -644,12 +643,6 @@ function editPost() {
 
 function openreport() {
     openReport.value = true
-}
-
-function openImage(imageSrcValue) {
-    showImageModal.value = true
-    imageSrc.value = imageSrcValue
-    translateY.value = 0
 }
 
 function formatTimeDifference(timestamp) {
