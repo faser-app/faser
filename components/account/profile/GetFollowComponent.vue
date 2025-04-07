@@ -1,5 +1,6 @@
 <template>
-    <RouterLink :to="'/' + user.username">
+    <div @click="openProfile(user.username)">
+        {{ user.username }}
         <div class="flex min-w-[80svw] items-center">
             <img v-if="user.hasProfilePicture" @error="user.hasProfilePicture = false"
                 :src="'https://s3.faser.app/profilepictures/' + user.id + '/image.png' + '?t=' + new Date().getTime()"
@@ -35,7 +36,7 @@
                 <p class="text-sm text-gray-400">@{{ user.username }}</p>
             </div>
         </div>
-    </RouterLink>
+    </div>
 </template>
 
 <script setup>
@@ -47,8 +48,14 @@ const props = defineProps({
     id: Number,
 })
 
+const emit = defineEmits(["openProfile"])
+
 const runtimeConfig = useRuntimeConfig()
 
+function openProfile(name) {
+    console.log(name)
+    emit("openProfile", name)
+}
 
 onMounted(async () => {
     const response = await axios.get(baseURL + "/api/account/getProfile", {
