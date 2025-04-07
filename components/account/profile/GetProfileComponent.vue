@@ -232,7 +232,7 @@
               'border-b border-gray-700/50 pb-2': index !== profileData.follower.length - 1,
               'mt-2': index !== 0 
             }">
-            <AccountProfileGetFollowComponent :id="user" />
+            <AccountProfileGetFollowComponent :id="user" @open-profile="openProfile()" />
           </div>
         </div>
         <div v-else class="empty-state">
@@ -251,7 +251,7 @@
               'border-b border-gray-700/50 pb-2': index !== profileData.following.length - 1,
               'mt-2': index !== 0 
             }">
-            <AccountProfileGetFollowComponent :id="user" />
+            <AccountProfileGetFollowComponent :id="user" @open-profile="openProfile()" />
           </div>
         </div>
         <div v-else class="empty-state">
@@ -397,6 +397,13 @@ async function main() {
       getProfile()
     });
 
+}
+
+function openProfile(name) {
+  openFollower.value = false
+  openFollowing.value = false
+  console.log(name)
+  router.push("/" + name)
 }
 
 function componentToHex(c) {
