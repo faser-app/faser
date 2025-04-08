@@ -150,6 +150,14 @@ watch(() => props.isOpen, (value) => {
 
 function onLeave() {
 }
+
+onMounted(() => {
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && props.isOpen) {
+            emit('close');
+        }
+    });
+})
 </script>
 
 <style scoped>
