@@ -1,6 +1,5 @@
 <template>
     <div @click="openProfile(user.username)">
-        {{ user.username }}
         <div class="flex min-w-[80svw] items-center">
             <img v-if="user.hasProfilePicture" @error="user.hasProfilePicture = false"
                 :src="'https://s3.faser.app/profilepictures/' + user.id + '/image.png' + '?t=' + new Date().getTime()"
