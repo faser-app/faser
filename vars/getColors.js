@@ -27,5 +27,9 @@ if (theme.value === "normal") {
   currentPalette.value = colors.value.normal;
 }
 
+if (theme.value === "neon") {
+  currentPalette.value = colors.value.neon;
+}
+
 
 export default currentPalette;

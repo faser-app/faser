@@ -65,6 +65,17 @@ const colors = ref({
     textSecondary: "#b9c4d8",
     textPrimary: "#f0f5ff",
   },
+  neon: {
+    name: "neon",
+    displayName: "Neon",
+    bg: "#213a58",
+    bgSecondary: "#0c6478",
+    buttonSecondary: "#15919b",
+    buttonPrimary: "#09b1c7",
+    buttonDanger: "#80cfee",
+    textSecondary: "#bce3d7",
+    textPrimary: "#ffffff",
+  },
 });
 
 export default colors;
