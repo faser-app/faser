@@ -5,26 +5,26 @@
       <div class="md:w-4/5 max-w-[90rem] w-full px-4">
         <!-- Profile Header Section -->
         <div class="profile-card rounded-xl overflow-hidden shadow-lg mb-6"
-          :style="{ backgroundColor: currentPalette.bgSecondary }">
+             :style="{ backgroundColor: currentPalette.bgSecondary }">
           <!-- Profile Cover Image (placeholder) -->
           <div class="profile-cover h-32 md:h-48 w-full"
-            :style="'background: linear-gradient(45deg, ' + gradient1 + ', ' + gradient2 + ')'"></div>
+               :style="'background: linear-gradient(45deg, ' + gradient1 + ', ' + gradient2 + ')'"></div>
           <!-- Profile Header Content -->
           <div class="px-6 pt-0 pb-6 relative">
             <!-- Profile Picture -->
             <div class="profile-picture-container">
               <img v-if="hasProfilePicture && loaded"
-                :src="'https://s3.faser.app/profilepictures/' + profileData.id + '/image.png?t=' + new Date().getTime()"
-                @error="hasProfilePicture = false" alt="profile picture"
-                class="profile-picture bg-gray-900 object-cover border-4 ph-no-capture" :class="{
+                   :src="'https://s3.faser.app/profilepictures/' + profileData.id + '/image.png?t=' + new Date().getTime()"
+                   @error="hasProfilePicture = false" alt="profile picture"
+                   class="profile-picture bg-gray-900 object-cover border-4 ph-no-capture" :class="{
                   'rounded-full': !profileData.businessAccount,
                   'rounded-md': profileData.businessAccount,
                   'border-gray-800': currentPalette.name === 'normal',
                   'border-gray-900': currentPalette.name !== 'normal'
-                }" />
+                }"/>
               <div v-else
-                class="profile-picture flex border justify-center items-center border-[#96969627] bg-[#1118276c]"
-                :class="{
+                   class="profile-picture flex border justify-center items-center border-[#96969627] bg-[#1118276c]"
+                   :class="{
                   'rounded-full': !profileData.businessAccount,
                   'rounded-md': profileData.businessAccount
                 }">
@@ -37,26 +37,28 @@
               <Menu as="div" class="relative md:hidden inline-block text-left">
                 <div>
                   <MenuButton
-                    class="inline-flex justify-center rounded-full bg-gray-800 bg-opacity-50 p-2 text-sm text-white hover:bg-opacity-70 transition-all">
+                      class="inline-flex justify-center rounded-full bg-gray-800 bg-opacity-50 p-2 text-sm text-white hover:bg-opacity-70 transition-all">
                     <i class="fa-solid fa-users"></i>
                   </MenuButton>
                 </div>
                 <transition enter-active-class="transition duration-100 ease-out"
-                  enter-from-class="transform scale-95 opacity-0" enter-to-class="transform scale-100 opacity-100"
-                  leave-active-class="transition duration-75 ease-in" leave-from-class="transform scale-100 opacity-100"
-                  leave-to-class="transform scale-95 opacity-0">
+                            enter-from-class="transform scale-95 opacity-0"
+                            enter-to-class="transform scale-100 opacity-100"
+                            leave-active-class="transition duration-75 ease-in"
+                            leave-from-class="transform scale-100 opacity-100"
+                            leave-to-class="transform scale-95 opacity-0">
                   <MenuItems
-                    class="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-700 rounded-md shadow-lg ring-1 ring-black/5 focus:outline-hidden"
-                    :style="{ backgroundColor: currentPalette.bg }">
+                      class="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-700 rounded-md shadow-lg ring-1 ring-black/5 focus:outline-hidden"
+                      :style="{ backgroundColor: currentPalette.bg }">
                     <div class="px-1 py-1 ph-no-capture">
                       <MenuItem v-for="community in communities" v-slot="{ active }">
-                      <RouterLink :to="'/communities/' + community.id" :class="[
+                        <RouterLink :to="'/communities/' + community.id" :class="[
                           active ? 'bg-gray-700 text-white' : 'text-gray-200',
                           'group flex w-full items-center rounded-md px-2 py-2 text-sm',
                         ]">
-                        <i class="fa-solid fa-users mr-2"></i>
-                        {{ community.displayName }}
-                      </RouterLink>
+                          <i class="fa-solid fa-users mr-2"></i>
+                          {{ community.displayName }}
+                        </RouterLink>
                       </MenuItem>
                     </div>
                   </MenuItems>
@@ -69,7 +71,7 @@
               <!-- Badges -->
               <div class="flex flex-wrap gap-2 text-sm mb-3" v-if="badges.length !== 0">
                 <div v-for="badge in badges" :key="badge.name"
-                  class="badge flex items-center cursor-default rounded-full px-3 py-1 ph-no-capture" :style="{
+                     class="badge flex items-center cursor-default rounded-full px-3 py-1 ph-no-capture" :style="{
                     backgroundColor: badge.color + '22', 
                     border: '1px solid ' + badge.color,
                     color: badge.color
@@ -96,11 +98,11 @@
 
               <!-- Follow Button -->
               <div v-if="isAbleToFollow" @click="toggleFollow"
-                class="inline-block cursor-pointer select-none rounded-md overflow-hidden">
+                   class="inline-block cursor-pointer select-none rounded-md overflow-hidden">
                 <div class="relative h-10 w-24">
                   <div
-                    class="absolute inset-0 bg-gradient-to-tr from-[#24c7ce] to-[#1ed794] flex items-center justify-center"
-                    v-if="followed">
+                      class="absolute inset-0 bg-gradient-to-tr from-[#24c7ce] to-[#1ed794] flex items-center justify-center"
+                      v-if="followed">
                     <p>Followed</p>
                   </div>
                   <div class="absolute inset-0 bg-gray-800 flex items-center justify-center text-gray-100" v-else>
@@ -132,13 +134,13 @@
             <!-- Music section -->
             <div v-if="music.songAuthor" class="music-section my-6 ph-no-capture">
               <iframe :src="'https://open.spotify.com/embed/track/' + music.songId"
-                class="spotify-embed rounded-lg shadow-lg w-full mx-auto md:w-3/4" height="80" frameBorder="0"
-                allowfullscreen="" allow="clipboard-write; encrypted-media;"></iframe>
+                      class="spotify-embed rounded-lg shadow-lg w-full mx-auto md:w-3/4" height="80" frameBorder="0"
+                      allowfullscreen="" allow="clipboard-write; encrypted-media;"></iframe>
             </div>
 
             <!-- Bio Section -->
             <div class="bio-section my-6 p-4 rounded-lg bio ph-no-capture"
-              :style="{ backgroundColor: currentPalette.bg }">
+                 :style="{ backgroundColor: currentPalette.bg }">
               <p v-if="profileData.bio" class="markdown-content" v-html="markdownHTML"></p>
               <p v-else class="italic text-gray-400">
                 No bio. Just imagine something cool here.
@@ -148,25 +150,25 @@
             <!-- Action Buttons -->
             <div class="action-buttons-grid grid grid-cols-2 gap-3 my-6">
               <div to="/account/settings" @click="openReport = true"
-                class="flex items-center gap-2 cursor-pointer justify-center rounded-md p-2"
-                :style="{ backgroundColor: currentPalette.buttonPrimary, color: currentPalette.textSecondary }">
+                   class="flex items-center gap-2 cursor-pointer justify-center rounded-md p-2"
+                   :style="{ backgroundColor: currentPalette.buttonPrimary, color: currentPalette.textSecondary }">
                 <i class="fa-solid fa-shield mr-2"></i>
                 Report Profile
               </div>
               <div to="/account/settings" @click="alertNotImplemented"
-                class="flex items-center gap-2 cursor-pointer justify-center rounded-md p-2"
-                :style="{ backgroundColor: currentPalette.buttonPrimary, color: currentPalette.textSecondary }">
+                   class="flex items-center gap-2 cursor-pointer justify-center rounded-md p-2"
+                   :style="{ backgroundColor: currentPalette.buttonPrimary, color: currentPalette.textSecondary }">
                 <i class="fa-solid fa-ban mr-2"></i>
                 Block User
               </div>
               <div @click="shareProfile" class="flex items-center gap-2 cursor-pointer justify-center rounded-md p-2"
-                :style="{ backgroundColor: currentPalette.buttonPrimary, color: currentPalette.textSecondary }">
+                   :style="{ backgroundColor: currentPalette.buttonPrimary, color: currentPalette.textSecondary }">
                 <i class="fa-solid fa-share mr-2"></i>
                 Share Profile
               </div>
               <RouterLink :to="'/messages/' + profileData.id"
-                class="flex items-center gap-2 cursor-pointer justify-center rounded-md p-2"
-                :style="{ backgroundColor: currentPalette.buttonPrimary, color: currentPalette.textSecondary }">
+                          class="flex items-center gap-2 cursor-pointer justify-center rounded-md p-2"
+                          :style="{ backgroundColor: currentPalette.buttonPrimary, color: currentPalette.textSecondary }">
                 <i class="fa-solid fa-message mr-2"></i>
                 Message
               </RouterLink>
@@ -176,7 +178,7 @@
 
         <!-- Posts Section -->
         <div class="posts-section rounded-xl overflow-hidden shadow-lg"
-          :style="{ backgroundColor: currentPalette.bgSecondary }">
+             :style="{ backgroundColor: currentPalette.bgSecondary }">
           <h2 class="text-xl font-semibold p-4 border-b border-gray-700/50">Posts</h2>
           <div v-if="posts == 0" class="empty-posts flex flex-col items-center justify-center py-16">
             <i class="fa-regular fa-newspaper text-4xl text-gray-500 mb-4"></i>
@@ -184,9 +186,10 @@
           </div>
           <div v-else class="posts-list">
             <div v-for="(post, index) in loadedPosts" :key="post.id"
-              :class="{ 'border-b border-gray-700/50': index !== loadedPosts.length - 1 }">
+                 :class="{ 'border-b border-gray-700/50': index !== loadedPosts.length - 1 }">
               <PostGetPostComponent class="ph-no-capture" :postId="post" ownProfile="true" :profile="profileData"
-                :ownProfile="ownProfile" :account="accountData" :ownProfileData="ownProfileData" :border="false" />
+                                    :ownProfile="ownProfile" :account="accountData" :ownProfileData="ownProfileData"
+                                    :border="false"/>
             </div>
           </div>
         </div>
@@ -195,18 +198,18 @@
       <!-- Right Sidebar (Communities) - Desktop Only -->
       <div class="communities-sidebar md:block hidden md:w-1/5 mr-3">
         <div v-if="communities.length > 0" class="sidebar-section rounded-xl p-4 shadow-lg"
-          :style="{ backgroundColor: currentPalette.bgSecondary }">
+             :style="{ backgroundColor: currentPalette.bgSecondary }">
           <h2 class="text-xl font-semibold mb-4 text-center">Communities</h2>
           <div class="space-y-3">
             <div v-for="community in communities" :key="community.name" class="ph-no-capture">
               <RouterLink :to="'/communities/' + community.id">
-                <CommunityLinkComponent :community="community" />
+                <CommunityLinkComponent :community="community"/>
               </RouterLink>
             </div>
           </div>
         </div>
         <div v-else class="sidebar-section text-center text-gray-400 rounded-xl p-4 shadow-lg"
-          :style="{ backgroundColor: currentPalette.bgSecondary }">
+             :style="{ backgroundColor: currentPalette.bgSecondary }">
           <p v-if="!privateAccount">No Communities yet</p>
           <p v-else>Private account</p>
         </div>
@@ -225,14 +228,14 @@
     <!-- Modals -->
     <!-- Followers Modal -->
     <BaseModalComponent :show-submit-button="false" cancel-text="Close" class="modal-overlay" :isOpen="openFollower"
-      @close="openFollower = false" :title="'Followers (' + followers + ')'">
+                        @close="openFollower = false" :title="'Followers (' + followers + ')'">
       <div class="modal-body">
         <div v-if="profileData.follower && profileData.follower.length > 0" class="followers-list">
           <div v-for="(user, index) in profileData.follower" :key="user" :class="{ 
               'border-b border-gray-700/50 pb-2': index !== profileData.follower.length - 1,
               'mt-2': index !== 0 
             }">
-            <AccountProfileGetFollowComponent :id="user" @open-profile="openProfile()" />
+            <AccountProfileGetFollowComponent :id="user" @open-profile="openProfile"/>
           </div>
         </div>
         <div v-else class="empty-state">
@@ -244,14 +247,14 @@
 
     <!-- Following Modal -->
     <BaseModalComponent :show-submit-button="false" cancel-text="Close" class="modal-overlay" :isOpen="openFollowing"
-      @close="openFollowing = false" :title="'Following (' + following + ')'">
+                        @close="openFollowing = false" :title="'Following (' + following + ')'">
       <div class="modal-body">
         <div v-if="profileData.following && profileData.following.length > 0" class="following-list">
           <div v-for="(user, index) in profileData.following" :key="user" :class="{ 
               'border-b border-gray-700/50 pb-2': index !== profileData.following.length - 1,
               'mt-2': index !== 0 
             }">
-            <AccountProfileGetFollowComponent :id="user" @open-profile="openProfile()" />
+            <AccountProfileGetFollowComponent :id="user" @open-profile="openProfile"/>
           </div>
         </div>
         <div v-else class="empty-state">
@@ -273,7 +276,7 @@
           </div>
           <div class="modal-body">
             <SupportFieldsComponent :predefinedSubject="'User Report for ' + profileData.displayName"
-              :predefinedMessage="'I want to report this person because...\n\nUser ID: ' + profileData.id" />
+                                    :predefinedMessage="'I want to report this person because...\n\nUser ID: ' + profileData.id"/>
             <p class="ml-4 mb-4">Please provide the User ID for the Person you want to report.</p>
           </div>
         </div>
@@ -291,7 +294,7 @@
             </button>
           </div>
           <div class="modal-body">
-            <LoginComponent />
+            <LoginComponent/>
           </div>
         </div>
       </div>
@@ -301,11 +304,11 @@
 
 <script setup>
 import axios from "axios";
-import { useRoute, useRouter } from "vue-router";
+import {useRoute, useRouter} from "vue-router";
 import MarkdownIt from "markdown-it";
 import Cookies from "js-cookie";
-import { useHead } from "#app";
-import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
+import {useHead} from "#app";
+import {Menu, MenuButton, MenuItems, MenuItem} from '@headlessui/vue'
 import currentPalette from "~/vars/getColors";
 import CommunityLinkComponent from "./CommunityLinkComponent.vue";
 import ColorThief from 'colorthief';
@@ -381,21 +384,21 @@ async function main() {
       token: Cookies.get("token"),
     },
   })
-    .then(async (ownResponse) => {
-      if (ownResponse && ownResponse.data) {
-        ownProfileData.value = ownResponse.data[0];
-        ownId.value = ownResponse.data[0].id;
-        accountData.value = ownResponse.data[1];
-      } else {
-        console.error("Die API hat keine gültigen Daten zurückgegeben.");
-      }
+      .then(async (ownResponse) => {
+        if (ownResponse && ownResponse.data) {
+          ownProfileData.value = ownResponse.data[0];
+          ownId.value = ownResponse.data[0].id;
+          accountData.value = ownResponse.data[1];
+        } else {
+          console.error("Die API hat keine gültigen Daten zurückgegeben.");
+        }
 
-      getProfile()
-    })
-    .catch((error) => {
-      console.error("Fehler beim Abrufen des eigenen Profils:", error);
-      getProfile()
-    });
+        getProfile()
+      })
+      .catch((error) => {
+        console.error("Fehler beim Abrufen des eigenen Profils:", error);
+        getProfile()
+      });
 
 }
 
@@ -414,19 +417,19 @@ function componentToHex(c) {
 
 async function getProfile() {
   const response = await axios
-    .get(url, {
-      headers: {
-        username: username,
-        lang: navigator.language || navigator.userLanguage,
-      },
-    }).catch((error) => {
-      if (error.response.status === 404) {
-        loaded.value = true;
-        success.value = false;
-      } else {
-        router.push("/login")
-      }
-    });
+      .get(url, {
+        headers: {
+          username: username,
+          lang: navigator.language || navigator.userLanguage,
+        },
+      }).catch((error) => {
+        if (error.response.status === 404) {
+          loaded.value = true;
+          success.value = false;
+        } else {
+          router.push("/login")
+        }
+      });
 
   if (response.status === 200) {
     loaded.value = true;
@@ -466,9 +469,9 @@ async function getProfile() {
     axios.post(baseURL + "/api/community/getCommunity", {
       communityId: response.data[0].communities[i].id
     })
-      .then((response) => {
-        communities.value.push(response.data.community)
-      })
+        .then((response) => {
+          communities.value.push(response.data.community)
+        })
   }
 
   music.value = response.data[0].music
@@ -526,42 +529,42 @@ function toggleFollow() {
     token: Cookies.get("token"),
     username: route.params.user.replace("@", "")
   })
-    .then()
-    .catch((error) => {
-      if (error.response.data.message === "You cannot follow yourself") {
-        alert(error.response.data.message)
+      .then()
+      .catch((error) => {
+        if (error.response.data.message === "You cannot follow yourself") {
+          alert(error.response.data.message)
 
-        if (followed.value) {
-          url = baseURL + "/api/social/unfollowUser"
-          followers.value--
+          if (followed.value) {
+            url = baseURL + "/api/social/unfollowUser"
+            followers.value--
+          } else {
+            url = baseURL + "/api/social/followUser"
+            followers.value++
+          }
+
+          followed.value = !followed.value
+        } else if (error.response.status === 429) {
+          alert(error.response.data)
+
+          if (followed.value) {
+            url = baseURL + "/api/social/unfollowUser"
+            followers.value--
+          } else {
+            url = baseURL + "/api/social/followUser"
+            followers.value++
+          }
+
+          followed.value = !followed.value
+        } else if (error.response.data.message === "You are already following this user") {
+          if (url.includes("unfollow")) {
+            followers.value++
+          } else {
+            followers.value--
+          }
         } else {
-          url = baseURL + "/api/social/followUser"
-          followers.value++
+          router.push("/login")
         }
-
-        followed.value = !followed.value
-      } else if (error.response.status === 429) {
-        alert(error.response.data)
-
-        if (followed.value) {
-          url = baseURL + "/api/social/unfollowUser"
-          followers.value--
-        } else {
-          url = baseURL + "/api/social/followUser"
-          followers.value++
-        }
-
-        followed.value = !followed.value
-      } else if (error.response.data.message === "You are already following this user") {
-        if (url.includes("unfollow")) {
-          followers.value++
-        } else {
-          followers.value--
-        }
-      } else {
-        router.push("/login")
-      }
-    })
+      })
 
   followed.value = !followed.value
 }

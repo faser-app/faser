@@ -49,8 +49,6 @@ const props = defineProps({
 
 const emit = defineEmits(["openProfile"])
 
-const runtimeConfig = useRuntimeConfig()
-
 function openProfile(name) {
     console.log(name)
     emit("openProfile", name)
