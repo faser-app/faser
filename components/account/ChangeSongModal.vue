@@ -71,7 +71,7 @@ const props = defineProps({
     profileSelector: Boolean,
 })
 
-defineEmits(['close']);
+const emit = defineEmits(['close']);
 
 const router = useRouter();
 const error = ref("");
@@ -100,7 +100,7 @@ function changeSong() {
         albumId: selectedTrack.value.albumId,
     })
         .then((response) => {
-            $emit('close');
+            emit("close")
             router.push("/profile");
         })
 }
@@ -110,7 +110,7 @@ function removeSong() {
         token: Cookies.get("token"),
     })
         .then((response) => {
-            $emit('close');
+            emit('close');
             router.push("/profile");
         })
 }
