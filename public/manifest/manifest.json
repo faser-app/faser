@@ -1,25 +1,25 @@
 {
-  "name": "faser",
-  "short_name": "faser",
-  "icons": [
-    {
-      "src": "/icon/logo.png",
-      "sizes": "2048x2048",
-      "type": "image/png"
-    },
-    {
-      "src": "/icon/logo.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "/icon/logo.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    }
-  ],
-  "start_url": "/",
-  "display": "standalone",
-  "background_color": "#030712",
-  "theme_color": "#030712"
+    "name": "faser",
+    "short_name": "faser",
+    "icons": [
+        {
+            "src": "/icon/logo.png",
+            "sizes": "2048x2048",
+            "type": "image/png"
+        },
+        {
+            "src": "/icon/logo.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/icon/logo.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ],
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#030712",
+    "theme_color": "#030712"
 }

@@ -1,20 +1,40 @@
 <template>
-    <BaseModalComponent :isOpen="isOpen" @close="$emit('close')"
-        customClass="p-0 bg-transparent max-w-[90vw] max-h-[90vh]" :showDefaultFooter="false"
-        animationDirection="bottom">
-        <div class="image-carousel w-full h-full relative" @touchstart="handleTouchStart" @touchmove="handleTouchMove"
-            @touchend="handleTouchEnd" :style="{ transform: `translateY(${translateY}px)` }"
-            :class="{'transition-back': !isDragging}">
-
-            <img :src="currentImage" class="full-image max-w-full max-h-[90vh] object-contain" />
+    <BaseModalComponent
+        :isOpen="isOpen"
+        @close="$emit('close')"
+        customClass="p-0 bg-transparent max-w-[90vw] max-h-[90vh]"
+        :showDefaultFooter="false"
+        animationDirection="bottom"
+    >
+        <div
+            class="image-carousel w-full h-full relative"
+            @touchstart="handleTouchStart"
+            @touchmove="handleTouchMove"
+            @touchend="handleTouchEnd"
+            :style="{ transform: `translateY(${translateY}px)` }"
+            :class="{ 'transition-back': !isDragging }"
+        >
+            <img
+                :src="currentImage"
+                class="full-image max-w-full max-h-[90vh] object-contain"
+            />
 
             <div v-if="hasMultipleImages" class="navigation-arrows">
-                <button @click.stop="prevImage" class="nav-arrow left-arrow" :class="{'disabled': currentIndex === 0}">
+                <button
+                    @click.stop="prevImage"
+                    class="nav-arrow left-arrow"
+                    :class="{ disabled: currentIndex === 0 }"
+                >
                     <i class="fa-solid fa-chevron-left"></i>
                 </button>
 
-                <button @click.stop="nextImage" class="nav-arrow right-arrow"
-                    :class="{'disabled': currentIndex === imagesList.length - 1}">
+                <button
+                    @click.stop="nextImage"
+                    class="nav-arrow right-arrow"
+                    :class="{
+                        disabled: currentIndex === imagesList.length - 1,
+                    }"
+                >
                     <i class="fa-solid fa-chevron-right"></i>
                 </button>
             </div>
@@ -26,133 +46,138 @@
     </BaseModalComponent>
 </template>
 <script setup>
-import BaseModalComponent from "~/components/ui/BaseModalComponent.vue";
+import BaseModalComponent from '~/components/ui/BaseModalComponent.vue'
 
 const props = defineProps({
     isOpen: {
         type: Boolean,
-        required: true
+        required: true,
     },
     imageSrc: {
         type: String,
         required: false,
-        default: ''
+        default: '',
     },
     imagesList: {
         type: Array,
         required: false,
-        default: () => []
+        default: () => [],
     },
     startIndex: {
         type: Number,
         required: false,
-        default: 0
+        default: 0,
+    },
+})
+
+defineEmits(['close'])
+
+const isDragging = ref(false)
+const startY = ref(0)
+const currentY = ref(0)
+const translateY = ref(0)
+const startX = ref(0)
+const currentX = ref(0)
+const translateX = ref(0)
+const currentIndex = ref(props.startIndex)
+
+watch(
+    () => props.isOpen,
+    (newValue) => {
+        if (newValue) {
+            currentIndex.value = props.startIndex
+        }
     }
-});
-
-defineEmits(['close']);
-
-const isDragging = ref(false);
-const startY = ref(0);
-const currentY = ref(0);
-const translateY = ref(0);
-const startX = ref(0);
-const currentX = ref(0);
-const translateX = ref(0);
-const currentIndex = ref(props.startIndex);
-
-watch(() => props.isOpen, (newValue) => {
-    if (newValue) {
-        currentIndex.value = props.startIndex;
-    }
-});
+)
 
 const currentImage = computed(() => {
     if (props.imagesList && props.imagesList.length > 0) {
-        return props.imagesList[currentIndex.value];
+        return props.imagesList[currentIndex.value]
     }
-    return props.imageSrc;
-});
+    return props.imageSrc
+})
 
 const hasMultipleImages = computed(() => {
-    return props.imagesList && props.imagesList.length > 1;
-});
+    return props.imagesList && props.imagesList.length > 1
+})
 
 const nextImage = () => {
     if (currentIndex.value < props.imagesList.length - 1) {
-        currentIndex.value++;
+        currentIndex.value++
     }
-};
+}
 
 const prevImage = () => {
     if (currentIndex.value > 0) {
-        currentIndex.value--;
+        currentIndex.value--
     }
-};
+}
 
 const handleTouchStart = (event) => {
-    isDragging.value = true;
-    startY.value = event.touches[0].clientY;
-    startX.value = event.touches[0].clientX;
-};
+    isDragging.value = true
+    startY.value = event.touches[0].clientY
+    startX.value = event.touches[0].clientX
+}
 
 const handleTouchMove = (event) => {
-    if (!isDragging.value) return;
+    if (!isDragging.value) return
 
-    currentY.value = event.touches[0].clientY;
-    currentX.value = event.touches[0].clientX;
+    currentY.value = event.touches[0].clientY
+    currentX.value = event.touches[0].clientX
 
-    const diffY = currentY.value - startY.value;
-    const diffX = currentX.value - startX.value;
+    const diffY = currentY.value - startY.value
+    const diffX = currentX.value - startX.value
 
     if (Math.abs(diffX) > Math.abs(diffY) && hasMultipleImages.value) {
-        translateX.value = diffX;
-        translateY.value = 0; 
+        translateX.value = diffX
+        translateY.value = 0
+    } else if (diffY > 0) {
+        translateY.value = diffY
+        translateX.value = 0
     }
-    else if (diffY > 0) {
-        translateY.value = diffY;
-        translateX.value = 0; 
-    }
-};
+}
 
 const handleTouchEnd = () => {
-    isDragging.value = false;
+    isDragging.value = false
 
     if (translateY.value > 200) {
-        $emit('close');
+        $emit('close')
     }
 
     if (Math.abs(translateX.value) > 100 && hasMultipleImages.value) {
         if (translateX.value > 0 && currentIndex.value > 0) {
-            prevImage();
-        } else if (translateX.value < 0 && currentIndex.value < props.imagesList.length - 1) {
-            nextImage();
+            prevImage()
+        } else if (
+            translateX.value < 0 &&
+            currentIndex.value < props.imagesList.length - 1
+        ) {
+            nextImage()
         }
     }
 
-    translateY.value = 0;
-    translateX.value = 0;
-};
+    translateY.value = 0
+    translateX.value = 0
+}
 
 const handleKeyDown = (event) => {
-    if (!props.isOpen || !hasMultipleImages.value) return;
+    if (!props.isOpen || !hasMultipleImages.value) return
 
     if (event.key === 'ArrowRight') {
-        nextImage();
+        nextImage()
     } else if (event.key === 'ArrowLeft') {
-        prevImage();
+        prevImage()
     } else if (event.key === 'Escape') {
-        $emit('close');
+        $emit('close')
     }
-};
+}
 
 onMounted(() => {
-    window.addEventListener('keydown', handleKeyDown);
-});
+    window.addEventListener('keydown', handleKeyDown)
+})
 
 onUnmounted(() => {
-    window.removeEventListener('keydown', handleKeyDown);
-});
+    window.removeEventListener('keydown', handleKeyDown)
+})
 </script>
 
 <style scoped>

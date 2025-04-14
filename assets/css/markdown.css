@@ -1,170 +1,170 @@
 .bio h1 {
-  font-size: 2em;
+    font-size: 2em;
 }
 
 .bio h2 {
-  font-size: 1.5em;
+    font-size: 1.5em;
 }
 
 .bio h3 {
-  font-size: 1.17em;
+    font-size: 1.17em;
 }
 
 .bio h4 {
-  font-size: 1em;
+    font-size: 1em;
 }
 
 .bio h5 {
-  font-size: 0.83em;
+    font-size: 0.83em;
 }
 
 .bio h6 {
-  font-size: 0.67em;
+    font-size: 0.67em;
 }
 
 .bio p {
-  font-size: 1em;
+    font-size: 1em;
 }
 
 .bio a {
-  text-decoration: underline;
+    text-decoration: underline;
 }
 
 .bio ul {
-  list-style-type: disc;
+    list-style-type: disc;
 }
 
 .bio ol {
-  list-style-type: decimal;
+    list-style-type: decimal;
 }
 
 .bio li {
-  font-size: 1em;
+    font-size: 1em;
 }
 
 .bio blockquote {
-  font-size: 1em;
+    font-size: 1em;
 }
 
 .bio code {
-  font-size: 1em;
+    font-size: 1em;
 }
 
 .bio pre {
-  font-size: 1em;
+    font-size: 1em;
 }
 
 .bio strong {
-  font-weight: bold;
+    font-weight: bold;
 }
 
 .bio em {
-  font-style: italic;
+    font-style: italic;
 }
 
 .bio u {
-  text-decoration: underline;
+    text-decoration: underline;
 }
 
 .bio del {
-  text-decoration: line-through;
+    text-decoration: line-through;
 }
 
 .bio s {
-  text-decoration: line-through;
+    text-decoration: line-through;
 }
 
 .bio ins {
-  text-decoration: underline;
+    text-decoration: underline;
 }
 
 .bio mark {
-  background-color: yellow;
+    background-color: yellow;
 }
 
 .bio sub {
-  vertical-align: sub;
+    vertical-align: sub;
 }
 
 .bio sup {
-  vertical-align: super;
+    vertical-align: super;
 }
 
 .bio small {
-  font-size: 0.83em;
+    font-size: 0.83em;
 }
 
 .bio b {
-  font-weight: bold;
+    font-weight: bold;
 }
 
 .bio i {
-  font-style: italic;
+    font-style: italic;
 }
 
 .bio u {
-  text-decoration: underline;
+    text-decoration: underline;
 }
 
 .bio center {
-  text-align: center;
+    text-align: center;
 }
 
 .bio table {
-  border-collapse: collapse;
-  width: 100%;
+    border-collapse: collapse;
+    width: 100%;
 }
 
 .bio th {
-  border: 1px solid #ddd;
-  padding: 8px;
+    border: 1px solid #ddd;
+    padding: 8px;
 }
 
 .bio td {
-  border: 1px solid #ddd;
-  padding: 8px;
+    border: 1px solid #ddd;
+    padding: 8px;
 }
 
 .bio tr:nth-child(even) {
-  background-color: #f2f2f2;
+    background-color: #f2f2f2;
 }
 
 .bio img {
-  max-width: 100%;
-  height: auto;
+    max-width: 100%;
+    height: auto;
 }
 
 .bio hr {
-  border: 0;
-  border-top: 1px solid #ccc;
+    border: 0;
+    border-top: 1px solid #ccc;
 }
 
 .bio .highlight {
-  background-color: #f7f7f7;
-  border-left: 6px solid #7ad7f0;
-  padding: 1em;
+    background-color: #f7f7f7;
+    border-left: 6px solid #7ad7f0;
+    padding: 1em;
 }
 
 .bio .highlight pre {
-  margin: 0;
+    margin: 0;
 }
 
 .bio .highlight pre code {
-  background-color: transparent;
-  border: 0;
-  display: inline;
-  line-height: 1.5;
-  margin: 0;
-  padding: 0;
-  white-space: pre;
+    background-color: transparent;
+    border: 0;
+    display: inline;
+    line-height: 1.5;
+    margin: 0;
+    padding: 0;
+    white-space: pre;
 }
 
 .bio .highlight pre code span {
-  background-color: transparent;
-  border: 0;
-  display: inline;
-  line-height: 1.5;
-  margin: 0;
-  padding: 0;
-  white-space: pre;
+    background-color: transparent;
+    border: 0;
+    display: inline;
+    line-height: 1.5;
+    margin: 0;
+    padding: 0;
+    white-space: pre;
 }

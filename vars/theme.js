@@ -1,5 +1,5 @@
-import Cookies from "js-cookie";
+import Cookies from 'js-cookie'
 
-const theme = ref(Cookies.get("theme") || "normal");
+const theme = ref(Cookies.get('theme') || 'normal')
 
-export default theme;
+export default theme

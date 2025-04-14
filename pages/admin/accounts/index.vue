@@ -6,16 +6,29 @@
 
                 <div v-for="account in activeAccounts" :key="account.id">
                     <div class="flex items-center gap-2 mb-2">
-                        <div class="flex justify-between w-full border-b border-gray-500 pb-2">
+                        <div
+                            class="flex justify-between w-full border-b border-gray-500 pb-2"
+                        >
                             <div class="flex items-center gap-2">
-                                <img :src="'https://s3.faser.app/profilepictures/' + account.id + '/image.png' + '?t=' + new Date().getTime()"
-                                    class="h-12 w-12 rounded-full" />
+                                <img
+                                    :src="
+                                        'https://s3.faser.app/profilepictures/' +
+                                        account.id +
+                                        '/image.png' +
+                                        '?t=' +
+                                        new Date().getTime()
+                                    "
+                                    class="h-12 w-12 rounded-full"
+                                />
                                 <div>
                                     <p>{{ account.username }}</p>
                                 </div>
                             </div>
                             <div>
-                                <button class="bg-red-500 px-2 py-1 rounded-sm" @click="terminateAccount(account.id)">
+                                <button
+                                    class="bg-red-500 px-2 py-1 rounded-sm"
+                                    @click="terminateAccount(account.id)"
+                                >
                                     Terminate
                                 </button>
                             </div>
@@ -23,14 +36,24 @@
                     </div>
                 </div>
             </div>
-            <div class="border-r border-gray-700 min-h-[calc(100vh-4.5rem)]"></div>
+            <div
+                class="border-r border-gray-700 min-h-[calc(100vh-4.5rem)]"
+            ></div>
             <div class="w-1/2">
                 <h1>Terminated Accounts</h1>
 
                 <div v-for="account in terminatedAccounts" :key="account.id">
                     <div class="flex items-center gap-2">
-                        <img :src="'https://s3.faser.app/profilepictures/' + account.id + '/image.png' + '?t=' + new Date().getTime()"
-                            class="h-12 w-12 rounded-full" />
+                        <img
+                            :src="
+                                'https://s3.faser.app/profilepictures/' +
+                                account.id +
+                                '/image.png' +
+                                '?t=' +
+                                new Date().getTime()
+                            "
+                            class="h-12 w-12 rounded-full"
+                        />
                         <div>
                             <p>{{ account.displayName }}</p>
                             <p>{{ account.username }}</p>
@@ -52,15 +75,15 @@ const activeAccounts = ref([])
 const loaded = ref(false)
 const runtimeConfig = useRuntimeConfig()
 
-
 onMounted(() => {
     loadList()
 })
 
 function loadList() {
-    axios.post(baseURL + "/api/admin/getAccounts", {
-        token: token
-    })
+    axios
+        .post(baseURL + '/api/admin/getAccounts', {
+            token: token,
+        })
         .then((response) => {
             terminatedAccounts.value = response.data.terminatedProfiles
             activeAccounts.value = response.data.activeProfiles
@@ -68,30 +91,30 @@ function loadList() {
 }
 
 function terminateAccount(id) {
-    axios.post(baseURL + "/api/admin/terminateAccount", {
-        token: token,
-        accountId: id
-    })
+    axios
+        .post(baseURL + '/api/admin/terminateAccount', {
+            token: token,
+            accountId: id,
+        })
         .then((response) => {
             loadList()
         })
 }
 
-axios.get(baseURL + "/api/account/getOwnProfile", {
-    headers: {
-        token: token
-    }
-})
+axios
+    .get(baseURL + '/api/account/getOwnProfile', {
+        headers: {
+            token: token,
+        },
+    })
     .then((response) => {
         if (!response.data[1].admin) {
-            router.push("/?error=You%20are%20not%20an%20admin")
+            router.push('/?error=You%20are%20not%20an%20admin')
         } else {
             loaded.value = true
         }
-
     })
     .catch((error) => {
-        router.push("/?error=You%20are%20not%20an%20admin")
+        router.push('/?error=You%20are%20not%20an%20admin')
     })
-
 </script>

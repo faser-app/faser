@@ -1,23 +1,28 @@
 <template>
-    <div class="messages-list-page" :style="{ backgroundColor: currentPalette.bg }">
+    <div
+        class="messages-list-page"
+        :style="{ backgroundColor: currentPalette.bg }"
+    >
         <MessagesList />
 
         <!-- Floating action button to start a new message -->
-        <RouterLink to="/search" class="new-message-button" :style="{ backgroundColor: currentPalette.buttonPrimary }">
+        <RouterLink
+            to="/search"
+            class="new-message-button"
+            :style="{ backgroundColor: currentPalette.buttonPrimary }"
+        >
             <i class="fa-solid fa-pen-to-square"></i>
         </RouterLink>
     </div>
 </template>
 
 <script setup>
-import currentPalette from '~/vars/getColors';
+import currentPalette from '~/vars/getColors'
 
 // Set page metadata
 useHead({
     title: 'Messages - faser',
-    meta: [
-        { name: 'description', content: 'Your conversations on faser' }
-    ]
+    meta: [{ name: 'description', content: 'Your conversations on faser' }],
 })
 </script>
 

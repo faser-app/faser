@@ -1,94 +1,175 @@
 <template>
-    <div class="min-h-[calc(100vh-4.5rem)] text-white community-container"
-        :style="{ backgroundColor: currentPalette.bg }">
+    <div
+        class="min-h-[calc(100vh-4.5rem)] text-white community-container"
+        :style="{ backgroundColor: currentPalette.bg }"
+    >
         <!-- Community Content -->
         <div class="md:flex w-full justify-center" v-if="loaded">
             <!-- Main Community Content -->
             <div class="md:w-4/5 max-w-[90rem] w-full px-4">
                 <!-- Community Header Card -->
-                <div class="community-card rounded-xl overflow-hidden shadow-lg mb-6"
-                    :style="{ backgroundColor: currentPalette.bgSecondary }">
-
+                <div
+                    class="community-card rounded-xl overflow-hidden shadow-lg mb-6"
+                    :style="{ backgroundColor: currentPalette.bgSecondary }"
+                >
                     <!-- Community Cover Image (placeholder) -->
-                    <div class="community-cover h-32 md:h-48 w-full bg-gradient-to-r from-gray-800 to-gray-700"></div>
+                    <div
+                        class="community-cover h-32 md:h-48 w-full bg-gradient-to-r from-gray-800 to-gray-700"
+                    ></div>
 
                     <!-- Community Header Content -->
                     <div class="px-6 pt-0 pb-6 relative">
                         <!-- Community Actions Menu -->
                         <div class="absolute right-4 top-2 z-10">
-                            <Menu as="div" class="relative inline-block text-left">
+                            <Menu
+                                as="div"
+                                class="relative inline-block text-left"
+                            >
                                 <div>
                                     <MenuButton
-                                        class="inline-flex justify-center rounded-full bg-gray-800 bg-opacity-50 p-2 text-sm text-white hover:bg-opacity-70 transition-all">
-                                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                                        class="inline-flex justify-center rounded-full bg-gray-800 bg-opacity-50 p-2 text-sm text-white hover:bg-opacity-70 transition-all"
+                                    >
+                                        <i
+                                            class="fa-solid fa-ellipsis-vertical"
+                                        ></i>
                                     </MenuButton>
                                 </div>
-                                <transition enter-active-class="transition duration-100 ease-out"
+                                <transition
+                                    enter-active-class="transition duration-100 ease-out"
                                     enter-from-class="transform scale-95 opacity-0"
                                     enter-to-class="transform scale-100 opacity-100"
                                     leave-active-class="transition duration-75 ease-in"
                                     leave-from-class="transform scale-100 opacity-100"
-                                    leave-to-class="transform scale-95 opacity-0">
+                                    leave-to-class="transform scale-95 opacity-0"
+                                >
                                     <MenuItems
                                         class="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-700 rounded-md shadow-lg ring-1 ring-black/5 focus:outline-hidden"
-                                        :style="{ backgroundColor: currentPalette.bg }">
+                                        :style="{
+                                            backgroundColor: currentPalette.bg,
+                                        }"
+                                    >
                                         <div class="px-1 py-1">
                                             <MenuItem v-slot="{ active }">
-                                            <button :class="[
-                                                    active ? 'bg-gray-700 text-white' : 'text-gray-200',
-                                                    'group flex w-full items-center rounded-md px-2 py-2 text-sm',
-                                                ]" @click="showRulesModal = true">
-                                                <i class="fa-solid fa-scroll mr-2"></i>
-                                                Rules
-                                            </button>
+                                                <button
+                                                    :class="[
+                                                        active
+                                                            ? 'bg-gray-700 text-white'
+                                                            : 'text-gray-200',
+                                                        'group flex w-full items-center rounded-md px-2 py-2 text-sm',
+                                                    ]"
+                                                    @click="
+                                                        showRulesModal = true
+                                                    "
+                                                >
+                                                    <i
+                                                        class="fa-solid fa-scroll mr-2"
+                                                    ></i>
+                                                    Rules
+                                                </button>
                                             </MenuItem>
                                             <MenuItem v-slot="{ active }">
-                                            <button :class="[
-                                                    active ? 'bg-gray-700 text-white' : 'text-gray-200',
-                                                    'group flex w-full items-center rounded-md px-2 py-2 text-sm',
-                                                ]" @click="showInviteLinkModal = true">
-                                                <i class="fa-solid fa-link mr-2"></i>
-                                                Create Invite link
-                                            </button>
+                                                <button
+                                                    :class="[
+                                                        active
+                                                            ? 'bg-gray-700 text-white'
+                                                            : 'text-gray-200',
+                                                        'group flex w-full items-center rounded-md px-2 py-2 text-sm',
+                                                    ]"
+                                                    @click="
+                                                        showInviteLinkModal = true
+                                                    "
+                                                >
+                                                    <i
+                                                        class="fa-solid fa-link mr-2"
+                                                    ></i>
+                                                    Create Invite link
+                                                </button>
                                             </MenuItem>
                                             <MenuItem
-                                                v-if="communityObject.moderators && communityObject.moderators.includes(ownProfileData.id)"
-                                                v-slot="{ active }">
-                                            <button :class="[
-                                                    active ? 'bg-gray-700 text-white' : 'text-gray-200',
-                                                    'group flex w-full items-center rounded-md px-2 py-2 text-sm',
-                                                ]" @click="showEditModal = true">
-                                                <i class="fa-solid fa-pen-to-square mr-2"></i>
-                                                Edit Community
-                                            </button>
+                                                v-if="
+                                                    communityObject.moderators &&
+                                                    communityObject.moderators.includes(
+                                                        ownProfileData.id
+                                                    )
+                                                "
+                                                v-slot="{ active }"
+                                            >
+                                                <button
+                                                    :class="[
+                                                        active
+                                                            ? 'bg-gray-700 text-white'
+                                                            : 'text-gray-200',
+                                                        'group flex w-full items-center rounded-md px-2 py-2 text-sm',
+                                                    ]"
+                                                    @click="
+                                                        showEditModal = true
+                                                    "
+                                                >
+                                                    <i
+                                                        class="fa-solid fa-pen-to-square mr-2"
+                                                    ></i>
+                                                    Edit Community
+                                                </button>
                                             </MenuItem>
-                                            <MenuItem v-if="!memberArray.includes(id)" v-slot="{ active }">
-                                            <button :class="[
-                                                    active ? 'bg-gray-700 text-green-500' : 'text-green-500',
-                                                    'group flex w-full items-center rounded-md px-2 py-2 text-sm',
-                                                ]" @click="joinCommunity">
-                                                <i class="fa-solid fa-user-plus mr-2"></i>
-                                                Join Community
-                                            </button>
+                                            <MenuItem
+                                                v-if="!memberArray.includes(id)"
+                                                v-slot="{ active }"
+                                            >
+                                                <button
+                                                    :class="[
+                                                        active
+                                                            ? 'bg-gray-700 text-green-500'
+                                                            : 'text-green-500',
+                                                        'group flex w-full items-center rounded-md px-2 py-2 text-sm',
+                                                    ]"
+                                                    @click="joinCommunity"
+                                                >
+                                                    <i
+                                                        class="fa-solid fa-user-plus mr-2"
+                                                    ></i>
+                                                    Join Community
+                                                </button>
                                             </MenuItem>
-                                            <MenuItem v-else v-slot="{ active }">
-                                            <button :class="[
-                                                    active ? 'bg-gray-700 text-red-500' : 'text-red-500',
-                                                    'group flex w-full items-center rounded-md px-2 py-2 text-sm',
-                                                ]" @click="leaveCommunity">
-                                                <i class="fa-solid fa-user-minus mr-2"></i>
-                                                Leave Community
-                                            </button>
+                                            <MenuItem
+                                                v-else
+                                                v-slot="{ active }"
+                                            >
+                                                <button
+                                                    :class="[
+                                                        active
+                                                            ? 'bg-gray-700 text-red-500'
+                                                            : 'text-red-500',
+                                                        'group flex w-full items-center rounded-md px-2 py-2 text-sm',
+                                                    ]"
+                                                    @click="leaveCommunity"
+                                                >
+                                                    <i
+                                                        class="fa-solid fa-user-minus mr-2"
+                                                    ></i>
+                                                    Leave Community
+                                                </button>
                                             </MenuItem>
-                                            <MenuItem v-if="communityObject.owner === ownProfileData.id"
-                                                v-slot="{ active }">
-                                            <button :class="[
-                                                    active ? 'bg-gray-700 text-red-500' : 'text-red-500',
-                                                    'group flex w-full items-center rounded-md px-2 py-2 text-sm',
-                                                ]" @click="deleteCommunity">
-                                                <i class="fa-solid fa-triangle-exclamation mr-2"></i>
-                                                Delete Community
-                                            </button>
+                                            <MenuItem
+                                                v-if="
+                                                    communityObject.owner ===
+                                                    ownProfileData.id
+                                                "
+                                                v-slot="{ active }"
+                                            >
+                                                <button
+                                                    :class="[
+                                                        active
+                                                            ? 'bg-gray-700 text-red-500'
+                                                            : 'text-red-500',
+                                                        'group flex w-full items-center rounded-md px-2 py-2 text-sm',
+                                                    ]"
+                                                    @click="deleteCommunity"
+                                                >
+                                                    <i
+                                                        class="fa-solid fa-triangle-exclamation mr-2"
+                                                    ></i>
+                                                    Delete Community
+                                                </button>
                                             </MenuItem>
                                         </div>
                                     </MenuItems>
@@ -98,28 +179,46 @@
 
                         <!-- Community Picture -->
                         <div class="community-picture-container">
-                            <div v-if="haveImage" class="community-picture object-cover border-4"
-                                @click="openCommunityImage = true" :style="{
+                            <div
+                                v-if="haveImage"
+                                class="community-picture object-cover border-4"
+                                @click="openCommunityImage = true"
+                                :style="{
                                     backgroundImage: `url('https://s3.faser.app/communityimages/${communityObject.id}/image.png')`,
                                     backgroundColor: '#1118276c',
                                     backgroundSize: 'cover',
                                     backgroundPosition: 'center',
-                                    borderColor: currentPalette.name === 'normal' ? '#1e293b' : '#0f172a'
-                                }">
-                            </div>
-                            <div v-else
-                                class="community-picture flex border justify-center items-center border-[#96969627] bg-[#1118276c]">
+                                    borderColor:
+                                        currentPalette.name === 'normal'
+                                            ? '#1e293b'
+                                            : '#0f172a',
+                                }"
+                            ></div>
+                            <div
+                                v-else
+                                class="community-picture flex border justify-center items-center border-[#96969627] bg-[#1118276c]"
+                            >
                                 <i class="fa-solid fa-users text-4xl"></i>
                             </div>
 
                             <!-- Community Image Modal -->
-                            <div v-if="openCommunityImage" @click.self="openCommunityImage = false"
-                                class="modal-overlay">
-                                <img v-if="haveImage"
-                                    :src="'https://s3.faser.app/communityimages/' + communityObject.id + '/image.png'"
+                            <div
+                                v-if="openCommunityImage"
+                                @click.self="openCommunityImage = false"
+                                class="modal-overlay"
+                            >
+                                <img
+                                    v-if="haveImage"
+                                    :src="
+                                        'https://s3.faser.app/communityimages/' +
+                                        communityObject.id +
+                                        '/image.png'
+                                    "
                                     class="rounded-lg max-w-[80vw] max-h-[80vh] object-cover"
-                                    @click="openCommunityImage = false" alt="Community Image"
-                                    @error="haveImage = false" />
+                                    @click="openCommunityImage = false"
+                                    alt="Community Image"
+                                    @error="haveImage = false"
+                                />
                             </div>
                         </div>
 
@@ -127,8 +226,13 @@
                         <div class="mt-12 pb-4">
                             <!-- Community Name and Status -->
                             <div class="flex items-center mb-1">
-                                <h1 class="text-2xl font-bold mr-2">{{ displayName }}</h1>
-                                <div v-if="communityObject.private" class="status-badge private">
+                                <h1 class="text-2xl font-bold mr-2">
+                                    {{ displayName }}
+                                </h1>
+                                <div
+                                    v-if="communityObject.private"
+                                    class="status-badge private"
+                                >
                                     <i class="fa-solid fa-lock text-xs"></i>
                                 </div>
                                 <div v-else class="status-badge public">
@@ -140,35 +244,56 @@
                             <p class="text-gray-300 mb-3">{{ description }}</p>
 
                             <!-- Community Tags -->
-                            <div v-if="communityObject.tags && communityObject.tags.length > 0"
-                                class="flex flex-wrap gap-2 text-sm mb-4">
-                                <div v-for="tag in communityObject.tags" :key="tag"
-                                    class="tag flex items-center cursor-default rounded-full px-3 py-1" :style="{
-                                        backgroundColor: '#3b82f622', 
+                            <div
+                                v-if="
+                                    communityObject.tags &&
+                                    communityObject.tags.length > 0
+                                "
+                                class="flex flex-wrap gap-2 text-sm mb-4"
+                            >
+                                <div
+                                    v-for="tag in communityObject.tags"
+                                    :key="tag"
+                                    class="tag flex items-center cursor-default rounded-full px-3 py-1"
+                                    :style="{
+                                        backgroundColor: '#3b82f622',
                                         border: '1px solid #60a5fa',
-                                        color: '#60a5fa'
-                                    }">
+                                        color: '#60a5fa',
+                                    }"
+                                >
                                     {{ tag }}
                                 </div>
                             </div>
 
                             <!-- Join/Leave Button -->
-                            <div v-if="!memberArray.includes(id)" @click="joinCommunity" class="join-button">
+                            <div
+                                v-if="!memberArray.includes(id)"
+                                @click="joinCommunity"
+                                class="join-button"
+                            >
                                 <span>Join Community</span>
                             </div>
-                            <div v-else @click="leaveCommunity" class="leave-button">
+                            <div
+                                v-else
+                                @click="leaveCommunity"
+                                class="leave-button"
+                            >
                                 <span>Leave Community</span>
                             </div>
                         </div>
 
                         <!-- Statistics Section -->
-                        <div class="stats-section flex flex-wrap gap-6 md:gap-8 mt-4 pb-4 border-b border-gray-700/50">
+                        <div
+                            class="stats-section flex flex-wrap gap-6 md:gap-8 mt-4 pb-4 border-b border-gray-700/50"
+                        >
                             <div class="text-center stat-item">
                                 <p class="font-bold text-xl">{{ members }}</p>
                                 <p class="text-sm text-gray-400">Members</p>
                             </div>
                             <div class="text-center stat-item">
-                                <p class="font-bold text-xl">{{ moderators ? moderators.length : 0 }}</p>
+                                <p class="font-bold text-xl">
+                                    {{ moderators ? moderators.length : 0 }}
+                                </p>
                                 <p class="text-sm text-gray-400">Moderators</p>
                             </div>
                             <div class="text-center stat-item">
@@ -179,39 +304,79 @@
 
                         <!-- Community Quick Actions -->
                         <div class="quick-actions mt-6">
-                            <div v-if="memberArray.includes(id)" class="mb-4 w-full">
-                                <CreatePostComponent text="Create Post" :own-profile="ownProfileData" :mobile="false"
-                                    :community="true" :community-id="props.communityId"
-                                    :community-object="communityObject" />
+                            <div
+                                v-if="memberArray.includes(id)"
+                                class="mb-4 w-full"
+                            >
+                                <CreatePostComponent
+                                    text="Create Post"
+                                    :own-profile="ownProfileData"
+                                    :mobile="false"
+                                    :community="true"
+                                    :community-id="props.communityId"
+                                    :community-object="communityObject"
+                                />
                             </div>
-                            <div v-else-if="!communityObject.private" class="info-message mb-4">
+                            <div
+                                v-else-if="!communityObject.private"
+                                class="info-message mb-4"
+                            >
                                 <i class="fa-solid fa-info-circle mr-2"></i>
                                 <span>Join this community to create posts</span>
                             </div>
                             <div v-else class="info-message mb-4">
                                 <i class="fa-solid fa-lock mr-2"></i>
-                                <span>This community is private. You need to be invited to see posts.</span>
+                                <span
+                                    >This community is private. You need to be
+                                    invited to see posts.</span
+                                >
                             </div>
 
                             <!-- Action Buttons -->
-                            <div class="action-buttons-grid grid grid-cols-2 md:grid-cols-3 gap-3 my-6">
-                                <button @click="showRulesModal = true" class="action-button"
-                                    :style="{ backgroundColor: currentPalette.buttonPrimary }">
+                            <div
+                                class="action-buttons-grid grid grid-cols-2 md:grid-cols-3 gap-3 my-6"
+                            >
+                                <button
+                                    @click="showRulesModal = true"
+                                    class="action-button"
+                                    :style="{
+                                        backgroundColor:
+                                            currentPalette.buttonPrimary,
+                                    }"
+                                >
                                     <i class="fa-solid fa-scroll mr-2"></i>
                                     Community Rules
                                 </button>
 
-                                <button @click="showInviteLinkModal = true" class="action-button"
-                                    :style="{ backgroundColor: currentPalette.buttonPrimary }">
+                                <button
+                                    @click="showInviteLinkModal = true"
+                                    class="action-button"
+                                    :style="{
+                                        backgroundColor:
+                                            currentPalette.buttonPrimary,
+                                    }"
+                                >
                                     <i class="fa-solid fa-link mr-2"></i>
                                     Invite Members
                                 </button>
 
                                 <button
-                                    v-if="communityObject.moderators && communityObject.moderators.includes(ownProfileData.id)"
-                                    @click="showEditModal = true" class="action-button"
-                                    :style="{ backgroundColor: currentPalette.buttonPrimary }">
-                                    <i class="fa-solid fa-pen-to-square mr-2"></i>
+                                    v-if="
+                                        communityObject.moderators &&
+                                        communityObject.moderators.includes(
+                                            ownProfileData.id
+                                        )
+                                    "
+                                    @click="showEditModal = true"
+                                    class="action-button"
+                                    :style="{
+                                        backgroundColor:
+                                            currentPalette.buttonPrimary,
+                                    }"
+                                >
+                                    <i
+                                        class="fa-solid fa-pen-to-square mr-2"
+                                    ></i>
                                     Edit Community
                                 </button>
                             </div>
@@ -220,30 +385,61 @@
                 </div>
 
                 <!-- Posts Section -->
-                <div class="posts-section rounded-xl overflow-hidden shadow-lg"
-                    :style="{ backgroundColor: currentPalette.bgSecondary }">
-                    <h2 class="text-xl font-semibold p-4 border-b border-gray-700/50">Community Posts</h2>
+                <div
+                    class="posts-section rounded-xl overflow-hidden shadow-lg"
+                    :style="{ backgroundColor: currentPalette.bgSecondary }"
+                >
+                    <h2
+                        class="text-xl font-semibold p-4 border-b border-gray-700/50"
+                    >
+                        Community Posts
+                    </h2>
 
-                    <div v-if="posts === 0 && !communityObject.private"
-                        class="empty-posts flex flex-col items-center justify-center py-16">
-                        <i class="fa-regular fa-newspaper text-4xl text-gray-500 mb-4"></i>
-                        <p class="italic text-gray-400">No posts in this community yet</p>
+                    <div
+                        v-if="posts === 0 && !communityObject.private"
+                        class="empty-posts flex flex-col items-center justify-center py-16"
+                    >
+                        <i
+                            class="fa-regular fa-newspaper text-4xl text-gray-500 mb-4"
+                        ></i>
+                        <p class="italic text-gray-400">
+                            No posts in this community yet
+                        </p>
                     </div>
 
-                    <div v-else-if="posts === 0 && communityObject.private"
-                        class="empty-posts flex flex-col items-center justify-center py-16">
-                        <i class="fa-solid fa-lock text-4xl text-gray-500 mb-4"></i>
+                    <div
+                        v-else-if="posts === 0 && communityObject.private"
+                        class="empty-posts flex flex-col items-center justify-center py-16"
+                    >
+                        <i
+                            class="fa-solid fa-lock text-4xl text-gray-500 mb-4"
+                        ></i>
                         <p class="italic text-gray-400">
-                            This community is private. You need to be invited to see posts.
+                            This community is private. You need to be invited to
+                            see posts.
                         </p>
                     </div>
 
                     <div v-else class="posts-list">
-                        <div v-for="(post, index) in loadedPosts" :key="post"
-                            :class="{ 'border-b border-gray-700/50': index !== loadedPosts.length - 1 }">
-                            <PostGetPostComponent :postId="post" ownProfile="false" :is-community="true"
-                                :profile="profileData" :ownProfile="ownProfile" :community-id="communityObject.id"
-                                :account="accountData" :own-profile-data="ownProfileData" :border="false" />
+                        <div
+                            v-for="(post, index) in loadedPosts"
+                            :key="post"
+                            :class="{
+                                'border-b border-gray-700/50':
+                                    index !== loadedPosts.length - 1,
+                            }"
+                        >
+                            <PostGetPostComponent
+                                :postId="post"
+                                ownProfile="false"
+                                :is-community="true"
+                                :profile="profileData"
+                                :ownProfile="ownProfile"
+                                :community-id="communityObject.id"
+                                :account="accountData"
+                                :own-profile-data="ownProfileData"
+                                :border="false"
+                            />
                         </div>
                     </div>
                 </div>
@@ -255,42 +451,55 @@
 
     <!-- Modals -->
     <!-- Rules Modal -->
-    <ViewRulesModal :showModal="showRulesModal" :rules="rules" @close="showRulesModal = false" class="z-100" />
+    <ViewRulesModal
+        :showModal="showRulesModal"
+        :rules="rules"
+        @close="showRulesModal = false"
+        class="z-100"
+    />
 
     <!-- Invite Link Modal -->
-    <CreateInviteLinkModalComponent :showModal="showInviteLinkModal" :community-id="communityObject.id"
-        @close="showInviteLinkModal = false" class="z-100" />
+    <CreateInviteLinkModalComponent
+        :showModal="showInviteLinkModal"
+        :community-id="communityObject.id"
+        @close="showInviteLinkModal = false"
+        class="z-100"
+    />
 
     <!-- Edit Community Modal -->
-    <CommunitiesUpdateCommunityComponent :show-modal="showEditModal" :community="communityObject"
-        @update="updateCommunity" @close="showEditModal = false" />
+    <CommunitiesUpdateCommunityComponent
+        :show-modal="showEditModal"
+        :community="communityObject"
+        @update="updateCommunity"
+        @close="showEditModal = false"
+    />
 </template>
 
 <script setup>
-import axios from 'axios';
-import Cookie from "js-cookie"
+import axios from 'axios'
+import Cookie from 'js-cookie'
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
-import ViewRulesModal from './ViewRulesModalComponent.vue';
-import CreatePostComponent from '../post/CreatePostComponent.vue';
-import currentPalette from '~/vars/getColors';
-import CreateInviteLinkModalComponent from './CreateInviteLinkModalComponent.vue';
+import ViewRulesModal from './ViewRulesModalComponent.vue'
+import CreatePostComponent from '../post/CreatePostComponent.vue'
+import currentPalette from '~/vars/getColors'
+import CreateInviteLinkModalComponent from './CreateInviteLinkModalComponent.vue'
 
 const props = defineProps({
     communityId: {
         type: String,
-        required: true
-    }
+        required: true,
+    },
 })
 
-const displayName = ref("")
-const description = ref("")
-const members = ref("")
+const displayName = ref('')
+const description = ref('')
+const members = ref('')
 const moderators = ref([])
-const rules = ref("")
+const rules = ref('')
 const openCommunityImage = ref(false)
 const showRulesModal = ref(false)
 const showInviteLinkModal = ref(false)
-const id = ref("")
+const id = ref('')
 const ownProfile = ref({})
 const loaded = ref(false)
 const memberArray = ref([])
@@ -313,42 +522,45 @@ function updateCommunity() {
 }
 
 function getCommunity() {
-    axios.post(baseURL + "/api/community/getCommunity", {
-        token: Cookie.get("token"),
-        communityId: props.communityId
-    }).then(response => {
-        displayName.value = response.data.community.displayName
-        description.value = response.data.community.description
-        members.value = response.data.community.members
-        moderators.value = response.data.community.moderators
-        rules.value = response.data.community.rules
-        communityObject.value = response.data.community
-
-        useHead({
-            title: response.data.community.displayName + ' - faser.app',
+    axios
+        .post(baseURL + '/api/community/getCommunity', {
+            token: Cookie.get('token'),
+            communityId: props.communityId,
         })
+        .then((response) => {
+            displayName.value = response.data.community.displayName
+            description.value = response.data.community.description
+            members.value = response.data.community.members
+            moderators.value = response.data.community.moderators
+            rules.value = response.data.community.rules
+            communityObject.value = response.data.community
 
-        loaded.value = true
-    })
+            useHead({
+                title: response.data.community.displayName + ' - faser.app',
+            })
+
+            loaded.value = true
+        })
 }
 
 onMounted(() => {
-    axios.get(baseURL + "/api/account/getOwnProfile", {
-        headers: {
-            token: Cookie.get("token")
-        }
-    })
+    axios
+        .get(baseURL + '/api/account/getOwnProfile', {
+            headers: {
+                token: Cookie.get('token'),
+            },
+        })
         .then((response) => {
             id.value = response.data[0].id
             ownProfileData.value = response.data[0]
-            accountData.value = response.data[1];
+            accountData.value = response.data[1]
         })
 
-
-    axios.post(baseURL + "/api/community/getPosts", {
-        token: Cookie.get("token"),
-        communityId: props.communityId
-    })
+    axios
+        .post(baseURL + '/api/community/getPosts', {
+            token: Cookie.get('token'),
+            communityId: props.communityId,
+        })
         .then((response) => {
             posts.value = response.data.posts.length
             postsValue.value = response.data.posts
@@ -361,19 +573,21 @@ onMounted(() => {
 })
 
 function getMembers() {
-    axios.post(baseURL + "/api/community/getMembers", {
-        communityId: props.communityId
-    })
+    axios
+        .post(baseURL + '/api/community/getMembers', {
+            communityId: props.communityId,
+        })
         .then((response) => {
             memberArray.value = response.data.members
         })
 }
 
 function leaveCommunity() {
-    axios.post(baseURL + "/api/community/leaveCommunity", {
-        token: Cookie.get("token"),
-        communityId: props.communityId
-    })
+    axios
+        .post(baseURL + '/api/community/leaveCommunity', {
+            token: Cookie.get('token'),
+            communityId: props.communityId,
+        })
         .then((response) => {
             getMembers()
         })
@@ -383,10 +597,11 @@ function leaveCommunity() {
 }
 
 function joinCommunity() {
-    axios.post(baseURL + "/api/community/joinCommunity", {
-        token: Cookie.get("token"),
-        communityId: props.communityId
-    })
+    axios
+        .post(baseURL + '/api/community/joinCommunity', {
+            token: Cookie.get('token'),
+            communityId: props.communityId,
+        })
         .then((response) => {
             getMembers()
         })
@@ -396,19 +611,20 @@ function joinCommunity() {
 }
 
 function deleteCommunity() {
-    axios.post(baseURL + "/api/community/deleteCommunity", {
-        token: Cookie.get("token"),
-        communityId: props.communityId
-    })
+    axios
+        .post(baseURL + '/api/community/deleteCommunity', {
+            token: Cookie.get('token'),
+            communityId: props.communityId,
+        })
         .then((response) => {
-            router.push("/communities")
+            router.push('/communities')
         })
         .catch((error) => {
             alert(error.response.data.message)
         })
 }
 
-document.addEventListener("scroll", (event) => {
+document.addEventListener('scroll', (event) => {
     if (document.body.offsetHeight - 8000 < window.scrollY) {
         if (lastRequest.value + 1000 < Date.now()) {
             lastRequest.value = Date.now()
@@ -426,7 +642,6 @@ function loadPosts(postsToLoad) {
         }
     }
 }
-
 </script>
 
 <style scoped>

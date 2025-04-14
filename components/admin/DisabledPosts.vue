@@ -1,8 +1,15 @@
 <template>
     <div class="min-h-[calc(100vh-4.5rem)] text-white">
         <div v-for="post in posts" :key="post.id">
-            <PostGetPostComponent :postId="post.postId" ownProfile="true" :profile="profileData"
-                :ownProfile="ownProfile" :account="accountData" :ownProfileData="ownProfileData" :admin="true" />
+            <PostGetPostComponent
+                :postId="post.postId"
+                ownProfile="true"
+                :profile="profileData"
+                :ownProfile="ownProfile"
+                :account="accountData"
+                :ownProfileData="ownProfileData"
+                :admin="true"
+            />
         </div>
 
         <div v-if="posts.length == 0" class="w-full flex justify-center">
@@ -14,7 +21,7 @@
 <script setup>
 import axios from 'axios'
 import Cookies from 'js-cookie'
-import { useRouter } from 'vue-router';
+import { useRouter } from 'vue-router'
 
 const token = Cookies.get('token')
 const router = useRouter()
@@ -26,15 +33,15 @@ const ownProfileData = ref({})
 
 const runtimeConfig = useRuntimeConfig()
 
-
-axios.get(baseURL + "/api/account/getOwnProfile", {
-    headers: {
-        token: token
-    }
-})
+axios
+    .get(baseURL + '/api/account/getOwnProfile', {
+        headers: {
+            token: token,
+        },
+    })
     .then((response) => {
         if (!response.data[1].admin) {
-            router.push("/?error=You%20are%20not%20an%20admin")
+            router.push('/?error=You%20are%20not%20an%20admin')
         }
 
         profileData.value = response.data[0]
@@ -42,14 +49,15 @@ axios.get(baseURL + "/api/account/getOwnProfile", {
         ownProfileData.value = response.data[0]
         ownProfile.value = true
 
-        axios.post(baseURL + "/api/admin/getDisabledPosts", {
-            token: token
-        })
+        axios
+            .post(baseURL + '/api/admin/getDisabledPosts', {
+                token: token,
+            })
             .then((response) => {
                 posts.value = response.data
             })
     })
     .catch((error) => {
-        router.push("/?error=You%20are%20not%20an%20admin")
+        router.push('/?error=You%20are%20not%20an%20admin')
     })
 </script>

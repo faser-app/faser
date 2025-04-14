@@ -1,11 +1,11 @@
 <template>
-  <div>
-    <MainComponent />
-  </div>
+    <div>
+        <MainComponent />
+    </div>
 </template>
 
 <script setup>
 definePageMeta({
-  middleware: "main-meta"
+    middleware: 'main-meta',
 })
 </script>

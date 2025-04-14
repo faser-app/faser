@@ -1,41 +1,67 @@
 <template>
     <transition :name="transitionName" @leave="onLeave">
-        <div v-if="isOpen"
+        <div
+            v-if="isOpen"
             class="fixed flex justify-center items-center top-0 left-0 w-full h-full z-50 backdrop-blur-sm modal-overlay"
-            @click.self="$emit('close')">
-            <div class="p-5 rounded-md m-3 md:w-auto w-full modal-container" :class="[customClass, {
-          'border border-red-500': error,
-        }]" :style="{
-          backgroundColor: currentPalette?.bg,
-          color: currentPalette?.textPrimary,
-          ...containerStyle
-        }">
+            @click.self="$emit('close')"
+        >
+            <div
+                class="p-5 rounded-md m-3 md:w-auto w-full modal-container"
+                :class="[
+                    customClass,
+                    {
+                        'border border-red-500': error,
+                    },
+                ]"
+                :style="{
+                    backgroundColor: currentPalette?.bg,
+                    color: currentPalette?.textPrimary,
+                    ...containerStyle,
+                }"
+            >
                 <div v-if="icon" class="w-full flex justify-center">
-                    <div :class="`border h-14 w-14 rounded-full flex justify-center items-center`" :style="{
-              backgroundColor: iconBgStyle,
-              borderColor: iconBorderStyle
-            }">
+                    <div
+                        :class="`border h-14 w-14 rounded-full flex justify-center items-center`"
+                        :style="{
+                            backgroundColor: iconBgStyle,
+                            borderColor: iconBorderStyle,
+                        }"
+                    >
                         <i :class="`fa-solid fa-${icon} text-xl`"></i>
                     </div>
                 </div>
-                <h2 v-if="title" class="text-center font-bold mt-2">{{ title }}</h2>
+                <h2 v-if="title" class="text-center font-bold mt-2">
+                    {{ title }}
+                </h2>
 
                 <slot></slot>
 
                 <div v-if="$slots.footer" class="mt-4">
                     <slot name="footer"></slot>
                 </div>
-                <div v-else-if="showDefaultFooter" class="flex flex-col md:flex-row justify-center gap-2 mt-4">
-                    <button @click="$emit('close')" class="md:w-2/3 p-2 rounded-md" :style="{
-              backgroundColor: currentPalette?.buttonSecondary,
-              color: currentPalette?.textPrimary
-            }">
+                <div
+                    v-else-if="showDefaultFooter"
+                    class="flex flex-col md:flex-row justify-center gap-2 mt-4"
+                >
+                    <button
+                        @click="$emit('close')"
+                        class="md:w-2/3 p-2 rounded-md"
+                        :style="{
+                            backgroundColor: currentPalette?.buttonSecondary,
+                            color: currentPalette?.textPrimary,
+                        }"
+                    >
                         {{ cancelText || 'Cancel' }}
                     </button>
-                    <button v-if="showSubmitButton" @click="$emit('submit')" class="md:w-1/3 p-2 rounded-md" :style="{
-              backgroundColor: currentPalette?.buttonPrimary,
-              color: currentPalette?.textPrimary
-            }">
+                    <button
+                        v-if="showSubmitButton"
+                        @click="$emit('submit')"
+                        class="md:w-1/3 p-2 rounded-md"
+                        :style="{
+                            backgroundColor: currentPalette?.buttonPrimary,
+                            color: currentPalette?.textPrimary,
+                        }"
+                    >
                         {{ submitText || 'Submit' }}
                     </button>
                 </div>
@@ -45,118 +71,124 @@
 </template>
 
 <script setup>
-import currentPalette from "~/vars/getColors";
+import currentPalette from '~/vars/getColors'
 
 const props = defineProps({
     isOpen: {
         type: Boolean,
-        required: true
+        required: true,
     },
     title: {
         type: String,
-        default: ''
+        default: '',
     },
     icon: {
         type: String,
-        default: ''
+        default: '',
     },
     iconBgColor: {
         type: String,
-        default: ''
+        default: '',
     },
     iconBorderColor: {
         type: String,
-        default: ''
+        default: '',
     },
     error: {
         type: String,
-        default: ''
+        default: '',
     },
     showSubmitButton: {
         type: Boolean,
-        default: true
+        default: true,
     },
     customClass: {
         type: String,
-        default: ''
+        default: '',
     },
     showDefaultFooter: {
         type: Boolean,
-        default: true
+        default: true,
     },
     cancelText: {
         type: String,
-        default: 'Cancel'
+        default: 'Cancel',
     },
     submitText: {
         type: String,
-        default: 'Submit'
+        default: 'Submit',
     },
     cancelButtonClass: {
         type: String,
-        default: ''
+        default: '',
     },
     submitButtonClass: {
         type: String,
-        default: ''
+        default: '',
     },
     containerStyle: {
         type: Object,
-        default: () => ({})
+        default: () => ({}),
     },
     isDanger: {
         type: Boolean,
-        default: false
+        default: false,
     },
     animationDirection: {
         type: String,
-        default: 'bottom'
-    }
-});
+        default: 'bottom',
+    },
+})
 
-const transitionName = computed(() => 'modal-standard');
+const transitionName = computed(() => 'modal-standard')
 
 const iconBgStyle = computed(() => {
-    if (props.iconBgColor) return props.iconBgColor;
-    return props.isDanger ? currentPalette.value?.buttonDanger : currentPalette.value?.buttonPrimary;
-});
+    if (props.iconBgColor) return props.iconBgColor
+    return props.isDanger
+        ? currentPalette.value?.buttonDanger
+        : currentPalette.value?.buttonPrimary
+})
 
 const iconBorderStyle = computed(() => {
-    if (props.iconBorderColor) return props.iconBorderColor;
-    return props.isDanger ? 'rgba(239, 68, 68, 0.6)' : currentPalette.value?.buttonSecondary;
-});
+    if (props.iconBorderColor) return props.iconBorderColor
+    return props.isDanger
+        ? 'rgba(239, 68, 68, 0.6)'
+        : currentPalette.value?.buttonSecondary
+})
 
-const emit = defineEmits(['close', 'submit']);
+const emit = defineEmits(['close', 'submit'])
 
-let scrollpos = 0;
+let scrollpos = 0
 
-watch(() => props.isOpen, (value) => {
-    if (value) {
-        scrollpos = window.scrollY;
+watch(
+    () => props.isOpen,
+    (value) => {
+        if (value) {
+            scrollpos = window.scrollY
 
-        setTimeout(() => {
-            document.body.style.top = `-${scrollpos}px`;
-            document.body.style.position = 'fixed';
-            document.body.style.width = '100%';
-            document.body.classList.add("overflow-hidden");
-        }, 5);
-    } else {
-        document.body.style.position = '';
-        document.body.style.top = '';
-        document.body.classList.remove("overflow-hidden");
-        window.scrollTo(0, scrollpos);
+            setTimeout(() => {
+                document.body.style.top = `-${scrollpos}px`
+                document.body.style.position = 'fixed'
+                document.body.style.width = '100%'
+                document.body.classList.add('overflow-hidden')
+            }, 5)
+        } else {
+            document.body.style.position = ''
+            document.body.style.top = ''
+            document.body.classList.remove('overflow-hidden')
+            window.scrollTo(0, scrollpos)
+        }
     }
-});
+)
 
-function onLeave() {
-}
+function onLeave() {}
 
 onMounted(() => {
     document.addEventListener('keydown', (event) => {
         if (event.key === 'Escape' && props.isOpen) {
-            emit('close');
+            emit('close')
         }
-    });
+    })
 })
 </script>
 

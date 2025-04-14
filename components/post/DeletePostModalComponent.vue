@@ -1,7 +1,17 @@
 <template>
-    <BaseModalComponent :isOpen="isOpen" @close="$emit('close')" title="Delete Post?" icon="trash" :isDanger="true"
-        submitText="Delete" @submit="$emit('delete')">
-        <div class="flex justify-center text-center mt-2" :style="{ color: currentPalette?.textSecondary }">
+    <BaseModalComponent
+        :isOpen="isOpen"
+        @close="$emit('close')"
+        title="Delete Post?"
+        icon="trash"
+        :isDanger="true"
+        submitText="Delete"
+        @submit="$emit('delete')"
+    >
+        <div
+            class="flex justify-center text-center mt-2"
+            :style="{ color: currentPalette?.textSecondary }"
+        >
             <div class="md:w-96 w-full">
                 <p>Do you really want to delete this post?</p>
             </div>
@@ -9,15 +19,15 @@
     </BaseModalComponent>
 </template>
 <script setup>
-import BaseModalComponent from "~/components/ui/BaseModalComponent.vue";
-import currentPalette from "~/vars/getColors";
+import BaseModalComponent from '~/components/ui/BaseModalComponent.vue'
+import currentPalette from '~/vars/getColors'
 
 const props = defineProps({
     isOpen: {
         type: Boolean,
-        required: true
-    }
-});
+        required: true,
+    },
+})
 
-defineEmits(['close', 'delete']);
+defineEmits(['close', 'delete'])
 </script>

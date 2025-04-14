@@ -5,15 +5,14 @@
 </template>
 
 <script setup>
-import { useRoute } from 'vue-router';
-import GetCommunityComponent from '~/components/communities/GetCommunityComponent.vue';
+import { useRoute } from 'vue-router'
+import GetCommunityComponent from '~/components/communities/GetCommunityComponent.vue'
 
-const route = useRoute();
+const route = useRoute()
 
-const communityId = route.params.id;
+const communityId = route.params.id
 
 definePageMeta({
-    middleware: "community-meta"
+    middleware: 'community-meta',
 })
-
 </script>

@@ -1,18 +1,21 @@
 <template>
-    <div class="message-page-wrapper" :style="{ backgroundColor: currentPalette.bg }">
+    <div
+        class="message-page-wrapper"
+        :style="{ backgroundColor: currentPalette.bg }"
+    >
         <MessageComponent />
     </div>
 </template>
 
 <script setup>
-import currentPalette from '~/vars/getColors';
+import currentPalette from '~/vars/getColors'
 
 // Set metadata for the page
 useHead({
     title: 'Chat - faser',
     meta: [
-        { name: 'description', content: 'Chat with your connections on faser' }
-    ]
+        { name: 'description', content: 'Chat with your connections on faser' },
+    ],
 })
 </script>
 

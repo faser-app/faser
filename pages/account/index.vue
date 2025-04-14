@@ -1,13 +1,13 @@
 <template>
-  <div class="min-h-[calc(100vh-4.5rem)] bg-black"></div>
+    <div class="min-h-[calc(100vh-4.5rem)] bg-black"></div>
 </template>
 
 <script setup>
-import { useRouter } from "vue-router";
+import { useRouter } from 'vue-router'
 
-const router = useRouter();
+const router = useRouter()
 
 onMounted(() => {
-  router.push("/account/settings");
-});
+    router.push('/account/settings')
+})
 </script>
