@@ -30,7 +30,7 @@
                         <i :class="`fa-solid fa-${icon} text-xl`"></i>
                     </div>
                 </div>
-                <h2 v-if="title" class="text-center font-bold mt-2">
+                <h2 v-if="title" class="text-center font-bold my-2">
                     {{ title }}
                 </h2>
 
@@ -44,6 +44,7 @@
                     class="flex flex-col md:flex-row justify-center gap-2 mt-4"
                 >
                     <button
+                        v-if="showCloseButton"
                         @click="$emit('close')"
                         class="md:w-2/3 p-2 rounded-md"
                         :style="{
@@ -137,6 +138,10 @@ const props = defineProps({
     animationDirection: {
         type: String,
         default: 'bottom',
+    },
+    showCloseButton: {
+        type: Boolean,
+        default: true,
     },
 })
 

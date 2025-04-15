@@ -4,6 +4,8 @@ import { useRoute } from 'vue-router'
 import axios from 'axios'
 import posthog from 'posthog-js'
 import currentPalette from './vars/getColors'
+import userinfo from '~/vars/userinfo.js'
+import BaseModalComponent from '~/components/ui/BaseModalComponent.vue'
 
 useHead({
     bodyAttrs: {
@@ -14,10 +16,14 @@ useHead({
 const mobile = ref(false)
 const route = useRoute()
 
+const acceptedPrivacyPolicy = ref(false)
+
 const pagesWithoutFooter = ref(['messages'])
 
 // Pages that should use the full-width layout
 const fullWidthPages = ref(['login', 'register', 'verify', 'community'])
+
+const noPrivacyPolicy = ref(['privacy', 'imprint', 'tos', 'cookies'])
 
 const accepted = ref(false)
 
@@ -42,6 +48,10 @@ const isFullWidthPage = computed(() => {
     return fullWidthPages.value.some((page) => route.path.includes(page))
 })
 
+const showPrivacyPolicy = computed(() => {
+    return !noPrivacyPolicy.value.some((page) => route.path.includes(page))
+})
+
 const isFooterVisible = computed(() => {
     return !pagesWithoutFooter.value.some((page) => route.path.includes(page))
 })
@@ -59,13 +69,37 @@ onMounted(() => {
     window.addEventListener('resize', () => {
         windowWidth.value = window.innerWidth
     })
+
+    axios
+        .get(baseURL + '/api/account/getOwnProfile', {
+            headers: {
+                token: Cookies.get('token'),
+            },
+        })
+        .then((response) => {
+            acceptedPrivacyPolicy.value = !response.data[1].accepted
+        })
 })
+
+function acceptPrivacyPolicy() {
+    axios
+        .post(baseURL + '/api/account/accept', {
+            token: Cookies.get('token'),
+        })
+        .then((response) => {
+            acceptedPrivacyPolicy.value = false
+        })
+}
 
 onUnmounted(() => {
     window.removeEventListener('resize', () => {
         windowWidth.value = window.innerWidth
     })
 })
+
+function closeWindow() {
+    window.close()
+}
 
 const isMobileView = computed(() => {
     return windowWidth.value < 768
@@ -95,6 +129,32 @@ const isMobileView = computed(() => {
                 >
                     <NuxtPage />
                 </main>
+
+                <BaseModalComponent
+                    :is-open="showPrivacyPolicy && acceptedPrivacyPolicy"
+                    title="Privacy Policy Change"
+                    :show-close-button="false"
+                    submit-text="Accept"
+                    @submit="acceptPrivacyPolicy"
+                >
+                    <p className="text-base leading-relaxed text-gray-300">
+                        We've updated our Privacy Policy to provide you with
+                        greater transparency and comply with the latest legal
+                        requirements.
+                    </p>
+                    <p className="text-base leading-relaxed text-gray-300">
+                        Please review and accept the updated policy to continue
+                        using this app.
+                    </p>
+                    <div className="mt-4">
+                        <a
+                            href="/privacy"
+                            className="text-blue-600 hover:text-blue-800 underline font-medium"
+                        >
+                            View Privacy Policy
+                        </a>
+                    </div>
+                </BaseModalComponent>
 
                 <!-- Right sidebar with Trends - Only on home page (desktop only) -->
                 <TrendsComponent
