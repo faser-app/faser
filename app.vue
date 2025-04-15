@@ -23,7 +23,13 @@ const pagesWithoutFooter = ref(['messages'])
 // Pages that should use the full-width layout
 const fullWidthPages = ref(['login', 'register', 'verify', 'community'])
 
-const noPrivacyPolicy = ref(['privacy', 'imprint', 'tos', 'cookies'])
+const noPrivacyPolicy = ref([
+    'privacy',
+    'imprint',
+    'tos',
+    'cookies',
+    'account/settings',
+])
 
 const accepted = ref(false)
 
