@@ -37,7 +37,7 @@
                                 "
                                 @error="hasProfilePicture = false"
                                 alt="profile picture"
-                                class="profile-picture object-cover border-4 ph-no-capture"
+                                class="profile-picture bg-gray-900 object-cover border-4 ph-no-capture"
                                 :class="{
                                     'rounded-full':
                                         !profileData.businessAccount,
