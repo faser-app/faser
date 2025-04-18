@@ -58,6 +58,15 @@
                             >
                                 <i class="fa-solid fa-user text-4xl"></i>
                             </div>
+
+                            <div
+                                v-if="isOnline"
+                                class="bg-gray-900 flex items-center justify-center h-10 w-10 absolute rounded-full top-22 left-22"
+                            >
+                                <div
+                                    class="bg-green-500 h-6 w-6 rounded-full"
+                                ></div>
+                            </div>
                         </div>
 
                         <!-- Profile Actions (Mobile) -->
@@ -189,38 +198,85 @@
                         </div>
 
                         <!-- Statistics Section -->
-                        <div
-                            class="stats-section flex flex-wrap gap-6 md:gap-8 mt-4 pb-4 border-b border-gray-700/50"
-                        >
+                        <div class="border-b border-gray-700/50">
                             <div
-                                class="text-center cursor-pointer stat-item"
-                                @click="openFollower = true"
+                                class="text-gray-400 stats-section flex flex-wrap gap-6 md:gap-8 mt-4 pb-4"
                             >
-                                <p class="font-bold text-xl ph-no-capture">
-                                    {{ followers }}
-                                </p>
-                                <p class="text-sm text-gray-400">Followers</p>
+                                <div
+                                    class="text-center cursor-pointer stat-item"
+                                    @click="openFollower = true"
+                                >
+                                    <p class="font-bold text-xl ph-no-capture">
+                                        {{ followers }}
+                                    </p>
+                                    <p class="text-sm text-gray-400">
+                                        Followers
+                                    </p>
+                                </div>
+                                <div
+                                    class="text-center cursor-pointer stat-item"
+                                    @click="openFollowing = true"
+                                >
+                                    <p class="font-bold text-xl ph-no-capture">
+                                        {{ following }}
+                                    </p>
+                                    <p class="text-sm text-gray-400">
+                                        Following
+                                    </p>
+                                </div>
+                                <div class="text-center stat-item">
+                                    <p class="font-bold text-xl ph-no-capture">
+                                        {{ posts }}
+                                    </p>
+                                    <p class="text-sm text-gray-400">Posts</p>
+                                </div>
+                                <div
+                                    class="text-sm text-gray-400 ml-auto self-end ph-no-capture"
+                                >
+                                    Member since {{ sinceString }}
+                                </div>
                             </div>
-                            <div
-                                class="text-center cursor-pointer stat-item"
-                                @click="openFollowing = true"
-                            >
-                                <p class="font-bold text-xl ph-no-capture">
-                                    {{ following }}
-                                </p>
-                                <p class="text-sm text-gray-400">Following</p>
-                            </div>
-                            <div class="text-center stat-item">
-                                <p class="font-bold text-xl ph-no-capture">
-                                    {{ posts }}
-                                </p>
-                                <p class="text-sm text-gray-400">Posts</p>
-                            </div>
-                            <div
-                                class="text-sm text-gray-400 ml-auto self-end ph-no-capture"
-                            >
-                                Member since {{ sinceString }}
-                            </div>
+                            <!--                            <div class="text-gray-400 flex items-center">-->
+                            <!--                                <div-->
+                            <!--                                    v-for="i in 3"-->
+                            <!--                                    :key="i"-->
+                            <!--                                    class="flex items-center"-->
+                            <!--                                >-->
+                            <!--                                    <img-->
+                            <!--                                        src="https://picsum.photos/200"-->
+                            <!--                                        class="absolute h-6 w-6 rounded-full"-->
+                            <!--                                        :style="{-->
+                            <!--                                            marginLeft: 0.75 * (i - 1) + 'rem',-->
+                            <!--                                        }"-->
+                            <!--                                    />-->
+                            <!--                                </div>-->
+
+                            <!--                                <p class="ml-14 text-sm">-->
+                            <!--                                    Followed by-->
+                            <!--                                    <strong class="text-white">onemo</strong>-->
+                            <!--                                    and-->
+                            <!--                                    <strong class="text-white">13 others</strong-->
+                            <!--                                    >.-->
+                            <!--                                </p>-->
+                            <!--                            </div>-->
+
+                            <!--                            <div-->
+                            <!--                                v-for="i in profileData.follower.length"-->
+                            <!--                                :key="i"-->
+                            <!--                            >-->
+                            <!--                                <div-->
+                            <!--                                    v-if="-->
+                            <!--                                        ownProfileData.following.includes(-->
+                            <!--                                            profileData.follower[i]-->
+                            <!--                                        )-->
+                            <!--                                    "-->
+                            <!--                                >-->
+                            <!--                                    Hallo-->
+                            <!--                                </div>-->
+                            <!--                            </div>-->
+
+                            <!--                            {{ ownProfileData.following }}-->
+                            <!--                            {{ profileData.follower }}-->
                         </div>
 
                         <!-- Music section -->
@@ -554,6 +610,7 @@ import currentPalette from '~/vars/getColors'
 import CommunityLinkComponent from './CommunityLinkComponent.vue'
 import ColorThief from 'colorthief'
 import BaseModalComponent from '~/components/ui/BaseModalComponent.vue'
+import userinfo from '~/vars/userinfo.js'
 
 useHead({
     meta: [
@@ -607,6 +664,7 @@ const loading = ref(false)
 const gradient1 = ref('#000000')
 const gradient2 = ref('#000000')
 const lastRequest = ref(0)
+const isOnline = ref(false)
 
 function shareProfile() {
     navigator.share({
@@ -709,6 +767,8 @@ async function getProfile() {
     posts.value = response.data[0].posts.length
     followers.value = response.data[0].follower.length
     following.value = response.data[0].following.length
+
+    isOnline.value = response.data[0].lastOnlineTime > Date.now() - 10000
 
     for (let i = 0; i < response.data[0].communities.length; i++) {
         axios

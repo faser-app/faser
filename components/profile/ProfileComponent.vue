@@ -59,6 +59,13 @@
                             >
                                 <i class="fa-solid fa-user text-4xl"></i>
                             </div>
+                            <div
+                                class="bg-gray-900 flex items-center justify-center h-10 w-10 absolute rounded-full top-22 left-22"
+                            >
+                                <div
+                                    class="bg-green-500 h-6 w-6 rounded-full"
+                                ></div>
+                            </div>
                         </div>
                         <!-- Profile Actions (Mobile) -->
                         <div class="mr-2 absolute right-4 top-2 z-10">
