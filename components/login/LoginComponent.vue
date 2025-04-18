@@ -91,7 +91,7 @@ function login() {
                     }
                 )
             }
-            router.push('/profile')
+            window.location.href = '/profile'
         })
         .catch((err) => {
             error.value = err.response.data.message
