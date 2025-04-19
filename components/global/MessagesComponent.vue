@@ -1,18 +1,11 @@
 <template>
-    <div
-        class="max-w-[90rem] md:w-[80svw] w-[95svw] text-white max-h-[70svh] overflow-auto bg-gray-800 p-2 rounded-md"
-    >
+    <div class="text-white w-full overflow-auto p-2 rounded-md">
         <div
             class="w-full flex items-center justify-between text-2xl font-bold"
         >
             <div class="w-full text-center">
-                <h1>Messages</h1>
+                <h1>Message</h1>
             </div>
-            <i
-                v-if="!standalone"
-                class="fa-solid fa-xmark mr-2 cursor-pointer text-xl"
-                @click="closeUserMessages"
-            ></i>
         </div>
         <div
             v-if="messages.length === 0"
