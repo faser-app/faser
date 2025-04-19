@@ -59,6 +59,14 @@
                             >{{ author.displayName }}
                         </RouterLink>
                         <div
+                            v-if="isOnline"
+                            class="bg-gray-900 ml-2 flex items-center justify-center h-4 w-4 rounded-full"
+                        >
+                            <div
+                                class="bg-green-500 h-2 w-2 rounded-full"
+                            ></div>
+                        </div>
+                        <div
                             v-if="author.businessAccount"
                             class="verification-badge business"
                         >
@@ -567,6 +575,7 @@ const isDragging = ref(false)
 const startY = ref(0)
 const currentY = ref(0)
 const translateY = ref(0)
+const isOnline = ref(false)
 const embed = ref({
     url: '',
     title: '',
@@ -790,6 +799,8 @@ axios
         author.value = response.data[0]
         author.value.username = response.data[1].username
         author.value.hasProfilePicture = true
+        isOnline.value = response.data[0].lastOnlineTime > Date.now() - 60000
+        console.log(response.data[0].lastOnlineTime > Date.now() - 60000)
     })
 
 function toggleLike() {

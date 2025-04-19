@@ -8,9 +8,6 @@
     >
         <div
             class="image-carousel w-full h-full relative"
-            @touchstart="handleTouchStart"
-            @touchmove="handleTouchMove"
-            @touchend="handleTouchEnd"
             :style="{ transform: `translateY(${translateY}px)` }"
             :class="{ 'transition-back': !isDragging }"
         >
