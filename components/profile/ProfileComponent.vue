@@ -59,13 +59,13 @@
                             >
                                 <i class="fa-solid fa-user text-4xl"></i>
                             </div>
-                            <!--                            <div-->
-                            <!--                                class="bg-gray-900 flex items-center justify-center h-10 w-10 absolute rounded-full top-22 left-22"-->
-                            <!--                            >-->
-                            <!--                                <div-->
-                            <!--                                    class="bg-green-500 h-6 w-6 rounded-full"-->
-                            <!--                                ></div>-->
-                            <!--                            </div>-->
+                            <div
+                                class="bg-gray-900 flex items-center justify-center md:h-10 md:w-10 h-6 w-6 absolute rounded-full md:top-22 md:left-22 top-17 left-17"
+                            >
+                                <div
+                                    class="bg-green-500 md:h-6 md:w-6 h-3 w-3 rounded-full"
+                                ></div>
+                            </div>
                         </div>
                         <!-- Profile Actions (Mobile) -->
                         <div class="mr-2 absolute right-4 top-2 z-10">

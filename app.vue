@@ -110,6 +110,22 @@ function closeWindow() {
 const isMobileView = computed(() => {
     return windowWidth.value < 768
 })
+
+const lastHeartbeat = ref(0)
+
+onMounted(() => {
+    if (Cookies.get('token')) {
+        setInterval(() => {
+            if (lastHeartbeat.value < Date.now() - 10000) {
+                lastHeartbeat.value = Date.now()
+
+                axios.post(baseURL + '/api/profile/heartbeat', {
+                    token: Cookies.get('token'),
+                })
+            }
+        }, 1000)
+    }
+})
 </script>
 
 <template>
