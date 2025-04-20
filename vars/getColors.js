@@ -27,8 +27,12 @@ if (theme.value === 'normal') {
     currentPalette.value = colors.value.normal
 }
 
-if (theme.value === 'neon') {
-    currentPalette.value = colors.value.neon
+if (theme.value === 'cyan') {
+    currentPalette.value = colors.value.cyan
+}
+
+if (theme.value === 'carmine') {
+    currentPalette.value = colors.value.carmine
 }
 
 export default currentPalette

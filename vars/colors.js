@@ -43,6 +43,17 @@ const colors = ref({
         textSecondary: '#8EB69B',
         textPrimary: '#DAF1DE',
     },
+    carmine: {
+        name: 'carmine',
+        displayName: 'Carmine',
+        bg: '#330808',
+        bgSecondary: '#631d1d',
+        buttonSecondary: '#991515',
+        buttonPrimary: '#cc1f24',
+        buttonDanger: '#470002',
+        textSecondary: '#ffb8b8',
+        textPrimary: '#ffffff',
+    },
     bluepurple: {
         name: 'bluepurple',
         displayName: 'Blue Purple',
@@ -65,9 +76,9 @@ const colors = ref({
         textSecondary: '#b9c4d8',
         textPrimary: '#f0f5ff',
     },
-    neon: {
-        name: 'neon',
-        displayName: 'Neon',
+    cyan: {
+        name: 'cyan',
+        displayName: 'Cyan',
         bg: '#213a58',
         bgSecondary: '#0c6478',
         buttonSecondary: '#15919b',
