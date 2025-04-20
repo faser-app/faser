@@ -23,7 +23,7 @@ const colors = ref({
     },
     orangeblue: {
         name: 'orangeblue',
-        displayName: 'Orange Blue',
+        displayName: 'Celestial',
         bg: '#162037',
         bgSecondary: '#233154',
         buttonSecondary: '#FF9D77',
