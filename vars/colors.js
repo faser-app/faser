@@ -56,7 +56,7 @@ const colors = ref({
     },
     bluepurple: {
         name: 'bluepurple',
-        displayName: 'Blue Purple',
+        displayName: 'Lavender',
         bg: '#0a1a38',
         bgSecondary: '#142747',
         buttonSecondary: '#C7A0BE',
@@ -67,7 +67,7 @@ const colors = ref({
     },
     purpleblue: {
         name: 'purpleblue',
-        displayName: 'Purple Blue',
+        displayName: 'Periwinkle',
         bg: '#1a2140',
         bgSecondary: '#263155',
         buttonSecondary: '#7d6c96',
