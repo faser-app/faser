@@ -255,9 +255,10 @@
 
 /* Post content */
 .blur-content {
-    filter: blur(8px);
+    filter: blur(25px);
     user-select: none;
     pointer-events: none;
+    transition: filter 0.25s ease;
 }
 
 .post-content {

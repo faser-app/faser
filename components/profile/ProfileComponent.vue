@@ -446,6 +446,7 @@ import BaseModalComponent from '../ui/BaseModalComponent.vue'
 const md = new MarkdownIt({
     html: false,
     linkify: false,
+    breaks: true,
 }).disable(['code', 'table', 'heading', 'hr', 'image'])
 const router = useRouter()
 const runtimeConfig = useRuntimeConfig()

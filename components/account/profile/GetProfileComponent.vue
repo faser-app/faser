@@ -70,7 +70,18 @@
                         </div>
 
                         <!-- Profile Actions (Mobile) -->
-                        <div class="mr-2 absolute right-4 top-2 z-10">
+                        <div
+                            class="mr-2 flex gap-2 absolute right-4 top-2 z-10"
+                        >
+                            <button
+                                @click="reloadProfile"
+                                class="bg-gray-800 px-2 rounded-full"
+                            >
+                                <i
+                                    class="fa-solid fa-rotate-right"
+                                    :class="{ reloading: reloading }"
+                                ></i>
+                            </button>
                             <Menu
                                 as="div"
                                 class="relative md:hidden inline-block text-left"
@@ -625,6 +636,7 @@ const router = useRouter()
 const md = new MarkdownIt({
     html: false,
     linkify: false,
+    breaks: true,
 }).disable(['code', 'table', 'heading', 'hr', 'image'])
 
 const runtimeConfig = useRuntimeConfig()
@@ -665,6 +677,7 @@ const gradient1 = ref('#000000')
 const gradient2 = ref('#000000')
 const lastRequest = ref(0)
 const isOnline = ref(false)
+const reloading = ref(false)
 
 function shareProfile() {
     navigator.share({
@@ -770,6 +783,8 @@ async function getProfile() {
 
     isOnline.value = response.data[0].lastOnlineTime > Date.now() - 60000
 
+    communities.value = []
+
     for (let i = 0; i < response.data[0].communities.length; i++) {
         axios
             .post(baseURL + '/api/community/getCommunity', {
@@ -812,6 +827,15 @@ function loadPosts(postsToLoad) {
             postIndex.value++
         }
     }
+}
+
+function reloadProfile() {
+    getProfile()
+    reloading.value = true
+
+    setTimeout(() => {
+        reloading.value = false
+    }, 500)
 }
 
 function toggleFollow() {
@@ -902,6 +926,20 @@ function toggleFollow() {
     .profile-picture {
         width: 128px;
         height: 128px;
+    }
+}
+
+.reloading {
+    animation: rotate 0.5s infinite linear;
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
     }
 }
 
