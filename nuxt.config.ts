@@ -19,7 +19,9 @@ export default defineNuxtConfig({
     },
 
     app: {
-        keepalive: true,
+        keepalive: {
+            include: ['index'],
+        },
         pageTransition: { name: 'page', mode: 'out-in' },
         head: {
             title: 'faser.app',
