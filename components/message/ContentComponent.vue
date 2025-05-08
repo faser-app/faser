@@ -1,7 +1,7 @@
 <template>
     <!-- Delete message button -->
     <div
-        class="absolute -mt-8 mx-2 bg-gray-800 p-2 w-8 h-8 flex items-center justify-center rounded-full text-red-500 cursor-pointer shadow-lg"
+        class="absolute -mt-6 mx-2 bg-gray-800 p-2 w-8 h-8 flex items-center justify-center rounded-full text-red-500 cursor-pointer shadow-lg"
         v-if="hover && message.sender === ownProfile[0].id"
         @mouseenter="hover = true"
         @mouseleave="hover = false"
@@ -23,9 +23,67 @@
     >
         <!-- Message content -->
         <p
+            v-if="message.type !== 'file'"
             class="break-words ph-no-capture text-sm"
             v-html="convertedToUrl(message.message)"
         ></p>
+
+        <div v-if="message.type === 'file'">
+            <!-- Image files -->
+            <img
+                v-if="
+                    message.message.endsWith('.png') ||
+                    message.message.endsWith('.jpg') ||
+                    message.message.endsWith('.jpeg') ||
+                    message.message.endsWith('.webp') ||
+                    message.message.endsWith('.gif')
+                "
+                :src="message.message"
+                class="rounded-lg"
+            />
+
+            <!-- Video files -->
+            <video
+                v-else-if="
+                    message.message.endsWith('.mp4') ||
+                    message.message.endsWith('.webm') ||
+                    message.message.endsWith('.mov') ||
+                    message.message.endsWith('.avi')
+                "
+                controls
+                class="rounded-lg max-w-full"
+            >
+                <source :src="message.message" />
+                Your browser does not support the video tag.
+            </video>
+
+            <!-- Audio files -->
+            <audio
+                v-else-if="
+                    message.message.endsWith('.mp3') ||
+                    message.message.endsWith('.wav') ||
+                    message.message.endsWith('.ogg') ||
+                    message.message.endsWith('.m4a')
+                "
+                controls
+                class="w-full"
+            >
+                <source :src="message.message" />
+                Your browser does not support the audio tag.
+            </audio>
+
+            <!-- Unknown file type -->
+            <div
+                v-else
+                class="flex items-center p-2 bg-gray-800/30 rounded-lg cursor-pointer"
+                @click="downloadFile(message.message)"
+            >
+                <i class="fa-solid fa-file mr-2"></i>
+                <span class="text-sm">{{
+                    message.message.split('/').pop()
+                }}</span>
+            </div>
+        </div>
 
         <!-- Message timestamp -->
         <div
@@ -57,6 +115,10 @@ function deleteMessage() {
             otherAccount: props.profile[0].id,
         })
         .then(() => {})
+}
+
+function downloadFile(url) {
+    window.location.href = url
 }
 
 function formatTime(time) {

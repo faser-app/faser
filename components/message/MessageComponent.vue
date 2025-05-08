@@ -157,6 +157,12 @@
             :class="{ 'mb-20': mobile }"
         >
             <div class="w-full mx-auto flex gap-2">
+                <button
+                    @click="selectFile"
+                    class="w-10 h-10 rounded-full flex justify-center items-center transition-colors cursor-pointer"
+                >
+                    <i class="fa-solid fa-paperclip"></i>
+                </button>
                 <input
                     type="text"
                     autocomplete="off"
@@ -236,6 +242,48 @@ async function sendMessage() {
         console.error('Failed to send message:', error)
         // Handle any error cases - remove the optimistic message
         messageHistory.value.pop()
+    }
+}
+
+function selectFile() {
+    const input = document.createElement('input')
+    input.type = 'file'
+    input.click()
+
+    input.onchange = (e) => {
+        const file = e.target.files[0]
+
+        if (!file) return
+
+        if (file.size / 1024 / 1024 >= 10) {
+            alert('File Size too big. Max size is 10MB.')
+            return
+        }
+
+        const formData = new FormData()
+        formData.append('file', file)
+
+        axios
+            .post(baseURL + '/api/messages/uploadFile', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    token: Cookies.get('token'),
+                    recipient: profile.value[0].id,
+                    lang: 'en',
+                },
+            })
+            .then(() => {
+                if (i === images.value.length - 1) {
+                    router.go(0)
+                    loading.value = false
+                    resetForm()
+                }
+            })
+            .catch((err) => {
+                error.value =
+                    err.response?.data?.message || 'Error uploading image'
+                loading.value = false
+            })
     }
 }
 
