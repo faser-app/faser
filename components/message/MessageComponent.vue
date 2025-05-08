@@ -255,8 +255,8 @@ function selectFile() {
 
         if (!file) return
 
-        if (file.size / 1024 / 1024 >= 10) {
-            alert('File Size too big. Max size is 10MB.')
+        if (file.size / 1024 / 1024 >= 50) {
+            alert('File Size too big. Max size is 50MB.')
             return
         }
 
