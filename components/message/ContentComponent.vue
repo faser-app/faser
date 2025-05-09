@@ -39,7 +39,7 @@
                     message.message.endsWith('.gif')
                 "
                 :src="message.message"
-                class="rounded-lg"
+                class="rounded-lg max-h-80"
             />
 
             <!-- Video files -->
@@ -51,7 +51,7 @@
                     message.message.endsWith('.avi')
                 "
                 controls
-                class="rounded-lg max-w-full"
+                class="rounded-lg max-w-full max-h-80"
             >
                 <source :src="message.message" />
                 Your browser does not support the video tag.
@@ -66,7 +66,7 @@
                     message.message.endsWith('.m4a')
                 "
                 controls
-                class="w-full"
+                class="w-64"
             >
                 <source :src="message.message" />
                 Your browser does not support the audio tag.
