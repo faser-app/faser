@@ -40,6 +40,8 @@
                 "
                 :src="message.message"
                 class="rounded-lg max-h-80"
+                ref="smallImage"
+                @click="openImage = true"
             />
 
             <!-- Video files -->
@@ -95,6 +97,30 @@
         >
             <p class="text-xs opacity-70">{{ formatTime(message.time) }}</p>
         </div>
+
+        <!-- Fullscreen image overlay with transition -->
+        <Transition name="fade">
+            <div
+                v-if="openImage"
+                class="fixed inset-0 bg-black/70 flex items-center justify-center z-[2000]"
+                @click="openImage = false"
+            >
+                <Transition name="zoom">
+                    <div class="relative" ref="largeImage" @click.stop>
+                        <img
+                            :src="message.message"
+                            class="rounded-lg max-w-[90vw] max-h-[90vh] object-contain shadow-xl"
+                        />
+                        <button
+                            class="absolute top-2 right-2 bg-gray-800/70 hover:bg-gray-700 text-white rounded-full w-8 h-8 flex items-center justify-center transition-colors"
+                            @click="openImage = false"
+                        >
+                            <i class="fa-solid fa-times"></i>
+                        </button>
+                    </div>
+                </Transition>
+            </div>
+        </Transition>
     </div>
 </template>
 
@@ -106,6 +132,9 @@ import currentPalette from '~/vars/getColors'
 
 const runtimeConfig = useRuntimeConfig()
 const hover = ref(false)
+const openImage = ref(false)
+const smallImage = ref(null)
+const largeImage = ref(null)
 
 function deleteMessage() {
     axios
@@ -120,6 +149,35 @@ function deleteMessage() {
 function downloadFile(url) {
     window.location.href = url
 }
+
+// Handle ESC key to close the image
+onMounted(() => {
+    window.addEventListener('keydown', handleKeyDown)
+})
+
+onUnmounted(() => {
+    window.removeEventListener('keydown', handleKeyDown)
+})
+
+function handleKeyDown(e) {
+    if (e.key === 'Escape' && openImage.value) {
+        openImage.value = false
+    }
+}
+
+// Watch for image open/close to handle body scroll
+watch(
+    () => openImage.value,
+    (value) => {
+        // You could add additional logic here if needed
+        // For example, prevent body scrolling when image is open
+        if (value) {
+            document.body.style.overflow = 'hidden'
+        } else {
+            document.body.style.overflow = ''
+        }
+    }
+)
 
 function formatTime(time) {
     return DateTime.fromISO(time).toLocaleString(DateTime.TIME_SIMPLE)
@@ -159,5 +217,28 @@ a {
 a:hover {
     color: #38bdf8;
     text-decoration: underline;
+}
+
+/* Fade transition for the overlay */
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0;
+}
+
+/* Zoom transition for the image */
+.zoom-enter-active,
+.zoom-leave-active {
+    transition: all 0.3s ease;
+}
+
+.zoom-enter-from,
+.zoom-leave-to {
+    opacity: 0;
+    transform: scale(0.9);
 }
 </style>
